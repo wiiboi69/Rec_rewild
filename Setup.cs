@@ -82,7 +82,7 @@ namespace start
 			}
 			if (!(File.Exists("SaveData\\profileimage.png")))
 			{
-				File.WriteAllBytes("SaveData\\profileimage.png", new WebClient().DownloadData("https://github.com/wiiboi69/Rec_rewild/raw/main/Download/profileimage.png"));
+				File.WriteAllBytes("SaveData\\profileimage.png", new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/profileimage.png"));
 			}
 			if (!(File.Exists("SaveData\\App\\privaterooms.txt")))
 			{
