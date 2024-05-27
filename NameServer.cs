@@ -52,6 +52,10 @@ namespace server
                     PlayerSettings = "http://localhost:2021",
                     CDN = "http://localhost:2021/",
 
+                    Data = "http://localhost:2021", 
+                    DataCollection =  "http://localhost:2021",
+                    Discovery =  "http://localhost:2021",
+
                     Matchmaking = "http://localhost:2021/",
                     Storage = "http://localhost:2021/",
                     Chat = "http://localhost:2021/",
@@ -103,6 +107,10 @@ namespace server
             // (get) Token: 0x060000D1 RID: 209 RVA: 0x00007E06 File Offset: 0x00006006
             // (set) Token: 0x060000D2 RID: 210 RVA: 0x00007E0E File Offset: 0x0000600E
             public string Images { get; set; }
+
+        public string Data { get; set; }
+        public string DataCollection { get; set; }
+        public string Discovery {  get; set; }
 
             // Token: 0x1700004A RID: 74
             // (get) Token: 0x060000D3 RID: 211 RVA: 0x00007E17 File Offset: 0x00006017
