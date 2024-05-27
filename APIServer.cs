@@ -9,6 +9,7 @@ using api2017;
 using Newtonsoft.Json;
 using vaultgamesesh;
 using System.Collections.Generic;
+using api2019;
 
 namespace server
 {
@@ -101,6 +102,10 @@ namespace server
                         if (Url.StartsWith("roomkeys/"))
                         {
                             s = BracketResponse;
+                        }
+                        if (rawUrl.StartsWith("/account/bulk"))
+                        {
+                            s = AccountAuth.GetAccountsBulk();
                         }
                         if (Url == "players/v1/list")
 						{

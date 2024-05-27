@@ -79,10 +79,7 @@ namespace server
                             s = AccountAuth.CachedLogins();
                             
                         }
-						else if (rawUrl.StartsWith("/account/bulk"))
-                        {
-                            s = AccountAuth.GetAccountsBulk();
-                        }
+						
                         Console.WriteLine("Auth Response: " + s);
 						bytes = Encoding.UTF8.GetBytes(s);
 						response.ContentLength64 = (long)bytes.Length;
