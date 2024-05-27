@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using vaultgamesesh;
 using System.Collections.Generic;
 using api2019;
+using static api2019.AccountAuth;
+using System.Security.AccessControl;
 
 namespace server
 {
@@ -106,6 +108,16 @@ namespace server
                         if (rawUrl.StartsWith("/account/bulk"))
                         {
                             s = AccountAuth.GetAccountsBulk();
+                        }
+                        if (rawUrl.StartsWith("/account/me"))
+                        {
+                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
+
+                        }
+                        if (rawUrl.StartsWith("/account/"))
+                        {
+                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
+                           
                         }
                         if (Url == "players/v1/list")
 						{
