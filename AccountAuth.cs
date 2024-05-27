@@ -35,13 +35,13 @@ namespace api2019
                 new Account
                 {
                     accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                    displayName = File.ReadAllText(Program.ProfilePath + "\\username.txt.txt"),
+                    displayName = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     bannerImage = "",
                     createdAt = DateTime.Now,
                     isJunior = false,
                     platforms = 1,
                     profileImage = "Profile.png",
-                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt.txt"),
+                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     IsDeveloper = true
                 }
             });
