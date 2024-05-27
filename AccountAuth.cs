@@ -21,7 +21,7 @@ namespace api2019
                 {
                     platform = 0,
                     platformId = "eeeeee",
-                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\id.txt")),
+                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                     lastLoginTime = DateTime.Now
                 }
             });
@@ -34,14 +34,14 @@ namespace api2019
             {
                 new Account
                 {
-                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\id.txt")),
-                    displayName = File.ReadAllText(Program.ProfilePath + "\\name.txt"),
+                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                    displayName = File.ReadAllText(Program.ProfilePath + "\\username.txt.txt"),
                     bannerImage = "",
                     createdAt = DateTime.Now,
                     isJunior = false,
                     platforms = 1,
                     profileImage = "Profile.png",
-                    username = File.ReadAllText(Program.ProfilePath + "\\name.txt"),
+                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt.txt"),
                     IsDeveloper = true
                 }
             });
@@ -64,7 +64,7 @@ namespace api2019
         {
             return JsonConvert.SerializeObject(new Progress
             {
-                PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\id.txt")),
+                PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                 Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
                 XP = 0
             });
@@ -75,7 +75,7 @@ namespace api2019
         {
             return JsonConvert.SerializeObject(new Rep
             {
-                AccountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\id.txt")),
+                AccountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                 Noteriety = 0.0,
                 CheerCreative = 0,
                 CheerCredit = 0,
