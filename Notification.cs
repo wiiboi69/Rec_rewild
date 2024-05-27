@@ -97,7 +97,7 @@ namespace ws
 						ReportCategory = 1,
 						Duration = int.MaxValue,
 						GameSessionId = 100L,
-						Message = "You have been banned. You are probably a little kid and are now whining at your VR headset. If you aren't a little kid, DM me to appeal."
+						Message = "You have been banned."
 					}
 				};
 			}

@@ -13,7 +13,7 @@ namespace ws
 		// Token: 0x06000031 RID: 49 RVA: 0x000066D4 File Offset: 0x000048D4
 		public WebSocket()
 		{
-			WebSocketServer webSocketServer = new WebSocketServer(string.Format("ws://localhost:20161", Array.Empty<object>()));
+			WebSocketServer webSocketServer = new WebSocketServer(string.Format("ws://localhost:20212", Array.Empty<object>()));
 			webSocketServer.AddWebSocketService<WebSocket.NotificationV2>("/api/notification/v2");
 			webSocketServer.AddWebSocketService<WebSocket.NotificationV2>("/hub/v1");
 			webSocketServer.Start();
@@ -29,14 +29,7 @@ namespace ws
 			{
 				Console.WriteLine("WebSocket.cs called for.");
 				base.Send(Notification.ProcessRequest(e.Data));
-				bool flag = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/banned.txt").Contains(File.ReadAllText("SaveData\\Profile\\userid.txt"));
-				if (flag)
-				{
-					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("You are banned. Using this version of OpenRec will not work, please download OpenRec 0.4.2 or prior.");
-					Console.ForegroundColor = ConsoleColor.Green;
-					Program.bannedflag = true;
-				}
+				
 			}
 		}
 	}
