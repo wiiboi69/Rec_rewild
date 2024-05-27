@@ -68,7 +68,7 @@ namespace server
 						{
 							CachedVersionMonth = 05;
 							
-							s = VersionCheckResponse;
+							s = VersionCheckResponse2;
 						}
 						if (Url == ("config/v2"))
 						{
