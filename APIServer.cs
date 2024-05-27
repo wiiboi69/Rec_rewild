@@ -263,7 +263,11 @@ namespace server
 						{
 							s = "{\"IsPure\":true}";
 						}
-						if (Url == "avatar/v3/saved")
+                        if (Url == "avatar/v1/defaultunlocked")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "avatar/v3/saved")
 						{
 							s = BracketResponse;
 						}
