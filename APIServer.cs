@@ -114,11 +114,7 @@ namespace server
                             s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
 
                         }
-                        if (rawUrl.StartsWith("/account/"))
-                        {
-                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
-                           
-                        }
+                       
                         if (Url == "players/v1/list")
 						{
 							s = BracketResponse;
