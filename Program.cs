@@ -341,17 +341,17 @@ namespace start
                 new NameServer();
                 new ImageServer();
                 new APIServer();
+                new AuthServer();
                 new WebSocket();
                 Console.Title = "Rec_rewild server started!";
-                    
-                    
+
                 
                 Console.WriteLine(msg);
             }
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
-        public static string appversion = "0.0.1";
+        public static string appversion = "0.0.2";
         public static bool bannedflag = false;
     }
 
