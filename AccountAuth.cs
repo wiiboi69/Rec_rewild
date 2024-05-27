@@ -20,7 +20,7 @@ namespace api2019
                 new mCachedLogins
                 {
                     platform = 0,
-                    platformId = "eeeeee",
+                    platformId = "1",
                     accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                     lastLoginTime = DateTime.Now
                 }
@@ -36,16 +36,15 @@ namespace api2019
                 {
                     accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                     displayName = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-                    bannerImage = "",
+                    bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     createdAt = DateTime.Now,
                     isJunior = false,
                     platforms = 1,
                     profileImage = "Profile.png",
-                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-                    IsDeveloper = true
+                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt")
                 }
             });
-        }
+        }//[{"accountId":7383744,"displayName":"wordcarboy84","bannerImage":"wordcarboy84","createdAt":"0001-01-01T00:00:00","isJunior":false,"platforms":0,"profileImage":"wordcarboy84","username":"wordcarboy84"}]
 
         // Token: 0x06000007 RID: 7 RVA: 0x0000219B File Offset: 0x0000039B 
         public static string ConnectToken()
@@ -221,11 +220,6 @@ namespace api2019
             // (get) Token: 0x0600000B RID: 11 RVA: 0x000022B5 File Offset: 0x000004B5
             // (set) Token: 0x0600000C RID: 12 RVA: 0x000022BD File Offset: 0x000004BD
             public int accountId { get; set; }
-
-            // Token: 0x17000002 RID: 2
-            // (get) Token: 0x0600000D RID: 13 RVA: 0x000022C6 File Offset: 0x000004C6
-            // (set) Token: 0x0600000E RID: 14 RVA: 0x000022CE File Offset: 0x000004CE
-            public bool IsDeveloper { get; set; }
 
             // Token: 0x17000003 RID: 3
             // (get) Token: 0x0600000F RID: 15 RVA: 0x000022D7 File Offset: 0x000004D7
