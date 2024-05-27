@@ -29,7 +29,7 @@ namespace ws
 			{
 				Console.WriteLine("WebSocket.cs called for.");
 				base.Send(Notification.ProcessRequest(e.Data));
-				bool flag = new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Update/banned.txt").Contains(File.ReadAllText("SaveData\\Profile\\userid.txt"));
+				bool flag = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/banned.txt").Contains(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 				if (flag)
 				{
 					Console.ForegroundColor = ConsoleColor.Red;

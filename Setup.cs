@@ -21,48 +21,48 @@ namespace start
 			Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
 			if (!(File.Exists("SaveData\\App\\firsttime.txt")))
 			{
-				File.WriteAllText("SaveData\\App\\firsttime.txt", "this text file has no use other than to tell the program whether to bring up the intro or not, so i can just write random shit here. among us balls, you suck mad dick you big fat fa----");
+				File.WriteAllText("SaveData\\App\\firsttime.txt", "this text file has no use other than to tell the program whether to bring up the intro or not");
 				firsttime = true;
 			}
 			if (!(File.Exists("SaveData\\avatar.txt")))
 			{
-				File.WriteAllText("SaveData\\avatar.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/avatar.txt"));
+				File.WriteAllText("SaveData\\avatar.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avatar.txt"));
 			}
 			else if (File.ReadAllText("SaveData\\avatar.txt") == "")
             {
-				File.WriteAllText("SaveData\\avatar.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/avatar.txt"));
+				File.WriteAllText("SaveData\\avatar.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avatar.txt"));
 			}
 			if (!(File.Exists("SaveData\\avataritems.txt")))
 			{
-				File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/avataritems.txt"));
+				File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));
 			}
 			if (!(File.Exists("SaveData\\avataritems2.txt")))
 			{
-				File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/avataritems2.txt"));
+				File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
 			}
 			if (!(File.Exists("SaveData\\equipment.txt")))
 			{
-				File.WriteAllText("SaveData\\equipment.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/equipment.txt"));
+				File.WriteAllText("SaveData\\equipment.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/equipment.txt"));
 			}
 			if (!(File.Exists("SaveData\\consumables.txt")))
 			{
-				File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/consumables.txt"));
+				File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/consumables.txt"));
 			}
 			if (!(File.Exists("SaveData\\gameconfigs.txt")))
 			{
-				File.WriteAllText("SaveData\\gameconfigs.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/gameconfigs.txt"));
+				File.WriteAllText("SaveData\\gameconfigs.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/gameconfigs.txt"));
 			}
 			if (!(File.Exists("SaveData\\storefronts2.txt")))
 			{
-				File.WriteAllText("SaveData\\storefronts2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/storefront2.txt"));
+				File.WriteAllText("SaveData\\storefronts2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/storefront2.txt"));
 			}
 			if (!(File.Exists("SaveData\\baserooms.txt")))
 			{
-				File.WriteAllText("SaveData\\baserooms.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/baserooms.txt"));
+				File.WriteAllText("SaveData\\baserooms.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/baserooms.txt"));
 			}
 			if (!(File.Exists("SaveData\\Profile\\username.txt")))
 			{
-				File.WriteAllText("SaveData\\Profile\\username.txt", "OpenRec User#" + new Random().Next(0, 1000000));
+				File.WriteAllText("SaveData\\Profile\\username.txt", "Rec_rewild User#" + new Random().Next(0, 1000000));
 			}
 			if (!(File.Exists("SaveData\\Profile\\level.txt")))
 			{
@@ -82,11 +82,11 @@ namespace start
 			}
 			if (!(File.Exists("SaveData\\profileimage.png")))
 			{
-				File.WriteAllBytes("SaveData\\profileimage.png", new WebClient().DownloadData("https://github.com/OpenRecRoom/OpenRec/raw/main/profileimage.png"));
+				File.WriteAllBytes("SaveData\\profileimage.png", new WebClient().DownloadData("https://github.com/wiiboi69/Rec_rewild/raw/main/Download/profileimage.png"));
 			}
 			if (!(File.Exists("SaveData\\App\\privaterooms.txt")))
 			{
-				File.WriteAllText("SaveData\\App\\privaterooms.txt", "Disabled");
+				File.WriteAllText("SaveData\\App\\privaterooms.txt", "Enabled");
 			}
 			if (!(File.Exists("SaveData\\App\\showopenrecinfo.txt")))
 			{
@@ -94,7 +94,7 @@ namespace start
 			}
 			if (!(File.Exists("SaveData\\App\\facefeaturesadd.txt")))
 			{
-				File.WriteAllText("SaveData\\App\\facefeaturesadd.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/recroom2016/OpenRec/master/Download/facefeaturesadd.txt"));
+				File.WriteAllText("SaveData\\App\\facefeaturesadd.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/facefeaturesadd.txt"));
 			}
 			goto tryagain;
 
