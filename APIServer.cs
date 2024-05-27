@@ -98,7 +98,11 @@ namespace server
 						{
 							s = BlankResponse;
 						}
-						if (Url == "players/v1/list")
+                        if (Url.StartsWith("roomkeys/"))
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "players/v1/list")
 						{
 							s = BracketResponse;
 						}

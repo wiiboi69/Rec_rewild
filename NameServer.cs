@@ -42,10 +42,25 @@ namespace server
                 string s = "";
                 NSData data = new NSData()
                 {
-                    Auth = "http://localhost:20214",
                     API = "http://localhost:2021",
                     Notifications = "http://localhost:20212",
-                    Images = "http://localhost:20213"
+                    Images = "http://localhost:20213",
+                    Auth = "http://localhost:20214",
+                    WWW = "http://localhost:2021",
+                    Commerce = "http://localhost:2021",
+                    Accounts = "http://localhost:2021",
+
+                    CDN = "http://localhost:2021/",
+
+                    Matchmaking = "http://localhost:2021/",
+                    Storage = "http://localhost:2021/",
+                    Chat = "http://localhost:2021/",
+                    Leaderboard = "http://localhost:2021/",
+
+                    Link = "http://localhost:2021/",
+                    RoomComments = "http://localhost:2021/",
+                    Rooms = "http://localhost:2021/",
+                    Clubs = "http://localhost:2021/"
                 };
                 s = JsonConvert.SerializeObject(data);
                 Console.WriteLine("API Response: " + s);
@@ -64,36 +79,83 @@ namespace server
 		public static string BlankResponse = "";
         public class NSData
         {
-            // Token: 0x17000013 RID: 19
-            // (get) Token: 0x06000040 RID: 64 RVA: 0x00002256 File Offset: 0x00000456
-            // (set) Token: 0x06000041 RID: 65 RVA: 0x0000225E File Offset: 0x0000045E
+            // Token: 0x17000045 RID: 69
+            // (get) Token: 0x060000C9 RID: 201 RVA: 0x00007DC2 File Offset: 0x00005FC2
+            // (set) Token: 0x060000CA RID: 202 RVA: 0x00007DCA File Offset: 0x00005FCA
+            public string Accounts { get; set; }
+
+            // Token: 0x17000046 RID: 70
+            // (get) Token: 0x060000CB RID: 203 RVA: 0x00007DD3 File Offset: 0x00005FD3
+            // (set) Token: 0x060000CC RID: 204 RVA: 0x00007DDB File Offset: 0x00005FDB
             public string Auth { get; set; }
 
-            // Token: 0x17000014 RID: 20
-            // (get) Token: 0x06000042 RID: 66 RVA: 0x00002267 File Offset: 0x00000467
-            // (set) Token: 0x06000043 RID: 67 RVA: 0x0000226F File Offset: 0x0000046F
+            // Token: 0x17000047 RID: 71
+            // (get) Token: 0x060000CD RID: 205 RVA: 0x00007DE4 File Offset: 0x00005FE4
+            // (set) Token: 0x060000CE RID: 206 RVA: 0x00007DEC File Offset: 0x00005FEC
             public string API { get; set; }
 
-            // Token: 0x17000015 RID: 21
-            // (get) Token: 0x06000044 RID: 68 RVA: 0x00002278 File Offset: 0x00000478
-            // (set) Token: 0x06000045 RID: 69 RVA: 0x00002280 File Offset: 0x00000480
-            public string WWW { get; set; }
-
-            // Token: 0x17000016 RID: 22
-            // (get) Token: 0x06000046 RID: 70 RVA: 0x00002289 File Offset: 0x00000489
-            // (set) Token: 0x06000047 RID: 71 RVA: 0x00002291 File Offset: 0x00000491
+            // Token: 0x17000048 RID: 72
+            // (get) Token: 0x060000CF RID: 207 RVA: 0x00007DF5 File Offset: 0x00005FF5
+            // (set) Token: 0x060000D0 RID: 208 RVA: 0x00007DFD File Offset: 0x00005FFD
             public string Notifications { get; set; }
 
-            // Token: 0x17000017 RID: 23
-            // (get) Token: 0x06000048 RID: 72 RVA: 0x0000229A File Offset: 0x0000049A
-            // (set) Token: 0x06000049 RID: 73 RVA: 0x000022A2 File Offset: 0x000004A2
+            // Token: 0x17000049 RID: 73
+            // (get) Token: 0x060000D1 RID: 209 RVA: 0x00007E06 File Offset: 0x00006006
+            // (set) Token: 0x060000D2 RID: 210 RVA: 0x00007E0E File Offset: 0x0000600E
             public string Images { get; set; }
 
-            // Token: 0x17000018 RID: 24
-            // (get) Token: 0x0600004A RID: 74 RVA: 0x000022AB File Offset: 0x000004AB
-            // (set) Token: 0x0600004B RID: 75 RVA: 0x000022B3 File Offset: 0x000004B3
+            // Token: 0x1700004A RID: 74
+            // (get) Token: 0x060000D3 RID: 211 RVA: 0x00007E17 File Offset: 0x00006017
+            // (set) Token: 0x060000D4 RID: 212 RVA: 0x00007E1F File Offset: 0x0000601F
             public string Commerce { get; set; }
+
+            // Token: 0x1700004B RID: 75
+            // (get) Token: 0x060000D5 RID: 213 RVA: 0x00007E28 File Offset: 0x00006028
+            // (set) Token: 0x060000D6 RID: 214 RVA: 0x00007E30 File Offset: 0x00006030
+            public string CDN { get; set; }
+
+            // Token: 0x1700004C RID: 76
+            // (get) Token: 0x060000D7 RID: 215 RVA: 0x00007E39 File Offset: 0x00006039
+            // (set) Token: 0x060000D8 RID: 216 RVA: 0x00007E41 File Offset: 0x00006041
+            public string WWW { get; set; }
+
+            // Token: 0x1700004D RID: 77
+            // (get) Token: 0x060000D9 RID: 217 RVA: 0x00007E4A File Offset: 0x0000604A
+            // (set) Token: 0x060000DA RID: 218 RVA: 0x00007E52 File Offset: 0x00006052
+            public string Matchmaking { get; set; }
+
+            // Token: 0x1700004E RID: 78
+            // (get) Token: 0x060000DB RID: 219 RVA: 0x00007E5B File Offset: 0x0000605B
+            // (set) Token: 0x060000DC RID: 220 RVA: 0x00007E63 File Offset: 0x00006063
+            public string Storage { get; set; }
+
+            // Token: 0x1700004F RID: 79
+            // (get) Token: 0x060000DD RID: 221 RVA: 0x00007E6C File Offset: 0x0000606C
+            // (set) Token: 0x060000DE RID: 222 RVA: 0x00007E74 File Offset: 0x00006074
+            public string Leaderboard { get; set; }
+
+            // Token: 0x17000050 RID: 80
+            // (get) Token: 0x060000DF RID: 223 RVA: 0x00007E7D File Offset: 0x0000607D
+            // (set) Token: 0x060000E0 RID: 224 RVA: 0x00007E85 File Offset: 0x00006085
+            public string Chat { get; set; }
+
+            // Token: 0x17000051 RID: 81
+            // (get) Token: 0x060000E1 RID: 225 RVA: 0x00007E8E File Offset: 0x0000608E
+            // (set) Token: 0x060000E2 RID: 226 RVA: 0x00007E96 File Offset: 0x00006096
+            public string Link { get; set; }
+
+            // Token: 0x17000052 RID: 82
+            // (get) Token: 0x060000E3 RID: 227 RVA: 0x00007E9F File Offset: 0x0000609F
+            // (set) Token: 0x060000E4 RID: 228 RVA: 0x00007EA7 File Offset: 0x000060A7
+            public string RoomComments { get; set; }
+            public string Rooms { get; set; }
+
+            // Token: 0x17000053 RID: 83
+            // (get) Token: 0x060000E5 RID: 229 RVA: 0x00007EB0 File Offset: 0x000060B0
+            // (set) Token: 0x060000E6 RID: 230 RVA: 0x00007EB8 File Offset: 0x000060B8
+            public string Clubs { get; set; }
         }
+    
 
 
         // Token: 0x04000192 RID: 402
