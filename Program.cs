@@ -352,6 +352,15 @@ namespace start
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
         public static string appversion = "0.0.2";
+
+        public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
+
+        // Token: 0x04000068 RID: 104   
+        public static string ProfilePath = Program.DataPath + "\\Profile";
+
+        // Token: 0x04000069 RID: 105
+        public static string CustomImages = Program.DataPath + "\\Images";
+
         public static bool bannedflag = false;
     }
 

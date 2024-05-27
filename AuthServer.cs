@@ -6,9 +6,11 @@ using System.Threading;
 using api;
 using api2017;
 using api2018;
+using api2019;
 using Newtonsoft.Json;
 using vaultgamesesh;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 
 namespace server
 {
@@ -72,8 +74,12 @@ namespace server
                         {
                             s = tokenResponse;
                         }
-
-						Console.WriteLine("Auth Response: " + s);
+						else if (rawUrl.StartsWith("/cachedlogin/forplatformid/"))
+                        {
+                            s = AccountAuth.CachedLogins();
+                            
+                        }
+                        Console.WriteLine("Auth Response: " + s);
 						bytes = Encoding.UTF8.GetBytes(s);
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;
