@@ -49,7 +49,7 @@ namespace server
                     WWW = "http://localhost:2021",
                     Commerce = "http://localhost:2021",
                     Accounts = "http://localhost:2021",
-
+                    PlayerSettings = "http://localhost:2021",
                     CDN = "http://localhost:2021/",
 
                     Matchmaking = "http://localhost:2021/",
@@ -148,6 +148,8 @@ namespace server
             // (get) Token: 0x060000E3 RID: 227 RVA: 0x00007E9F File Offset: 0x0000609F
             // (set) Token: 0x060000E4 RID: 228 RVA: 0x00007EA7 File Offset: 0x000060A7
             public string RoomComments { get; set; }
+
+            public string PlayerSettings { get; set; }
             public string Rooms { get; set; }
 
             // Token: 0x17000053 RID: 83
