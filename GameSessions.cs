@@ -75,10 +75,6 @@ namespace gamesesh
 			{
 				gamesessionid = new Random().Next(0, 99);
 			}
-			if (start.Program.bannedflag == true)
-			{
-				gamesessionid = 100L;
-			}
 			GameSessions.CreateRequest createRequest = JsonConvert.DeserializeObject<GameSessions.CreateRequest>(jsonData);
 			Config.localGameSession = new GameSessions.SessionInstance
 			{
@@ -105,8 +101,42 @@ namespace gamesesh
 			});
 		}
 
-		// Token: 0x060000C1 RID: 193 RVA: 0x0000257B File Offset: 0x0000077B
-		public static GameSessions.PlayerStatus StatusSessionInstance()
+        public static string Createdorm()
+        {
+            long gamesessionid = 20161L;
+            Console.WriteLine("OpenRec GameSession Custom Room");
+            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
+            {
+                gamesessionid = new Random().Next(0, 99);
+            }
+
+            Config.localGameSession = new GameSessions.SessionInstance
+            {
+                GameSessionId = gamesessionid,
+                RegionId = "us",
+                RoomId = "1",
+                RecRoomId = null,
+                EventId = null,
+                CreatorPlayerId = (long?)APIServer.CachedPlayerID,
+                Name = "OpenRec Custom Room",
+                ActivityLevelId = "1",
+                Private = false,
+                Sandbox = true,
+                SupportsScreens = true,
+                SupportsVR = true,
+                GameInProgress = false,
+                MaxCapacity = 20,
+                IsFull = false
+            };
+            return JsonConvert.SerializeObject(new GameSessions.JoinResult
+            {
+                Result = 0,
+                GameSession = Config.localGameSession
+            });
+        }
+
+        // Token: 0x060000C1 RID: 193 RVA: 0x0000257B File Offset: 0x0000077B
+        public static GameSessions.PlayerStatus StatusSessionInstance()
 		{
 			return new GameSessions.PlayerStatus
 			{
