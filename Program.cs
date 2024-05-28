@@ -342,10 +342,9 @@ namespace start
                 new ImageServer();
                 new APIServer();
                 new AuthServer();
-                new WebSocket();
+                new NotificationsServer();
+                new WebSocketHTTP();
                 Console.Title = "Rec_rewild server started!";
-
-                
                 Console.WriteLine(msg);
             }
         }

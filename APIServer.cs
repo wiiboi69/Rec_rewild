@@ -114,7 +114,21 @@ namespace server
                             s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
 
                         }
-                       
+                        if (rawUrl.StartsWith("/player/login"))
+                        {
+                            s = AccountAuth.ConnectToken();
+                            
+                        }
+                        if (Url.StartsWith("players/v1/progression/"))
+                        {
+                            s = AccountAuth.GetLevel();
+                            
+                        }
+                        if (Url.StartsWith("playerReputation/v1/"))
+                        {
+                            s = AccountAuth.GetRep();
+                            
+                        }
                         if (Url == "players/v1/list")
 						{
 							s = BracketResponse;
@@ -184,7 +198,16 @@ namespace server
 						{
 							Settings.SetPlayerSettings(text);
 						}
-						if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
+                        if (rawUrl.Contains("/club/"))
+                        {
+                            s = BracketResponse;
+                        }
+                        if (rawUrl.Contains("/api/storefronts/v3"))
+                        {
+                            s = BracketResponse;
+                        }
+                        // {"playerId":7383744,"statusVisibility":0,"deviceClass":0,"roomInstance":{"roomInstanceId":505995663,"roomId":1,"subRoomId":1,"location":"76d98498-60a1-430c-ab76-b54a29b7a163","photonRegionId":"us","photonRoomId":"1Re0.5.1born76376384","name":"^DormRoom","maxCapacity":20,"dataBlob":"","isFull":false,"isPrivate":true,"isInProgress":false}}
+                        if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
 						{
 							s = BracketResponse;
 						}
@@ -198,7 +221,22 @@ namespace server
 							s = File.ReadAllText("SaveData\\avataritems2.txt");
 							
 						}
-						if (Url == "equipment/v1/getUnlocked")
+                        if (Url == "avatar/v4/items")
+                        {
+
+                            s = File.ReadAllText("SaveData\\avataritems2.txt");
+
+                        }
+                        if (rawUrl.Contains("quickPlay/v1/getandclear"))
+                        {
+                            s = JsonConvert.SerializeObject((object)new QuickPlayResponseDTO()
+                            {
+                                TargetPlayerId = new long?(),
+                                RoomName = (string)null,
+                                ActionCode = (string)null
+                            });
+                        }
+                        if (Url == "equipment/v1/getUnlocked")
 						{
 							s = File.ReadAllText("SaveData\\equipment.txt");
 						}
@@ -326,7 +364,16 @@ namespace server
 							
 							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.m000027()));
 						}
-						if (Url == "rooms/v1/featuredRoomGroup")
+                        if (Url == "PlayerReporting/v1/hile")
+                        {
+                            s = "{\"Message\":\"\",\"Type\":0}";
+                        }
+                        if (rawUrl == "config/LoadingScreenTipData")
+                        {
+							s = BracketResponse;
+                        }
+                        ///config/LoadingScreenTipData
+                        if (Url == "rooms/v1/featuredRoomGroup")
 						{
 							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/dormslideshow.txt");
 						}
@@ -355,8 +402,16 @@ namespace server
 						{
 							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/rcslideshow.txt");
 						}
-						Console.WriteLine("API Response: " + s);
-						bytes = Encoding.UTF8.GetBytes(s);
+
+                        if (s.Length > 400)
+                        {
+                            Console.WriteLine("api Response: " + s.Length);
+                        }
+                        else
+                        {
+                            Console.WriteLine("api Response: " + s);
+                        }
+                        bytes = Encoding.UTF8.GetBytes(s);
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;
 						outputStream.Write(bytes, 0, bytes.Length);
@@ -375,7 +430,17 @@ namespace server
 				new APIServer();
 			}
 		}
-		public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
+
+        public class QuickPlayResponseDTO
+        {
+            public long? TargetPlayerId { get; set; }
+
+            public string RoomName { get; set; }
+
+            public string ActionCode { get; set; }
+        }
+
+        public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 		public static ulong CachedPlatformID = 10000;
 		public static int CachedVersionMonth = 01;
 

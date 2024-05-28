@@ -39,7 +39,7 @@ namespace vaultgamesesh
 
 		public static Late2018WebSock instance;
 
-		public WebSocketServer WebSock = new WebSocketServer("ws://localhost:20161/");
+		public WebSocketServer WebSock = new WebSocketServer("ws://localhost:20219/");
 
 		public class HubWS : WebSocketBehavior
 		{
@@ -61,7 +61,7 @@ namespace vaultgamesesh
 				this.accessToken = "AccessDeezNuts";
 				this.SupportedTransports = new List<string>();
 				this.negotiateVersion = 0;
-				this.url = new Uri(string.Format("http://localhost:{0}/", "2018"));
+				this.url = new Uri(string.Format("http://localhost:{0}/", "20212"));
 			}
 
 			public Uri url { get; set; }
@@ -77,15 +77,7 @@ namespace vaultgamesesh
 		{
 			protected override void OnMessage(MessageEventArgs p0)
 			{
-				bool flag = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/banned.txt").Contains(File.ReadAllText("SaveData\\Profile\\userid.txt"));
-				if (flag)
-				{
-					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("You are banned. Using this version of OpenRec will not work, please download OpenRec 0.4.2 or prior.");
-					Console.ForegroundColor = ConsoleColor.Green;
-					Program.bannedflag = true;
-					Late2018WebSock.instance.Broadcast(Notification.Reponse.createBannedResponse());
-				}
+				
 				Console.WriteLine("LateWebSocket.cs Notif Requested.");
 				bool flag2 = p0.Data == null;
 				bool flag3 = flag2;

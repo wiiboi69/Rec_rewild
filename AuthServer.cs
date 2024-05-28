@@ -69,6 +69,8 @@ namespace server
                         if (rawUrl == "/eac/challenge")
                         {
 							s = challengesResponse;
+                            Thread.Sleep(100);
+
                         }
                         else if (rawUrl == "/connect/token")
                         {
@@ -85,7 +87,7 @@ namespace server
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;
 						outputStream.Write(bytes, 0, bytes.Length);
-						Thread.Sleep(400);
+						Thread.Sleep(100);
 						outputStream.Close();
 						this.listener.Stop();
 

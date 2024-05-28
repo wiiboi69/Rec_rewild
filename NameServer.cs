@@ -65,8 +65,8 @@ namespace server
                     RoomComments = "http://localhost:2021/",
                     Rooms = "http://localhost:2021/",
                     Clubs = "http://localhost:2021/"
-                };*/
-                //s = JsonConvert.SerializeObject(data);
+                };
+                s = JsonConvert.SerializeObject(data);*/
                 s = "{\r\n  \"Accounts\": \"http://localhost:2021\",\r\n  \"API\":\"http://localhost:2021\",\r\n  \"Auth\": \"http://localhost:20214\",\r\n  \"BugReporting\": \"http://localhost:2021\",\r\n  \"Cards\": \"http://localhost:2021\",\r\n  \"CDN\": \"http://localhost:2021\",\r\n  \"Chat\": \"http://localhost:2021\",\r\n  \"Clubs\": \"http://localhost:2021\",\r\n  \"CMS\": \"http://localhost:2021\",  \r\n  \"Commerce\": \"http://localhost:2021\",\r\n  \"Data\": \"http://localhost:2021\", \r\n  \"DataCollection\": \"http://localhost:2021\",\r\n  \"Discovery\": \"http://localhost:2021\",\r\n  \"Econ\": \"http://localhost:2021\",\r\n  \"GameLogs\": \"http://localhost:2021\",\r\n  \"Geo\": \"http://localhost:2021\",\r\n  \"Images\": \"http://localhost:20213\",\r\n  \"Leaderboard\": \"http://localhost:2021\",\r\n  \"Link\": \"http://localhost:2021\",\r\n  \"Lists\": \"http://localhost:2021\",\r\n  \"Matchmaking\": \"http://localhost:2021\",\r\n  \"Moderation\": \"http://localhost:2021\",\r\n  \"Notifications\": \"http://localhost:20212\",\r\n    \r\n  \"PlayerSettings\": \"http://localhost:2021\",\r\n  \"RoomComments\": \"http://localhost:2021\",\r\n  \"Rooms\": \"http://localhost:2021\",\r\n  \"Storage\": \"http://localhost:2021\", \r\n  \"Strings\": \"http://localhost:2021\",\r\n  \"StringsCDN\": \"http://localhost:2021\",\r\n  \r\n  \"Thorn\": \"http://localhost:2021\",\r\n  \"Videos\": \"http://localhost:2021\",\r\n  \"WWW\": \"http://localhost:2021\"\r\n} \r\n\r\n";
                 Console.WriteLine("API Response: " + s);
                 byte[] bytes = Encoding.UTF8.GetBytes(s);
