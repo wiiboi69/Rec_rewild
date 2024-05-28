@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using api2019;
 using static api2019.AccountAuth;
 using System.Security.AccessControl;
+using start;
 
 namespace server
 {
@@ -206,7 +207,17 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        // {"playerId":7383744,"statusVisibility":0,"deviceClass":0,"roomInstance":{"roomInstanceId":505995663,"roomId":1,"subRoomId":1,"location":"76d98498-60a1-430c-ab76-b54a29b7a163","photonRegionId":"us","photonRoomId":"1Re0.5.1born76376384","name":"^DormRoom","maxCapacity":20,"dataBlob":"","isFull":false,"isPrivate":true,"isInProgress":false}}
+                        if (rawUrl.Contains("/thread"))
+                        {
+                            s = BracketResponse;
+                        }
+
+                        if (rawUrl.Contains("player/heartbeat"))
+                        {
+                            s = "{\"playerId\":7383744,\"statusVisibility\":0,\"deviceClass\":0,\"roomInstance\":{\"roomInstanceId\":505995663,\"roomId\":1,\"subRoomId\":1,\"location\":\"76d98498-60a1-430c-ab76-b54a29b7a163\",\"photonRegionId\":\"us\",\"photonRoomId\":\"1Re0.5.1born76376384\",\"name\":\"^DormRoom\",\"maxCapacity\":20,\"dataBlob\":\"\",\"isFull\":false,\"isPrivate\":true,\"isInProgress\":false}}";
+                        }
+                        ///player/heartbeat
+                        // 
                         if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
 						{
 							s = BracketResponse;
@@ -226,12 +237,13 @@ namespace server
 
                             s = File.ReadAllText("SaveData\\avataritems2.txt");
 
+
                         }
                         if (rawUrl.Contains("quickPlay/v1/getandclear"))
                         {
                             s = JsonConvert.SerializeObject((object)new QuickPlayResponseDTO()
                             {
-                                TargetPlayerId = new long?(),
+                                TargetPlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                                 RoomName = (string)null,
                                 ActionCode = (string)null
                             });
@@ -415,7 +427,7 @@ namespace server
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;
 						outputStream.Write(bytes, 0, bytes.Length);
-						Thread.Sleep(400);
+						Thread.Sleep(200);
 						outputStream.Close();
 						this.listener.Stop();
 
