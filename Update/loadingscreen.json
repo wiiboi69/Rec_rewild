@@ -1,0 +1,16 @@
+[
+  {
+    "Name": "hello there",
+    "Title": "We're all on rec.net!",
+    "Message": "Log into your Rec Net profile to stay in touch with your friends any time!",
+    "RoomNames": [],
+    "Context": 0,
+    "InputType": 0,
+    "Visibility": 0,
+    "AllowCycling": true,
+    "RestrictToNewUsers": false,
+    "ImageName": "Community/Kuti/site.png",
+    "PlatformMask": -1,
+    "CreatedAt": "2022-12-06T20:31:28Z"
+  }
+]

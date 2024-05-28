@@ -382,7 +382,7 @@ namespace server
                         }
                         if (rawUrl == "config/LoadingScreenTipData")
                         {
-							s = BracketResponse;
+							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/loadingscreen.json"); ;
                         }
                         ///config/LoadingScreenTipData
                         if (Url == "rooms/v1/featuredRoomGroup")
@@ -397,7 +397,12 @@ namespace server
 						{
 							s = BracketResponse;
 						}
-						if (Url.StartsWith("rooms/v2/search?value="))
+                        if (rawUrl == "/goto/room/DormRoom")
+                        {
+                            s = "{\"errorCode\":0,\"roomInstance\":{\"roomInstanceId\":505995663,\"roomId\":1,\"subRoomId\":1,\"location\":\"76d98498-60a1-430c-ab76-b54a29b7a163\",\"photonRegionId\":\"us\",\"photonRoomId\":\"1Re0.5.1born76376384\",\"name\":\"^DormRoom\",\"maxCapacity\":20,\"dataBlob\":\"\",\"isFull\":false,\"isPrivate\":true,\"isInProgress\":false}}";
+                        }
+                        //
+                        if (Url.StartsWith("rooms/v2/search?value="))
 						{
 							CustomRooms.RoomGet(Url.Remove(0, 22));
 						}
