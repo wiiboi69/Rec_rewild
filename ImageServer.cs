@@ -77,7 +77,7 @@ namespace server
 						{
                             Console.WriteLine("[ImageServer.cs] using Image.");
 
-							i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
+							i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
 
                         }
 
