@@ -110,7 +110,7 @@ namespace gamesesh
                 gamesessionid = new Random().Next(0, 99);
             }
 
-            Config.localGameSession = new GameSessions.SessionInstance
+            Config.localGameSessionv2 = new GameSessions.SessionInstancev2
             {
                 GameSessionId = gamesessionid,
                 RegionId = "us",
@@ -118,7 +118,7 @@ namespace gamesesh
                 RecRoomId = null,
                 EventId = null,
                 CreatorPlayerId = (long?)APIServer.CachedPlayerID,
-                Name = "OpenRec Custom Room",
+                Name = "DormRoom",
                 ActivityLevelId = "1",
                 Private = false,
                 Sandbox = true,
@@ -126,12 +126,18 @@ namespace gamesesh
                 SupportsVR = true,
                 GameInProgress = false,
                 MaxCapacity = 20,
-                IsFull = false
+                IsFull = false,
+                PhotonRegionId = "us",
+                PhotonRoomId = "DormRoom",
+                RoomSceneId = "",
+                RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                DataBlobName = "",
+                PlayerEventId = null
             };
-            return JsonConvert.SerializeObject(new GameSessions.JoinResult
+            return JsonConvert.SerializeObject(new GameSessions.JoinResultv2
             {
                 Result = 0,
-                GameSession = Config.localGameSession
+                GameSession = Config.localGameSessionv2
             });
         }
 
@@ -293,8 +299,95 @@ namespace gamesesh
 			public bool IsFull { get; set; }
 		}
 
-		// Token: 0x02000024 RID: 36
-		public class JoinRandomRequest
+        public class SessionInstancev2
+        {
+            // Token: 0x17000043 RID: 67
+            // (get) Token: 0x060000CC RID: 204 RVA: 0x000025EA File Offset: 0x000007EA
+            // (set) Token: 0x060000CD RID: 205 RVA: 0x000025F2 File Offset: 0x000007F2
+            public long GameSessionId { get; set; }
+
+            // Token: 0x17000044 RID: 68
+            // (get) Token: 0x060000CE RID: 206 RVA: 0x000025FB File Offset: 0x000007FB
+            // (set) Token: 0x060000CF RID: 207 RVA: 0x00002603 File Offset: 0x00000803
+            public string RegionId { get; set; }
+
+            // Token: 0x17000045 RID: 69
+            // (get) Token: 0x060000D0 RID: 208 RVA: 0x0000260C File Offset: 0x0000080C
+            // (set) Token: 0x060000D1 RID: 209 RVA: 0x00002614 File Offset: 0x00000814
+            public string RoomId { get; set; }
+
+            // Token: 0x17000046 RID: 70
+            // (get) Token: 0x060000D2 RID: 210 RVA: 0x0000261D File Offset: 0x0000081D
+            // (set) Token: 0x060000D3 RID: 211 RVA: 0x00002625 File Offset: 0x00000825
+            public long? EventId { get; set; }
+
+            // Token: 0x17000047 RID: 71
+            // (get) Token: 0x060000D4 RID: 212 RVA: 0x0000262E File Offset: 0x0000082E
+            // (set) Token: 0x060000D5 RID: 213 RVA: 0x00002636 File Offset: 0x00000836
+            public long? RecRoomId { get; set; }
+
+            // Token: 0x17000048 RID: 72
+            // (get) Token: 0x060000D6 RID: 214 RVA: 0x0000263F File Offset: 0x0000083F
+            // (set) Token: 0x060000D7 RID: 215 RVA: 0x00002647 File Offset: 0x00000847
+            public long? CreatorPlayerId { get; set; }
+
+            // Token: 0x17000049 RID: 73
+            // (get) Token: 0x060000D8 RID: 216 RVA: 0x00002650 File Offset: 0x00000850
+            // (set) Token: 0x060000D9 RID: 217 RVA: 0x00002658 File Offset: 0x00000858
+            public string Name { get; set; }
+
+            // Token: 0x1700004A RID: 74
+            // (get) Token: 0x060000DA RID: 218 RVA: 0x00002661 File Offset: 0x00000861
+            // (set) Token: 0x060000DB RID: 219 RVA: 0x00002669 File Offset: 0x00000869
+            public string ActivityLevelId { get; set; }
+
+            // Token: 0x1700004B RID: 75
+            // (get) Token: 0x060000DC RID: 220 RVA: 0x00002672 File Offset: 0x00000872
+            // (set) Token: 0x060000DD RID: 221 RVA: 0x0000267A File Offset: 0x0000087A
+            public bool Private { get; set; }
+
+            // Token: 0x1700004C RID: 76
+            // (get) Token: 0x060000DE RID: 222 RVA: 0x00002683 File Offset: 0x00000883
+            // (set) Token: 0x060000DF RID: 223 RVA: 0x0000268B File Offset: 0x0000088B
+            public bool Sandbox { get; set; }
+
+            // Token: 0x1700004D RID: 77
+            // (get) Token: 0x060000E0 RID: 224 RVA: 0x00002694 File Offset: 0x00000894
+            // (set) Token: 0x060000E1 RID: 225 RVA: 0x0000269C File Offset: 0x0000089C
+            public bool SupportsVR { get; set; }
+
+            // Token: 0x1700004E RID: 78
+            // (get) Token: 0x060000E2 RID: 226 RVA: 0x000026A5 File Offset: 0x000008A5
+            // (set) Token: 0x060000E3 RID: 227 RVA: 0x000026AD File Offset: 0x000008AD
+            public bool SupportsScreens { get; set; }
+
+            // Token: 0x1700004F RID: 79
+            // (get) Token: 0x060000E4 RID: 228 RVA: 0x000026B6 File Offset: 0x000008B6
+            // (set) Token: 0x060000E5 RID: 229 RVA: 0x000026BE File Offset: 0x000008BE
+            public bool GameInProgress { get; set; }
+
+            // Token: 0x17000050 RID: 80
+            // (get) Token: 0x060000E6 RID: 230 RVA: 0x000026C7 File Offset: 0x000008C7
+            // (set) Token: 0x060000E7 RID: 231 RVA: 0x000026CF File Offset: 0x000008CF
+            public int MaxCapacity { get; set; }
+
+            // Token: 0x17000051 RID: 81
+            // (get) Token: 0x060000E8 RID: 232 RVA: 0x000026D8 File Offset: 0x000008D8
+            // (set) Token: 0x060000E9 RID: 233 RVA: 0x000026E0 File Offset: 0x000008E0
+            public bool IsFull { get; set; }
+
+
+            public string RoomSceneId { get; set; }
+            public string PhotonRegionId { get; set; }
+            public string PhotonRoomId { get; set; }
+            public string RoomSceneLocationId { get; set; }
+            public string DataBlobName { get; set; }
+            public string PlayerEventId { get; set; }
+
+        }
+
+        // Token: 0x02000024 RID: 36
+        public class JoinRandomRequest
 		{
 			// Token: 0x17000052 RID: 82
 			// (get) Token: 0x060000EB RID: 235 RVA: 0x000026E9 File Offset: 0x000008E9
@@ -402,5 +495,18 @@ namespace gamesesh
 			// (set) Token: 0x06000103 RID: 259 RVA: 0x0000279B File Offset: 0x0000099B
 			public GameSessions.SessionInstance GameSession { get; set; }
 		}
-	}
+
+        private class JoinResultv2
+        {
+            // Token: 0x1700005B RID: 91
+            // (get) Token: 0x06000100 RID: 256 RVA: 0x00002782 File Offset: 0x00000982
+            // (set) Token: 0x06000101 RID: 257 RVA: 0x0000278A File Offset: 0x0000098A
+            public int Result { get; set; }
+
+            // Token: 0x1700005C RID: 92
+            // (get) Token: 0x06000102 RID: 258 RVA: 0x00002793 File Offset: 0x00000993
+            // (set) Token: 0x06000103 RID: 259 RVA: 0x0000279B File Offset: 0x0000099B
+            public GameSessions.SessionInstancev2 GameSession { get; set; }
+        }
+    }
 }

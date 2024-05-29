@@ -214,7 +214,7 @@ namespace server
 
                         if (rawUrl.Contains("player/heartbeat"))
                         {
-                            s = "{\"playerId\":7383744,\"statusVisibility\":0,\"deviceClass\":0,\"roomInstance\":{\"roomInstanceId\":505995663,\"roomId\":1,\"subRoomId\":1,\"location\":\"76d98498-60a1-430c-ab76-b54a29b7a163\",\"photonRegionId\":\"us\",\"photonRoomId\":\"1Re0.5.1born76376384\",\"name\":\"^DormRoom\",\"maxCapacity\":20,\"dataBlob\":\"\",\"isFull\":false,\"isPrivate\":true,\"isInProgress\":false}}";
+							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.m000027()));
                         }
                         ///player/heartbeat
                         // 
@@ -380,7 +380,11 @@ namespace server
                         {
                             s = "{\"Message\":\"\",\"Type\":0}";
                         }
-                        if (rawUrl == "config/LoadingScreenTipData")
+						if (rawUrl == "/gamesight/event")
+						{
+							s = BracketResponse;
+						}
+                        if (rawUrl == "/config/LoadingScreenTipData")
                         {
 							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/loadingscreen.json"); ;
                         }
@@ -400,6 +404,10 @@ namespace server
                         if (rawUrl == "/goto/room/DormRoom")
                         {
 							s = gamesesh.GameSessions.Createdorm();
+                        }
+						else if (rawUrl.StartsWith("/goto/player/"))
+                        {
+                            s = gamesesh.GameSessions.Createdorm();
                         }
                         //
                         if (Url.StartsWith("rooms/v2/search?value="))

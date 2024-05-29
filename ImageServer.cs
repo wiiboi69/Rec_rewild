@@ -67,9 +67,22 @@ namespace server
 					}
 					catch
                     {
-						Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net.");
+
+						Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net. using Default Room Image");
+						try
+						{
+							i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
+						}
+						catch
+						{
+                            Console.WriteLine("[ImageServer.cs] using Image.");
+
+							i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
+
+                        }
+
                     }
-				}
+                }
 				if (rawUrl.StartsWith("/CustomRoom.png"))
                 {
 					try
