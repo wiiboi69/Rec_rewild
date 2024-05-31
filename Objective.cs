@@ -15,5 +15,7 @@ namespace api
 		// (get) Token: 0x06000077 RID: 119 RVA: 0x00002325 File Offset: 0x00000525
 		// (set) Token: 0x06000078 RID: 120 RVA: 0x0000232D File Offset: 0x0000052D
 		public int score { get; set; }
+
+		public int? xp { get; set; }
 	}
 }

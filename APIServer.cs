@@ -71,10 +71,36 @@ namespace server
 						if (Url.StartsWith("versioncheck"))
 						{
 							CachedVersionMonth = 05;
-							
-							s = VersionCheckResponse2;
-						}
-						if (Url == ("config/v2"))
+                            if (Url.Contains("20190502_EA"))
+                            {
+                                s = VersionCheckResponse;
+
+                            }
+                            else
+                            {
+								CachedversionID = ulong.Parse(Url.Substring(18, 8));
+								Console.WriteLine(CachedversionID);
+                                s = VersionCheckResponse2;
+
+                            }
+                        }
+                        if (Url.StartsWith("platformlogin/v2/getcachedlogins"))
+                        {
+                            s = getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
+                            CachedPlayerID = ulong.Parse(text.Remove(0, 32));
+                            CachedPlatformID = ulong.Parse(text.Remove(0, 22));
+                            File.WriteAllText("SaveData\\Profile\\userid.txt", Convert.ToString(CachedPlayerID));
+
+                        }
+                        if (Url == "equipment/v1/getUnlocked")
+                        {
+                            s = File.ReadAllText("SaveData\\equipment.txt");
+                        }
+                        if (Url == "equipment/v2/getUnlocked")
+                        {
+                            s = File.ReadAllText("SaveData\\equipment.txt");
+                        }
+                        if (Url == ("config/v2"))
 						{
 							s = Config2.GetDebugConfig();
 						}
@@ -214,7 +240,7 @@ namespace server
 
                         if (rawUrl.Contains("player/heartbeat"))
                         {
-							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.m000027()));
+							s = JsonConvert.SerializeObject(c000020.player_heartbeat());
                         }
                         ///player/heartbeat
                         // 
@@ -243,7 +269,7 @@ namespace server
                         {
                             s = JsonConvert.SerializeObject((object)new QuickPlayResponseDTO()
                             {
-                                TargetPlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                                TargetPlayerId = null,
                                 RoomName = (string)null,
                                 ActionCode = (string)null
                             });
@@ -374,21 +400,56 @@ namespace server
 						if (Url == "presence/v3/heartbeat")
 						{
 							
-							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.m000027()));
+							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
 						}
                         if (Url == "PlayerReporting/v1/hile")
                         {
                             s = "{\"Message\":\"\",\"Type\":0}";
                         }
-						if (rawUrl == "/gamesight/event")
+                        //gamerewards/v1/pending
+                        //rooms/createdby/me
+                        if (rawUrl == "/player/statusvisibility")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "PlayerReporting/v1/voteToKickReasons")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url.StartsWith("roomconsumables/v1/roomConsumable/"))
+                        {
+                            s = BracketResponse;
+                        }
+						if (Url == "rooms/createdby/me")
 						{
 							s = BracketResponse;
 						}
+                        if (Url.StartsWith("roomcurrencies/v1/currencies"))
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url.StartsWith("storefronts/v4/balance/"))
+                        {
+                            s = BracketResponse;
+                        }
+                        //
+                        if (Url == "gamerewards/v1/pending")
+						{
+							s = BracketResponse;
+						}
+                        if (Url.StartsWith("playerReputation/v2/"))
+                        {
+                            s = "{\"AccountId\":" + Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")) + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}";
+                        }
                         if (rawUrl == "/config/LoadingScreenTipData")
                         {
 							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/loadingscreen.json"); ;
                         }
-                        ///config/LoadingScreenTipData
+                        if (rawUrl.Contains("/roomcurrencies/v1/getAllBalances"))
+                        {
+							s = BracketResponse;
+                        }
+                        ///roomcurrencies/v1/getAllBalances
                         if (Url == "rooms/v1/featuredRoomGroup")
 						{
 							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/dormslideshow.txt");
@@ -410,21 +471,61 @@ namespace server
 							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
 							s = gamesesh.GameSessions.Createdorm();
                         }
-                        //
+                        if (Url == "announcement/v1/get")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (rawUrl == "/rooms/createdby/me")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "announcement/v1/get")
+                        {
+                            s = BracketResponse;
+                        }
+						if (Url == "communityboard/v2/current")
+						{
+							s = BracketResponse;
+						}
+						if (Url == "consumables/v2/getUnlocked")
+						{  s = BracketResponse;}
+                        //announcement/v1/get
                         if (Url.StartsWith("rooms/v2/search?value="))
 						{
 							CustomRooms.RoomGet(Url.Remove(0, 22));
 						}
-						if (Url == "rooms/v4/details/29")
+                        if (Url.StartsWith("players/v2/progression/bulk"))
+                        {
+                            s = AccountAuth.GetLevel();
+                        }
+                        if (Url == "rooms/v4/details/29")
 						{
 							s = File.ReadAllText("SaveData\\Rooms\\Downloaded\\RoomDetails.json");
 							Thread.Sleep(100);
 						}
+
 						else if (Url.StartsWith("rooms/v4/details"))
 						{
-							s = JsonConvert.SerializeObject(c00005d.m000023(Convert.ToInt32(Url.Remove(0, 17))));
-						}
-						if (Url == "images/v1/slideshow")
+                            //rooms_find_list
+                            //s = File.ReadAllText("SaveData\\RoomDetails-test.json");
+
+                            s = JsonConvert.SerializeObject(c00005d.m000023(Convert.ToInt32(Url.Remove(0, 17))));
+                        }
+                        else if (Url.StartsWith("rooms/v4/details/1"))
+                        {
+                            //rooms_find_list
+                            //s = File.ReadAllText("SaveData\\RoomDetails-test.json");
+
+                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(Url.Remove(0, 17))));
+                        }
+                        if (rawUrl.StartsWith("/rooms/1"))
+                        {
+                            //rooms_find_list
+                            //s = File.ReadAllText("SaveData\\RoomDetails-test.json");
+
+                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(1));
+                        }
+                        if (Url == "images/v1/slideshow")
 						{
 							s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/rcslideshow.txt");
 						}
@@ -468,7 +569,10 @@ namespace server
 
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 		public static ulong CachedPlatformID = 10000;
-		public static int CachedVersionMonth = 01;
+        public static ulong CachedversionID = 20200000;
+
+        // 
+        public static int CachedVersionMonth = 01;
 
 		public static string BlankResponse = "";
 		public static string BracketResponse = "[]";

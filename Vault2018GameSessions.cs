@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Newtonsoft.Json;
 using System.IO;
+using gamesesh;
 
 namespace vaultgamesesh
 {
@@ -32,8 +33,35 @@ namespace vaultgamesesh
 			};
 		}
 
-		// Token: 0x0600000F RID: 15 RVA: 0x00002370 File Offset: 0x00000570
-		public static c000041.c000042 m000030(string p0)
+        public static GameSessions.SessionInstancev2 player_heartbeat_room()
+        {
+
+
+            Console.WriteLine("Rec_Rewild player heartbeat room");
+
+            return new GameSessions.SessionInstancev2
+            {
+                EncryptVoiceChat = false,
+                clubId = null,
+                dataBlob = "",
+                EventId = null,
+                isFull = false,
+                isInProgress = false,
+                isPrivate = false,
+                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                MaxCapacity = 20,
+                Name = "DormRoom",
+                photonRegionId = "us",
+                photonRoomId = "DormRoom" + GameSessions.myuuidAsString,
+                roomId = 1,
+                roomInstanceId = GameSessions.gamesessionid,
+                roomInstanceType = 2,
+                subRoomId = GameSessions.gamesessionsubroomid,
+            };
+        }
+
+        // Token: 0x0600000F RID: 15 RVA: 0x00002370 File Offset: 0x00000570
+        public static c000041.c000042 m000030(string p0)
 		{
 			c00006b.c00006c c00006c = JsonConvert.DeserializeObject<c00006b.c00006c>(p0);
 			Console.WriteLine("[BackEnd] Room Name: " + c00006c.RoomName);
@@ -114,6 +142,7 @@ namespace vaultgamesesh
 
 		// Token: 0x0400000C RID: 12
 		public static c000041.c000044 f000013;
+		public static GameSessions.SessionInstancev2 player_heartbeat_SessionInstance;
 
 		// Token: 0x02000028 RID: 40
 		public sealed class c000042

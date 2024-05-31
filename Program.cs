@@ -361,6 +361,7 @@ namespace start
         public static string CustomImages = Program.DataPath + "\\Images";
 
         public static bool bannedflag = false;
+
     }
 
 }

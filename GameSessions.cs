@@ -104,8 +104,8 @@ namespace gamesesh
 
         public static string Createdorm()
         {
-            long gamesessionid = 20161L;
-            long gamesessionsubroomid = 20161L;
+            GameSessions.gamesessionid = 20161L;
+            gamesessionsubroomid = 20161L;
             Console.WriteLine("Rec_Rewild GameSession DormRoom");
             if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
             {
@@ -113,9 +113,7 @@ namespace gamesesh
                 gamesessionsubroomid = new Random().Next(0, 0xffff);
             }
             Guid myuuid = Guid.NewGuid();
-            string myuuidAsString = myuuid.ToString();
-
-
+            myuuidAsString = myuuid.ToString();
 
             Config.localGameSessionv2 = new GameSessions.SessionInstancev2
             {
@@ -131,7 +129,8 @@ namespace gamesesh
                 Name = "DormRoom",
                 photonRegionId = "us",
                 photonRoomId = "DormRoom" + myuuidAsString,
-                roomId = 512,
+                roomCode = null,
+                roomId = 1,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 2,
                 subRoomId = gamesessionsubroomid,
@@ -139,9 +138,9 @@ namespace gamesesh
             };
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv2
             {
-                appVersion = "20200000",
+                appVersion = APIServer.CachedversionID.ToString(),
                 deviceClass = 0,
-                errorCode = 0,
+                errorCode = null,
                 isOnline = true,
                 playerId =  (long?)APIServer.CachedPlayerID,
                 roomInstance = Config.localGameSessionv2,
@@ -440,6 +439,10 @@ namespace gamesesh
 			public GameSessions.SessionInstance GameSession { get; set; }
 		}
 
+		public static string myuuidAsString { get; set; }
+
+        public static long gamesessionid {  get; set; }
+        public static long gamesessionsubroomid {  get; set; }
         private class JoinResultv2
         {
             // Token: 0x1700005B RID: 91
@@ -447,7 +450,7 @@ namespace gamesesh
             // (set) Token: 0x06000101 RID: 257 RVA: 0x0000278A File Offset: 0x0000098A
             public string appVersion { get; set; }
             public int deviceClass { get; set; }
-            public int errorCode { get; set; } // a custom thing?
+            public int? errorCode { get; set; } // a custom thing?
 
             public bool isOnline { get; set; }
 

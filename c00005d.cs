@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using server;
+using static api2019.AccountAuth;
 
 namespace vaultgamesesh
 {
@@ -70,8 +72,24 @@ namespace vaultgamesesh
 			return c00005d.f000050["DormRoom"];
 		}
 
-		// Token: 0x04000008 RID: 8
-		public static Dictionary<string, c00005d.c000060> f000024 = new Dictionary<string, c00005d.c000060>
+        public static c00005d.rooms_details rooms_find_list(int p0)
+        {
+            foreach (KeyValuePair<string, c00005d.rooms_details> keyValuePair in c00005d.rooms_details_list)
+            {
+                bool flag = keyValuePair.Value.RoomId == (ulong)((long)p0);
+                bool flag2 = flag;
+                if (flag2)
+                {
+                    return keyValuePair.Value;
+                }
+            }
+            return c00005d.rooms_details_list["DormRoom"];
+        }
+
+        //rooms_details
+
+        // Token: 0x04000008 RID: 8
+        public static Dictionary<string, c00005d.c000060> f000024 = new Dictionary<string, c00005d.c000060>
 		{
 			{
 				"MakerRoom",
@@ -331,69 +349,105 @@ namespace vaultgamesesh
 		};
 
 		// Token: 0x04000009 RID: 9
-		public static Dictionary<string, c00005d.c000060> f000050 = new Dictionary<string, c00005d.c000060>
+		public static Dictionary<string, c00005d.rooms_details> rooms_details_list = new Dictionary<string, c00005d.rooms_details>
 		{
 			{
 				"DormRoom",
-				new c00005d.c000060
+				new c00005d.rooms_details
 				{
-					Room = new c00005d.c000061
+
+					Accessibility = 1,
+					CloningAllowed = false,
+					CreatedAt = DateTime.Now,
+					CreatorPlayerId = APIServer.CachedPlayerID,
+					CustomRoomWarning = null,
+					Description = "A private room.",
+					DisableMicAutoMute = true,
+					DisableRoomComments = true,
+					EncryptVoiceChat = true,
+					ImageName = "DefaultRoomImage.jpg",
+					IsAGRoom = true,
+					IsDormRoom = true,
+					IsRRO = true,
+					LoadScreens = "[]",
+					MaxPlayerCalculationMode = 0,
+					MaxPlayers = 20,
+					MinLevel = 0,
+					Name = "DormRoom",
+					PromoExternalContent = "[]",
+					PromoImages = "[]",
+					RoomId = 1UL,
+					RoomWarningMask = 0,
+					State = 0,
+					SupportsJuniors = true,
+					SupportsLevelVoting = false,
+					SupportsMobile = true,
+					SupportsQuest2 = true,
+					SupportsScreens = true,
+					SupportsTeleportVR = true,
+					SupportsVRLow = true,
+					SupportsWalkVR = true,
+					ReleaseStatus = 2,
+					ReplicationId = "DormRoom",
+					WarningMask = 0,
+
+					Roles = new List<c00005d.Roles>
 					{
-						RoomId = 1UL,
-						Name = "DormRoom",
-						Description = "A private room.",
-						ReleaseStatus = 2,
-						ReplicationId = "DormRoom",
-						CreatorPlayerId = APIServer.CachedPlayerID,
-						ImageName = "DefaultRoomImage.jpg",
-						State = 0,
-						Accessibility = 1,
-						SupportsLevelVoting = false,
-						IsAGRoom = true,
-						CloningAllowed = false,
-						SupportsScreens = true,
-						SupportsTeleportVR = true,
-						SupportsWalkVR = true
-					},
-					Scenes = new List<c00005d.c00005f>
-					{
-						new c00005d.c00005f
+						new c00005d.Roles
 						{
-							RoomSceneId = 1L,
-							RoomId = 0UL,
-							RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
-							Name = "dormroom2",
+							AccountId = APIServer.CachedPlayerID,
+							InvitedRole = 0,
+							Role = 255,
+						}
+					},
+
+					Stats = new List<c00005d.Stats>
+					{
+						new c00005d.Stats
+						{
+							RoomId = 1ul,
+							CheerCount = 1,
+							FavoriteCount = 1,
+							VisitCount = 1,
+							VisitorCount = 1,
+						}
+					},
+
+					SubRooms = new List<c00005d.SubRooms>
+					{
+						new c00005d.SubRooms
+						{
+							Accessibility = 1,
+							DataBlob = string.Empty,
 							IsSandbox = false,
-							DataBlobName = string.Empty,
 							MaxPlayers = 20,
-							CanMatchmakeInto = true,
-							DataModifiedAt = DateTime.Now,
-							ReplicationId = "your mom still gae",
-							SupportsJoinInProgress = true,
-							ReleaseStatus = 2,
-							UseAgeBasedMatchmaking = true,
-							UseLevelBasedMatchmaking = true,
-							UseRecRoyaleMatchmaking = false
+							RoomId = 1UL,
+							SubRoomId = 1UL,
+							UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
 						}
 					},
 					CoOwners = new List<int>(),
 					InvitedCoOwners = new List<int>(),
 					Hosts = new List<int>(),
 					InvitedHosts = new List<int>(),
-					CheerCount = 1,
-					FavoriteCount = 1,
-					VisitCount = 1,
+					Moderators = new List<int>(),
+					InvitedModerators = new List<int>(),
+
 					Tags = new List<c00005d.c000063>
 					{
 						new c00005d.c000063
 						{
 							Tag = "rro",
-							Type = 2
+							Type = 2,
 						}
 					}
 				}
 			},
-			{
+		};
+
+        public static Dictionary<string, c00005d.c000060> f000050 = new Dictionary<string, c00005d.c000060>
+        {
+            {
 				"RecCenter",
 				new c00005d.c000060
 				{
@@ -1762,172 +1816,68 @@ namespace vaultgamesesh
 			// Token: 0x1700009B RID: 155
 			// (get) Token: 0x060001A6 RID: 422 RVA: 0x0000A9B4 File Offset: 0x00008BB4
 			// (set) Token: 0x060001A7 RID: 423 RVA: 0x0000A9CC File Offset: 0x00008BCC
-			public c00005d.c000061 Room
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f00002d;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f00002d = value;
-				}
-			}
+			public c00005d.c000061 Room { get; set; }
 
-			// Token: 0x1700009C RID: 156
-			// (get) Token: 0x060001A8 RID: 424 RVA: 0x0000A9D8 File Offset: 0x00008BD8
-			// (set) Token: 0x060001A9 RID: 425 RVA: 0x0000A9F0 File Offset: 0x00008BF0
-			public List<c00005d.c00005f> Scenes
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000031;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000031 = value;
-				}
-			}
 
-			// Token: 0x1700009D RID: 157
-			// (get) Token: 0x060001AA RID: 426 RVA: 0x0000A9FC File Offset: 0x00008BFC
-			// (set) Token: 0x060001AB RID: 427 RVA: 0x0000AA14 File Offset: 0x00008C14
-			public List<int> CoOwners
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000034;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000034 = value;
-				}
-			}
+            // Token: 0x1700009C RID: 156
+            // (get) Token: 0x060001A8 RID: 424 RVA: 0x0000A9D8 File Offset: 0x00008BD8
+            // (set) Token: 0x060001A9 RID: 425 RVA: 0x0000A9F0 File Offset: 0x00008BF0
+            public List<c00005d.c00005f> Scenes { get; set; }
 
-			// Token: 0x1700009E RID: 158
-			// (get) Token: 0x060001AC RID: 428 RVA: 0x0000AA20 File Offset: 0x00008C20
-			// (set) Token: 0x060001AD RID: 429 RVA: 0x0000AA38 File Offset: 0x00008C38
-			public List<int> InvitedCoOwners
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000034;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000034 = value;
-				}
-			}
+
+            // Token: 0x1700009D RID: 157
+            // (get) Token: 0x060001AA RID: 426 RVA: 0x0000A9FC File Offset: 0x00008BFC
+            // (set) Token: 0x060001AB RID: 427 RVA: 0x0000AA14 File Offset: 0x00008C14
+            public List<int> CoOwners { get; set; }
+
+
+            // Token: 0x1700009E RID: 158
+            // (get) Token: 0x060001AC RID: 428 RVA: 0x0000AA20 File Offset: 0x00008C20
+            // (set) Token: 0x060001AD RID: 429 RVA: 0x0000AA38 File Offset: 0x00008C38
+            public List<int> InvitedCoOwners { get; set; }
+
 
 			// Token: 0x1700009F RID: 159
 			// (get) Token: 0x060001AE RID: 430 RVA: 0x0000AA44 File Offset: 0x00008C44
 			// (set) Token: 0x060001AF RID: 431 RVA: 0x0000AA5C File Offset: 0x00008C5C
-			public List<int> Hosts
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f00002a;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f00002a = value;
-				}
-			}
+			public List<int> Hosts { get; set; }
 
-			// Token: 0x170000A0 RID: 160
-			// (get) Token: 0x060001B0 RID: 432 RVA: 0x0000AA68 File Offset: 0x00008C68
-			// (set) Token: 0x060001B1 RID: 433 RVA: 0x0000AA80 File Offset: 0x00008C80
-			public List<int> InvitedHosts
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000034;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000034 = value;
-				}
-			}
 
-			// Token: 0x170000A1 RID: 161
-			// (get) Token: 0x060001B2 RID: 434 RVA: 0x0000AA8C File Offset: 0x00008C8C
-			// (set) Token: 0x060001B3 RID: 435 RVA: 0x0000AAA4 File Offset: 0x00008CA4
-			public int CheerCount
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000005;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000005 = value;
-				}
-			}
+            // Token: 0x170000A0 RID: 160
+            // (get) Token: 0x060001B0 RID: 432 RVA: 0x0000AA68 File Offset: 0x00008C68
+            // (set) Token: 0x060001B1 RID: 433 RVA: 0x0000AA80 File Offset: 0x00008C80
+            public List<int> InvitedHosts { get; set; }
 
-			// Token: 0x170000A2 RID: 162
-			// (get) Token: 0x060001B4 RID: 436 RVA: 0x0000AAB0 File Offset: 0x00008CB0
-			// (set) Token: 0x060001B5 RID: 437 RVA: 0x0000AAC8 File Offset: 0x00008CC8
-			public int FavoriteCount
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000006;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000006 = value;
-				}
-			}
+            public List<int> Moderators { get;set; }
+
+            // Token: 0x170000A0 RID: 160
+            // (get) Token: 0x060001B0 RID: 432 RVA: 0x0000AA68 File Offset: 0x00008C68
+            // (set) Token: 0x060001B1 RID: 433 RVA: 0x0000AA80 File Offset: 0x00008C80
+            public List<int> InvitedModerators { get; set; }
+
+
+            // Token: 0x170000A1 RID: 161
+            // (get) Token: 0x060001B2 RID: 434 RVA: 0x0000AA8C File Offset: 0x00008C8C
+            // (set) Token: 0x060001B3 RID: 435 RVA: 0x0000AAA4 File Offset: 0x00008CA4
+            public int CheerCount { get; set; }
+
+
+            // Token: 0x170000A2 RID: 162
+            // (get) Token: 0x060001B4 RID: 436 RVA: 0x0000AAB0 File Offset: 0x00008CB0
+            // (set) Token: 0x060001B5 RID: 437 RVA: 0x0000AAC8 File Offset: 0x00008CC8
+            public int FavoriteCount { get; set; }
 
 			// Token: 0x170000A3 RID: 163
 			// (get) Token: 0x060001B6 RID: 438 RVA: 0x0000AAD4 File Offset: 0x00008CD4
 			// (set) Token: 0x060001B7 RID: 439 RVA: 0x0000AAEC File Offset: 0x00008CEC
-			public int VisitCount
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000007;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000007 = value;
-				}
-			}
+			public int VisitCount { get; set; }
+
 
 			// Token: 0x170000A4 RID: 164
 			// (get) Token: 0x060001B8 RID: 440 RVA: 0x0000AAF8 File Offset: 0x00008CF8
 			// (set) Token: 0x060001B9 RID: 441 RVA: 0x0000AB10 File Offset: 0x00008D10
-			public List<c00005d.c000063> Tags
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.f000075;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.f000075 = value;
-				}
-			}
+			public List<c00005d.c000063> Tags { get; set; }
+
 
 			// Token: 0x040000D8 RID: 216
 			private c00005d.c000061 f00002d;
@@ -1954,13 +1904,362 @@ namespace vaultgamesesh
 			private List<c00005d.c000063> f000075;
 		}
 
-		// Token: 0x02000040 RID: 64
-		public sealed class c000061
+        public sealed class rooms_details
+        {
+            // Token: 0x1700009B RID: 155
+            // (get) Token: 0x060001A6 RID: 422 RVA: 0x0000A9B4 File Offset: 0x00008BB4
+            // (set) Token: 0x060001A7 RID: 423 RVA: 0x0000A9CC File Offset: 0x00008BCC
+            public List<c00005d.Roles> Roles { get; set; }
+
+
+            // Token: 0x1700009C RID: 156
+            // (get) Token: 0x060001A8 RID: 424 RVA: 0x0000A9D8 File Offset: 0x00008BD8
+            // (set) Token: 0x060001A9 RID: 425 RVA: 0x0000A9F0 File Offset: 0x00008BF0
+            public List<c00005d.Stats> Stats { get; set; }
+
+
+            public List<c00005d.SubRooms> SubRooms { get; set; }
+
+
+            // Token: 0x1700009D RID: 157
+            // (get) Token: 0x060001AA RID: 426 RVA: 0x0000A9FC File Offset: 0x00008BFC
+            // (set) Token: 0x060001AB RID: 427 RVA: 0x0000AA14 File Offset: 0x00008C14
+            public List<int> CoOwners { get; set; }
+
+
+            // Token: 0x1700009E RID: 158
+            // (get) Token: 0x060001AC RID: 428 RVA: 0x0000AA20 File Offset: 0x00008C20
+            // (set) Token: 0x060001AD RID: 429 RVA: 0x0000AA38 File Offset: 0x00008C38
+            public List<int> InvitedCoOwners { get; set; }
+
+
+            // Token: 0x1700009F RID: 159
+            // (get) Token: 0x060001AE RID: 430 RVA: 0x0000AA44 File Offset: 0x00008C44
+            // (set) Token: 0x060001AF RID: 431 RVA: 0x0000AA5C File Offset: 0x00008C5C
+            public List<int> Hosts { get; set; }
+
+
+            // Token: 0x170000A0 RID: 160
+            // (get) Token: 0x060001B0 RID: 432 RVA: 0x0000AA68 File Offset: 0x00008C68
+            // (set) Token: 0x060001B1 RID: 433 RVA: 0x0000AA80 File Offset: 0x00008C80
+            public List<int> InvitedHosts { get; set; }
+
+            public List<int> Moderators { get; set; }
+
+            // Token: 0x170000A0 RID: 160
+            // (get) Token: 0x060001B0 RID: 432 RVA: 0x0000AA68 File Offset: 0x00008C68
+            // (set) Token: 0x060001B1 RID: 433 RVA: 0x0000AA80 File Offset: 0x00008C80
+            public List<int> InvitedModerators { get; set; }
+
+
+
+
+            // Token: 0x170000A4 RID: 164
+            // (get) Token: 0x060001B8 RID: 440 RVA: 0x0000AAF8 File Offset: 0x00008CF8
+            // (set) Token: 0x060001B9 RID: 441 RVA: 0x0000AB10 File Offset: 0x00008D10
+            public List<c00005d.c000063> Tags { get; set; }
+
+            // Token: 0x040000DF RID: 223
+
+            public ulong RoomId
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000001;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000001 = value;
+                }
+            }
+
+            public bool AllowsJuniors { get; set; }
+            public string CustomRoomWarning { get; set; }
+            public bool DisableMicAutoMute { get; set; }
+            public bool IsDormRoom { get; set; }
+            public int RoomWarningMask { get; set; }
+            public int WarningMask { get; set; }
+
+
+
+            // Token: 0x170000A6 RID: 166
+            // (get) Token: 0x060001BD RID: 445 RVA: 0x0000AB48 File Offset: 0x00008D48
+            // (set) Token: 0x060001BE RID: 446 RVA: 0x0000AB60 File Offset: 0x00008D60
+            public string Name
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000002;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000002 = value;
+                }
+            }
+
+            // Token: 0x170000A7 RID: 167
+            // (get) Token: 0x060001BF RID: 447 RVA: 0x0000AB6C File Offset: 0x00008D6C
+            // (set) Token: 0x060001C0 RID: 448 RVA: 0x0000AB84 File Offset: 0x00008D84
+            public string Description
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000003;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000003 = value;
+                }
+            }
+
+            // Token: 0x170000A8 RID: 168
+            // (get) Token: 0x060001C1 RID: 449 RVA: 0x0000AB90 File Offset: 0x00008D90
+            // (set) Token: 0x060001C2 RID: 450 RVA: 0x0000ABA8 File Offset: 0x00008DA8
+            public ulong CreatorPlayerId
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000076;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000076 = value;
+                }
+            }
+
+            // Token: 0x170000A9 RID: 169
+            // (get) Token: 0x060001C3 RID: 451 RVA: 0x0000ABB4 File Offset: 0x00008DB4
+            // (set) Token: 0x060001C4 RID: 452 RVA: 0x0000ABCC File Offset: 0x00008DCC
+            public string ImageName
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000036;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000036 = value;
+                }
+            }
+
+            // Token: 0x170000AA RID: 170
+            // (get) Token: 0x060001C5 RID: 453 RVA: 0x0000ABD8 File Offset: 0x00008DD8
+            // (set) Token: 0x060001C6 RID: 454 RVA: 0x0000ABF0 File Offset: 0x00008DF0
+            public int State
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000006;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000006 = value;
+                }
+            }
+
+            // Token: 0x170000AB RID: 171
+            // (get) Token: 0x060001C7 RID: 455 RVA: 0x0000ABFC File Offset: 0x00008DFC
+            // (set) Token: 0x060001C8 RID: 456 RVA: 0x0000AC14 File Offset: 0x00008E14
+            public int Accessibility
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000007;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000007 = value;
+                }
+            }
+
+            // Token: 0x170000AC RID: 172
+            // (get) Token: 0x060001C9 RID: 457 RVA: 0x0000AC20 File Offset: 0x00008E20
+            // (set) Token: 0x060001CA RID: 458 RVA: 0x0000AC38 File Offset: 0x00008E38
+            public bool SupportsLevelVoting
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000017;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000017 = value;
+                }
+            }
+
+            // Token: 0x170000AD RID: 173
+            // (get) Token: 0x060001CB RID: 459 RVA: 0x0000AC44 File Offset: 0x00008E44
+            // (set) Token: 0x060001CC RID: 460 RVA: 0x0000AC5C File Offset: 0x00008E5C
+            public bool IsAGRoom
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000077;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000077 = value;
+                }
+            }
+
+            // Token: 0x170000AE RID: 174
+            // (get) Token: 0x060001CD RID: 461 RVA: 0x0000AC68 File Offset: 0x00008E68
+            // (set) Token: 0x060001CE RID: 462 RVA: 0x0000AC80 File Offset: 0x00008E80
+            public bool CloningAllowed
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000018;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000018 = value;
+                }
+            }
+
+            // Token: 0x170000AF RID: 175
+            // (get) Token: 0x060001CF RID: 463 RVA: 0x0000AC8C File Offset: 0x00008E8C
+            // (set) Token: 0x060001D0 RID: 464 RVA: 0x0000ACA4 File Offset: 0x00008EA4
+            public bool SupportsScreens
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f000019;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f000019 = value;
+                }
+            }
+
+            // Token: 0x170000B0 RID: 176
+            // (get) Token: 0x060001D1 RID: 465 RVA: 0x0000ACB0 File Offset: 0x00008EB0
+            // (set) Token: 0x060001D2 RID: 466 RVA: 0x0000ACC8 File Offset: 0x00008EC8
+            public bool SupportsWalkVR
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f00001a;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f00001a = value;
+                }
+            }
+
+            // Token: 0x170000B1 RID: 177
+            // (get) Token: 0x060001D3 RID: 467 RVA: 0x0000ACD4 File Offset: 0x00008ED4
+            // (set) Token: 0x060001D4 RID: 468 RVA: 0x0000ACEC File Offset: 0x00008EEC
+            public bool SupportsTeleportVR
+            {
+                [CompilerGenerated]
+                get
+                {
+                    return this.f00001b;
+                }
+                [CompilerGenerated]
+                set
+                {
+                    this.f00001b = value;
+                }
+            }
+
+            // Token: 0x170000B2 RID: 178
+            // (get) Token: 0x060001D5 RID: 469 RVA: 0x0000ACF6 File Offset: 0x00008EF6
+            // (set) Token: 0x060001D6 RID: 470 RVA: 0x0000ACFE File Offset: 0x00008EFE
+            public string ReplicationId { get; set; }
+
+            // Token: 0x170000B3 RID: 179
+            // (get) Token: 0x060001D7 RID: 471 RVA: 0x0000AD07 File Offset: 0x00008F07
+            // (set) Token: 0x060001D8 RID: 472 RVA: 0x0000AD0F File Offset: 0x00008F0F
+            public int ReleaseStatus { get; set; }
+            public DateTime CreatedAt { get; internal set; }
+            public bool DisableRoomComments { get; internal set; }
+            public bool EncryptVoiceChat { get; internal set; }
+            public bool IsRRO { get; internal set; }
+            public string LoadScreens { get; internal set; }
+            public int MaxPlayerCalculationMode { get; internal set; }
+            public int MaxPlayers { get; internal set; }
+            public bool SupportsMobile { get; internal set; }
+            public bool SupportsQuest2 { get; internal set; }
+            public int MinLevel { get; internal set; }
+            public string PromoExternalContent { get; internal set; }
+            public string PromoImages { get; internal set; }
+            public bool SupportsJuniors { get; internal set; }
+            public bool SupportsVRLow { get; internal set; }
+
+            // Token: 0x040000E2 RID: 226
+            private ulong f000001;
+
+            // Token: 0x040000E3 RID: 227
+            private string f000002;
+
+            // Token: 0x040000E4 RID: 228
+            private string f000003;
+
+            // Token: 0x040000E5 RID: 229
+            private ulong f000076;
+
+            // Token: 0x040000E6 RID: 230
+            private string f000036;
+
+            // Token: 0x040000E7 RID: 231
+            private int f000006;
+
+            // Token: 0x040000E8 RID: 232
+            private int f000007;
+
+            // Token: 0x040000E9 RID: 233
+            private bool f000017;
+
+            // Token: 0x040000EA RID: 234
+            private bool f000077;
+
+            // Token: 0x040000EB RID: 235
+            private bool f000018;
+
+            // Token: 0x040000EC RID: 236
+            private bool f000019;
+
+            // Token: 0x040000ED RID: 237
+            private bool f00001a;
+
+            // Token: 0x040000EE RID: 238
+            private bool f00001b;
+
+        }
+
+        // Token: 0x02000040 RID: 64
+        public sealed class c000061
 		{
 			// Token: 0x170000A5 RID: 165
 			// (get) Token: 0x060001BB RID: 443 RVA: 0x0000AB24 File Offset: 0x00008D24
 			// (set) Token: 0x060001BC RID: 444 RVA: 0x0000AB3C File Offset: 0x00008D3C
-			public ulong RoomId
+			public ulong RoomId 
 			{
 				[CompilerGenerated]
 				get
@@ -1973,11 +2272,20 @@ namespace vaultgamesesh
 					this.f000001 = value;
 				}
 			}
+            
+			public bool AllowsJuniors {  get; set; }
+			public string CustomRoomWarning {  get; set; }
+            public bool DisableMicAutoMute {  get; set; }
+            public bool IsDormRoom  {  get; set; }
+            public int RoomWarningMask {  get; set; }
+            public int WarningMask  {  get; set; }
+			
 
-			// Token: 0x170000A6 RID: 166
-			// (get) Token: 0x060001BD RID: 445 RVA: 0x0000AB48 File Offset: 0x00008D48
-			// (set) Token: 0x060001BE RID: 446 RVA: 0x0000AB60 File Offset: 0x00008D60
-			public string Name
+
+            // Token: 0x170000A6 RID: 166
+            // (get) Token: 0x060001BD RID: 445 RVA: 0x0000AB48 File Offset: 0x00008D48
+            // (set) Token: 0x060001BE RID: 446 RVA: 0x0000AB60 File Offset: 0x00008D60
+            public string Name
 			{
 				[CompilerGenerated]
 				get
@@ -2187,9 +2495,10 @@ namespace vaultgamesesh
 			// (get) Token: 0x060001D7 RID: 471 RVA: 0x0000AD07 File Offset: 0x00008F07
 			// (set) Token: 0x060001D8 RID: 472 RVA: 0x0000AD0F File Offset: 0x00008F0F
 			public int ReleaseStatus { get; set; }
+            public DateTime CreatedAt { get; internal set; }
 
-			// Token: 0x040000E2 RID: 226
-			private ulong f000001;
+            // Token: 0x040000E2 RID: 226
+            private ulong f000001;
 
 			// Token: 0x040000E3 RID: 227
 			private string f000002;
@@ -2359,5 +2668,45 @@ namespace vaultgamesesh
 		{
 
 		}
-	}
+
+        public sealed class SubRooms
+        {
+            public int Accessibility { get; set; }
+            public string DataBlob { get; set; }
+            public bool IsSandbox { get; set; }
+            public int MaxPlayers { get; set; }
+            public ulong RoomId { get; set; }
+            public ulong SubRoomId { get; set; }
+            public string UnitySceneId { get; set; }
+        }
+        public sealed class Stats
+        {
+
+            // Token: 0x170000A1 RID: 161
+            // (get) Token: 0x060001B2 RID: 434 RVA: 0x0000AA8C File Offset: 0x00008C8C
+            // (set) Token: 0x060001B3 RID: 435 RVA: 0x0000AAA4 File Offset: 0x00008CA4
+            public int CheerCount { get; set; }
+
+
+            // Token: 0x170000A2 RID: 162
+            // (get) Token: 0x060001B4 RID: 436 RVA: 0x0000AAB0 File Offset: 0x00008CB0
+            // (set) Token: 0x060001B5 RID: 437 RVA: 0x0000AAC8 File Offset: 0x00008CC8
+            public int FavoriteCount { get; set; }
+
+            // Token: 0x170000A3 RID: 163
+            // (get) Token: 0x060001B6 RID: 438 RVA: 0x0000AAD4 File Offset: 0x00008CD4
+            // (set) Token: 0x060001B7 RID: 439 RVA: 0x0000AAEC File Offset: 0x00008CEC
+            public int VisitCount { get; set; }
+            public ulong RoomId { get; set; }
+            public int VisitorCount { get; set; }
+        }
+        public sealed class Roles
+        {
+            public ulong AccountId { get; internal set; }
+            public int InvitedRole { get; internal set; }
+            public int Role { get; internal set; }
+        }
+
+
+    }
 }

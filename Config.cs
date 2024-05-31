@@ -37,17 +37,20 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             },
             new Objective[]
@@ -55,17 +58,20 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             },
             new Objective[]
@@ -73,17 +79,20 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             },
             new Objective[]
@@ -91,17 +100,20 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             },
             new Objective[]
@@ -109,17 +121,20 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             },
             new Objective[]
@@ -127,17 +142,20 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             },
             new Objective[]
@@ -145,20 +163,22 @@ namespace api
                 new Objective
                 {
                     type = 20,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 21,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 },
                 new Objective
                 {
                     type = 22,
-                    score = 1
+                    score = 1,
+                    xp = 200
                 }
             }
         };
-
     }
 }

@@ -14,5 +14,7 @@ namespace api
 		// (get) Token: 0x06000072 RID: 114 RVA: 0x00002303 File Offset: 0x00000503
 		// (set) Token: 0x06000073 RID: 115 RVA: 0x0000230B File Offset: 0x0000050B
 		public int RequiredXp { get; set; }
+
+		public int? GiftDropId { get; set;}
 	}
 }
