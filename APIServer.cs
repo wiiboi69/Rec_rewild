@@ -407,7 +407,8 @@ namespace server
                         }
 						else if (rawUrl.StartsWith("/goto/player/"))
                         {
-                            s = gamesesh.GameSessions.Createdorm();
+							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
+							s = gamesesh.GameSessions.Createdorm();
                         }
                         //
                         if (Url.StartsWith("rooms/v2/search?value="))
