@@ -53,6 +53,7 @@ namespace vaultgamesesh
                 Name = "DormRoom",
                 photonRegionId = "us",
                 photonRoomId = "DormRoom" + GameSessions.myuuidAsString,
+                roomCode = null,
                 roomId = 1,
                 roomInstanceId = GameSessions.gamesessionid,
                 roomInstanceType = 2,

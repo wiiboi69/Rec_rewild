@@ -1,0 +1,153 @@
+﻿
+using Microsoft.Win32;
+using Newtonsoft.Json;
+
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using static api2019.AccountAuth;
+
+namespace Client
+{
+    public class ClientSecurity
+    {
+        public static string GenerateToken()
+        {
+            ClientSecurity.Auth auth = new ClientSecurity.Auth();
+            auth.nbf = DateTime.UtcNow.Ticks;
+            DateTime dateTime = DateTime.UtcNow;
+            dateTime = dateTime.AddDays(1.0);
+            dateTime = dateTime.Date;
+            auth.exp = dateTime.Ticks;
+            auth.iss = "http://localhost:2021";
+            auth.aud = new List<string>()
+            {
+                "http://localhost:2021",
+                "http://localhost:20211",
+                "http://localhost:20212",
+                "http://localhost:20213",
+                "http://localhost:20214",
+                "http://localhost:20215",
+                "http://localhost:20216",
+                "http://localhost:20217",
+                "http://localhost:20218",
+                "rr.api",
+                "rr.commerce",
+                "rr.rooms",
+                "rr.storage",
+                "rr.match",
+                "rr.leaderboard",
+                "rr.auth",
+                "rr.chat",
+                "rr.accounts"
+            };
+            auth.client_id = "recnet";
+            auth.role = "webClient";
+            auth.RnPlat = "1";
+            auth.RnPlatid = "1";
+            auth.RnDeviceclass = "5";
+            auth.RnVer = "20210820";
+            auth.RnAsid = DateTime.UtcNow.Ticks.ToString();
+            auth.RnSk = "4289734123";
+            auth.sub = GetMID().ToString();
+            auth.auth_time = DateTime.UtcNow.Ticks;
+            auth.idp = "local";
+            auth.RnPid = "3781123978";
+            auth.scope = new List<string>()
+            {
+                "rn.accounts",
+                "rn.accounts.gc",
+                "rn.api",
+                "rn.auth",
+                "rn.auth.gc",
+                "rn.chat",
+                "rn.clubs",
+                "rn.commerce",
+                "rn.leaderboard",
+                "rn.link",
+                "rn.match.read",
+                "rn.match.write",
+                "rn.notify",
+                "rn.roomcomments",
+                "rn.rooms",
+                "rn.storage",
+                "offline_access"
+            };
+            auth.amr = new List<string>() { "cached_login" };
+            Console.WriteLine(auth);
+
+            return EncodeTo64(JsonConvert.SerializeObject(auth));
+            
+        }
+
+        public class auth_token_data
+        {
+            public string? access_token { get; set; }
+            public string error { get; set; }
+            public string error_description { get; set; }
+            public string key { get; set; }
+            public string refresh_token { get; set; }
+        }
+
+        public static string EncodeTo64(string toEncode) => Convert.ToBase64String(Encoding.ASCII.GetBytes(toEncode));
+
+        public static string DecodeFrom64(string encodedData) => Encoding.ASCII.GetString(Convert.FromBase64String(encodedData));
+
+
+        public static ulong GetTokenSubject(string token) => ulong.Parse(new JwtSecurityTokenHandler().ReadJwtToken(token).Subject);
+
+        public static uint GetMID()
+        {
+            string name1 = "SOFTWARE\\Microsoft\\Cryptography";
+            string name2 = "MachineGuid";
+            uint num = 0;
+            using (RegistryKey registryKey1 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+            {
+                using (RegistryKey registryKey2 = registryKey1.OpenSubKey(name1))
+                    num = uint.Parse(((registryKey2 != null ? registryKey2.GetValue(name2) : throw new KeyNotFoundException(string.Format("Key Not Found: {0}", (object)name1))) ?? throw new IndexOutOfRangeException(string.Format("Index Not Found: {0}", (object)name2))).ToString().Split('-')[0], NumberStyles.HexNumber);
+            }
+            return num;
+        }
+
+        public class Auth
+        {
+            public long nbf { get; set; }
+
+            public long exp { get; set; }
+
+            public string iss { get; set; }
+
+            public List<string> aud { get; set; }
+
+            public string client_id { get; set; }
+
+            public string role { get; set; }
+
+            public string RnPlat { get; set; }
+
+            public string RnPlatid { get; set; }
+
+            public string RnDeviceclass { get; set; }
+
+            public string RnVer { get; set; }
+
+            public string RnAsid { get; set; }
+
+            public string RnSk { get; set; }
+
+            public string sub { get; set; }
+
+            public long auth_time { get; set; }
+
+            public string idp { get; set; }
+
+            public string RnPid { get; set; }
+
+            public List<string> scope { get; set; }
+
+            public List<string> amr { get; set; }
+        }
+    }
+}

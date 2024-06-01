@@ -149,6 +149,33 @@ namespace gamesesh
             });
         }
 
+        public static string Createnone()
+        {
+            GameSessions.gamesessionid = 20161L;
+            gamesessionsubroomid = 20161L;
+            Console.WriteLine("Rec_Rewild GameSession DormRoom");
+            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
+            {
+                gamesessionid = new Random().Next(0, 99);
+                gamesessionsubroomid = new Random().Next(0, 0xffff);
+            }
+            Guid myuuid = Guid.NewGuid();
+            myuuidAsString = myuuid.ToString();
+
+			Config.localGameSessionv2 = null;
+            return JsonConvert.SerializeObject(new GameSessions.JoinResultv2
+            {
+                appVersion = APIServer.CachedversionID.ToString(),
+                deviceClass = 0,
+                errorCode = null,
+                isOnline = false,
+                playerId = (long?)APIServer.CachedPlayerID,
+                roomInstance = Config.localGameSessionv2,
+                statusVisibility = 0,
+                vrMovementMode = 1
+            });
+        }
+
         // Token: 0x060000C1 RID: 193 RVA: 0x0000257B File Offset: 0x0000077B
         public static GameSessions.PlayerStatus StatusSessionInstance()
 		{

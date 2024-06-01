@@ -59,7 +59,11 @@ namespace server
 				{
 					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
 				}
-				else
+                else if (rawUrl.StartsWith("/profile.png"))
+                {
+                    i = File.ReadAllBytes("SaveData\\profileimage.png");
+                }
+                else
                 {
 					try
                     {

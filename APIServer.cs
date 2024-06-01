@@ -104,7 +104,8 @@ namespace server
 						{
 							s = Config2.GetDebugConfig();
 						}
-						if (Url == "platformlogin/v1/getcachedlogins")
+                        ///cachedlogin/forplatformids
+                        if (Url == "platformlogin/v1/getcachedlogins")
 						{
 							s = getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
 							CachedPlayerID = ulong.Parse(text.Remove(0, 32));
@@ -240,10 +241,17 @@ namespace server
 
                         if (rawUrl.Contains("player/heartbeat"))
                         {
+							//s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
 							s = JsonConvert.SerializeObject(c000020.player_heartbeat());
                         }
-                        ///player/heartbeat
-                        // 
+						///player/heartbeat
+						// 
+						if (Url == "challenge/v2/getCurrent")
+						{  
+							s = "{\"ChallengeMapId\":0,\"StartAt\":\"2021-12-27T21:27:38.188Z\",\"EndAt\":\"2025-12-27T21:27:38.188Z\",\"ServerTime\":\"2023-12-27T21:27:38.188Z\",\"Challenges\":[],\"Gift\":{\"GiftDropId\":1,\"AvatarItemDesc\":\"\",\"Xp\":2,\"Level\":0,\"EquipmentPrefabName\":\"[WaterBottle]\"},\"ChallengeThemeString\":\"RebornRec Water\"}"; 
+						}
+
+                        //
                         if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
 						{
 							s = BracketResponse;
@@ -420,10 +428,7 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-						if (Url == "rooms/createdby/me")
-						{
-							s = BracketResponse;
-						}
+
                         if (Url.StartsWith("roomcurrencies/v1/currencies"))
                         {
                             s = BracketResponse;
@@ -462,11 +467,20 @@ namespace server
 						{
 							s = BracketResponse;
 						}
+                        if (Url.StartsWith("subscription/mine/"))
+                        {
+                            s = BracketResponse;
+                        }
+                        ///subscription/mine/member
                         if (rawUrl == "/goto/room/DormRoom")
                         {
 							s = gamesesh.GameSessions.Createdorm();
                         }
-						else if (rawUrl.StartsWith("/goto/player/"))
+						else if (rawUrl == "/goto/none")
+                        {
+                            s = gamesesh.GameSessions.Createnone();
+                        }
+                        else if (rawUrl.StartsWith("/goto/player/"))
                         {
 							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
 							s = gamesesh.GameSessions.Createdorm();
@@ -488,7 +502,9 @@ namespace server
 							s = BracketResponse;
 						}
 						if (Url == "consumables/v2/getUnlocked")
-						{  s = BracketResponse;}
+						{
+                            s = File.ReadAllText("SaveData\\consumables.txt");
+                        }
                         //announcement/v1/get
                         if (Url.StartsWith("rooms/v2/search?value="))
 						{
@@ -518,12 +534,9 @@ namespace server
 
                             s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(Url.Remove(0, 17))));
                         }
-                        if (rawUrl.StartsWith("/rooms/1"))
+                        if (rawUrl.StartsWith("/announcements/v2/"))
                         {
-                            //rooms_find_list
-                            //s = File.ReadAllText("SaveData\\RoomDetails-test.json");
-
-                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(1));
+							s = BracketResponse;
                         }
                         if (Url == "images/v1/slideshow")
 						{

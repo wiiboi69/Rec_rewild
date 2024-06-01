@@ -343,6 +343,7 @@ namespace start
                 new APIServer();
                 new AuthServer();
                 new NotificationsServer();
+                new roomServer();
                 new WebSocketHTTP();
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);

@@ -356,42 +356,65 @@ namespace vaultgamesesh
 				new c00005d.rooms_details
 				{
 
-					Accessibility = 1,
-					CloningAllowed = false,
-					CreatedAt = DateTime.Now,
-					CreatorPlayerId = APIServer.CachedPlayerID,
-					CustomRoomWarning = null,
-					Description = "A private room.",
-					DisableMicAutoMute = true,
-					DisableRoomComments = true,
+
+                    SubRooms = new List<c00005d.SubRooms>
+                    {
+                        new c00005d.SubRooms
+                        {
+                            SubRoomId = 1UL,
+                            RoomId = 1UL,
+                            Name = "home",
+                            DataBlob = string.Empty,
+                            IsSandbox = false,
+                            MaxPlayers = 20,
+                            Accessibility = 1,
+                            UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                            CanMatchmakeInto = true,
+                            DataBlobName = string.Empty,
+                            DataModifiedAt = DateTime.Now,
+                            RoomSceneId = 1UL,
+                            RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                        }
+                    },
+                    DisableRoomComments = true,
 					EncryptVoiceChat = true,
-					ImageName = "DefaultRoomImage.jpg",
-					IsAGRoom = true,
-					IsDormRoom = true,
 					IsRRO = true,
-					LoadScreens = "[]",
+					LoadScreens = [],
 					MaxPlayerCalculationMode = 0,
 					MaxPlayers = 20,
 					MinLevel = 0,
-					Name = "DormRoom",
-					PromoExternalContent = "[]",
-					PromoImages = "[]",
+					PromoExternalContent = [],
+					PromoImages = [],
 					RoomId = 1UL,
-					RoomWarningMask = 0,
-					State = 0,
 					SupportsJuniors = true,
-					SupportsLevelVoting = false,
 					SupportsMobile = true,
 					SupportsQuest2 = true,
-					SupportsScreens = true,
-					SupportsTeleportVR = true,
 					SupportsVRLow = true,
-					SupportsWalkVR = true,
 					ReleaseStatus = 2,
 					ReplicationId = "DormRoom",
-					WarningMask = 0,
+                    Accessibility = 2,
+                    CloningAllowed = false,
+                    CreatedAt = DateTime.Now,
+                    CustomWarning = string.Empty,
+                    DataBlob = null,
+                    Description = "A private room.",
+                    DisableMicAutoMute = true,
+                    ImageName = "DefaultRoomImage.jpg",
+                    IsAGRoom = true,
+                    IsDorm = true,
+                    Name = "DormRoom",
+                    RoomWarningMask = 0,
+                    State = 0,
+                    SupportsLevelVoting = false,
+                    SupportsScreens = true,
+                    SupportsTeleportVR = true,
+                    SupportsWalkVR = true,
+                    WarningMask = 0,
+                    CreatorAccountId = APIServer.CachedPlayerID,
 
-					Roles = new List<c00005d.Roles>
+
+
+                    Roles = new List<c00005d.Roles>
 					{
 						new c00005d.Roles
 						{
@@ -401,32 +424,19 @@ namespace vaultgamesesh
 						}
 					},
 
-					Stats = new List<c00005d.Stats>
+					Stats = new c00005d.Stats
 					{
-						new c00005d.Stats
-						{
+						
 							RoomId = 1ul,
 							CheerCount = 1,
 							FavoriteCount = 1,
 							VisitCount = 1,
 							VisitorCount = 1,
-						}
+						
 					},
 
-					SubRooms = new List<c00005d.SubRooms>
-					{
-						new c00005d.SubRooms
-						{
-							Accessibility = 1,
-							DataBlob = string.Empty,
-							IsSandbox = false,
-							MaxPlayers = 20,
-							RoomId = 1UL,
-							SubRoomId = 1UL,
-							UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
-						}
-					},
-					CoOwners = new List<int>(),
+                    
+                    CoOwners = new List<int>(),
 					InvitedCoOwners = new List<int>(),
 					Hosts = new List<int>(),
 					InvitedHosts = new List<int>(),
@@ -1906,6 +1916,10 @@ namespace vaultgamesesh
 
         public sealed class rooms_details
         {
+
+            public c00005d.c000061 Room { get; set; }
+
+
             // Token: 0x1700009B RID: 155
             // (get) Token: 0x060001A6 RID: 422 RVA: 0x0000A9B4 File Offset: 0x00008BB4
             // (set) Token: 0x060001A7 RID: 423 RVA: 0x0000A9CC File Offset: 0x00008BCC
@@ -1915,11 +1929,11 @@ namespace vaultgamesesh
             // Token: 0x1700009C RID: 156
             // (get) Token: 0x060001A8 RID: 424 RVA: 0x0000A9D8 File Offset: 0x00008BD8
             // (set) Token: 0x060001A9 RID: 425 RVA: 0x0000A9F0 File Offset: 0x00008BF0
-            public List<c00005d.Stats> Stats { get; set; }
+            public c00005d.Stats Stats { get; set; }
 
 
             public List<c00005d.SubRooms> SubRooms { get; set; }
-
+            public List<c00005d.Scenes> Scenes { get; set; }
 
             // Token: 0x1700009D RID: 157
             // (get) Token: 0x060001AA RID: 426 RVA: 0x0000A9FC File Offset: 0x00008BFC
@@ -2201,16 +2215,20 @@ namespace vaultgamesesh
             public bool DisableRoomComments { get; internal set; }
             public bool EncryptVoiceChat { get; internal set; }
             public bool IsRRO { get; internal set; }
-            public string LoadScreens { get; internal set; }
+            public List<dummylist> LoadScreens { get; internal set; }
             public int MaxPlayerCalculationMode { get; internal set; }
             public int MaxPlayers { get; internal set; }
             public bool SupportsMobile { get; internal set; }
             public bool SupportsQuest2 { get; internal set; }
             public int MinLevel { get; internal set; }
-            public string PromoExternalContent { get; internal set; }
-            public string PromoImages { get; internal set; }
+            public List<dummylist> PromoExternalContent { get; internal set; }
+            public List<dummylist> PromoImages { get; internal set; }
             public bool SupportsJuniors { get; internal set; }
             public bool SupportsVRLow { get; internal set; }
+            public object CustomWarning { get; internal set; }
+            public string DataBlob { get; internal set; }
+            public ulong CreatorAccountId { get; internal set; }
+            public bool IsDorm { get; internal set; }
 
             // Token: 0x040000E2 RID: 226
             private ulong f000001;
@@ -2252,6 +2270,8 @@ namespace vaultgamesesh
             private bool f00001b;
 
         }
+
+		public sealed class dummylist { }
 
         // Token: 0x02000040 RID: 64
         public sealed class c000061
@@ -2668,7 +2688,7 @@ namespace vaultgamesesh
 		{
 
 		}
-
+        //Scenes
         public sealed class SubRooms
         {
             public int Accessibility { get; set; }
@@ -2678,6 +2698,27 @@ namespace vaultgamesesh
             public ulong RoomId { get; set; }
             public ulong SubRoomId { get; set; }
             public string UnitySceneId { get; set; }
+            public bool CanMatchmakeInto { get; internal set; }
+            public string DataBlobName { get; internal set; }
+            public DateTime DataModifiedAt { get; internal set; }
+            public ulong RoomSceneId { get; internal set; }
+            public string RoomSceneLocationId { get; internal set; }
+            public string Name { get; internal set; }
+        }
+        public sealed class Scenes
+        {
+            public int Accessibility { get; set; }
+            public string DataBlob { get; set; }
+            public bool IsSandbox { get; set; }
+            public int MaxPlayers { get; set; }
+            public ulong RoomId { get; set; }
+            public ulong SubRoomId { get; set; }
+            public string UnitySceneId { get; set; }
+            public bool CanMatchmakeInto { get; internal set; }
+            public string DataBlobName { get; internal set; }
+            public DateTime DataModifiedAt { get; internal set; }
+            public ulong RoomSceneId { get; internal set; }
+            public string RoomSceneLocationId { get; internal set; }
         }
         public sealed class Stats
         {
