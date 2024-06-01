@@ -83,6 +83,7 @@ namespace vaultgamesesh
                     return keyValuePair.Value;
                 }
             }
+
             return c00005d.rooms_details_list["DormRoom"];
         }
 
@@ -355,8 +356,6 @@ namespace vaultgamesesh
 				"DormRoom",
 				new c00005d.rooms_details
 				{
-
-
                     SubRooms = new List<c00005d.SubRooms>
                     {
                         new c00005d.SubRooms
@@ -376,6 +375,26 @@ namespace vaultgamesesh
                             RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
                         }
                     },
+                    Scenes = new List<c00005d.Scenes>
+                    {
+                        new c00005d.Scenes
+                        {
+                            SubRoomId = 1UL,
+                            RoomId = 1UL,
+                            Name = "home",
+                            DataBlob = string.Empty,
+                            IsSandbox = false,
+                            MaxPlayers = 20,
+                            Accessibility = 1,
+                            UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                            CanMatchmakeInto = true,
+                            DataBlobName = string.Empty,
+                            DataModifiedAt = DateTime.Now,
+                            RoomSceneId = 1UL,
+                            RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                        }
+                    },
+
                     DisableRoomComments = true,
 					EncryptVoiceChat = true,
 					IsRRO = true,
@@ -412,7 +431,30 @@ namespace vaultgamesesh
                     WarningMask = 0,
                     CreatorAccountId = APIServer.CachedPlayerID,
 
+                    Room = new c00005d.c000061
+                    {
 
+						Accessibility = 1,
+                        AllowsJuniors = true,
+						CloningAllowed = false,
+						CreatorPlayerId = APIServer.CachedPlayerID,
+
+                        CustomRoomWarning = string.Empty,
+						Description = "A private room.",
+						DisableMicAutoMute = true,
+						ImageName = "DefaultRoomImage.jpg",
+						IsAGRoom = true,
+						IsDormRoom = true,
+						Name = "DormRoom",
+						RoomId = 1UL,
+						RoomWarningMask = 0,
+						State = 0,
+						SupportsLevelVoting = false,
+						SupportsScreens = true,
+						SupportsTeleportVR = true,
+						SupportsWalkVR = true,
+						WarningMask = 0,
+                    },
 
                     Roles = new List<c00005d.Roles>
 					{
@@ -435,7 +477,10 @@ namespace vaultgamesesh
 						
 					},
 
-                    
+
+                    CheerCount = 1,
+                    FavoriteCount = 1,
+                    VisitCount = 1,
                     CoOwners = new List<int>(),
 					InvitedCoOwners = new List<int>(),
 					Hosts = new List<int>(),
@@ -2229,6 +2274,9 @@ namespace vaultgamesesh
             public string DataBlob { get; internal set; }
             public ulong CreatorAccountId { get; internal set; }
             public bool IsDorm { get; internal set; }
+            public int CheerCount { get; internal set; }
+            public int VisitCount { get; internal set; }
+            public int FavoriteCount { get; internal set; }
 
             // Token: 0x040000E2 RID: 226
             private ulong f000001;
@@ -2719,6 +2767,7 @@ namespace vaultgamesesh
             public DateTime DataModifiedAt { get; internal set; }
             public ulong RoomSceneId { get; internal set; }
             public string RoomSceneLocationId { get; internal set; }
+            public string Name { get; internal set; }
         }
         public sealed class Stats
         {

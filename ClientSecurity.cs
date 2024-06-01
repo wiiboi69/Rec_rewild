@@ -43,17 +43,24 @@ namespace Client
                 "rr.chat",
                 "rr.accounts"
             };
-            auth.client_id = "recnet";
-            auth.role = "webClient";
-            auth.RnPlat = "1";
+            auth.client_id = "recroom";
+            auth.role = new List<String> 
+            {
+                "gameClient", 
+                "screenshare",
+            };
+            auth.RnPlat = "0";
             auth.RnPlatid = "1";
-            auth.RnDeviceclass = "5";
+            auth.RnDeviceclass = "2";
             auth.RnVer = "20210820";
+            auth.idp = "local";
+            auth.sub = GetMID().ToString();
             auth.RnAsid = DateTime.UtcNow.Ticks.ToString();
             auth.RnSk = "4289734123";
-            auth.sub = GetMID().ToString();
+            auth.nbf = DateTime.UtcNow.Ticks;
+            auth.exp = DateTime.UtcNow.Ticks;
+            auth.iat = DateTime.UtcNow.Ticks;
             auth.auth_time = DateTime.UtcNow.Ticks;
-            auth.idp = "local";
             auth.RnPid = "3781123978";
             auth.scope = new List<string>()
             {
@@ -78,7 +85,7 @@ namespace Client
             auth.amr = new List<string>() { "cached_login" };
             Console.WriteLine(auth);
 
-            return EncodeTo64(JsonConvert.SerializeObject(auth));
+            return EncodeTo64(JsonConvert.SerializeObject("{\"alg\":\"HS256\",\"typ\":\"JWT\"}" + auth));
             
         }
 
@@ -123,7 +130,7 @@ namespace Client
 
             public string client_id { get; set; }
 
-            public string role { get; set; }
+            public List<string> role { get; set; }
 
             public string RnPlat { get; set; }
 
@@ -148,6 +155,7 @@ namespace Client
             public List<string> scope { get; set; }
 
             public List<string> amr { get; set; }
+            public long iat { get; internal set; }
         }
     }
 }

@@ -62,6 +62,10 @@ namespace server
                         {
                             Console.WriteLine("Auth Requested (rawUrl): " + rawUrl);
                         }
+                        string temp1 = "";
+                        string temp2 = "";
+                        string temp3 = "";
+                        string temp4 = "";
                         string text;
                         string s = "";
                         using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
@@ -77,10 +81,26 @@ namespace server
                         }
                         else if (rawUrl == "/connect/token")
                         {
-                            s = tokenResponse;
-
+                            // s = tokenResponse;
+                            temp1 = ClientSecurity.GenerateToken();
+                            /*s = JsonConvert.SerializeObject(new ClientSecurity.auth_token_data
+                            {
+                                access_token = temp1,
+                                error = "",
+                                error_description = "",
+                                key = "",
+                                refresh_token = temp1,
+                            }.ToString());
+                            */
+                            Guid myuuid = Guid.NewGuid();
+                            temp2 = myuuid.ToString();
+                            s = "{\"access_token\":\"" + temp1 + "\",\"refresh_token\":\""+ temp2+"\",\"key\":\"\"}";
                             Thread.Sleep(100);
 
+                        }
+                        else if (rawUrl.StartsWith("/cachedlogin/forplatformids"))
+                        {
+                            s = AccountAuth.CachedLogins();
                         }
                         else if (rawUrl.StartsWith("/cachedlogin/forplatformid/"))
                         {

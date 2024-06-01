@@ -98,13 +98,17 @@ namespace server
                         }
                         if (Url == "equipment/v2/getUnlocked")
                         {
-                            s = File.ReadAllText("SaveData\\equipment.txt");
+							//s = File.ReadAllText("SaveData\\equipment.txt");
+							s = BracketResponse;
                         }
                         if (Url == ("config/v2"))
 						{
 							s = Config2.GetDebugConfig();
 						}
                         ///cachedlogin/forplatformids
+						///
+
+
                         if (Url == "platformlogin/v1/getcachedlogins")
 						{
 							s = getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
@@ -405,7 +409,12 @@ namespace server
                             File.WriteAllText(c000004.m000007() + c000041.f000043.Room.Name + "\\RoomDetails.json", JsonConvert.SerializeObject(c000041.f000043));
                             s = JsonConvert.SerializeObject(c00005d.m000035());
                         }
-						if (Url == "presence/v3/heartbeat")
+                        if (rawUrl.StartsWith("/account/create"))
+                        {
+
+                            s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
+                        }
+                        if (Url == "presence/v3/heartbeat")
 						{
 							
 							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
@@ -497,11 +506,15 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-						if (Url == "communityboard/v2/current")
-						{
-							s = BracketResponse;
-						}
-						if (Url == "consumables/v2/getUnlocked")
+                        if (Url == "communityboard/v2/current")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "communityboard/v1/current")
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "consumables/v2/getUnlocked")
 						{
                             s = File.ReadAllText("SaveData\\consumables.txt");
                         }
@@ -520,6 +533,14 @@ namespace server
 							Thread.Sleep(100);
 						}
 
+                        else if (Url.StartsWith("rooms/v4/details/1"))
+                        {
+                            //rooms_find_list
+                            //s = File.ReadAllText("SaveData\\RoomDetails-test.json");
+
+                            //s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(Url.Remove(0, 17))));
+                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(1));
+                        }
 						else if (Url.StartsWith("rooms/v4/details"))
 						{
                             //rooms_find_list
@@ -527,13 +548,16 @@ namespace server
 
                             s = JsonConvert.SerializeObject(c00005d.m000023(Convert.ToInt32(Url.Remove(0, 17))));
                         }
-                        else if (Url.StartsWith("rooms/v4/details/1"))
-                        {
-                            //rooms_find_list
-                            //s = File.ReadAllText("SaveData\\RoomDetails-test.json");
+                        if (Url.StartsWith("CampusCard/v1/UpdateAndGetSubscription"))
+						{
+							s = BracketResponse;
+						}
+						if (Url.StartsWith("messages/v1/favoriteFriendOnlineStatus"))
+						{
+							s = BracketResponse;
+						}
 
-                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(Url.Remove(0, 17))));
-                        }
+                            //CampusCard/v1/UpdateAndGetSubscription
                         if (rawUrl.StartsWith("/announcements/v2/"))
                         {
 							s = BracketResponse;

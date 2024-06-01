@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using api2018;
 using System.IO;
+using static api2019.AccountAuth;
 
 namespace api2018
 {
@@ -54,14 +55,14 @@ namespace api2018
 						}
 					}
 				}
-				
+
 			});
 		}
 
-		// Token: 0x17000135 RID: 309
-		// (get) Token: 0x0600033D RID: 829 RVA: 0x0000395C File Offset: 0x00001B5C
-		// (set) Token: 0x0600033E RID: 830 RVA: 0x00003964 File Offset: 0x00001B64
-		public ulong Id { get; set; }
+        // Token: 0x17000135 RID: 309
+        // (get) Token: 0x0600033D RID: 829 RVA: 0x0000395C File Offset: 0x00001B5C
+        // (set) Token: 0x0600033E RID: 830 RVA: 0x00003964 File Offset: 0x00001B64
+        public ulong Id { get; set; }
 
 		// Token: 0x17000136 RID: 310
 		// (get) Token: 0x0600033F RID: 831 RVA: 0x0000396D File Offset: 0x00001B6D

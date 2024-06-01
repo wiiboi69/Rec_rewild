@@ -56,16 +56,24 @@ namespace server
                             text = streamReader.ReadToEnd();
                         }
                         Console.WriteLine("room Data: " + text);
-                        if (rawUrl == "rooms/createdby/me")
+                        if (rawUrl == "/rooms/createdby/me")
                         { 
                             s = BracketResponse;
+                        }
+                        else if (rawUrl.StartsWith("/rooms/bulk"))
+                        {
+                            s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
+
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
                             Url = rawUrl.Remove(0, 7);
                             string[] stringSeparators = new string[] { "?include=1325" };
                             string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(subs[0])));
+                            stringSeparators = new string[] { "?include=301" };
+                            subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            s = File.ReadAllText("SaveData\\Rooms\\" + subs[0]+".txt");
+                            //s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(subs[0])));
                         }
                         
 
