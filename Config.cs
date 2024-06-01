@@ -29,6 +29,7 @@ namespace api
         }
         public static gamesesh.GameSessions.SessionInstance localGameSession;
         public static gamesesh.GameSessions.SessionInstancev2 localGameSessionv2;
+        public static gamesesh.GameSessions.SessionInstancev3 localGameSessionv3;
 
         public static Objective[][] dailyObjectives = new Objective[][]
         {

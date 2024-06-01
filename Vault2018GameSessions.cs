@@ -33,13 +33,13 @@ namespace vaultgamesesh
 			};
 		}
 
-        public static GameSessions.SessionInstancev2 player_heartbeat_room()
+        public static GameSessions.SessionInstancev3 player_heartbeat_room()
         {
 
 
             Console.WriteLine("Rec_Rewild player heartbeat room");
 
-            return new GameSessions.SessionInstancev2
+            return new GameSessions.SessionInstancev3
             {
                 EncryptVoiceChat = false,
                 clubId = null,

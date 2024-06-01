@@ -246,7 +246,14 @@ namespace server
                         if (rawUrl.Contains("player/heartbeat"))
                         {
 							//s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
-							s = JsonConvert.SerializeObject(c000020.player_heartbeat());
+							if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
+							{
+                                s = JsonConvert.SerializeObject(c000020.player_heartbeatold());
+							}
+							else
+							{
+								s = JsonConvert.SerializeObject(c000020.player_heartbeat());
+                            }
                         }
 						///player/heartbeat
 						// 
@@ -483,11 +490,16 @@ namespace server
                         ///subscription/mine/member
                         if (rawUrl == "/goto/room/DormRoom")
                         {
+
 							s = gamesesh.GameSessions.Createdorm();
                         }
 						else if (rawUrl == "/goto/none")
                         {
                             s = gamesesh.GameSessions.Createnone();
+                        }
+                        else if (rawUrl.StartsWith("/goto/room/"))
+                        {
+                            s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0,7));
                         }
                         else if (rawUrl.StartsWith("/goto/player/"))
                         {

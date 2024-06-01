@@ -72,8 +72,8 @@ namespace server
                             string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             stringSeparators = new string[] { "?include=301" };
                             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            s = File.ReadAllText("SaveData\\Rooms\\" + subs[0]+".txt");
-                            //s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(subs[0])));
+                            //s = File.ReadAllText("SaveData\\Rooms\\" + subs[0]+".txt");
+                            s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(subs[0])));
                         }
                         
 

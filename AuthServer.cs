@@ -79,22 +79,29 @@ namespace server
                             Thread.Sleep(100);
 
                         }
+
                         else if (rawUrl == "/connect/token")
                         {
-                            // s = tokenResponse;
-                            temp1 = ClientSecurity.GenerateToken();
-                            /*s = JsonConvert.SerializeObject(new ClientSecurity.auth_token_data
+                            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
                             {
-                                access_token = temp1,
-                                error = "",
-                                error_description = "",
-                                key = "",
-                                refresh_token = temp1,
-                            }.ToString());
-                            */
-                            Guid myuuid = Guid.NewGuid();
-                            temp2 = myuuid.ToString();
-                            s = "{\"access_token\":\"" + temp1 + "\",\"refresh_token\":\""+ temp2+"\",\"key\":\"\"}";
+                                s = tokenResponse;
+                            }
+                            else 
+                            { 
+                                temp1 = ClientSecurity.GenerateToken();
+                                Guid myuuid = Guid.NewGuid();
+                                temp2 = myuuid.ToString();
+                                /*s = JsonConvert.SerializeObject(new ClientSecurity.auth_token_data
+                                {
+                                    access_token = temp1,
+                                    error = "",
+                                    error_description = "",
+                                    key = "",
+                                    refresh_token = temp2,
+                                }.ToString());
+                                */
+                                s = "{\"access_token\":\"" + temp1 + "\",\"error_description\":\"\",\"error\":\"\",\"refresh_token\":\"" + temp2+"\",\"key\":\"\"}";
+                            }
                             Thread.Sleep(100);
 
                         }

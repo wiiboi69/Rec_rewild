@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Win32;
 using Newtonsoft.Json;
-
+using server;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,6 +33,7 @@ namespace Client
                 "http://localhost:20216",
                 "http://localhost:20217",
                 "http://localhost:20218",
+                "http://localhost:20219",
                 "rr.api",
                 "rr.commerce",
                 "rr.rooms",
@@ -52,7 +53,7 @@ namespace Client
             auth.RnPlat = "0";
             auth.RnPlatid = "1";
             auth.RnDeviceclass = "2";
-            auth.RnVer = "20210820";
+            auth.RnVer = APIServer.CachedversionID.ToString();
             auth.idp = "local";
             auth.sub = GetMID().ToString();
             auth.RnAsid = DateTime.UtcNow.Ticks.ToString();
