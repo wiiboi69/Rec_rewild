@@ -254,6 +254,7 @@ namespace server
 							{
 								s = JsonConvert.SerializeObject(c000020.player_heartbeat());
                             }
+							Console.WriteLine(s);
                         }
 						///player/heartbeat
 						// 
@@ -483,23 +484,30 @@ namespace server
 						{
 							s = BracketResponse;
 						}
-                        if (Url.StartsWith("subscription/mine/"))
+                        if (rawUrl.StartsWith("/subscription"))
                         {
                             s = BracketResponse;
                         }
                         ///subscription/mine/member
                         if (rawUrl == "/goto/room/DormRoom")
                         {
-
-							s = gamesesh.GameSessions.Createdorm();
+							
+								Cachedroomname = rawUrl;
+                                s = gamesesh.GameSessions.Createdorm();
+                            
                         }
 						else if (rawUrl == "/goto/none")
                         {
+
+                            Cachedroomname = rawUrl;
                             s = gamesesh.GameSessions.Createnone();
                         }
                         else if (rawUrl.StartsWith("/goto/room/"))
                         {
-                            s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0,7));
+
+								Cachedroomname = rawUrl;
+								s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 7));
+							
                         }
                         else if (rawUrl.StartsWith("/goto/player/"))
                         {
@@ -619,6 +627,7 @@ namespace server
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 		public static ulong CachedPlatformID = 10000;
         public static ulong CachedversionID = 20200000;
+        public static string Cachedroomname = "";
 
         // 
         public static int CachedVersionMonth = 01;

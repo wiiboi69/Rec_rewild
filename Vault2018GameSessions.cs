@@ -56,7 +56,7 @@ namespace vaultgamesesh
                 roomCode = null,
                 roomId = 1,
                 roomInstanceId = GameSessions.gamesessionid,
-                roomInstanceType = 2,
+                roomInstanceType = 0,
                 subRoomId = GameSessions.gamesessionsubroomid,
             };
         }

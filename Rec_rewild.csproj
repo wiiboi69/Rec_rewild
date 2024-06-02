@@ -13,14 +13,16 @@
     <PackageProjectUrl>https://discord.gg/daC8QUhnFP</PackageProjectUrl>
     <Company>OpenRec</Company>
     <Version>0.4.0</Version>
+
   </PropertyGroup>
 
+  
   <ItemGroup>
     <None Remove="NewFile1.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
   </ItemGroup>
 

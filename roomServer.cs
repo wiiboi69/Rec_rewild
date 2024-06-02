@@ -60,9 +60,11 @@ namespace server
                         { 
                             s = BracketResponse;
                         }
-                        else if (rawUrl.StartsWith("/rooms/bulk"))
+                        else if (rawUrl.StartsWith("/rooms/bulk?name="))
                         {
-                            s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
+                            Console.WriteLine(rawUrl.Remove(0, 17) + ".txt");
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0,17).ToLower() + ".txt");
+                            //s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
 
                         }
                         else if (rawUrl.StartsWith("/rooms/"))

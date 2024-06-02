@@ -15,9 +15,17 @@ namespace start
     {
         static void Main()
         {
+
             //startup for Rec_rewild
 
+            if ((File.Exists("SaveData\\App\\firsttime.txt")))
+            {
+                Setup.quicksetup();
+
+                goto Start;
+            }
             Setup.setup();
+
             goto Tutorial;
 
         Tutorial:
@@ -34,6 +42,7 @@ namespace start
                     Console.Title = "Rec_rewild Tutorial";
                     Console.WriteLine("In that case, welcome to Rec_rewild!");
                     Console.WriteLine("Rec_rewild is server software that emulates the old servers of previous RecRoom versions.");
+                    Console.WriteLine("it emulate server for rec room versions from 2020 to 2021");
                     Console.WriteLine("To use Rec_rewild, you'll need to have builds aswell!");
                     Console.WriteLine("To download builds, either go to the builds channel or use the links below: (these links are also available from the #builds channel)" + Environment.NewLine);
                     Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
@@ -60,8 +69,13 @@ namespace start
             {
                 goto Start;
             }
+            
+            
 
         Start:
+
+               
+
             Console.Title = "Rec_rewild Startup Menu";
 
             Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
@@ -176,7 +190,7 @@ namespace start
 
             Profile:
                 Console.Title = "Rec_rewild Profile Menu";
-                Console.WriteLine("(1) Change Username" + Environment.NewLine + "(2) Change Profile Image" + Environment.NewLine + "(3) Change Level" + Environment.NewLine + "(4) Profile Downloader" + Environment.NewLine + "(5) Go Back");
+                Console.WriteLine("(1) Change Username" + Environment.NewLine + "(2) Change Profile Image" + Environment.NewLine + "(3) Change Level" + Environment.NewLine + "(4) Change bio" + Environment.NewLine + "(5) Profile Downloader" + Environment.NewLine + "(6) Go Back");
                 string readline3 = Console.ReadLine();
                 if (readline3 == "1")
                 {
@@ -287,6 +301,16 @@ namespace start
                 }
                 else if (readline3 == "4")
                 {
+                    Console.WriteLine("Current bio: " + File.ReadAllText("SaveData\\Profile\\bio.txt"));
+                    Console.WriteLine("New bio: ");
+                    string newlevel = Console.ReadLine();
+                    File.WriteAllText("SaveData\\Profile\\bio.txt", newlevel);
+                    Console.Clear();
+                    Console.WriteLine("Success!");
+                    goto Profile;
+                }
+                else if (readline3 == "5")
+                {
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
                     Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to OpenRec.");
@@ -314,7 +338,7 @@ namespace start
                     Console.WriteLine("Success!");
                     goto Start;
                 }
-                else if (readline3 == "5")
+                else if (readline3 == "6")
                 {
                     Console.Clear();
                     goto Start;
@@ -347,6 +371,7 @@ namespace start
                 new WebSocketHTTP();
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
+
             }
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";

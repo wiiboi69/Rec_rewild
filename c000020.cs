@@ -41,7 +41,7 @@ namespace vaultgamesesh
             GameSessions.SessionInstancev3 gameSession;
 
             
-            if (flag)
+            if (!flag)
             {
                 gameSession = c000041.player_heartbeat_room();
             }
@@ -63,7 +63,7 @@ namespace vaultgamesesh
                 errorCode = null,
                 PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                 roomInstance = gameSession,
-                GameSession = gameSession,
+                
 
                 statusVisibility = 0,
                 vrMovementMode = 1
@@ -184,10 +184,9 @@ namespace vaultgamesesh
             public int statusVisibility { get; set; }
 
             public int vrMovementMode { get; set; }
-            public int PlayerType { get; internal set; }
-            public GameSessions.SessionInstancev3 GameSession { get; internal set; }
+            public int PlayerType { get; set; }
 
-            private c000041.c000044 f000038;
+
         }
     }
 }

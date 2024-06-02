@@ -104,39 +104,39 @@ namespace gamesesh
 
 		public static string Createdorm()
 		{
-			GameSessions.gamesessionid = 20161L;
-			gamesessionsubroomid = 20161L;
-			Console.WriteLine("Rec_Rewild GameSession DormRoom");
-			if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
-			{
-				gamesessionid = new Random().Next(0, 99);
-				gamesessionsubroomid = new Random().Next(0, 0xffff);
-			}
-			Guid myuuid = Guid.NewGuid();
-			myuuidAsString = myuuid.ToString();
+            GameSessions.gamesessionid = 20161L;
+            gamesessionsubroomid = 20161L;
+            Console.WriteLine("Rec_Rewild GameSession dormroom" );
+            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
+            {
+                gamesessionid = new Random().Next(0, 99);
+                gamesessionsubroomid = new Random().Next(0, 0xffff);
+            }
+            Guid myuuid = Guid.NewGuid();
+            myuuidAsString = myuuid.ToString();
 
-			Config.localGameSessionv3 = new GameSessions.SessionInstancev3
-			{
-				EncryptVoiceChat = false,
-				clubId = null,
-				dataBlob = "",
-				EventId = null,
-				isFull = false,
-				isInProgress = false,
-				isPrivate = false,
-				location = "76d98498-60a1-430c-ab76-b54a29b7a163",
-				MaxCapacity = 20,
-				Name = "DormRoom",
-				photonRegionId = "us",
-				photonRoomId = "DormRoom-" + myuuidAsString + "-room",
-				roomCode = null,
-				roomId = 1,
-				roomInstanceId = gamesessionid,
-				roomInstanceType = 2,
-				subRoomId = 1,
+            Config.localGameSessionv3 = new GameSessions.SessionInstancev3
+            {
+                EncryptVoiceChat = false,
+                clubId = null,
+                dataBlob = "",
+                EventId = null,
+                isFull = false,
+                isInProgress = false,
+                isPrivate = false,
+                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                MaxCapacity = 20,
+                Name = "dormroom",
+                photonRegionId = "us",
+                photonRoomId = "dormroom" + "-" + myuuidAsString + "-room",
+                roomCode = null,
+                roomId = 1,
+                roomInstanceId = gamesessionid,
+                roomInstanceType = 0,
+                subRoomId = gamesessionsubroomid,
 
-			};
-			if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
+            };
+            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
 			{
                 return JsonConvert.SerializeObject(new GameSessions.JoinResultv2
                 {
@@ -190,7 +190,7 @@ namespace gamesesh
                 roomCode = null,
                 roomId = 1,
                 roomInstanceId = gamesessionid,
-                roomInstanceType = 2,
+                roomInstanceType = 0,
                 subRoomId = gamesessionsubroomid,
 
             };
