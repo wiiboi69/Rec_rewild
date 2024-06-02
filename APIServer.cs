@@ -66,10 +66,20 @@ namespace server
 						string s = "";
 						using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
 						{
+
 							text = streamReader.ReadToEnd();
+
 						}
-						Console.WriteLine("API Data: " + text);
-						if (Url.StartsWith("versioncheck"))
+
+						if (text.Length > 0xff)
+						{ 
+							Console.WriteLine("API Data: unviewable" );
+						}
+						else
+						{
+							Console.WriteLine("API Data: " + text);
+						}
+                        if (Url.StartsWith("versioncheck"))
 						{
 							CachedVersionMonth = 05;
                             if (Url.Contains("20190502_EA"))
@@ -99,17 +109,12 @@ namespace server
                         }
                         if (Url == "equipment/v2/getUnlocked")
                         {
-							//s = File.ReadAllText("SaveData\\equipment.txt");
-							s = BracketResponse;
+							s = File.ReadAllText("SaveData\\equipment.txt");
                         }
                         if (Url == ("config/v2"))
 						{
 							s = Config2.GetDebugConfig();
 						}
-                        ///cachedlogin/forplatformids
-						///
-
-
                         if (Url == "platformlogin/v1/getcachedlogins")
 						{
 							s = getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
@@ -313,11 +318,13 @@ namespace server
 						}
 						if (Url == "consumables/v1/getUnlocked")
 						{
-							
 							s = File.ReadAllText("SaveData\\consumables.txt");
-							
 						}
-						if (Url == "avatar/v2/gifts")
+                        if (Url == "consumables/v2/getUnlocked")
+                        {
+                            s = File.ReadAllText("SaveData\\consumables.txt");
+                        }
+                        if (Url == "avatar/v2/gifts")
 						{
 							s = BracketResponse;
 						}
@@ -497,7 +504,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        ///subscription/mine/member
                         if (rawUrl == "/goto/room/DormRoom")
                         {
 							
@@ -509,21 +515,23 @@ namespace server
                         {
 
                             Cachedroomname = rawUrl;
-                            s = gamesesh.GameSessions.Createdorm();
+                            //s = gamesesh.GameSessions.Createdorm();
 
-                            //s = gamesesh.GameSessions.Createnone();
+                            s = gamesesh.GameSessions.Createnone();
                         }
                         else if (rawUrl.StartsWith("/goto/room/"))
                         {
-
 							Cachedroomname = rawUrl;
 							s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 7));
-							
                         }
                         else if (rawUrl.StartsWith("/goto/player/"))
                         {
 							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
 							s = gamesesh.GameSessions.Createdorm();
+                        }
+                        if (rawUrl.StartsWith("/goto/"))
+                        {
+                            Console.WriteLine(s);
                         }
                         if (Url == "announcement/v1/get")
                         {
@@ -545,11 +553,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (Url == "consumables/v2/getUnlocked")
-						{
-                            s = File.ReadAllText("SaveData\\consumables.txt");
-                        }
-                        //announcement/v1/get
                         if (Url.StartsWith("rooms/v2/search?value="))
 						{
 							CustomRooms.RoomGet(Url.Remove(0, 22));
@@ -606,6 +609,7 @@ namespace server
                         {
                             Console.WriteLine("api Response: " + s);
                         }
+
                         bytes = Encoding.UTF8.GetBytes(s);
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;

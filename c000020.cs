@@ -49,7 +49,6 @@ namespace vaultgamesesh
                     appVersion = APIServer.CachedversionID.ToString(),
                     deviceClass = 2,
                     IsOnline = true,
-                    PlayerType = 0,
                     errorCode = null,
                     PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                     roomInstance = null,
@@ -67,12 +66,9 @@ namespace vaultgamesesh
                     appVersion = APIServer.CachedversionID.ToString(),
                     deviceClass = 2,
                     IsOnline = true,
-                    PlayerType = 0,
                     errorCode = null,
                     PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                     roomInstance = gameSession,
-                
-
                     statusVisibility = 0,
                     vrMovementMode = 1
 
@@ -184,8 +180,6 @@ namespace vaultgamesesh
             public int statusVisibility { get; set; }
 
             public int vrMovementMode { get; set; }
-            public int PlayerType { get; set; }
-
 
         }
     }

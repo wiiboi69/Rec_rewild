@@ -129,7 +129,7 @@ namespace gamesesh
                 Name = "dormroom",
                 photonRegionId = "us",
                 photonRoomId = "dormroom" + "-" + myuuidAsString + "-room",
-                roomCode = null,
+                roomCode = "",
                 roomId = 1,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
@@ -150,7 +150,7 @@ namespace gamesesh
                 Name = "dormroom",
                 photonRegionId = "us",
                 photonRoomId = "dormroom" + "-" + myuuidAsString + "-room",
-                roomCode = null,
+                roomCode = "",
                 roomId = 1,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
@@ -165,11 +165,12 @@ namespace gamesesh
                     roomInstance = Config.localGameSessionv2,
                 });
             }
-			else { 
+			else 
+			{ 
 				return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
 				{
 					appVersion = APIServer.CachedversionID.ToString(),
-					deviceClass = 0,
+					deviceClass = 2,
 					errorCode = null,
 					isOnline = true,
 					playerId = (long?)APIServer.CachedPlayerID,
@@ -207,7 +208,7 @@ namespace gamesesh
                 MaxCapacity = 20,
                 Name = roomname,
                 photonRegionId = "us",
-                photonRoomId = roomname+"-" + myuuidAsString + "-room",
+                photonRoomId = roomname + "-" + myuuidAsString + "-room",
                 roomCode = null,
                 roomId = 1,
                 roomInstanceId = gamesessionid,
@@ -218,7 +219,7 @@ namespace gamesesh
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
             {
                 appVersion = APIServer.CachedversionID.ToString(),
-                deviceClass = 0,
+                deviceClass = 2,
                 errorCode = null,
                 isOnline = true,
                 playerId = (long?)APIServer.CachedPlayerID,
@@ -230,27 +231,17 @@ namespace gamesesh
 
         public static string Createnone()
         {
-            GameSessions.gamesessionid = 20161L;
-            gamesessionsubroomid = 20161L;
-            Console.WriteLine("Rec_Rewild GameSession noroom");
-            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
-            {
-                gamesessionid = new Random().Next(0, 99);
-                gamesessionsubroomid = new Random().Next(0, 0xffff);
-            }
-            Guid myuuid = Guid.NewGuid();
-            myuuidAsString = myuuid.ToString();
 
-			Config.localGameSessionv2 = null;
+            Console.WriteLine("Rec_Rewild GameSession noroom");
 
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
             {
                 appVersion = APIServer.CachedversionID.ToString(),
-                deviceClass = 0,
+                deviceClass = 2,
                 errorCode = null,
-                isOnline = false,
+                isOnline = true,
                 playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = Config.localGameSessionv3,
+                roomInstance = null,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });
