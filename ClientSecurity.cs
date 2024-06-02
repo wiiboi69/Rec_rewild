@@ -15,6 +15,8 @@ namespace Client
     {
         public static string GenerateToken()
         {
+            string temp1 = "";
+            string temp2 = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
             ClientSecurity.Auth auth = new ClientSecurity.Auth();
             auth.nbf = DateTime.UtcNow.Ticks;
             DateTime dateTime = DateTime.UtcNow;
@@ -85,9 +87,10 @@ namespace Client
             };
             auth.amr = new List<string>() { "cached_login" };
             Console.WriteLine(auth);
+            temp1 = EncodeTo64(JsonConvert.SerializeObject("" + auth));
+            return EncodeTo64(temp2) + "." + temp1 + "." + "TVkpz8Nbmz_8fFdbf3xI0CHwjogaIR45TmhK4NXSgx__e85M0xNO8UDSbGJaUMeSN7rn_I1obrzvqqJhDjqOAyQs39rtKJ-lyMq_oFDf1DOjFhB_KWCQ3V_N1SIOpoTnzoD7kr3voixtB4VrTo1HkUQPK_6a2FvUfg3sNwBBAxVvSv7jRPF5_BLGLRACfT3vIHfM7baSOFYkgijnGu9Okd4XKCSolb0hBO14vRMSUZ_gzdm2YubWEF5PK4kiIKMLnnvqUIAXt37sn0m7SjFK_7CI5K7TcSGJcnO-r63PaKsH3UfPqkTq6QWJKUh9X59mQcUJ6iClkY6Pv8LZWjqpkg";
 
-            return EncodeTo64(JsonConvert.SerializeObject("{\"alg\":\"HS256\",\"typ\":\"JWT\"}" + auth));
-            
+
         }
 
         public class auth_token_data

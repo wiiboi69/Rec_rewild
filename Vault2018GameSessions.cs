@@ -60,6 +60,33 @@ namespace vaultgamesesh
                 subRoomId = GameSessions.gamesessionsubroomid,
             };
         }
+        public static GameSessions.SessionInstancev2 player_heartbeat_room_old()
+        {
+
+
+            Console.WriteLine("Rec_Rewild player heartbeat room");
+
+            return new GameSessions.SessionInstancev2
+            {
+                EncryptVoiceChat = false,
+                clubId = null,
+                dataBlob = "",
+                EventId = null,
+                isFull = false,
+                isInProgress = false,
+                isPrivate = false,
+                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                MaxCapacity = 20,
+                Name = "DormRoom",
+                photonRegionId = "us",
+                photonRoomId = "DormRoom" + GameSessions.myuuidAsString,
+                roomCode = null,
+                roomId = 1,
+                roomInstanceId = GameSessions.gamesessionid,
+                roomInstanceType = 0,
+                subRoomId = GameSessions.gamesessionsubroomid,
+            };
+        }
 
         // Token: 0x0600000F RID: 15 RVA: 0x00002370 File Offset: 0x00000570
         public static c000041.c000042 m000030(string p0)

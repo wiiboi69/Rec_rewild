@@ -136,7 +136,28 @@ namespace gamesesh
                 subRoomId = gamesessionsubroomid,
 
             };
-            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
+            Config.localGameSessionv2 = new GameSessions.SessionInstancev2
+            {
+                EncryptVoiceChat = false,
+                clubId = null,
+                dataBlob = "",
+                EventId = null,
+                isFull = false,
+                isInProgress = false,
+                isPrivate = false,
+                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                MaxCapacity = 20,
+                Name = "dormroom",
+                photonRegionId = "us",
+                photonRoomId = "dormroom" + "-" + myuuidAsString + "-room",
+                roomCode = null,
+                roomId = 1,
+                roomInstanceId = gamesessionid,
+                roomInstanceType = 0,
+                subRoomId = gamesessionsubroomid,
+
+            };
+            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
 			{
                 return JsonConvert.SerializeObject(new GameSessions.JoinResultv2
                 {

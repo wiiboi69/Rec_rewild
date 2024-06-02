@@ -44,29 +44,33 @@ namespace server
 					text = streamReader.ReadToEnd();
 				}
 				if (rawUrl.StartsWith("/alt/"))
-                {
+				{
 					i = File.ReadAllBytes("SaveData\\profileimage.png");
 				}
 				else if (rawUrl.StartsWith("/" + File.ReadAllText("SaveData\\Profile\\username.txt")))
-                {
+				{
 					i = File.ReadAllBytes("SaveData\\profileimage.png");
 				}
 				else if (rawUrl.StartsWith("//room/"))
-                {
+				{
 					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
-                }
+				}
 				else if (rawUrl.StartsWith("//data/"))
 				{
 					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
 				}
+				else if (rawUrl.StartsWith("/Community"))
+				{
+					i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
+                }
                 else
-                {
+				{
 					try
-                    {
+					{
 						i = new WebClient().DownloadData("https://img.rec.net" + rawUrl);
 					}
 					catch
-                    {
+					{
 
 						Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net. using Default Room Image");
 						try
@@ -75,14 +79,14 @@ namespace server
 						}
 						catch
 						{
-                            Console.WriteLine("[ImageServer.cs] using Image.");
+							Console.WriteLine("[ImageServer.cs] using Image.");
 
 							i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
 
-                        }
+						}
 
-                    }
-                }
+					}
+				}
 				if (rawUrl.StartsWith("/CustomRoom.png"))
                 {
 					try

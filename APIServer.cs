@@ -6,6 +6,7 @@ using System.Threading;
 using api;
 using api2018;
 using api2017;
+using RecNet;
 using Newtonsoft.Json;
 using vaultgamesesh;
 using System.Collections.Generic;
@@ -186,19 +187,30 @@ namespace server
 						{
 							s = BracketResponse;
 						}
-						if (Url == "relationships/v2/get")
-						{
-							s = BracketResponse;
-						}
 						if (Url == "gameconfigs/v1/all")
 						{
 							s = File.ReadAllText("SaveData\\gameconfigs.txt");
 						}
-						if (Url.StartsWith("storefronts/v3/giftdropstore"))
+
+                        if (rawUrl.StartsWith("/api/relationships/v2/get") || rawUrl.StartsWith("/api/relationships/v1/get"))
+						{ 
+                            s = Relationships.Friends();
+						}
+                        if (Url.StartsWith("relationships/v2/sendfriendrequest"))
+						{ 
+                            s = Relationships.SendFriendRequest(int.Parse(Url.Split('=')[1]));
+						}
+                        if (Url.StartsWith("relationships/v2/acceptfriendrequest"))
 						{
-							
+							s = Relationships.AcceptFriendRequest(int.Parse(Url.Split('=')[1]));
+						}
+                        if (Url.StartsWith("relationships/v1/bulkignoreplatformuser"))
+						{
+							s = "[]";
+						}
+                        if (Url.StartsWith("storefronts/v3/giftdropstore"))
+						{
 							s = BracketResponse;
-							
 						}
 						if (Url.StartsWith("storefronts/v3/balance/"))
 						{
@@ -246,7 +258,7 @@ namespace server
                         if (rawUrl.Contains("player/heartbeat"))
                         {
 							//s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
-							if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
+							if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
 							{
                                 s = JsonConvert.SerializeObject(c000020.player_heartbeatold());
 							}
@@ -256,14 +268,11 @@ namespace server
                             }
 							Console.WriteLine(s);
                         }
-						///player/heartbeat
-						// 
 						if (Url == "challenge/v2/getCurrent")
 						{  
 							s = "{\"ChallengeMapId\":0,\"StartAt\":\"2021-12-27T21:27:38.188Z\",\"EndAt\":\"2025-12-27T21:27:38.188Z\",\"ServerTime\":\"2023-12-27T21:27:38.188Z\",\"Challenges\":[],\"Gift\":{\"GiftDropId\":1,\"AvatarItemDesc\":\"\",\"Xp\":2,\"Level\":0,\"EquipmentPrefabName\":\"[WaterBottle]\"},\"ChallengeThemeString\":\"RebornRec Water\"}"; 
 						}
 
-                        //
                         if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
 						{
 							s = BracketResponse;
@@ -492,21 +501,23 @@ namespace server
                         if (rawUrl == "/goto/room/DormRoom")
                         {
 							
-								Cachedroomname = rawUrl;
-                                s = gamesesh.GameSessions.Createdorm();
+							Cachedroomname = rawUrl;
+							s = gamesesh.GameSessions.Createdorm();
                             
                         }
 						else if (rawUrl == "/goto/none")
                         {
 
                             Cachedroomname = rawUrl;
-                            s = gamesesh.GameSessions.Createnone();
+                            s = gamesesh.GameSessions.Createdorm();
+
+                            //s = gamesesh.GameSessions.Createnone();
                         }
                         else if (rawUrl.StartsWith("/goto/room/"))
                         {
 
-								Cachedroomname = rawUrl;
-								s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 7));
+							Cachedroomname = rawUrl;
+							s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 7));
 							
                         }
                         else if (rawUrl.StartsWith("/goto/player/"))
@@ -626,7 +637,7 @@ namespace server
 
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 		public static ulong CachedPlatformID = 10000;
-        public static ulong CachedversionID = 20200000;
+        public static ulong CachedversionID = 20206000;
         public static string Cachedroomname = "";
 
         // 

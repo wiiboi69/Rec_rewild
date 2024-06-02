@@ -41,55 +41,60 @@ namespace vaultgamesesh
             GameSessions.SessionInstancev3 gameSession;
 
             
-            if (!flag)
+
+            if (flag)
             {
-                gameSession = c000041.player_heartbeat_room();
+                return new c000020.player_heartbeat_datav2
+                {
+                    appVersion = APIServer.CachedversionID.ToString(),
+                    deviceClass = 2,
+                    IsOnline = true,
+                    PlayerType = 0,
+                    errorCode = null,
+                    PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    roomInstance = null,
+                    statusVisibility = 0,
+                    vrMovementMode = 1
+
+                };
             }
-            //APIServer.CachedversionID.ToString()
             else
             {
+
                 gameSession = Config.localGameSessionv3;
-            }
-			
-            //gameSession = Config.localGameSessionv3;
-
-
-            return new c000020.player_heartbeat_datav2
-            {
-                appVersion = APIServer.CachedversionID.ToString(),
-                deviceClass = 0,
-                IsOnline = true,
-                PlayerType = 2,
-                errorCode = null,
-                PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                roomInstance = gameSession,
+                return new c000020.player_heartbeat_datav2
+                {
+                    appVersion = APIServer.CachedversionID.ToString(),
+                    deviceClass = 2,
+                    IsOnline = true,
+                    PlayerType = 0,
+                    errorCode = null,
+                    PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    roomInstance = gameSession,
                 
 
-                statusVisibility = 0,
-                vrMovementMode = 1
+                    statusVisibility = 0,
+                    vrMovementMode = 1
 
-            };
+                };
+            }
         }
             
         public static c000020.player_heartbeat_data player_heartbeatold()
         {
-            //bool flag = Config.localGameSessionv2 == null;
+            bool flag = Config.localGameSessionv2 == null;
 
 
             GameSessions.SessionInstancev2 gameSessionold;
-            /*
+            
             if (flag)
             {
-                gameSession = c000041.player_heartbeat_room();
+                gameSessionold = c000041.player_heartbeat_room_old();
             }
-            //APIServer.CachedversionID.ToString()
             else
             {
-                gameSession = Config.localGameSessionv2;
+                gameSessionold = Config.localGameSessionv2;
             }
-            */
- 
-            gameSessionold = Config.localGameSessionv2;
 
             return new c000020.player_heartbeat_data
             {
@@ -155,21 +160,16 @@ namespace vaultgamesesh
 
         public sealed class player_heartbeat_data
         {
-            public string appVersion { get; set; }
-            public int deviceClass { get; set; }
+
             public int? errorCode { get; set; }
-            public bool IsOnline { get; set; }
-            public ulong PlayerId { get; set; }
+
 
             public GameSessions.SessionInstancev2 roomInstance { get; set; }
 
-            public int statusVisibility { get; set; }
 
-            public int vrMovementMode { get; set; }
-            public int PlayerType { get; internal set; }
-            public GameSessions.SessionInstancev2 GameSession { get; internal set; }
+            public GameSessions.SessionInstancev2 GameSession { get; set; }
 
-            private c000041.c000044 f000038;
+
         }
         public sealed class player_heartbeat_datav2
         {

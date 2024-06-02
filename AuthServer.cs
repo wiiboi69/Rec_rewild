@@ -82,7 +82,7 @@ namespace server
 
                         else if (rawUrl == "/connect/token")
                         {
-                            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20206000 - 1)
+                            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
                             {
                                 s = tokenResponse;
                             }
