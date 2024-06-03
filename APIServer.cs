@@ -338,8 +338,9 @@ namespace server
 						}
 						if (Url == "objectives/v1/myprogress")
 						{
-							s = JsonConvert.SerializeObject(new Objective2018());
-						}
+							s = "{\"Objectives\": [], \"ObjectiveGroups\": []}";
+                            //s = JsonConvert.SerializeObject(new Objective2018());
+                        }
 						if (Url == "rooms/v1/myrooms")
 						{
 							s = File.ReadAllText("SaveData\\myrooms.txt");
@@ -522,7 +523,7 @@ namespace server
                         else if (rawUrl.StartsWith("/goto/room/"))
                         {
 							Cachedroomname = rawUrl;
-							s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 7));
+							s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 11));
                         }
                         else if (rawUrl.StartsWith("/goto/player/"))
                         {

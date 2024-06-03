@@ -4,6 +4,8 @@ using api;
 using server;
 using System.IO;
 using static gamesesh.GameSessions;
+using System.Collections.Generic;
+using vaultgamesesh;
 namespace gamesesh
 
 {
@@ -186,7 +188,7 @@ namespace gamesesh
         {
             GameSessions.gamesessionid = 20161L;
             gamesessionsubroomid = 20161L;
-            Console.WriteLine("Rec_Rewild GameSession " + roomname);
+            Console.WriteLine("Rec_Rewild GameSession room : " + roomname);
             if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
             {
                 gamesessionid = new Random().Next(0, 99);
@@ -194,6 +196,15 @@ namespace gamesesh
             }
             Guid myuuid = Guid.NewGuid();
             myuuidAsString = myuuid.ToString();
+			gameroomlocation = "";
+			gameroomId = 0;
+			if (!FindRoomData(roomname.ToLower())) 
+			{
+				Console.WriteLine("can't find room named : " + roomname + Environment.NewLine + "are you using a unsported room?");
+
+                gameroomlocation = "76d98498-60a1-430c-ab76-b54a29b7a163";
+                gameroomId = 1;
+            }
 
             Config.localGameSessionv3 = new GameSessions.SessionInstancev3
             {
@@ -204,13 +215,13 @@ namespace gamesesh
                 isFull = false,
                 isInProgress = false,
                 isPrivate = false,
-                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                location = gameroomlocation,
                 MaxCapacity = 20,
                 Name = roomname,
                 photonRegionId = "us",
                 photonRoomId = roomname + "-" + myuuidAsString + "-room",
                 roomCode = null,
-                roomId = 1,
+                roomId = gameroomId,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
                 subRoomId = gamesessionsubroomid,
@@ -234,14 +245,68 @@ namespace gamesesh
 
             Console.WriteLine("Rec_Rewild GameSession noroom");
 
+            GameSessions.gamesessionid = 20161L;
+            gamesessionsubroomid = 20161L;
+
+            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
+            {
+                gamesessionid = new Random().Next(0, 99);
+                gamesessionsubroomid = new Random().Next(0, 0xffff);
+            }
+            Guid myuuid = Guid.NewGuid();
+            myuuidAsString = myuuid.ToString();
+			/*
+            Config.localGameSessionv3 = new GameSessions.SessionInstancev3
+            {
+                EncryptVoiceChat = false,
+                clubId = null,
+                dataBlob = "",
+                EventId = null,
+                isFull = false,
+                isInProgress = false,
+                isPrivate = false,
+                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
+                MaxCapacity = 20,
+                Name = "dormroom",
+                photonRegionId = "us",
+                photonRoomId = "dormroom-" + myuuidAsString + "-room",
+                roomCode = null,
+                roomId = 1,
+                roomInstanceId = gamesessionid,
+                roomInstanceType = 0,
+                subRoomId = gamesessionsubroomid,
+
+            };*/
+            Config.localGameSessionv3 = new GameSessions.SessionInstancev3
+            {
+                EncryptVoiceChat = false,
+                clubId = null,
+                dataBlob = "",
+                EventId = null,
+                isFull = false,
+                isInProgress = false,
+                isPrivate = false,
+                location = "",
+                MaxCapacity = 20,
+                Name = "",
+                photonRegionId = "us",
+                photonRoomId = "",
+                roomCode = null,
+                roomId = 0,
+                roomInstanceId = gamesessionid,
+                roomInstanceType = 2,
+                subRoomId = gamesessionsubroomid,
+
+            };
+
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
             {
                 appVersion = APIServer.CachedversionID.ToString(),
                 deviceClass = 2,
                 errorCode = null,
-                isOnline = true,
+                isOnline = false,
                 playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = null,
+                roomInstance = null,//Config.localGameSessionv3,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });
@@ -259,8 +324,24 @@ namespace gamesesh
 			};
 		}
 
-		// Token: 0x02000021 RID: 33
-		public enum JoinResultIDs
+		public static bool FindRoomData(String roomname)
+		{
+
+            foreach (KeyValuePair<string, c00005d.rooms_details> keyValuePair in c00005d.rooms_details_list)
+            {
+                bool flag = keyValuePair.Value.Name == roomname;
+                if (flag)
+                {
+					gameroomlocation = keyValuePair.Value.RoomSceneLocationId;
+                    gameroomId = (long)keyValuePair.Value.RoomId;
+                    return true;
+                }
+            }
+            return false;
+		}
+
+        // Token: 0x02000021 RID: 33
+        public enum JoinResultIDs
 		{
 			// Token: 0x0400005E RID: 94
 			Success,
@@ -562,6 +643,9 @@ namespace gamesesh
 
 		public static string myuuidAsString { get; set; }
 
+        public static string gameroomlocation { get; set; }
+        public static long gameroomId { get; set; }
+
         public static long gamesessionid {  get; set; }
         public static long gamesessionsubroomid {  get; set; }
         private class JoinResultv2
@@ -598,6 +682,17 @@ namespace gamesesh
             public int statusVisibility { get; set; }
 
             public int vrMovementMode { get; set; }
+
+        }
+        private class JoinResultnone
+        {
+
+            public int? errorCode { get; set; } //todo: a custom thing?
+
+
+            public GameSessions.SessionInstancev3 roomInstance { get; set; }
+
+
 
         }
     }

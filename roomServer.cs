@@ -60,6 +60,10 @@ namespace server
                         { 
                             s = BracketResponse;
                         }
+                        else if (rawUrl == "/rooms/favoritedby/me")
+                        {
+                            s = BracketResponse;
+                        }
                         else if (rawUrl.StartsWith("/rooms/bulk?name="))
                         {
                             Console.WriteLine(rawUrl.Remove(0, 17) + ".txt");

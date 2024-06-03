@@ -394,6 +394,7 @@ namespace vaultgamesesh
                             RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
                         }
                     },
+                    RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
 
                     DisableRoomComments = true,
 					EncryptVoiceChat = true,
@@ -545,6 +546,7 @@ namespace vaultgamesesh
                             RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
                         }
                     },
+                    RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
 
                     DisableRoomComments = true,
                     EncryptVoiceChat = true,
@@ -561,7 +563,7 @@ namespace vaultgamesesh
                     SupportsQuest2 = true,
                     SupportsVRLow = true,
                     ReleaseStatus = 2,
-                    ReplicationId = "DormRoom",
+                    Name = "reccenter",
                     Accessibility = 2,
                     CloningAllowed = false,
                     CreatedAt = DateTime.Now,
@@ -571,8 +573,7 @@ namespace vaultgamesesh
                     DisableMicAutoMute = true,
                     ImageName = "DefaultRoomImage.jpg",
                     IsAGRoom = true,
-                    IsDorm = true,
-                    Name = "DormRoom",
+                    IsDorm = false,
                     RoomWarningMask = 0,
                     State = 0,
                     SupportsLevelVoting = false,
@@ -595,8 +596,8 @@ namespace vaultgamesesh
                         DisableMicAutoMute = true,
                         ImageName = "DefaultRoomImage.jpg",
                         IsAGRoom = true,
-                        IsDormRoom = true,
-                        Name = "DormRoom",
+                        IsDormRoom = false,
+                        Name = "reccenter",
                         RoomId = 2UL,
                         RoomWarningMask = 0,
                         State = 0,
@@ -2127,6 +2128,7 @@ namespace vaultgamesesh
             // (set) Token: 0x060001A9 RID: 425 RVA: 0x0000A9F0 File Offset: 0x00008BF0
             public c00005d.Stats Stats { get; set; }
 
+            public string RoomSceneLocationId { get; internal set; }
 
             public List<c00005d.SubRooms> SubRooms { get; set; }
             public List<c00005d.Scenes> Scenes { get; set; }
