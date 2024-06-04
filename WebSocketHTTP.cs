@@ -6,6 +6,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ws
 {
@@ -95,6 +96,7 @@ namespace ws
                 if (offset != 0)
                 {
                     string @string = Encoding.ASCII.GetString(received);
+                    Console.WriteLine(@string);
                     WebSocketHTTP.id++;
                     byte[] array = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                     {

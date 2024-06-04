@@ -306,8 +306,8 @@ namespace gamesesh
                 errorCode = null,
                 isOnline = false,
                 playerId = (long?)APIServer.CachedPlayerID,
-                //roomInstance = null,//Config.localGameSessionv3,
-                roomInstance = Config.localGameSessionv3,
+                roomInstance = null,
+                //roomInstance = Config.localGameSessionv3,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });

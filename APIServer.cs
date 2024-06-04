@@ -530,6 +530,20 @@ namespace server
 							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
 							s = gamesesh.GameSessions.Createdorm();
                         }
+                        /*{
+   "accountId" : 1569910,
+   "bio" : ""
+}
+						 */
+                        if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
+                        {
+							s = JsonConvert.SerializeObject(new
+							{
+                                accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                                bio = File.ReadAllText(Program.ProfilePath + "\\bio.txt")
+                            }
+							);
+                        }
                         if (rawUrl.StartsWith("/goto/"))
                         {
                             Console.WriteLine(s);
