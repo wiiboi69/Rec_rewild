@@ -306,7 +306,8 @@ namespace gamesesh
                 errorCode = null,
                 isOnline = false,
                 playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = null,//Config.localGameSessionv3,
+                //roomInstance = null,//Config.localGameSessionv3,
+                roomInstance = Config.localGameSessionv3,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });
@@ -324,21 +325,36 @@ namespace gamesesh
 			};
 		}
 
-		public static bool FindRoomData(String roomname)
-		{
+        public static bool FindRoomData(String roomname)
+        {
 
             foreach (KeyValuePair<string, c00005d.rooms_details> keyValuePair in c00005d.rooms_details_list)
             {
                 bool flag = keyValuePair.Value.Name == roomname;
                 if (flag)
                 {
-					gameroomlocation = keyValuePair.Value.RoomSceneLocationId;
+                    gameroomlocation = keyValuePair.Value.RoomSceneLocationId;
                     gameroomId = (long)keyValuePair.Value.RoomId;
                     return true;
                 }
             }
             return false;
-		}
+        }
+
+        public static string FindRoomid(ulong roomname)
+        {
+
+            foreach (KeyValuePair<string, c00005d.rooms_details> keyValuePair in c00005d.rooms_details_list)
+            {
+                bool flag = keyValuePair.Value.RoomId == (ulong)roomname;
+                if (flag)
+                {
+
+                    return keyValuePair.Value.Name;
+                }
+            }
+            return "";
+        }
 
         // Token: 0x02000021 RID: 33
         public enum JoinResultIDs
