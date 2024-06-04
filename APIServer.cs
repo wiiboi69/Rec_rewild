@@ -71,7 +71,7 @@ namespace server
 
 						}
 
-						if (text.Length > 0xff)
+						if (text.Length > 0xfff)
 						{ 
 							Console.WriteLine("API Data: unviewable" );
 						}
