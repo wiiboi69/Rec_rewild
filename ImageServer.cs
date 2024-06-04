@@ -59,12 +59,17 @@ namespace server
 				{
 					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
 				}
-				else if (rawUrl.StartsWith("/Community"))
-				{
-					i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
+                else if (rawUrl.StartsWith("/Community"))
+                {
+                    i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
                 }
+                else if (rawUrl.StartsWith("/Profile") || rawUrl.StartsWith("/profile"))
+                {
+                    i = File.ReadAllBytes("SaveData\\profileimage.png");
+                }
+                //
                 else
-				{
+                {
 					try
 					{
 						i = new WebClient().DownloadData("https://img.rec.net" + rawUrl);

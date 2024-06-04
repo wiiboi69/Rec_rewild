@@ -67,9 +67,22 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/bulk?name="))
                         {
                             Console.WriteLine(rawUrl.Remove(0, 17) + ".txt");
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0,17).ToLower() + ".txt");
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0, 17).ToLower() + ".txt");
                             //s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
+                        }
+                        else if (rawUrl.StartsWith("/rooms?name="))
+                        {
+                            Url = rawUrl.Remove(0, 12);
+                            string[] stringSeparators = new string[] { "?include=1325" };
+                            string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries); 
+                            stringSeparators = new string[] { "&" };
+                            subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            stringSeparators = new string[] { "?include=301" };
+                            subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            Console.WriteLine(subs[0] + ".txt");
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + subs[0].ToLower() + ".txt");
 
+                            //s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {

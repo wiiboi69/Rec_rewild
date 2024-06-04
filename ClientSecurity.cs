@@ -18,79 +18,80 @@ namespace Client
             string temp1 = "";
             string temp2 = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
             ClientSecurity.Auth auth = new ClientSecurity.Auth();
-            auth.nbf = DateTime.UtcNow.Ticks;
+
             DateTime dateTime = DateTime.UtcNow;
             dateTime = dateTime.AddDays(1.0);
             dateTime = dateTime.Date;
-            auth.exp = dateTime.Ticks;
-            auth.iss = "http://localhost:2021";
-            auth.aud = new List<string>()
+            temp1 = EncodeTo64(JsonConvert.SerializeObject( new
             {
-                "http://localhost:2021",
-                "http://localhost:20211",
-                "http://localhost:20212",
-                "http://localhost:20213",
-                "http://localhost:20214",
-                "http://localhost:20215",
-                "http://localhost:20216",
-                "http://localhost:20217",
-                "http://localhost:20218",
-                "http://localhost:20219",
-                "rr.api",
-                "rr.commerce",
-                "rr.rooms",
-                "rr.storage",
-                "rr.match",
-                "rr.leaderboard",
-                "rr.auth",
-                "rr.chat",
-                "rr.accounts"
-            };
-            auth.client_id = "recroom";
-            auth.role = new List<String> 
-            {
-                "gameClient", 
-                "screenshare",
-            };
-            auth.RnPlat = "0";
-            auth.RnPlatid = "1";
-            auth.RnDeviceclass = "2";
-            auth.RnVer = APIServer.CachedversionID.ToString();
-            auth.idp = "local";
-            auth.sub = GetMID().ToString();
-            auth.RnAsid = DateTime.UtcNow.Ticks.ToString();
-            auth.RnSk = "4289734123";
-            auth.nbf = DateTime.UtcNow.Ticks;
-            auth.exp = DateTime.UtcNow.Ticks;
-            auth.iat = DateTime.UtcNow.Ticks;
-            auth.auth_time = DateTime.UtcNow.Ticks;
-            auth.RnPid = "3781123978";
-            auth.scope = new List<string>()
-            {
-                "rn.accounts",
-                "rn.accounts.gc",
-                "rn.api",
-                "rn.auth",
-                "rn.auth.gc",
-                "rn.chat",
-                "rn.clubs",
-                "rn.commerce",
-                "rn.leaderboard",
-                "rn.link",
-                "rn.match.read",
-                "rn.match.write",
-                "rn.notify",
-                "rn.roomcomments",
-                "rn.rooms",
-                "rn.storage",
-                "offline_access"
-            };
-            auth.amr = new List<string>() { "cached_login" };
-            Console.WriteLine(auth);
-            temp1 = EncodeTo64(JsonConvert.SerializeObject("" + auth));
-            return EncodeTo64(temp2) + "." + temp1 + "." + "TVkpz8Nbmz_8fFdbf3xI0CHwjogaIR45TmhK4NXSgx__e85M0xNO8UDSbGJaUMeSN7rn_I1obrzvqqJhDjqOAyQs39rtKJ-lyMq_oFDf1DOjFhB_KWCQ3V_N1SIOpoTnzoD7kr3voixtB4VrTo1HkUQPK_6a2FvUfg3sNwBBAxVvSv7jRPF5_BLGLRACfT3vIHfM7baSOFYkgijnGu9Okd4XKCSolb0hBO14vRMSUZ_gzdm2YubWEF5PK4kiIKMLnnvqUIAXt37sn0m7SjFK_7CI5K7TcSGJcnO-r63PaKsH3UfPqkTq6QWJKUh9X59mQcUJ6iClkY6Pv8LZWjqpkg";
 
-
+                nbf = DateTime.UtcNow.Ticks,
+                exp = dateTime.Ticks,
+                iss = "http://localhost:2021",
+                aud = new List<string>()
+                {
+                    "http://localhost:2021",
+                    "http://localhost:20211",
+                    "http://localhost:20212",
+                    "http://localhost:20213",
+                    "http://localhost:20214",
+                    "http://localhost:20215",
+                    "http://localhost:20216",
+                    "http://localhost:20217",
+                    "http://localhost:20218",
+                    "http://localhost:20219",
+                    "rr.api",
+                    "rr.commerce",
+                    "rr.rooms",
+                    "rr.storage",
+                    "rr.match",
+                    "rr.leaderboard",
+                    "rr.auth",
+                    "rr.chat",
+                    "rr.accounts"
+                },
+                client_id = "recroom",
+                role = new List<String> 
+                {
+                    "gameClient", 
+                    "screenshare",
+                },
+                RnPlat = "0",
+                RnPlatid = "1",
+                RnDeviceclass = "2",
+                RnVer = APIServer.CachedversionID.ToString(),
+                idp = "local",
+                sub = GetMID().ToString(),
+                RnAsid = DateTime.UtcNow.Ticks.ToString(),
+                RnSk = "4289734123",
+                iat = DateTime.UtcNow.Ticks,
+                auth_time = DateTime.UtcNow.Ticks,
+                RnPid = "3781123978",
+                scope = new List<string>()
+                {
+                    "rn.accounts",
+                    "rn.accounts.gc",
+                    "rn.api",
+                    "rn.auth",
+                    "rn.auth.gc",
+                    "rn.chat",
+                    "rn.clubs",
+                    "rn.commerce",
+                    "rn.leaderboard",
+                    "rn.link",
+                    "rn.match.read",
+                    "rn.match.write",
+                    "rn.notify",
+                    "rn.roomcomments",
+                    "rn.rooms",
+                    "rn.storage",
+                    "offline_access"
+                },
+                amr = new List<string>() { "cached_login" },       
+                }
+            ));
+            Console.WriteLine(temp1 + "\n");
+            return EncodeTo64(temp2) + "" + temp1 + "" + "TVkpz8Nbmz_8fFdbf3xI0CHwjogaIR45TmhK4NXSgx__e85M0xNO8UDSbGJaUMeSN7rn_I1obrzvqqJhDjqOAyQs39rtKJ-lyMq_oFDf1DOjFhB_KWCQ3V_N1SIOpoTnzoD7kr3voixtB4VrTo1HkUQPK_6a2FvUfg3sNwBBAxVvSv7jRPF5_BLGLRACfT3vIHfM7baSOFYkgijnGu9Okd4XKCSolb0hBO14vRMSUZ_gzdm2YubWEF5PK4kiIKMLnnvqUIAXt37sn0m7SjFK_7CI5K7TcSGJcnO-r63PaKsH3UfPqkTq6QWJKUh9X59mQcUJ6iClkY6Pv8LZWjqpkg";
         }
 
         public class auth_token_data
