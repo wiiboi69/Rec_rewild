@@ -35,13 +35,13 @@ namespace api2019
                 new Account
                 {
                     accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     displayName = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     createdAt = DateTime.Now,
                     isJunior = false,
                     platforms = 1,
                     profileImage = "Profile.png",
-                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt")
                 }
             });
         }//[{"accountId":7383744,"displayName":"wordcarboy84","bannerImage":"wordcarboy84","createdAt":"0001-01-01T00:00:00","isJunior":false,"platforms":0,"profileImage":"wordcarboy84","username":"wordcarboy84"}]
@@ -75,15 +75,15 @@ namespace api2019
             return JsonConvert.SerializeObject(new Rep
             {
                 AccountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                IsCheerful = true,
                 Noteriety = 0.0,
-                CheerCreative = 0,
+                SelectedCheer = 0,
                 CheerCredit = 0,
                 CheerGeneral = 0,
-                CheerGreatHost = 0,
                 CheerHelpful = 0,
+                CheerCreative = 0,
+                CheerGreatHost = 0,
                 CheerSportsman = 0,
-                IsCheerful = true,
-                SelectedCheer = 0
             });
         }
 

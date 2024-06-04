@@ -478,7 +478,7 @@ namespace server
 						}
                         if (Url.StartsWith("playerReputation/v2/"))
                         {
-                            s = "{\"AccountId\":" + Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")) + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}";
+                            s = "[{\"AccountId\":" + Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")) + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}]";
                         }
                         if (rawUrl == "/config/LoadingScreenTipData")
                         {
@@ -560,7 +560,7 @@ namespace server
 						}
                         if (Url.StartsWith("players/v2/progression/bulk"))
                         {
-                            s = AccountAuth.GetLevel();
+                            s = "[" + AccountAuth.GetLevel() + "]";
                         }
                         if (Url == "rooms/v4/details/29")
 						{

@@ -40,40 +40,20 @@ namespace vaultgamesesh
 
             GameSessions.SessionInstancev3 gameSession;
 
+            gameSession = Config.localGameSessionv3;
+            return new c000020.player_heartbeat_datav2
+            {
+                PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                statusVisibility = 0,
+                deviceClass = 2,
+                vrMovementMode = 1,
+                roomInstance = gameSession,
+                IsOnline = true,
+                appVersion = APIServer.CachedversionID.ToString(),
+                errorCode = null,
+
+            };
             
-
-            if (flag)
-            {
-                return new c000020.player_heartbeat_datav2
-                {
-                    appVersion = APIServer.CachedversionID.ToString(),
-                    deviceClass = 2,
-                    IsOnline = true,
-                    errorCode = null,
-                    PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                    roomInstance = null,
-                    statusVisibility = 0,
-                    vrMovementMode = 1
-
-                };
-            }
-            else
-            {
-
-                gameSession = Config.localGameSessionv3;
-                return new c000020.player_heartbeat_datav2
-                {
-                    appVersion = APIServer.CachedversionID.ToString(),
-                    deviceClass = 2,
-                    IsOnline = true,
-                    errorCode = null,
-                    PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                    roomInstance = gameSession,
-                    statusVisibility = 0,
-                    vrMovementMode = 1
-
-                };
-            }
         }
             
         public static c000020.player_heartbeat_data player_heartbeatold()

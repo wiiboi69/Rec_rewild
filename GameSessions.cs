@@ -527,11 +527,11 @@ namespace gamesesh
 
         public class SessionInstancev3
         {
-            public bool EncryptVoiceChat { get; set; }
-            public long? clubId { get; set; }
+            public long? roomId { get; set; }
+            public long? roomInstanceId { get; set; }
+            public long? subRoomId { get; set; }
             public string dataBlob { get; set; }
-            public long? EventId { get; set; }
-            public bool isFull { get; set; }
+            public bool isFull { get; set; }	
             public bool isInProgress { get; set; }
             public bool isPrivate { get; set; }
             public string location { get; set; }
@@ -539,11 +539,11 @@ namespace gamesesh
             public string Name { get; set; }
             public string photonRegionId { get; set; }
             public string photonRoomId { get; set; }
-            public string roomCode { get; set; }
-            public long? roomId { get; set; }
-            public long? roomInstanceId { get; set; }
             public int roomInstanceType { get; set; } //todo: roomInstanceType
-            public long? subRoomId { get; set; }
+            public bool EncryptVoiceChat { get; set; }
+            public long? clubId { get; set; }
+            public long? EventId { get; set; }
+            public string roomCode { get; set; }
 
         }
 
