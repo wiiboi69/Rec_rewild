@@ -444,6 +444,37 @@ namespace server
 							
 							s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
 						}
+                        //consumables/v1/updateActive
+						if (Url == "consumables/v1/updateActive")
+						{
+                            s = "{\"success\":true,\"error\":\"\"}";
+						}
+						if (Url == "CampusCard/v1/UpdateAndGetSubscription")
+						{
+							s = JsonConvert.SerializeObject( new 
+							{
+								Subscription = new 
+								{
+									SubscriptionId = 0,
+									RecNetPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+									PlatformType = 0,
+									PlatformId = 1,
+									PlatformPurchaseId = "0",
+									Level = SubscriptionLevel.Platinum,
+									Period = SubscriptionPeriod.Year,
+									ExpirationDate = DateTime.Parse("2022-12-30T23:37:28.553Z"),
+									IsAutoRenewing = true,
+									CreatedAt = DateTime.Now,
+									ModifiedAt = DateTime.Now,
+									IsActive = true
+								},
+								CanBuySubscription = true,
+								PlatformAccountSubscribedPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt"))
+                            });
+
+                        }
+                        //
+                        
                         if (Url == "PlayerReporting/v1/hile")
                         {
                             s = "{\"Message\":\"\",\"Type\":0}";
@@ -530,19 +561,14 @@ namespace server
 							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
 							s = gamesesh.GameSessions.Createdorm();
                         }
-                        /*{
-   "accountId" : 1569910,
-   "bio" : ""
-}
-						 */
                         if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
                         {
-							s = JsonConvert.SerializeObject(new
+							s = "[" + JsonConvert.SerializeObject(new
 							{
                                 accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                                 bio = File.ReadAllText(Program.ProfilePath + "\\bio.txt")
                             }
-							);
+							) + "]";
                         }
                         if (rawUrl.StartsWith("/goto/"))
                         {
@@ -597,16 +623,11 @@ namespace server
 
                             s = JsonConvert.SerializeObject(c00005d.m000023(Convert.ToInt32(Url.Remove(0, 17))));
                         }
-                        if (Url.StartsWith("CampusCard/v1/UpdateAndGetSubscription"))
-						{
-							s = BracketResponse;
-						}
+
 						if (Url.StartsWith("messages/v1/favoriteFriendOnlineStatus"))
 						{
 							s = BracketResponse;
 						}
-
-                            //CampusCard/v1/UpdateAndGetSubscription
                         if (rawUrl.StartsWith("/announcements/v2/"))
                         {
 							s = BracketResponse;
@@ -629,7 +650,12 @@ namespace server
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;
 						outputStream.Write(bytes, 0, bytes.Length);
-						Thread.Sleep(40);
+                        if (rawUrl.StartsWith("/player/login"))
+						{
+							Thread.Sleep(360);
+
+						}
+                        Thread.Sleep(40);
 						outputStream.Close();
 						this.listener.Stop();
 
@@ -644,7 +670,28 @@ namespace server
 				new APIServer();
 			}
 		}
+        public enum SubscriptionLevel
+        {
+            Gold,
+            Platinum,
+        }
 
+        public enum SubscriptionPeriod
+        {
+            Month,
+            Year,
+        }
+
+        public enum PlatformType
+        {
+            All = -1, // 0xFFFFFFFF
+            Steam = 0,
+            Oculus = 1,
+            PlayStation = 2,
+            Microsoft = 3,
+            HeadlessBot = 4,
+            IOS = 5,
+        }
         public class QuickPlayResponseDTO
         {
             public long? TargetPlayerId { get; set; }
