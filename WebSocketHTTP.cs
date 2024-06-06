@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+using api;
 using Newtonsoft.Json;
+using server;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ws
@@ -74,6 +78,20 @@ namespace ws
             System.Net.WebSockets.WebSocket ws = httpListenerWebSocketContext.WebSocket;
             while (ws.State == WebSocketState.Open)
             {
+                string temp1 = "";
+                string temp2 = "";
+                string temp3 = "";
+                if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
+                {
+                    temp1 = JsonConvert.SerializeObject(Config.playerHeartbeatData);
+                }
+                else
+                {
+                    temp1 = JsonConvert.SerializeObject(Config.playerHeartbeatDatav2);
+                }
+                temp1 = EncodeNonAsciiCharacters(temp1, '"');
+                //temp1.Replace("\"", "\\" + "u0022");
+                Console.WriteLine(temp1);
                 byte[] received = new byte[2048];
                 int offset = 0;
                 for (; ; )
@@ -98,7 +116,13 @@ namespace ws
                     string @string = Encoding.ASCII.GetString(received);
                     Console.WriteLine(@string);
                     WebSocketHTTP.id++;
-                    byte[] array = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
+                    temp2 = JsonConvert.SerializeObject(new
+                    {
+                        Id = "PresenceUpdate",
+                        Msg = temp1
+                    });
+                    byte[] array;
+                    temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                     {
                         type = WebSocketHTTP.MessageTypes.Invocation,
                         result = "{\"Success\":true}",
@@ -107,21 +131,27 @@ namespace ws
                         arguments = new object[] { JsonConvert.SerializeObject(new
                         {
                             Id = "PresenceUpdate",
-                            Msg = ""
+                            Msg = "" + temp1 + ""
                         }) },
                         error = "",
                         invocationId = "1",
                         item = ""
-                    }) + "\u001e");
+                    });
                     if (@string.Contains("version"))
                     {
                         Console.WriteLine("{ws} game request json handshake!");
                         array = Encoding.ASCII.GetBytes("{}\u001e");
                     }
-                    else if (@string.Contains("SubscribeToPlayers"))
+                    else if (@string.Contains("SubscribeToPlayers"))    
                     {
                         Console.WriteLine("{ws} game request presence!");
-                        array = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
+                        temp2 =  JsonConvert.SerializeObject(new
+                        {
+                            Id = "PresenceUpdate",
+                            Msg = "" + temp1 + ""
+                        });
+
+                        temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                         {
                             type = WebSocketHTTP.MessageTypes.Invocation,
                             result = "{\"Success\":true}",
@@ -129,20 +159,149 @@ namespace ws
                             target = "Notification",
                             arguments = new object[] { JsonConvert.SerializeObject(new
                             {
-                                Id = "PresenceUpdate",
-                                Msg = ""
+                            Id = "PresenceUpdate",
+                            Msg = "" + temp1 + ""
                             }) },
                             error = null,
                             invocationId = null,
                             item = null
-                        }) + "\u001e");
+                        });
                     }
+                    Console.WriteLine(temp3 + "\u001e");
+
+                    temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
+                    Console.WriteLine(temp3 + "\u001e");
+
+                    //temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
+                    //Console.WriteLine(temp3 + "\u001e");
+                    array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
+
                     await ws.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
                     received = null;
                 }
                 received = null;
             }
         }
+
+        static string EncodeNonAsciiCharacters(string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in value)
+            {
+                if (c > 127)
+                {
+                    // This character is too big for ASCII
+                    string encodedValue = "\\u" + ((int)c).ToString("x4");
+                    sb.Append(encodedValue);
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
+        static string fixNonAsciiString(string value, char value1, int value2, int value3)
+        {
+            StringBuilder sb = new StringBuilder();
+            int tempval = 0;
+            foreach (char c in value)
+            {
+                if (value1 == c)
+                {
+                    tempval++;
+                    // This character is too big for ASCII
+                    if (tempval == value2)
+                    {
+                        tempval = 0;
+                        sb.Append(c);
+                    }
+                    else if (tempval <= value3)
+                    {
+                        sb.Append(c);
+                    }
+
+                }
+                else
+                {
+                    tempval = 0;
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+        static string fixNonAsciiStringset(string value, char value2, string value3)
+        {
+            StringBuilder sb = new StringBuilder();
+            int tempval = 0;
+            int skipval = 0;
+            char t = 'a';
+            foreach (char c in value)
+            {
+                if (skipval > 0)
+                {
+                    skipval =- 1;
+                    tempval++;
+                    continue;
+                }
+                if (value2 == c)
+                {
+                    t = value[tempval + 1];
+                    if (t == '"')
+                    {
+                        foreach (char r in value3)
+                        {
+                            sb.Append(r);  
+                        }
+                        skipval = 2;
+                        continue;
+                    }
+                    if (t == 'u' || t == 'U')
+                    { 
+                        sb.Append(c);
+                        sb.Append(t);
+                        skipval = 2;
+                        continue;
+                    }
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+                tempval++;
+            }
+            return sb.ToString();
+        }
+        static string EncodeNonAsciiCharacters(string value, char value1)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in value)
+            {
+                if (c > 127 || value1 == c)
+                {
+                    // This character is too big for ASCII
+                    string encodedValue = "\\u" + ((int)c).ToString("x4");
+                    sb.Append(encodedValue);
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
+        static string DecodeEncodedNonAsciiCharacters(string value)
+        {
+            return Regex.Replace(
+                value,
+                @"\\u(?<Value>[a-fA-F0-9]{4})",
+                m => {
+                    return ((char)int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString();
+                });
+        }
+
 
         // Token: 0x04000294 RID: 660
         public static HttpListener server = new HttpListener();

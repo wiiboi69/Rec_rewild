@@ -4,6 +4,7 @@ using server;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using static vaultgamesesh.c000020;
 
 namespace vaultgamesesh
 {
@@ -41,7 +42,8 @@ namespace vaultgamesesh
             GameSessions.SessionInstancev3 gameSession;
 
             gameSession = Config.localGameSessionv3;
-            return new c000020.player_heartbeat_datav2
+
+            Config.playerHeartbeatDatav2 = new c000020.player_heartbeat_datav2
             {
                 PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                 statusVisibility = 0,
@@ -53,7 +55,7 @@ namespace vaultgamesesh
                 errorCode = null,
 
             };
-            
+			return Config.playerHeartbeatDatav2;
         }
             
         public static c000020.player_heartbeat_data player_heartbeatold()
@@ -72,14 +74,15 @@ namespace vaultgamesesh
                 gameSessionold = Config.localGameSessionv2;
             }
 
-            return new c000020.player_heartbeat_data
+            Config.playerHeartbeatData = new c000020.player_heartbeat_data
             {
                 errorCode = null,
                 roomInstance = gameSessionold,
                 GameSession = gameSessionold,
 
             };
-                
+			return Config.playerHeartbeatData;
+
         }
 
         // player_heartbeat

@@ -251,9 +251,9 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl.Contains("/api/storefronts/v3"))
+                        if (Url.Contains("storefronts/v3"))
                         {
-                            s = BracketResponse;
+							s = BlankResponse;
                         }
                         if (rawUrl.Contains("/thread"))
                         {
@@ -301,12 +301,14 @@ namespace server
                         }
                         if (rawUrl.Contains("quickPlay/v1/getandclear"))
                         {
+							s = BracketResponse;
+							/*
                             s = JsonConvert.SerializeObject((object)new QuickPlayResponseDTO()
                             {
                                 TargetPlayerId = null,
                                 RoomName = (string)null,
                                 ActionCode = (string)null
-                            });
+                            });*/
                         }
                         if (Url == "equipment/v1/getUnlocked")
 						{
