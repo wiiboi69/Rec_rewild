@@ -301,14 +301,14 @@ namespace server
                         }
                         if (rawUrl.Contains("quickPlay/v1/getandclear"))
                         {
-							s = BracketResponse;
-							/*
+							//s = BracketResponse;
+							
                             s = JsonConvert.SerializeObject((object)new QuickPlayResponseDTO()
                             {
                                 TargetPlayerId = null,
                                 RoomName = (string)null,
                                 ActionCode = (string)null
-                            });*/
+                            });
                         }
                         if (Url == "equipment/v1/getUnlocked")
 						{

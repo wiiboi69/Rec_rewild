@@ -135,7 +135,7 @@ namespace gamesesh
                 roomId = 1,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
-                subRoomId = gamesessionsubroomid,
+                subRoomId = 1,
 
             };
             Config.localGameSessionv2 = new GameSessions.SessionInstancev2
@@ -156,19 +156,10 @@ namespace gamesesh
                 roomId = 1,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
-                subRoomId = gamesessionsubroomid,
+                subRoomId = 1,
 
             };
-            if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
-			{
-                return JsonConvert.SerializeObject(new GameSessions.JoinResultv2
-                {
-                    errorCode = null,
-                    roomInstance = Config.localGameSessionv2,
-                });
-            }
-			else 
-			{ 
+
 				return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
 				{
 					appVersion = APIServer.CachedversionID.ToString(),
@@ -180,7 +171,6 @@ namespace gamesesh
 					statusVisibility = 0,
 					vrMovementMode = 1
 				});
-			}
         }
 
 
@@ -224,7 +214,7 @@ namespace gamesesh
                 roomId = gameroomId,
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
-                subRoomId = gamesessionsubroomid,
+                subRoomId = 1,
 
             };
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
@@ -277,6 +267,7 @@ namespace gamesesh
                 subRoomId = gamesessionsubroomid,
 
             };*/
+			
             Config.localGameSessionv3 = new GameSessions.SessionInstancev3
             {
                 EncryptVoiceChat = false,
@@ -293,12 +284,12 @@ namespace gamesesh
                 photonRoomId = "",
                 roomCode = null,
                 roomId = 0,
-                roomInstanceId = gamesessionid,
+                roomInstanceId = 1,
                 roomInstanceType = 2,
-                subRoomId = gamesessionsubroomid,
+                subRoomId = 1,
 
             };
-
+			Config.localGameSessionv3 = null;
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
             {
                 appVersion = APIServer.CachedversionID.ToString(),
@@ -306,8 +297,8 @@ namespace gamesesh
                 errorCode = null,
                 isOnline = false,
                 playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = null,
-                //roomInstance = Config.localGameSessionv3,
+                //roomInstance = null,
+                roomInstance = Config.localGameSessionv3,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });

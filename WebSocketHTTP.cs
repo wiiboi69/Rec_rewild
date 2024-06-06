@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using api;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using server;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -81,15 +82,12 @@ namespace ws
                 string temp1 = "";
                 string temp2 = "";
                 string temp3 = "";
-                if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
-                {
-                    temp1 = JsonConvert.SerializeObject(Config.playerHeartbeatData);
-                }
-                else
-                {
-                    temp1 = JsonConvert.SerializeObject(Config.playerHeartbeatDatav2);
-                }
+
                 temp1 = EncodeNonAsciiCharacters(temp1, '"');
+                if (temp1 == null)
+                {
+                    temp1 = "{}";
+                }
                 //temp1.Replace("\"", "\\" + "u0022");
                 Console.WriteLine(temp1);
                 byte[] received = new byte[2048];
@@ -125,13 +123,15 @@ namespace ws
                     temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                     {
                         type = WebSocketHTTP.MessageTypes.Invocation,
-                        result = "{\"Success\":true}",
-                        nonblocking = false,
+                        //result = "{\"Success\":true}",
+                        result = "200 OK",
+
+                        nonblocking = true,
                         target = "Notification",
                         arguments = new object[] { JsonConvert.SerializeObject(new
                         {
                             Id = "PresenceUpdate",
-                            Msg = "" + temp1 + ""
+                            Msg = Config.playerHeartbeatDatav2
                         }) },
                         error = "",
                         invocationId = "1",
@@ -154,13 +154,15 @@ namespace ws
                         temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                         {
                             type = WebSocketHTTP.MessageTypes.Invocation,
-                            result = "{\"Success\":true}",
-                            nonblocking = false,
+                            //result = "{\"Success\":true}",
+                            result = "200 OK",
+
+                            nonblocking = true,
                             target = "Notification",
                             arguments = new object[] { JsonConvert.SerializeObject(new
                             {
                             Id = "PresenceUpdate",
-                            Msg = "" + temp1 + ""
+                            Msg = Config.playerHeartbeatDatav2
                             }) },
                             error = null,
                             invocationId = null,
@@ -172,8 +174,12 @@ namespace ws
                     temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
                     Console.WriteLine(temp3 + "\u001e");
 
-                    //temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
-                    //Console.WriteLine(temp3 + "\u001e");
+                    temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
+                    Console.WriteLine(temp3 + "\u001e");
+
+                    temp3 = temp3.Replace("\"{\\u0022Success\\u0022:true}\"", "\"{\"success\":true}\"");
+                    Console.WriteLine(temp3 + "\u001e");
+
                     array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
 
                     await ws.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
@@ -231,6 +237,54 @@ namespace ws
             }
             return sb.ToString();
         }
+        static string fixNonAsciiStringdata(string value, char value2, string value1, string value3)
+        {
+            StringBuilder sb = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
+            int tempval = 0;
+            int tempval1 = 0;
+            int tempval2 = 0;
+            int skipval = 0;
+            bool skip = false;
+            char t = 'a';
+            foreach (char c in value)
+            {
+                if (skipval > 0)
+                {
+                    skipval = -1;
+                    tempval++;
+                    continue;
+                }
+                skiptoadd:
+                if (value2 == c && !skip)
+                {
+                    t = value[tempval + 1];
+                    if (t != value1[1])
+                    {
+                        skip = true;
+                        goto skiptoadd;
+                    }
+                    foreach (char r in value1)
+                    {
+                        sb2.Append(r);
+                        if (r == value[tempval + 1])
+                        tempval1 ++;
+
+                    }
+
+                    skipval = 2;
+                    tempval++;
+                    continue;
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+                skip = false;
+                tempval++;
+            }
+            return sb.ToString();
+        }
         static string fixNonAsciiStringset(string value, char value2, string value3)
         {
             StringBuilder sb = new StringBuilder();
@@ -255,6 +309,7 @@ namespace ws
                             sb.Append(r);  
                         }
                         skipval = 2;
+                        tempval++;  
                         continue;
                     }
                     if (t == 'u' || t == 'U')
@@ -262,6 +317,7 @@ namespace ws
                         sb.Append(c);
                         sb.Append(t);
                         skipval = 2;
+                        tempval++;
                         continue;
                     }
                 }

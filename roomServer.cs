@@ -70,6 +70,10 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        else if (rawUrl.StartsWith("/rooms/") && rawUrl.EndsWith("/playerdata/me"))
+                        {
+                            s = BlankResponse;
+                        }
                         else if (rawUrl.StartsWith("/rooms/bulk?name="))
                         {
                             Console.WriteLine(rawUrl.Remove(0, 17) + ".txt");
