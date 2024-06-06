@@ -464,7 +464,7 @@ namespace server
 									PlatformPurchaseId = "0",
 									Level = SubscriptionLevel.Platinum,
 									Period = SubscriptionPeriod.Year,
-									ExpirationDate = DateTime.Parse("2022-12-30T23:37:28.553Z"),
+									ExpirationDate = DateTime.Parse("9999-12-30T23:37:28.553Z"),
 									IsAutoRenewing = true,
 									CreatedAt = DateTime.Now,
 									ModifiedAt = DateTime.Now,
