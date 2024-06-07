@@ -41,7 +41,15 @@ namespace vaultgamesesh
 
             GameSessions.SessionInstancev3 gameSession;
 
-            gameSession = Config.localGameSessionv3;
+            if (flag)
+            {
+                //gameSession = c000041.player_heartbeat_room();
+                gameSession = null;
+            }
+            else
+            {
+                gameSession = Config.localGameSessionv3;
+            }
 
             Config.playerHeartbeatDatav2 = new c000020.player_heartbeat_datav2
             {

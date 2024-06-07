@@ -36,7 +36,7 @@ namespace server
 			try
 			{
 				
-				this.listener.Prefixes.Add("http://localhost:" + start.Program.version + "/");
+				this.listener.Prefixes.Add("http://localhost:" + Program.version + "0/");
 				{
 					for (; ; )
 					{

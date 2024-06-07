@@ -356,47 +356,47 @@ namespace vaultgamesesh
 				"DormRoom",
 				new c00005d.rooms_details
 				{
-                    SubRooms = new List<c00005d.SubRooms>
-                    {
-                        new c00005d.SubRooms
-                        {
-                            SubRoomId = 1UL,
-                            RoomId = 1UL,
-                            Name = "home",
-                            DataBlob = string.Empty,
-                            IsSandbox = false,
-                            MaxPlayers = 20,
-                            Accessibility = 1,
-                            UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
-                            CanMatchmakeInto = true,
-                            DataBlobName = string.Empty,
-                            DataModifiedAt = DateTime.Now,
-                            RoomSceneId = 1UL,
-                            RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
-                        }
-                    },
-                    Scenes = new List<c00005d.Scenes>
-                    {
-                        new c00005d.Scenes
-                        {
-                            SubRoomId = 1UL,
-                            RoomId = 1UL,
-                            Name = "home",
-                            DataBlob = string.Empty,
-                            IsSandbox = false,
-                            MaxPlayers = 20,
-                            Accessibility = 1,
-                            UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
-                            CanMatchmakeInto = true,
-                            DataBlobName = string.Empty,
-                            DataModifiedAt = DateTime.Now,
-                            RoomSceneId = 1UL,
-                            RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
-                        }
-                    },
-                    RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+					SubRooms = new List<c00005d.SubRooms>
+					{
+						new c00005d.SubRooms
+						{
+							SubRoomId = 1UL,
+							RoomId = 1UL,
+							Name = "home",
+							DataBlob = string.Empty,
+							IsSandbox = false,
+							MaxPlayers = 20,
+							Accessibility = 1,
+							UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+							CanMatchmakeInto = true,
+							DataBlobName = string.Empty,
+							DataModifiedAt = DateTime.Now,
+							RoomSceneId = 1UL,
+							RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+						}
+					},
+					Scenes = new List<c00005d.Scenes>
+					{
+						new c00005d.Scenes
+						{
+							SubRoomId = 1UL,
+							RoomId = 1UL,
+							Name = "home",
+							DataBlob = string.Empty,
+							IsSandbox = false,
+							MaxPlayers = 20,
+							Accessibility = 1,
+							UnitySceneId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+							CanMatchmakeInto = true,
+							DataBlobName = string.Empty,
+							DataModifiedAt = DateTime.Now,
+							RoomSceneId = 1UL,
+							RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
+						}
+					},
+					RoomSceneLocationId = "76d98498-60a1-430c-ab76-b54a29b7a163",
 
-                    DisableRoomComments = true,
+					DisableRoomComments = true,
 					EncryptVoiceChat = true,
 					IsRRO = true,
 					LoadScreens = [],
@@ -412,35 +412,35 @@ namespace vaultgamesesh
 					SupportsVRLow = true,
 					ReleaseStatus = 2,
 					ReplicationId = "DormRoom",
-                    Accessibility = 2,
-                    CloningAllowed = false,
-                    CreatedAt = DateTime.Now,
-                    CustomWarning = string.Empty,
-                    DataBlob = null,
-                    Description = "A private room.",
-                    DisableMicAutoMute = true,
-                    ImageName = "DefaultRoomImage.jpg",
-                    IsAGRoom = true,
-                    IsDorm = true,
-                    Name = "DormRoom",
-                    RoomWarningMask = 0,
-                    State = 0,
-                    SupportsLevelVoting = false,
-                    SupportsScreens = true,
-                    SupportsTeleportVR = true,
-                    SupportsWalkVR = true,
-                    WarningMask = 0,
-                    CreatorAccountId = APIServer.CachedPlayerID,
+					Accessibility = 2,
+					CloningAllowed = false,
+					CreatedAt = DateTime.Now,
+					CustomWarning = string.Empty,
+					DataBlob = null,
+					Description = "A private room.",
+					DisableMicAutoMute = true,
+					ImageName = "DefaultRoomImage.jpg",
+					IsAGRoom = true,
+					IsDorm = true,
+					Name = "DormRoom",
+					RoomWarningMask = 0,
+					State = 0,
+					SupportsLevelVoting = false,
+					SupportsScreens = true,
+					SupportsTeleportVR = true,
+					SupportsWalkVR = true,
+					WarningMask = 0,
+					CreatorAccountId = APIServer.CachedPlayerID,
 
-                    Room = new c00005d.c000061
-                    {
+					Room = new c00005d.c000061
+					{
 
 						Accessibility = 1,
-                        AllowsJuniors = true,
+						AllowsJuniors = true,
 						CloningAllowed = false,
 						CreatorPlayerId = APIServer.CachedPlayerID,
 
-                        CustomRoomWarning = string.Empty,
+						CustomRoomWarning = string.Empty,
 						Description = "A private room.",
 						DisableMicAutoMute = true,
 						ImageName = "DefaultRoomImage.jpg",
@@ -455,9 +455,9 @@ namespace vaultgamesesh
 						SupportsTeleportVR = true,
 						SupportsWalkVR = true,
 						WarningMask = 0,
-                    },
+					},
 
-                    Roles = new List<c00005d.Roles>
+					Roles = new List<c00005d.Roles>
 					{
 						new c00005d.Roles
 						{
@@ -469,20 +469,20 @@ namespace vaultgamesesh
 
 					Stats = new c00005d.Stats
 					{
-						
+
 							RoomId = 1ul,
 							CheerCount = 1,
 							FavoriteCount = 1,
 							VisitCount = 1,
 							VisitorCount = 1,
-						
+
 					},
 
 
-                    CheerCount = 1,
-                    FavoriteCount = 1,
-                    VisitCount = 1,
-                    CoOwners = new List<int>(),
+					CheerCount = 1,
+					FavoriteCount = 1,
+					VisitCount = 1,
+					CoOwners = new List<int>(),
 					InvitedCoOwners = new List<int>(),
 					Hosts = new List<int>(),
 					InvitedHosts = new List<int>(),
@@ -498,157 +498,308 @@ namespace vaultgamesesh
 						}
 					}
 				}
-            },
+			},
 			{
-                "RecCenter",
-                new c00005d.rooms_details
+				"RecCenter",
+				new c00005d.rooms_details
 				{
 					SubRooms = new List<c00005d.SubRooms>
-                    {
-                        new c00005d.SubRooms
-                        {
-                            SubRoomId = 1UL,
+					{
+						new c00005d.SubRooms
+						{
+							SubRoomId = 1UL,
 
 
-                            DataBlob = string.Empty,
+							DataBlob = string.Empty,
 
-                            Accessibility = 1,
-                            UnitySceneId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
-
-
-                            RoomSceneId = 1L,
-                            RoomId = 2UL,
-                            RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
-                            Name = "reccenter",
-                            IsSandbox = false,
-                            DataBlobName = string.Empty,
-                            MaxPlayers = 20,
-                            CanMatchmakeInto = true,
-                            DataModifiedAt = DateTime.Now
-                        }
-                    },
-                    Scenes = new List<c00005d.Scenes>
-                    {
-                        new c00005d.Scenes
-                        {
-                            SubRoomId = 1UL,
-                            RoomId = 1UL,
-                            Name = "reccenter",
-                            DataBlob = string.Empty,
-                            IsSandbox = false,
-                            MaxPlayers = 20,
-                            Accessibility = 1,
-                            UnitySceneId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
-                            CanMatchmakeInto = true,
-                            DataBlobName = string.Empty,
-                            DataModifiedAt = DateTime.Now,
-                            RoomSceneId = 1UL,
-                            RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
-                        }
-                    },
-                    RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
-
-                    DisableRoomComments = true,
-                    EncryptVoiceChat = true,
-                    IsRRO = true,
-                    LoadScreens = [],
-                    MaxPlayerCalculationMode = 0,
-                    MaxPlayers = 20,
-                    MinLevel = 0,
-                    PromoExternalContent = [],
-                    PromoImages = [],
-                    RoomId = 2UL,
-                    SupportsJuniors = true,
-                    SupportsMobile = true,
-                    SupportsQuest2 = true,
-                    SupportsVRLow = true,
-                    ReleaseStatus = 2,
-                    Name = "reccenter",
-                    Accessibility = 2,
-                    CloningAllowed = false,
-                    CreatedAt = DateTime.Now,
-                    CustomWarning = string.Empty,
-                    DataBlob = null,
-                    Description = "A private room.",
-                    DisableMicAutoMute = true,
-                    ImageName = "DefaultRoomImage.jpg",
-                    IsAGRoom = true,
-                    IsDorm = false,
-                    RoomWarningMask = 0,
-                    State = 0,
-                    SupportsLevelVoting = false,
-                    SupportsScreens = true,
-                    SupportsTeleportVR = true,
-                    SupportsWalkVR = true,
-                    WarningMask = 0,
-                    CreatorAccountId = APIServer.CachedPlayerID,
-
-                    Room = new c00005d.c000061
-                    {
-
-                        Accessibility = 1,
-                        AllowsJuniors = true,
-                        CloningAllowed = false,
-                        CreatorPlayerId = APIServer.CachedPlayerID,
-
-                        CustomRoomWarning = string.Empty,
-                        Description = "A private room.",
-                        DisableMicAutoMute = true,
-                        ImageName = "DefaultRoomImage.jpg",
-                        IsAGRoom = true,
-                        IsDormRoom = false,
-                        Name = "reccenter",
-                        RoomId = 2UL,
-                        RoomWarningMask = 0,
-                        State = 0,
-                        SupportsLevelVoting = false,
-                        SupportsScreens = true,
-                        SupportsTeleportVR = true,
-                        SupportsWalkVR = true,
-                        WarningMask = 0,
-                    },
-
-                    Roles = new List<c00005d.Roles>
-                    {
-                        new c00005d.Roles
-                        {
-                            AccountId = APIServer.CachedPlayerID,
-                            InvitedRole = 0,
-                            Role = 255,
-                        }
-                    },
-
-                    Stats = new c00005d.Stats
-                    {
-
-                            RoomId = 2ul,
-                            CheerCount = 1,
-                            FavoriteCount = 1,
-                            VisitCount = 1,
-                            VisitorCount = 1,
-
-                    },
+							Accessibility = 1,
+							UnitySceneId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
 
 
-                    CheerCount = 1,
-                    FavoriteCount = 1,
-                    VisitCount = 1,
-                    CoOwners = new List<int>(),
-                    InvitedCoOwners = new List<int>(),
-                    Hosts = new List<int>(),
-                    InvitedHosts = new List<int>(),
-                    Moderators = new List<int>(),
-                    InvitedModerators = new List<int>(),
+							RoomSceneId = 1L,
+							RoomId = 2UL,
+							RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+							Name = "reccenter",
+							IsSandbox = false,
+							DataBlobName = string.Empty,
+							MaxPlayers = 20,
+							CanMatchmakeInto = true,
+							DataModifiedAt = DateTime.Now
+						}
+					},
+					Scenes = new List<c00005d.Scenes>
+					{
+						new c00005d.Scenes
+						{
+							SubRoomId = 1UL,
+							RoomId = 1UL,
+							Name = "reccenter",
+							DataBlob = string.Empty,
+							IsSandbox = false,
+							MaxPlayers = 20,
+							Accessibility = 1,
+							UnitySceneId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+							CanMatchmakeInto = true,
+							DataBlobName = string.Empty,
+							DataModifiedAt = DateTime.Now,
+							RoomSceneId = 1UL,
+							RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+						}
+					},
+					RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
 
-                    Tags = new List<c00005d.c000063>
-                    {
-                        new c00005d.c000063
-                        {
-                            Tag = "rro",
-                            Type = 2,
-                        }
-                    }
-                }
+					DisableRoomComments = true,
+					EncryptVoiceChat = true,
+					IsRRO = true,
+					LoadScreens = [],
+					MaxPlayerCalculationMode = 0,
+					MaxPlayers = 20,
+					MinLevel = 0,
+					PromoExternalContent = [],
+					PromoImages = [],
+					RoomId = 2UL,
+					SupportsJuniors = true,
+					SupportsMobile = true,
+					SupportsQuest2 = true,
+					SupportsVRLow = true,
+					ReleaseStatus = 2,
+					Name = "reccenter",
+					Accessibility = 2,
+					CloningAllowed = false,
+					CreatedAt = DateTime.Now,
+					CustomWarning = string.Empty,
+					DataBlob = null,
+					Description = "A private room.",
+					DisableMicAutoMute = true,
+					ImageName = "DefaultRoomImage.jpg",
+					IsAGRoom = true,
+					IsDorm = false,
+					RoomWarningMask = 0,
+					State = 0,
+					SupportsLevelVoting = false,
+					SupportsScreens = true,
+					SupportsTeleportVR = true,
+					SupportsWalkVR = true,
+					WarningMask = 0,
+					CreatorAccountId = APIServer.CachedPlayerID,
+
+					Room = new c00005d.c000061
+					{
+
+						Accessibility = 1,
+						AllowsJuniors = true,
+						CloningAllowed = false,
+						CreatorPlayerId = APIServer.CachedPlayerID,
+
+						CustomRoomWarning = string.Empty,
+						Description = "A private room.",
+						DisableMicAutoMute = true,
+						ImageName = "DefaultRoomImage.jpg",
+						IsAGRoom = true,
+						IsDormRoom = false,
+						Name = "reccenter",
+						RoomId = 2UL,
+						RoomWarningMask = 0,
+						State = 0,
+						SupportsLevelVoting = false,
+						SupportsScreens = true,
+						SupportsTeleportVR = true,
+						SupportsWalkVR = true,
+						WarningMask = 0,
+					},
+
+					Roles = new List<c00005d.Roles>
+					{
+						new c00005d.Roles
+						{
+							AccountId = APIServer.CachedPlayerID,
+							InvitedRole = 0,
+							Role = 255,
+						}
+					},
+
+					Stats = new c00005d.Stats
+					{
+
+							RoomId = 2ul,
+							CheerCount = 1,
+							FavoriteCount = 1,
+							VisitCount = 1,
+							VisitorCount = 1,
+
+					},
+
+
+					CheerCount = 1,
+					FavoriteCount = 1,
+					VisitCount = 1,
+					CoOwners = new List<int>(),
+					InvitedCoOwners = new List<int>(),
+					Hosts = new List<int>(),
+					InvitedHosts = new List<int>(),
+					Moderators = new List<int>(),
+					InvitedModerators = new List<int>(),
+
+					Tags = new List<c00005d.c000063>
+					{
+						new c00005d.c000063
+						{
+							Tag = "rro",
+							Type = 2,
+						}
+					}
+				}
+			},
+			{
+				"Orientation",
+				new c00005d.rooms_details
+				{
+					SubRooms = new List<c00005d.SubRooms>
+					{
+						new c00005d.SubRooms
+						{
+							SubRoomId = 1UL,
+
+
+							DataBlob = string.Empty,
+
+							Accessibility = 1,
+							UnitySceneId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+
+
+							RoomSceneId = 1L,
+							RoomId = 3UL,
+							RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+							Name = "orientation",
+							IsSandbox = false,
+							DataBlobName = string.Empty,
+							MaxPlayers = 20,
+							CanMatchmakeInto = true,
+							DataModifiedAt = DateTime.Now
+						}
+					},
+					Scenes = new List<c00005d.Scenes>
+					{
+						new c00005d.Scenes
+						{
+							SubRoomId = 1UL,
+							RoomId = 3UL,
+							Name = "orientation",
+							DataBlob = string.Empty,
+							IsSandbox = false,
+							MaxPlayers = 20,
+							Accessibility = 1,
+							UnitySceneId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+							CanMatchmakeInto = true,
+							DataBlobName = string.Empty,
+							DataModifiedAt = DateTime.Now,
+							RoomSceneId = 1UL,
+							RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+						}
+					},
+					RoomSceneLocationId = "cbad71af-0831-44d8-b8ef-69edafa841f6",
+
+					DisableRoomComments = true,
+					EncryptVoiceChat = true,
+					IsRRO = true,
+					LoadScreens = [],
+					MaxPlayerCalculationMode = 0,
+					MaxPlayers = 20,
+					MinLevel = 0,
+					PromoExternalContent = [],
+					PromoImages = [],
+					RoomId = 3UL,
+					SupportsJuniors = true,
+					SupportsMobile = true,
+					SupportsQuest2 = true,
+					SupportsVRLow = true,
+					ReleaseStatus = 2,
+					Name = "orientation",
+					Accessibility = 2,
+					CloningAllowed = false,
+					CreatedAt = DateTime.Now,
+					CustomWarning = string.Empty,
+					DataBlob = null,
+					Description = "hell.",
+					DisableMicAutoMute = true,
+					ImageName = "DefaultRoomImage.jpg",
+					IsAGRoom = true,
+					IsDorm = false,
+					RoomWarningMask = 0,
+					State = 0,
+					SupportsLevelVoting = false,
+					SupportsScreens = true,
+					SupportsTeleportVR = true,
+					SupportsWalkVR = true,
+					WarningMask = 0,
+					CreatorAccountId = APIServer.CachedPlayerID,
+
+					Room = new c00005d.c000061
+					{
+
+						Accessibility = 1,
+						AllowsJuniors = true,
+						CloningAllowed = false,
+						CreatorPlayerId = APIServer.CachedPlayerID,
+
+						CustomRoomWarning = string.Empty,
+						Description = "A private room.",
+						DisableMicAutoMute = true,
+						ImageName = "DefaultRoomImage.jpg",
+						IsAGRoom = true,
+						IsDormRoom = false,
+						Name = "reccenter",
+						RoomId = 2UL,
+						RoomWarningMask = 0,
+						State = 0,
+						SupportsLevelVoting = false,
+						SupportsScreens = true,
+						SupportsTeleportVR = true,
+						SupportsWalkVR = true,
+						WarningMask = 0,
+					},
+
+					Roles = new List<c00005d.Roles>
+					{
+						new c00005d.Roles
+						{
+							AccountId = APIServer.CachedPlayerID,
+							InvitedRole = 0,
+							Role = 255,
+						}
+					},
+
+					Stats = new c00005d.Stats
+					{
+
+							RoomId = 2ul,
+							CheerCount = 1,
+							FavoriteCount = 1,
+							VisitCount = 1,
+							VisitorCount = 1,
+
+					},
+
+
+					CheerCount = 1,
+					FavoriteCount = 1,
+					VisitCount = 1,
+					CoOwners = new List<int>(),
+					InvitedCoOwners = new List<int>(),
+					Hosts = new List<int>(),
+					InvitedHosts = new List<int>(),
+					Moderators = new List<int>(),
+					InvitedModerators = new List<int>(),
+
+					Tags = new List<c00005d.c000063>
+					{
+						new c00005d.c000063
+						{
+							Tag = "rro",
+							Type = 2,
+						}
+					}
+				}
 			}
 		};
 

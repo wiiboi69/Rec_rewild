@@ -267,7 +267,7 @@ namespace gamesesh
                 subRoomId = gamesessionsubroomid,
 
             };*/
-			
+			/*
             Config.localGameSessionv3 = new GameSessions.SessionInstancev3
             {
                 EncryptVoiceChat = false,
@@ -288,17 +288,17 @@ namespace gamesesh
                 roomInstanceType = 2,
                 subRoomId = 1,
 
-            };
+            };*/
 			Config.localGameSessionv3 = null;
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
             {
                 appVersion = APIServer.CachedversionID.ToString(),
                 deviceClass = 2,
                 errorCode = null,
-                isOnline = false,
+                isOnline = true,
                 playerId = (long?)APIServer.CachedPlayerID,
-                //roomInstance = null,
-                roomInstance = Config.localGameSessionv3,
+                roomInstance = null,
+                //roomInstance = Config.localGameSessionv3,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });

@@ -361,8 +361,10 @@ namespace start
                 Console.WriteLine("Please wait for server to start up");
                 
                 version = "2021";
-                
+
+                //note: nameserver is at the same port as before
                 new NameServer();
+
                 new ImageServer();
                 new APIServer();
                 new AuthServer();
@@ -376,6 +378,7 @@ namespace start
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
+
         public static string appversion = "0.0.2";
 
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
