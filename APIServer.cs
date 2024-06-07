@@ -152,11 +152,6 @@ namespace server
                             s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
 
                         }
-                        if (rawUrl.StartsWith("/player/login"))
-                        {
-                            s = AccountAuth.ConnectToken();
-                            
-                        }
                         if (Url.StartsWith("players/v1/progression/"))
                         {
                             s = AccountAuth.GetLevel();
@@ -259,20 +254,8 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+						
 
-                        if (rawUrl.Contains("player/heartbeat"))
-                        {
-							//s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
-							if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
-							{
-                                s = JsonConvert.SerializeObject(c000020.player_heartbeatold());
-							}
-							else
-							{
-								s = JsonConvert.SerializeObject(c000020.player_heartbeat());
-                            }
-							Console.WriteLine(s);
-                        }
 						if (Url == "challenge/v2/getCurrent")
 						{  
 							s = "{\"ChallengeMapId\":0,\"StartAt\":\"2021-12-27T21:27:38.188Z\",\"EndAt\":\"2025-12-27T21:27:38.188Z\",\"ServerTime\":\"2023-12-27T21:27:38.188Z\",\"Challenges\":[],\"Gift\":{\"GiftDropId\":1,\"AvatarItemDesc\":\"\",\"Xp\":2,\"Level\":0,\"EquipmentPrefabName\":\"[WaterBottle]\"},\"ChallengeThemeString\":\"RebornRec Water\"}"; 
@@ -538,31 +521,7 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl == "/goto/room/DormRoom")
-                        {
-							
-							Cachedroomname = rawUrl;
-							s = gamesesh.GameSessions.Createdorm();
-                            
-                        }
-						else if (rawUrl == "/goto/none")
-                        {
-
-                            Cachedroomname = rawUrl;
-                            //s = gamesesh.GameSessions.Createdorm();
-
-                            s = gamesesh.GameSessions.Createnone();
-                        }
-                        else if (rawUrl.StartsWith("/goto/room/"))
-                        {
-							Cachedroomname = rawUrl;
-							s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 11));
-                        }
-                        else if (rawUrl.StartsWith("/goto/player/"))
-                        {
-							Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
-							s = gamesesh.GameSessions.Createdorm();
-                        }
+                        
                         if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
                         {
 							s = "[" + JsonConvert.SerializeObject(new
@@ -572,10 +531,7 @@ namespace server
                             }
 							) + "]";
                         }
-                        if (rawUrl.StartsWith("/goto/"))
-                        {
-                            Console.WriteLine(s);
-                        }
+
                         if (Url == "announcement/v1/get")
                         {
                             s = BracketResponse;
@@ -652,11 +608,6 @@ namespace server
 						response.ContentLength64 = (long)bytes.Length;
 						Stream outputStream = response.OutputStream;
 						outputStream.Write(bytes, 0, bytes.Length);
-                        if (rawUrl.StartsWith("/player/login"))
-						{
-							Thread.Sleep(360);
-
-						}
                         Thread.Sleep(40);
 						outputStream.Close();
 						this.listener.Stop();
