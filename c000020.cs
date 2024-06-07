@@ -40,7 +40,7 @@ namespace vaultgamesesh
             bool flag = Config.localGameSessionv3 == null;
 
             GameSessions.SessionInstancev3 gameSession;
-
+            /*
             if (flag)
             {
                 gameSession = c000041.player_heartbeat_room();
@@ -50,7 +50,8 @@ namespace vaultgamesesh
             {
                 gameSession = Config.localGameSessionv3;
             }
-
+            */
+            gameSession = Config.localGameSessionv3;
             Config.playerHeartbeatDatav2 = new c000020.player_heartbeat_datav2
             {
                 PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
@@ -65,7 +66,24 @@ namespace vaultgamesesh
             };
 			return Config.playerHeartbeatDatav2;
         }
-            
+
+        public static c000020.player_heartbeat_datav2 player_heartbeat_websocket()
+        {
+
+            return new c000020.player_heartbeat_datav2
+            {
+                PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                statusVisibility = 0,
+                deviceClass = 0,
+                vrMovementMode = 1,
+                roomInstance = Config.localGameSessionv3,
+                IsOnline = true,
+                appVersion = APIServer.CachedversionID.ToString(),
+                errorCode = null,
+
+            };
+        }
+
         public static c000020.player_heartbeat_data player_heartbeatold()
         {
             bool flag = Config.localGameSessionv2 == null;

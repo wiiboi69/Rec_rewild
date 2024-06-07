@@ -119,6 +119,7 @@ namespace gamesesh
 
             Config.localGameSessionv3 = new GameSessions.SessionInstancev3
             {
+                
                 EncryptVoiceChat = false,
                 clubId = null,
                 dataBlob = "",
@@ -136,6 +137,10 @@ namespace gamesesh
                 roomInstanceId = gamesessionid,
                 roomInstanceType = 0,
                 subRoomId = 1,
+
+                name = "dormroom",
+                maxCapacity =20,
+                eventId = 0,
 
             };
             Config.localGameSessionv2 = new GameSessions.SessionInstancev2
@@ -160,17 +165,17 @@ namespace gamesesh
 
             };
 
-				return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
-				{
-					appVersion = APIServer.CachedversionID.ToString(),
-					deviceClass = 2,
-					errorCode = null,
-					isOnline = true,
-					playerId = (long?)APIServer.CachedPlayerID,
-					roomInstance = Config.localGameSessionv3,
-					statusVisibility = 0,
-					vrMovementMode = 1
-				});
+			return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
+			{
+				appVersion = APIServer.CachedversionID.ToString(),
+				deviceClass = 2,
+				errorCode = null,
+				isOnline = true,
+				playerId = (long?)APIServer.CachedPlayerID,
+				roomInstance = Config.localGameSessionv3,
+				statusVisibility = 0,
+				vrMovementMode = 1
+			});
         }
 
 
@@ -288,8 +293,9 @@ namespace gamesesh
                 roomInstanceType = 2,
                 subRoomId = 1,
 
-            };*/
+            };
 			Config.localGameSessionv3 = null;
+			*/
             return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
             {
                 appVersion = APIServer.CachedversionID.ToString(),
@@ -518,6 +524,11 @@ namespace gamesesh
 
         public class SessionInstancev3
         {
+
+            public int maxCapacity { get; set; }
+            public string name { get; set; }
+            public long? eventId { get; set; }
+
             public long? roomId { get; set; }
             public long? roomInstanceId { get; set; }
             public long? subRoomId { get; set; }
@@ -655,7 +666,7 @@ namespace gamesesh
 
         public static long gamesessionid {  get; set; }
         public static long gamesessionsubroomid {  get; set; }
-        private class JoinResultv2
+        public class JoinResultv2
         {
 
             public int? errorCode { get; set; } //todo: a custom thing?
@@ -668,7 +679,7 @@ namespace gamesesh
 
 
         }
-        private class JoinResultv3
+        public class JoinResultv3
         {
             // Token: 0x1700005B RID: 91
             // (get) Token: 0x06000100 RID: 256 RVA: 0x00002782 File Offset: 0x00000982
@@ -691,7 +702,7 @@ namespace gamesesh
             public int vrMovementMode { get; set; }
 
         }
-        private class JoinResultnone
+        public class JoinResultnone
         {
 
             public int? errorCode { get; set; } //todo: a custom thing?

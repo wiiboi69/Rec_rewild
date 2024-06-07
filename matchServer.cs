@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using api;
 using api2019;
+using gamesesh;
 using Newtonsoft.Json;
 using vaultgamesesh;
 
@@ -53,14 +54,7 @@ namespace server
                 if (rawUrl.Contains("player/heartbeat"))
                 {
                     //s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
-                    if (APIServer.CachedversionID >= 20200000 - 1 && APIServer.CachedversionID <= 20200600 - 1)
-                    {
-                        s = JsonConvert.SerializeObject(c000020.player_heartbeatold());
-                    }
-                    else
-                    {
-                        s = JsonConvert.SerializeObject(c000020.player_heartbeat());
-                    }
+					s = JsonConvert.SerializeObject(c000020.player_heartbeat());
                     Console.WriteLine(s);
                 }
                 if (rawUrl.StartsWith("/player/login"))
@@ -75,7 +69,8 @@ namespace server
                 else if (rawUrl == "/goto/none")
                 {
                     APIServer.Cachedroomname = rawUrl;
-                    s = gamesesh.GameSessions.Createnone();
+					//s = gamesesh.GameSessions.Createnone();
+					s = JsonConvert.SerializeObject(new GameSessions.JoinResultnone());
                 }
                 else if (rawUrl.StartsWith("/goto/room/"))
                 {

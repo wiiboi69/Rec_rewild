@@ -70,6 +70,10 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        else if (rawUrl.StartsWith("/rooms/visitedby/me"))
+                        {
+                            s = BracketResponse;
+                        }
                         else if (rawUrl.StartsWith("/rooms/") && rawUrl.EndsWith("/playerdata/me"))
                         {
                             s = BlankResponse;

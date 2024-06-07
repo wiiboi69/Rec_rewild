@@ -126,10 +126,10 @@ namespace ws
                         result = "200 OK",
                         nonblocking = true,
                         target = "Notification",
-                        arguments = new object[] { JsonConvert.SerializeObject(new
+                        arguments = new object[] { JsonConvert.SerializeObject(new Respond
                         {
                             Id = "PresenceUpdate",
-                            Msg = Config.playerHeartbeatDatav2
+                            Msg = vaultgamesesh.c000020.player_heartbeat_websocket()
                         }) },
                         error = "",
                         invocationId = "1",
@@ -143,22 +143,16 @@ namespace ws
                     else if (@string.Contains("SubscribeToPlayers"))    
                     {
                         Console.WriteLine("{ws} game request presence!");
-                        temp2 =  JsonConvert.SerializeObject(new
-                        {
-                            Id = "PresenceUpdate",
-                            Msg = "" + temp1 + ""
-                        });
-
                         temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                         {
                             type = WebSocketHTTP.MessageTypes.Invocation,
                             result = "200 OK",
                             nonblocking = true,
                             target = "Notification",
-                            arguments = new object[] { JsonConvert.SerializeObject(new
+                            arguments = new object[] { JsonConvert.SerializeObject(new Respond
                             {
                                 Id = "PresenceUpdate",
-                                Msg = Config.playerHeartbeatDatav2
+                                Msg = vaultgamesesh.c000020.player_heartbeat_websocket()
                             }) },
                             error = null,
                             invocationId = null,
@@ -167,7 +161,7 @@ namespace ws
                     }
                     Console.WriteLine(temp3 + "\u001e");
 
-                    temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
+                    /*temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
                     //Console.WriteLine(temp3 + "\u001e");
 
                     temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
@@ -176,7 +170,7 @@ namespace ws
                     temp3 = temp3.Replace("\"{\\u0022Success\\u0022:true}\"", "\\\"{\\\"success\\\":true}\\\"");
                     //Console.WriteLine(temp3 + "\u001e");
 
-                    temp3 = temp3.Replace("{\\u0022Id\\u0022:\\u0022PresenceUpdate\\u0022,\\u0022Msg\\u0022:", "{\\\"Id\\\":\\\"PresenceUpdate\\\",\\\"Msg\\\":");
+                    temp3 = temp3.Replace("{\\u0022Id\\u0022:\\u0022PresenceUpdate\\u0022,\\u0022Msg\\u0022:", "{\\\"Id\\\":\\\"PresenceUpdate\\\",\\\"Msg\\\":");*/
                     //Console.WriteLine(temp3 + "\u001e");
 
                     array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
@@ -357,6 +351,11 @@ namespace ws
                 });
         }
 
+        public class Respond
+        {
+            public object Id { get; set; }
+            public object Msg { get; set; }
+        }   
 
         // Token: 0x04000294 RID: 660
         public static HttpListener server = new HttpListener();
