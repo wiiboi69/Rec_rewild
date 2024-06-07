@@ -112,7 +112,7 @@ namespace ws
                 if (offset != 0)
                 {
                     string @string = Encoding.ASCII.GetString(received);
-                    Console.WriteLine(@string);
+                    //Console.WriteLine(@string);
                     WebSocketHTTP.id++;
                     temp2 = JsonConvert.SerializeObject(new
                     {
@@ -123,9 +123,7 @@ namespace ws
                     temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                     {
                         type = WebSocketHTTP.MessageTypes.Invocation,
-                        //result = "{\"Success\":true}",
                         result = "200 OK",
-
                         nonblocking = true,
                         target = "Notification",
                         arguments = new object[] { JsonConvert.SerializeObject(new
@@ -154,15 +152,13 @@ namespace ws
                         temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                         {
                             type = WebSocketHTTP.MessageTypes.Invocation,
-                            //result = "{\"Success\":true}",
                             result = "200 OK",
-
                             nonblocking = true,
                             target = "Notification",
                             arguments = new object[] { JsonConvert.SerializeObject(new
                             {
-                            Id = "PresenceUpdate",
-                            Msg = Config.playerHeartbeatDatav2
+                                Id = "PresenceUpdate",
+                                Msg = Config.playerHeartbeatDatav2
                             }) },
                             error = null,
                             invocationId = null,
@@ -172,13 +168,16 @@ namespace ws
                     Console.WriteLine(temp3 + "\u001e");
 
                     temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
-                    Console.WriteLine(temp3 + "\u001e");
+                    //Console.WriteLine(temp3 + "\u001e");
 
                     temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
-                    Console.WriteLine(temp3 + "\u001e");
+                    //Console.WriteLine(temp3 + "\u001e");
 
-                    temp3 = temp3.Replace("\"{\\u0022Success\\u0022:true}\"", "\"{\"success\":true}\"");
-                    Console.WriteLine(temp3 + "\u001e");
+                    temp3 = temp3.Replace("\"{\\u0022Success\\u0022:true}\"", "\\\"{\\\"success\\\":true}\\\"");
+                    //Console.WriteLine(temp3 + "\u001e");
+
+                    temp3 = temp3.Replace("{\\u0022Id\\u0022:\\u0022PresenceUpdate\\u0022,\\u0022Msg\\u0022:", "{\\\"Id\\\":\\\"PresenceUpdate\\\",\\\"Msg\\\":");
+                    //Console.WriteLine(temp3 + "\u001e");
 
                     array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
 

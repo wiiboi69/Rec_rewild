@@ -43,8 +43,8 @@ namespace vaultgamesesh
 
             if (flag)
             {
-                //gameSession = c000041.player_heartbeat_room();
-                gameSession = null;
+                gameSession = c000041.player_heartbeat_room();
+                //gameSession = null;
             }
             else
             {
