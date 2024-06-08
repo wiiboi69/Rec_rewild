@@ -1,11 +1,7 @@
 ﻿using System;
-using server;
 using System.IO;
-using ws;
-using api;
 using System.Net;
 using System.Diagnostics;
-using vaultgamesesh;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -69,24 +65,14 @@ namespace start
             {
                 goto Start;
             }
-            
-            
-
         Start:
-
-               
-
             Console.Title = "Rec_rewild Startup Menu";
 
             Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
 
-            if (!(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt").Contains(appversion)))
-            {
-                Console.WriteLine("This version of Rec_rewild is outdated. We recommend you install the latest version, Rec_rewild " + new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt"));
-            }
             
-            Console.WriteLine("//Custom Room Downloader has been moved to the settings tab!" + Environment.NewLine);
+            Console.WriteLine("this is a full server rewite version" + Environment.NewLine);
             Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server");
             string readline = Console.ReadLine();
             if (readline == "1")
@@ -140,7 +126,7 @@ namespace start
                         Console.WriteLine("Failed to download room...");
                         goto Settings;
                     }
-                    CustomRooms.RoomDecode(text);
+                    //CustomRooms.RoomDecode(text);
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Settings;
@@ -248,6 +234,7 @@ namespace start
                     }
                     else if (readline4 == "3")
                     {
+                        /*
                         Console.WriteLine("Type a RecRoom @ username and press enter: ");
                         string username = Console.ReadLine();
                         if (username.StartsWith("@"))
@@ -278,9 +265,10 @@ namespace start
                             Console.Clear();
                             Console.WriteLine("Unable to download image...");
                             goto Profile;
-                        }
                         Console.Clear();
                         Console.WriteLine("Success!");
+                        }*/
+                        Console.WriteLine("not ready!");
                         goto Profile;
                     }
                     else if (readline4 == "4")
@@ -311,6 +299,7 @@ namespace start
                 }
                 else if (readline3 == "5")
                 {
+                    /*
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
                     Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to OpenRec.");
@@ -336,6 +325,8 @@ namespace start
                     
                     Console.Clear();
                     Console.WriteLine("Success!");
+                    */
+                    Console.WriteLine("not ready!");
                     goto Start;
                 }
                 else if (readline3 == "6")
@@ -363,6 +354,7 @@ namespace start
                 version = "2021";
 
                 //note: nameserver is at the same port as before
+                /*
                 new NameServer();
 
                 new ImageServer();
@@ -372,6 +364,7 @@ namespace start
                 new matchServer();
                 new roomServer();
                 new WebSocketHTTP();
+                */
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
 
