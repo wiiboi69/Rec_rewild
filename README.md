@@ -4,8 +4,14 @@ Rec_rewild is a forked of OpenRec!
 
 ### Branches
  - Master
+ - dev
+ - serverr_rewit
 
 The master branch where all the experimental updates that are needed to be tested before release are.
+
+The dev branch where all the breaking changes that are needed to be tested before release are.
+
+The serverr_rewit branch is a full server rewite.
 
 ---
 # what needed
