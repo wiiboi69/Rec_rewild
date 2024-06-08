@@ -30,9 +30,12 @@ namespace api
         public static gamesesh.GameSessions.SessionInstance localGameSession;
         public static gamesesh.GameSessions.SessionInstancev2 localGameSessionv2;
         public static gamesesh.GameSessions.SessionInstancev3 localGameSessionv3;
+        public static gamesesh.GameSessions.JoinResultv3 GameSession;
 
         public static vaultgamesesh.c000020.player_heartbeat_data playerHeartbeatData;
         public static vaultgamesesh.c000020.player_heartbeat_datav2 playerHeartbeatDatav2;
+        public static vaultgamesesh.c000020.player_heartbeat_datav2old player_heartbeat_datav2old;
+        
 
         public static Objective[][] dailyObjectives = new Objective[][]
         {

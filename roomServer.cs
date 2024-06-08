@@ -82,7 +82,6 @@ namespace server
                         {
                             Console.WriteLine(rawUrl.Remove(0, 17) + ".txt");
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0, 17).ToLower() + ".txt");
-                            //s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
                         }
                         else if (rawUrl.StartsWith("/rooms?name="))
                         {
@@ -95,43 +94,6 @@ namespace server
                             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             Console.WriteLine(subs[0] + ".txt");
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + subs[0].ToLower() + ".txt");
-                            if (subs[0].ToLower() == "orientation") 
-                            {
-                                GameSessions.gamesessionid = 20161L;
-                                GameSessions.gamesessionsubroomid = 20161L;
-
-                                if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
-                                {
-                                    GameSessions.gamesessionid = new Random().Next(0, 99);
-                                    GameSessions.gamesessionsubroomid = new Random().Next(0, 0xffff);
-                                }
-                                Guid myuuid = Guid.NewGuid();
-                                GameSessions.myuuidAsString = myuuid.ToString();
-
-
-                                Config.localGameSessionv3 = new GameSessions.SessionInstancev3
-                                {
-                                    EncryptVoiceChat = false,
-                                    clubId = null,
-                                    dataBlob = "",
-                                    EventId = null,
-                                    isFull = false,
-                                    isInProgress = false,
-                                    isPrivate = true,
-                                    location = "c79709d8-a31b-48aa-9eb8-cc31ba9505e8",
-                                    MaxCapacity = 1,
-                                    Name = "orientation",
-                                    photonRegionId = "us",
-                                    photonRoomId = "orientation" + "-" + GameSessions.myuuidAsString + "-room",
-                                    roomCode = null,
-                                    roomId = 3,
-                                    roomInstanceId = GameSessions.gamesessionid,
-                                    roomInstanceType = 0,
-                                    subRoomId = GameSessions.gamesessionsubroomid,
-
-                                };
-                            }
-                            //s = File.ReadAllText("SaveData\\Rooms\\1-bulk.txt");
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
@@ -144,25 +106,16 @@ namespace server
                             temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
                             if (temp2 != "")
                             {
-
                                 Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
-
-
                                 s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + temp2.ToLower() + ".txt");
 
                             }
                             else 
                             {
                                 s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
-
                                 Console.WriteLine("can't find room id : " + temp1);
                             }
-
-
-                            //s = File.ReadAllText("SaveData\\Rooms\\" + subs[0]+".txt");
-                            //s = JsonConvert.SerializeObject(c00005d.rooms_find_list(Convert.ToInt32(subs[0])));
                         }
-                        
 
                         Console.WriteLine("room Response: " + s);
                         bytes = Encoding.UTF8.GetBytes(s);

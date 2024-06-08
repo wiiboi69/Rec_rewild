@@ -54,19 +54,16 @@ namespace server
                 if (rawUrl.Contains("player/heartbeat"))
                 {
                     //s = JsonConvert.SerializeObject(Notification2018.Reponse.createResponse(4, c000020.player_heartbeat()));
-					s = JsonConvert.SerializeObject(c000020.player_heartbeat());
+					//s = JsonConvert.SerializeObject(c000020.player_heartbeat());
+                    s = JsonConvert.SerializeObject(c000020.player_heartbeat_websocket());
+                    //
                     Console.WriteLine(s);
                 }
                 if (rawUrl.StartsWith("/player/login"))
                 {
                     s = AccountAuth.ConnectToken();
                 }
-                if (rawUrl == "/goto/room/DormRoom")
-                {
-                    APIServer.Cachedroomname = rawUrl;
-                    s = gamesesh.GameSessions.Createdorm();
-                }
-                else if (rawUrl == "/goto/none")
+				if (rawUrl == "/goto/none")
                 {
                     APIServer.Cachedroomname = rawUrl;
 					//s = gamesesh.GameSessions.Createnone();
@@ -75,12 +72,12 @@ namespace server
                 else if (rawUrl.StartsWith("/goto/room/"))
                 {
                     APIServer.Cachedroomname = rawUrl;
-                    s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 11));
+                    s = GameSessions.Createroom(rawUrl.Remove(0, 11));
                 }
                 else if (rawUrl.StartsWith("/goto/player/"))
                 {
                     Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
-                    s = gamesesh.GameSessions.Createdorm();
+                    s = GameSessions.Createdorm();
                 }
                 if (rawUrl.StartsWith("/roominstance/"))
                 {

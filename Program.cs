@@ -8,19 +8,26 @@ using System.Diagnostics;
 using vaultgamesesh;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace start
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
-
+            string readline = "";
             //startup for Rec_rewild
 
             if ((File.Exists("SaveData\\App\\firsttime.txt")))
             {
                 Setup.quicksetup();
+
+                if (args.FirstOrDefault<string>() == "quickstart")
+                {
+                    readline = "5";
+                    goto startserver;
+                }
 
                 goto Start;
             }
@@ -69,13 +76,7 @@ namespace start
             {
                 goto Start;
             }
-            
-            
-
         Start:
-
-               
-
             Console.Title = "Rec_rewild Startup Menu";
 
             Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
@@ -88,7 +89,7 @@ namespace start
             
             Console.WriteLine("//Custom Room Downloader has been moved to the settings tab!" + Environment.NewLine);
             Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server");
-            string readline = Console.ReadLine();
+            readline = Console.ReadLine();
             if (readline == "1")
             {
                 Console.Title = "Rec_rewild Changelog";
@@ -355,6 +356,7 @@ namespace start
                 Console.Clear();
                 goto Start;
             }
+            startserver:
             if (readline == "5")
             {
                 Console.Title = "starting server";

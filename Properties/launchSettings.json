@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Rec_rewild": {
+      "commandName": "Project",
+      "commandLineArgs": "quickstart"
+    }
+  }
+}

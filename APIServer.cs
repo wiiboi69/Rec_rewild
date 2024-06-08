@@ -254,13 +254,10 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-						
-
 						if (Url == "challenge/v2/getCurrent")
 						{  
 							s = "{\"ChallengeMapId\":0,\"StartAt\":\"2021-12-27T21:27:38.188Z\",\"EndAt\":\"2025-12-27T21:27:38.188Z\",\"ServerTime\":\"2023-12-27T21:27:38.188Z\",\"Challenges\":[],\"Gift\":{\"GiftDropId\":1,\"AvatarItemDesc\":\"\",\"Xp\":2,\"Level\":0,\"EquipmentPrefabName\":\"[WaterBottle]\"},\"ChallengeThemeString\":\"RebornRec Water\"}"; 
 						}
-
                         if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
 						{
 							s = BracketResponse;

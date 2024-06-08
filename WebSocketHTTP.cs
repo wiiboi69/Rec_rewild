@@ -79,17 +79,8 @@ namespace ws
             System.Net.WebSockets.WebSocket ws = httpListenerWebSocketContext.WebSocket;
             while (ws.State == WebSocketState.Open)
             {
-                string temp1 = "";
-                string temp2 = "";
                 string temp3 = "";
 
-                temp1 = EncodeNonAsciiCharacters(temp1, '"');
-                if (temp1 == null)
-                {
-                    temp1 = "{}";
-                }
-                //temp1.Replace("\"", "\\" + "u0022");
-                Console.WriteLine(temp1);
                 byte[] received = new byte[2048];
                 int offset = 0;
                 for (; ; )
@@ -112,13 +103,7 @@ namespace ws
                 if (offset != 0)
                 {
                     string @string = Encoding.ASCII.GetString(received);
-                    //Console.WriteLine(@string);
                     WebSocketHTTP.id++;
-                    temp2 = JsonConvert.SerializeObject(new
-                    {
-                        Id = "PresenceUpdate",
-                        Msg = temp1
-                    });
                     byte[] array;
                     temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
                     {
@@ -178,7 +163,6 @@ namespace ws
                     await ws.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
                     received = null;
                 }
-                received = null;
             }
         }
 

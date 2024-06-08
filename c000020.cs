@@ -4,6 +4,7 @@ using server;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using static vaultgamesesh.c000020;
 
 namespace vaultgamesesh
@@ -35,7 +36,7 @@ namespace vaultgamesesh
 			};
 		}
 
-        public static c000020.player_heartbeat_datav2 player_heartbeat()
+        public static c000020.player_heartbeat_datav2old player_heartbeat()
         {
             bool flag = Config.localGameSessionv3 == null;
 
@@ -52,7 +53,7 @@ namespace vaultgamesesh
             }
             */
             gameSession = Config.localGameSessionv3;
-            Config.playerHeartbeatDatav2 = new c000020.player_heartbeat_datav2
+            Config.player_heartbeat_datav2old = new c000020.player_heartbeat_datav2old
             {
                 PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                 statusVisibility = 0,
@@ -64,19 +65,59 @@ namespace vaultgamesesh
                 errorCode = null,
 
             };
-			return Config.playerHeartbeatDatav2;
+			return Config.player_heartbeat_datav2old;
         }
 
-        public static c000020.player_heartbeat_datav2 player_heartbeat_websocket()
+        public static c000020.player_heartbeat_datav2old player_heartbeat_websocketold()
         {
 
-            return new c000020.player_heartbeat_datav2
+            return new c000020.player_heartbeat_datav2old
             {
                 PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                 statusVisibility = 0,
                 deviceClass = 0,
                 vrMovementMode = 1,
                 roomInstance = Config.localGameSessionv3,
+                IsOnline = true,
+                appVersion = APIServer.CachedversionID.ToString(),
+                errorCode = null,
+
+            };
+        }
+        public static c000020.player_heartbeat_datav2old player_heartbeat_websocket()
+        {
+
+            bool flag;
+            try 
+            { 
+                flag = Config.GameSession.roomInstance == null;
+            } 
+            catch
+            {
+                flag = true;
+            }
+            if (flag)
+            {
+                return new c000020.player_heartbeat_datav2old
+                {
+                    PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    statusVisibility = 0,
+                    deviceClass = 0,
+                    vrMovementMode = 1,
+                    roomInstance = null,
+                    IsOnline = true,
+                    appVersion = APIServer.CachedversionID.ToString(),
+                    errorCode = null,
+
+                };
+            }
+            return new c000020.player_heartbeat_datav2old
+            {
+                PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                statusVisibility = 0,
+                deviceClass = 0,
+                vrMovementMode = 1,
+                roomInstance = Config.GameSession.roomInstance,
                 IsOnline = true,
                 appVersion = APIServer.CachedversionID.ToString(),
                 errorCode = null,
@@ -176,7 +217,7 @@ namespace vaultgamesesh
 
 
         }
-        public sealed class player_heartbeat_datav2
+        public sealed class player_heartbeat_datav2old
         {
             public string appVersion { get; set; }
             public int deviceClass { get; set; }
@@ -185,6 +226,21 @@ namespace vaultgamesesh
             public ulong PlayerId { get; set; }
 
             public GameSessions.SessionInstancev3 roomInstance { get; set; }
+
+            public int statusVisibility { get; set; }
+
+            public int vrMovementMode { get; set; }
+
+        }
+        public sealed class player_heartbeat_datav2
+        {
+            public string appVersion { get; set; }
+            public int deviceClass { get; set; }
+            public int? errorCode { get; set; }
+            public bool IsOnline { get; set; }
+            public ulong PlayerId { get; set; }
+
+            public GameSessions.RoomInstance roomInstance { get; set; }
 
             public int statusVisibility { get; set; }
 
