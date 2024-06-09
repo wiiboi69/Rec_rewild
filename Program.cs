@@ -4,6 +4,7 @@ using System.Net;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using server;
 
 namespace start
 {
@@ -11,13 +12,10 @@ namespace start
     {
         static void Main()
         {
-
             //startup for Rec_rewild
-
             if ((File.Exists("SaveData\\App\\firsttime.txt")))
             {
                 Setup.quicksetup();
-
                 goto Start;
             }
             Setup.setup();
@@ -54,7 +52,6 @@ namespace start
                     Console.Clear();
                     goto Start;
                 }
-
                 else
                 {
                     Console.Clear();
@@ -67,11 +64,8 @@ namespace start
             }
         Start:
             Console.Title = "Rec_rewild Startup Menu";
-
             Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
-
-            
             Console.WriteLine("this is a full server rewite version" + Environment.NewLine);
             Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server");
             string readline = Console.ReadLine();
@@ -88,8 +82,6 @@ namespace start
             if (readline == "2")
             {
                 Console.Clear();
-                goto Settings;
-
                 Settings:
                 Console.Title = "Rec_rewild Settings Menu";
                 Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader " + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Go Back");
@@ -148,9 +140,7 @@ namespace start
                     File.Delete("SaveData\\App\\facefeaturesadd.txt");
                     File.Delete("SaveData\\profileimage.png");
                     File.Delete("SaveData\\App\\firsttime.txt");
-                    
                     File.Delete("SaveData\\avataritems2.txt");
-                 
                     File.Delete("SaveData\\Rooms\\Downloaded\\roomname.txt");
                     File.Delete("SaveData\\Rooms\\Downloaded\\roomid.txt");
                     File.Delete("SaveData\\Rooms\\Downloaded\\datablob.txt");
@@ -172,8 +162,6 @@ namespace start
             if (readline == "3")
             {
                 Console.Clear();
-                goto Profile;
-
             Profile:
                 Console.Title = "Rec_rewild Profile Menu";
                 Console.WriteLine("(1) Change Username" + Environment.NewLine + "(2) Change Profile Image" + Environment.NewLine + "(3) Change Level" + Environment.NewLine + "(4) Change bio" + Environment.NewLine + "(5) Profile Downloader" + Environment.NewLine + "(6) Go Back");
@@ -350,13 +338,11 @@ namespace start
             {
                 Console.Title = "starting server";
                 Console.WriteLine("Please wait for server to start up");
-                
                 version = "2021";
 
                 //note: nameserver is at the same port as before
-                /*
                 new NameServer();
-
+                /*
                 new ImageServer();
                 new APIServer();
                 new AuthServer();
@@ -367,24 +353,13 @@ namespace start
                 */
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
-
             }
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
-
         public static string appversion = "0.0.2";
-
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
-
-        // Token: 0x04000068 RID: 104   
         public static string ProfilePath = Program.DataPath + "\\Profile";
-
-        // Token: 0x04000069 RID: 105
         public static string CustomImages = Program.DataPath + "\\Images";
-
-        public static bool bannedflag = false;
-
     }
-
 }
