@@ -169,11 +169,12 @@ namespace server
                         {
                             s = File.ReadAllText("SaveData\\gameconfigs.txt");
                         }
-                        /*
                         if (rawUrl.StartsWith("/api/relationships/v2/get") || rawUrl.StartsWith("/api/relationships/v1/get"))
                         {
-                            s = Relationships.Friends();
+                            //s = Relationships.Friends();
+                            s = "[]";
                         }
+                        /*
                         if (Url.StartsWith("relationships/v2/sendfriendrequest"))
                         {
                             s = Relationships.SendFriendRequest(int.Parse(Url.Split('=')[1]));
@@ -521,7 +522,15 @@ namespace server
                         }
                         if (Url == "settings/v2/")
                         {
-                            s = File.ReadAllText("SaveData\\settings.txt");
+                            try
+                            {
+                                s = File.ReadAllText("SaveData\\settings.txt");
+                            }
+                            catch
+                            {
+                                File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
+                                s = File.ReadAllText("SaveData\\settings.txt");
+                            }
                         }
                         if (Url == "settings/v2/set")
                         {

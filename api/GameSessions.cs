@@ -192,7 +192,6 @@ namespace api
             });
         }
 
-        // Token: 0x060000C1 RID: 193 RVA: 0x0000257B File Offset: 0x0000077B
         public static GameSessions.PlayerStatus StatusSessionInstance()
         {
             return new GameSessions.PlayerStatus
@@ -220,65 +219,41 @@ namespace api
             return false;
         }
 
+        */
         public static string FindRoomid(ulong roomname)
         {
-
-            foreach (KeyValuePair<string, c00005d.rooms_details> keyValuePair in c00005d.rooms_details_list)
+            foreach (KeyValuePair<string, roomdata.RoomRoot> keyValuePair in roomdata.RROS)
             {
-                bool flag = keyValuePair.Value.RoomId == (ulong)roomname;
+                bool flag = keyValuePair.Value.Room.RoomId == (ulong)roomname;
                 if (flag)
                 {
-
-                    return keyValuePair.Value.Name;
+                    return keyValuePair.Value.Room.Name;
                 }
             }
             return "";
         }
-*/
-        // Token: 0x02000021 RID: 33
         public enum JoinResultIDs
         {
-            // Token: 0x0400005E RID: 94
             Success,
-            // Token: 0x0400005F RID: 95
             NoSuchGame,
-            // Token: 0x04000060 RID: 96
             PlayerNotOnline,
-            // Token: 0x04000061 RID: 97
             InsufficientSpace,
-            // Token: 0x04000062 RID: 98
             EventNotStarted,
-            // Token: 0x04000063 RID: 99
             EventAlreadyFinished,
-            // Token: 0x04000064 RID: 100
             EventCreatorNotReady,
-            // Token: 0x04000065 RID: 101
             BlockedFromRoom,
-            // Token: 0x04000066 RID: 102
             ProfileLocked,
-            // Token: 0x04000067 RID: 103
             NoBirthday,
-            // Token: 0x04000068 RID: 104
             MarkedForDelete,
-            // Token: 0x04000069 RID: 105
             JuniorNotAllowed,
-            // Token: 0x0400006A RID: 106
             Banned,
-            // Token: 0x0400006B RID: 107
             NoSuchRoom = 20,
-            // Token: 0x0400006C RID: 108
             RoomCreatorNotReady,
-            // Token: 0x0400006D RID: 109
             RoomIsNotActive,
-            // Token: 0x0400006E RID: 110
             RoomBlockedByCreator,
-            // Token: 0x0400006F RID: 111
             RoomBlockingCreator,
-            // Token: 0x04000070 RID: 112
             RoomIsPrivate
         }
-
-        // Token: 0x02000022 RID: 34
         public class PlayerStatus
         {
             // Token: 0x1700003F RID: 63

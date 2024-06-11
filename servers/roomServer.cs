@@ -93,13 +93,14 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
                             s = BlankResponse;
-                            /*Url = rawUrl.Remove(0, 7);
+                            Url = rawUrl.Remove(0, 7);
                             string[] stringSeparators = new string[] { "?include=1325" };
                             string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             stringSeparators = new string[] { "?include=301" };
                             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             temp1 = subs[0];
                             temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
+                            /*
                             if (temp2 != "")
                             {
                                 Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);

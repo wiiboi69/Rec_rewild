@@ -78,7 +78,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\settings.txt")))
             {
-                //File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
+                File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
             }
             if (!(File.Exists("SaveData\\profileimage.png")))
             {
@@ -185,7 +185,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\settings.txt")))
             {
-                //File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
+                File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
             }
             if (!(File.Exists("SaveData\\profileimage.png")))
             {
