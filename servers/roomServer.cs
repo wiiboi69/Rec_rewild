@@ -100,18 +100,16 @@ namespace server
                             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             temp1 = subs[0];
                             temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
-                            /*
                             if (temp2 != "")
                             {
                                 Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
                                 s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + temp2.ToLower() + ".txt");
-
                             }
                             else 
                             {
                                 s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
                                 Console.WriteLine("can't find room id : " + temp1);
-                            }*/
+                            }
                         }
                         Console.WriteLine("room Response: " + s);
                         bytes = Encoding.UTF8.GetBytes(s);

@@ -37,52 +37,48 @@ namespace server
 				string text;
 				string s = "[]";
 				byte[] bytes;
-                using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
+				using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
 				{
 					text = streamReader.ReadToEnd();
 				}
 				Console.WriteLine("match Requested: " + rawUrl);
 				Console.WriteLine("match Data: " + text);
-                if (rawUrl.Contains("player/heartbeat"))
-                {
+				if (rawUrl.Contains("player/heartbeat"))
+				{
 					//s = JsonConvert.SerializeObject(c000020.player_heartbeat());
-                }
-                if (rawUrl.StartsWith("/player/login"))
-                {
-                    s = AccountAuth.ConnectToken();
-                }
-                if (rawUrl == "/goto/room/DormRoom")
-                {
-                    //s = gamesesh.GameSessions.Createdorm();
-                }
-                else if (rawUrl == "/goto/none")
-                {
-					//s = JsonConvert.SerializeObject(new GameSessions.JoinResultnone());
-                }
-                else if (rawUrl.StartsWith("/goto/room/"))
-                {
-                    //s = gamesesh.GameSessions.Createroom(rawUrl.Remove(0, 11));
-                }
-                else if (rawUrl.StartsWith("/goto/player/"))
-                {
-                    Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
-                   // s = gamesesh.GameSessions.Createdorm();
-                }
-                if (rawUrl.StartsWith("/roominstance/"))
-                {
-                    s = "{\"Success\":true,\"Message\":\"\"}";
-                }
-                if (rawUrl.StartsWith("/player/statusvisibility"))
-                {
-                    s = "{}";
-                }
-                if (rawUrl.StartsWith("/player/vrmovementmode"))
-                {
-                    s = "{}";
-                }
-                Console.WriteLine("match Response: " + s);
-                bytes = Encoding.UTF8.GetBytes(s);
-                response.ContentLength64 = (long)bytes.Length;
+				}
+				if (rawUrl.StartsWith("/player/login"))
+				{
+					s = AccountAuth.ConnectToken();
+				}
+				if (rawUrl == "/goto/none")
+				{
+					s = JsonConvert.SerializeObject(new GameSessions.JoinResult());
+				}
+				else if (rawUrl.StartsWith("/goto/room/"))
+				{
+					s = GameSessions.Createroom(rawUrl.Remove(0, 11));
+				}
+				else if (rawUrl.StartsWith("/goto/player/"))
+				{
+					Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
+					//s = gamesesh.GameSessions.Createdorm();
+				}
+				if (rawUrl.StartsWith("/roominstance/"))
+				{
+					s = "{\"Success\":true,\"Message\":\"\"}";
+				}
+				if (rawUrl.StartsWith("/player/statusvisibility"))
+				{
+					s = "{}";
+				}
+				if (rawUrl.StartsWith("/player/vrmovementmode"))
+				{
+					s = "{}";
+				}
+				Console.WriteLine("match Response: " + s);
+				bytes = Encoding.UTF8.GetBytes(s);
+				response.ContentLength64 = (long)bytes.Length;
 				Stream outputStream = response.OutputStream;
 				outputStream.Write(bytes, 0, bytes.Length);
 				Thread.Sleep(1);

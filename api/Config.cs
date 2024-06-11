@@ -10,7 +10,11 @@ namespace api
 {
 	internal class Config
 	{
-		public string MessageOfTheDay { get; set; }
+
+        public static GameSessions.SessionInstance localGameSession;
+        public static GameSessions.JoinResult GameSession;
+
+        public string MessageOfTheDay { get; set; }
 		public string CdnBaseUri { get; set; }
         public string ShareBaseUrl { get; set; }
         public List<LevelProgressionEntry> LevelProgressionMaps { get; set; }
@@ -213,7 +217,6 @@ namespace api
                 }
             });
 		}
-        public static GameSessions.SessionInstance localGameSession;
         public class photonConfig
         {
             public string CloudRegion { get; set; }
