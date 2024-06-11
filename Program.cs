@@ -342,13 +342,12 @@ namespace start
                 new NameServer();
                 new APIServer();
                 new AuthServer();
-                /*
                 new ImageServer();
-                new NotificationsServer();
                 new matchServer();
-                new roomServer();
+                new NotificationsServer();
                 new WebSocketHTTP();
-                */
+                new roomServer();                
+                
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
             }

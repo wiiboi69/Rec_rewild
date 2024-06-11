@@ -34,30 +34,7 @@ namespace server
                 HttpListenerResponse response = context.Response;
                 string rawUrl = request.RawUrl;
                 string s = "";
-                NSData data = new NSData()
-                {
-                    API = "http://localhost:20210",
-                    Notifications = "http://localhost:20212",
-                    Images = "http://localhost:20213",
-                    Auth = "http://localhost:20214",
-                    WWW = "http://localhost:2021",
-                    Commerce = "http://localhost:2021",
-                    Accounts = "http://localhost:2021",
-                    PlayerSettings = "http://localhost:2021",
-                    CDN = "http://localhost:2021/",
-                    Data = "http://localhost:2021", 
-                    DataCollection =  "http://localhost:2021",
-                    Discovery =  "http://localhost:2021",
-                    Matchmaking = "http://localhost:2021/",
-                    Storage = "http://localhost:2021/",
-                    Chat = "http://localhost:2021/",
-                    Leaderboard = "http://localhost:2021/",
-                    Link = "http://localhost:2021/",
-                    RoomComments = "http://localhost:2021/",
-                    Rooms = "http://localhost:2021/",
-                    Clubs = "http://localhost:2021/"
-                };
-                s = JsonConvert.SerializeObject(data);
+                s = "{\r\n  \"Accounts\": \"http://localhost:20210\",\r\n  \"API\":\"http://localhost:20210\",\r\n  \"Auth\": \"http://localhost:20214\",\r\n  \"BugReporting\": \"http://localhost:20210\",\r\n  \"Cards\": \"http://localhost:20210\",\r\n  \"CDN\": \"http://localhost:20210\",\r\n  \"Chat\": \"http://localhost:20210\",\r\n  \"Clubs\": \"http://localhost:20210\",\r\n  \"CMS\": \"http://localhost:20210\",  \r\n  \"Commerce\": \"http://localhost:20210\",\r\n  \"Data\": \"http://localhost:20210\", \r\n  \"DataCollection\": \"http://localhost:20210\",\r\n  \"Discovery\": \"http://localhost:20210\",\r\n  \"Econ\": \"http://localhost:20210\",\r\n  \"GameLogs\": \"http://localhost:20210\",\r\n  \"Geo\": \"http://localhost:20210\",\r\n  \"Images\": \"http://localhost:20213\",\r\n  \"Leaderboard\": \"http://localhost:20210\",\r\n  \"Link\": \"http://localhost:20210\",\r\n  \"Lists\": \"http://localhost:20210\",\r\n  \"Matchmaking\": \"http://localhost:20215\",\r\n  \"Moderation\": \"http://localhost:20210\",\r\n  \"Notifications\": \"http://localhost:20212\",\r\n    \r\n  \"PlayerSettings\": \"http://localhost:20210\",\r\n  \"RoomComments\": \"http://localhost:20210\",\r\n  \"Rooms\": \"http://localhost:20218\",\r\n  \"Storage\": \"http://localhost:20210\", \r\n  \"Strings\": \"http://localhost:20210\",\r\n  \"StringsCDN\": \"http://localhost:20210\",\r\n  \r\n  \"Thorn\": \"http://localhost:20210\",\r\n  \"Videos\": \"http://localhost:20210\",\r\n  \"WWW\": \"http://localhost:20210\"\r\n} \r\n\r\n";
                 Console.WriteLine("NameServer Response: " + s);
                 byte[] bytes = Encoding.UTF8.GetBytes(s);
                 response.ContentLength64 = (long)bytes.Length;
