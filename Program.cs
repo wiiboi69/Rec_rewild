@@ -19,9 +19,7 @@ namespace start
                 goto Start;
             }
             Setup.setup();
-
             goto Tutorial;
-
         Tutorial:
             if (Setup.firsttime == true)
             {
@@ -342,10 +340,10 @@ namespace start
 
                 //note: nameserver is at the same port as before
                 new NameServer();
-                /*
-                new ImageServer();
                 new APIServer();
                 new AuthServer();
+                /*
+                new ImageServer();
                 new NotificationsServer();
                 new matchServer();
                 new roomServer();
