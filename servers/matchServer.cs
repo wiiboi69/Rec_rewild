@@ -53,7 +53,7 @@ namespace server
 				}
 				if (rawUrl == "/goto/none")
 				{
-					s = JsonConvert.SerializeObject(new GameSessions.JoinResult());
+					s = JsonConvert.SerializeObject(GameSessions.Createnone());
 				}
 				else if (rawUrl.StartsWith("/goto/room/"))
 				{

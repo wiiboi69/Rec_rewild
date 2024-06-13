@@ -164,7 +164,7 @@ namespace api
                 errorCode = null,
                 isOnline = true,
                 playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = Config.localGameSession,
+                roomInstance = null,
                 statusVisibility = 0,
                 vrMovementMode = 1
             });
@@ -258,6 +258,21 @@ namespace api
 
         public static GameSessions.MatchPresence Presence()
         {
+            bool flag = Config.GameSession == null;
+            GameSessions.SessionInstance roomInstance1;
+            roomInstance1 = null;
+            if (!flag) 
+            {
+                try 
+                { 
+                    roomInstance1 = Config.GameSession.roomInstance;
+                }
+                catch 
+                { 
+                    roomInstance1 = null;
+                }
+
+            }
             return new GameSessions.MatchPresence
             {
                 isOnline = true,
@@ -265,7 +280,9 @@ namespace api
                 playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                 statusVisibility = 0,
                 vrMovementMode = 1,
+                //roomInstance = Config.GameSession.roomInstance,
                 roomInstance = null,
+                //roomInstance = roomInstance1,
                 platform = -1,
                 errorCode = 0,
                 lastOnline = APIServer.Cachedservertimestarted,
