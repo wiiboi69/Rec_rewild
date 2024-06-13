@@ -45,7 +45,7 @@ namespace server
 				Console.WriteLine("match Data: " + text);
 				if (rawUrl.Contains("player/heartbeat"))
 				{
-					//s = JsonConvert.SerializeObject(c000020.player_heartbeat());
+					s = JsonConvert.SerializeObject(GameSessions.Presence());
 				}
 				if (rawUrl.StartsWith("/player/login"))
 				{
@@ -62,7 +62,7 @@ namespace server
 				else if (rawUrl.StartsWith("/goto/player/"))
 				{
 					Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
-					//s = gamesesh.GameSessions.Createdorm();
+					s = GameSessions.Createdorm();
 				}
 				if (rawUrl.StartsWith("/roominstance/"))
 				{

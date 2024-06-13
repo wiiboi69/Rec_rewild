@@ -595,6 +595,7 @@ namespace server
 
         public static ulong CachedPlatformID = 10000;
         public static ulong CachedversionID = 20206000;
+        public static ulong Cachedservertimestarted = 20206000;
         public static int CachedVersionMonth = 01;
 
         public static string PlayerEventsResponse = "{\"Created\":[],\"Responses\":[]}";

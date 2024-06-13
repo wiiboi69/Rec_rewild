@@ -338,6 +338,8 @@ namespace start
                 Console.WriteLine("Please wait for server to start up");
                 version = "2021";
 
+                APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
+
                 //note: nameserver is at the same port as before
                 new NameServer();
                 new APIServer();

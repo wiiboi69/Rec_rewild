@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using api;
+using static api.WarningMask;
 
 namespace api
 {
@@ -905,7 +906,7 @@ namespace api
             public bool SupportsWalkVR { get; set; }
             public bool SupportsTeleportVR { get; set; }
             public bool AllowsJuniors { get; set; }
-            public int RoomWarningMask { get; set; }
+            public WarningMaskType RoomWarningMask { get; set; }
             public string CustomRoomWarning { get; set; }
             public bool DisableMicAutoMute { get; set; }
             public int Type { get; set; }
