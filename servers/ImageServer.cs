@@ -68,7 +68,6 @@ namespace server
 					try
 					{
 						i = new WebClient().DownloadData("https://img.rec.net" + rawUrl);
-						File.WriteAllBytes("dump.bin", i);
 					}
 					catch
 					{
