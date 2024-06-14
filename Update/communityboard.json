@@ -1,0 +1,60 @@
+{
+  "FeaturedPlayer": {
+    "Id": 1,
+    "TitleOverride": "no player here [|=(]",
+    "UrlOverride": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  "FeaturedRoomGroup": {
+    "Name": "rooms Highlights",
+    "FeaturedRooms": [
+      {
+        "RoomName": "dormroom",
+        "RoomId": 1,
+        "ImageName": "Crescendo.png"
+      },
+      {
+        "RoomName": "hell",
+        "RoomId": 2,
+        "ImageName": "bowling.png"
+      },
+      {
+        "RoomName": "real helll",
+        "RoomId": 3,
+        "ImageName": "bowling.png"
+      }
+    ]
+  },
+  "CurrentAnnouncement": {
+    "Message": "",
+    "MoreInfoUrl": ""
+  },
+  "InstagramImages": [
+    {
+      "ImageName": "Community/Instagram/Welcome.png",
+      "ImageUrl": "https://www.instagram.com/p/Ckb55YeMEFX/"
+    }    
+  ],
+  "Videos": [
+    {
+      "BlobName": "real.mp4",
+      "Title": "?",
+      "Description": "",
+      "ThumbnailBlobName": "IDK.png",
+      "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "BlobName": "u.webm",
+      "Title": "November 15th",
+      "Description": "",
+      "ThumbnailBlobName": "IDK.png",
+      "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "BlobName": "deez.mp4",
+      "Title": "When the imposter is sus",
+      "Description": "",
+      "ThumbnailBlobName": "Community/Videos/deez.png",
+      "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    }
+  ]
+}
