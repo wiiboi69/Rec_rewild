@@ -125,7 +125,8 @@ namespace server
                         arguments = new object[] { JsonConvert.SerializeObject(new Respond
                         {
                             Id = "PresenceUpdate",
-                            Msg = ""//vaultgamesesh.c000020.player_heartbeat_websocket()
+                            //Msg = ""//vaultgamesesh.c000020.player_heartbeat_websocket()
+                            Msg = GameSessions.Presence()
                         }) },
                         error = "",
                         invocationId = "1",
@@ -148,7 +149,8 @@ namespace server
                             arguments = new object[] { JsonConvert.SerializeObject(new Respond
                             {
                                 Id = "PresenceUpdate",
-                                Msg = ""//vaultgamesesh.c000020.player_heartbeat_websocket()
+                                //Msg = ""//vaultgamesesh.c000020.player_heartbeat_websocket()
+                                Msg = GameSessions.Presence()
                             }) },
                             error = null,
                             invocationId = null,

@@ -151,13 +151,13 @@ namespace api
             };
         }
 
-        public static string Createnone()
+        public static GameSessions.JoinResult Createnone()
         {
             Console.WriteLine("Rec_Rewild GameSession noroom");
             
 			Config.localGameSession = null;
 			
-            return JsonConvert.SerializeObject(new GameSessions.JoinResult
+            return new GameSessions.JoinResult
             {
                 appVersion = APIServer.CachedversionID.ToString(),
                 deviceClass = 2,
@@ -167,7 +167,7 @@ namespace api
                 roomInstance = null,
                 statusVisibility = 0,
                 vrMovementMode = 1
-            });
+            };
         }
         public static string Createroom(string roomname)
         {
@@ -204,7 +204,13 @@ namespace api
                 Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
                 Config.GameSession = new GameSessions.JoinResult
                 {
+                    isOnline = true,
+                    deviceClass = 0,
+                    playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    statusVisibility = 0,
+                    vrMovementMode = 1,
                     errorCode = 0,
+                    appVersion = APIServer.CachedversionID.ToString(),
                     roomInstance = new GameSessions.SessionInstance
                     {
                         encryptVoiceChat = false,
@@ -213,17 +219,19 @@ namespace api
                         eventId = 0,
                         isFull = false,
                         isInProgress = false,
-                        isPrivate = false,
+                        isPrivate = true,
                         location = roomdata.RROS[roomname].Scenes[0].RoomSceneLocationId,
                         maxCapacity = roomdata.RROS[roomname].Scenes[0].MaxPlayers,
                         name = roomname,
                         photonRegionId = "us",
+                        photonRegion = "us",
                         photonRoomId = roomname + "-" + myuuidAsString + "-room",
                         roomCode = null,
                         roomId = (long)roomdata.RROS[roomname].Room.RoomId,
                         roomInstanceId = gamesessionid,
                         roomInstanceType = 0,
                         subRoomId = 0,
+                        matchmakingPolicy = 0,
                     }
                 };
                 if (scenename != "")
@@ -234,6 +242,7 @@ namespace api
                         {
                             Config.GameSession.roomInstance.subRoomId = scene.RoomSceneId;
                             Config.GameSession.roomInstance.location = scene.RoomSceneLocationId;
+                            Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
                         }
                     }
                 }
@@ -342,6 +351,8 @@ namespace api
             public long? clubId { get; set; }
             public long? EventId { get; set; }
             public string roomCode { get; set; }
+            public string photonRegion { get; set; }
+            public int matchmakingPolicy { get; set; }
         }
 
         public class JoinRandomRequest2

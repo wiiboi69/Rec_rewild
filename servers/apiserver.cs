@@ -10,6 +10,8 @@ using start;
 using System.Security.Principal;
 using api;
 using static api.AccountAuth;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace server
 {
@@ -429,7 +431,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-
                         if (Url.StartsWith("roomcurrencies/v1/currencies"))
                         {
                             s = BracketResponse;
@@ -471,7 +472,15 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
+                        if (rawUrl.StartsWith("/account/me/bio"))
+                        {
+                            s = JsonConvert.SerializeObject(new
+                            {
+                                accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                                bio = File.ReadAllText(Program.ProfilePath + "\\bio.txt")
+                            }) ;
+                        }
+                        else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
                         {
                             s = "[" + JsonConvert.SerializeObject(new
                             {
@@ -494,11 +503,11 @@ namespace server
                         }
                         if (Url == "communityboard/v2/current")
                         {
-                            s = BracketResponse;
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/communityboard.json");
                         }
                         if (Url == "communityboard/v1/current")
                         {
-                            s = BracketResponse;
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/communityboard.json");
                         }
                         if (Url.StartsWith("rooms/v2/search?value="))
                         {
@@ -528,7 +537,7 @@ namespace server
                             }
                             catch
                             {
-                                File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
+                                File.WriteAllText("SaveData\\settings.txt", JsonConvert.SerializeObject(Settings.CreateDefaultSettings()));
                                 s = File.ReadAllText("SaveData\\settings.txt");
                             }
                         }
@@ -594,7 +603,7 @@ namespace server
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 
         public static ulong CachedPlatformID = 10000;
-        public static ulong CachedversionID = 20206000;
+        public static ulong CachedversionID = 20200600;
         public static ulong Cachedservertimestarted = 20206000;
         public static int CachedVersionMonth = 01;
 

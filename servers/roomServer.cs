@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Web;
 using System.Text;
 using System.Threading;
 using api;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Security.AccessControl;
+using static server.WebSocketHTTP;
 
 
 namespace server
@@ -90,6 +92,11 @@ namespace server
                             Console.WriteLine(subs[0] + ".txt");
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + subs[0].ToLower() + ".txt");
                         }
+                        else if (rawUrl.StartsWith("/rooms/search?query=") || rawUrl.StartsWith("/rooms/hot"))
+                        {
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
+                            s = "{\r\n\"Results\":[\r\n" + s + ",\r\n],\"TotalResults\": 1\r\n}";
+                        }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
                             s = BlankResponse;
@@ -102,15 +109,27 @@ namespace server
                             temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
                             if (temp2 != "")
                             {
-                                Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
-                                s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + temp2.ToLower() + ".txt");
+                                try
+                                {
+                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + temp2.ToLower() + ".txt");
+                                    Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
+                                }
+                                catch
+                                {
+                                    goto roomfaileddownload;
+                                }
                             }
-                            else 
+                            else
                             {
-                                s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
-                                Console.WriteLine("can't find room id : " + temp1);
+                                goto roomfaileddownload;
                             }
+                            goto roomdownload;
+                            roomfaileddownload:
+                            Console.WriteLine("can't find room id : " + temp1);
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
                         }
+                        roomdownload:
+
                         Console.WriteLine("room Response: " + s);
                         bytes = Encoding.UTF8.GetBytes(s);
                         response.ContentLength64 = (long)bytes.Length;
@@ -119,7 +138,6 @@ namespace server
                         Thread.Sleep(100);
                         outputStream.Close();
                         this.listener.Stop();
-
                     }
                 }
             }
