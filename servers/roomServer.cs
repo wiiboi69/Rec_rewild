@@ -100,6 +100,7 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
                             s = room_util.find_room_with_id(rawUrl, 7);
+                            s = room_util.room_change_CreatorAccount(s);
                             //s = "[" + room_util.find_room_with_id(rawUrl, 7) + "]";
                         }
                         Console.WriteLine("room Response: " + s);

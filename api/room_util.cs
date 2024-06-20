@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using static api.roomdata;
 
 namespace api
 {
@@ -41,6 +46,25 @@ namespace api
             return new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt").ToString();
         }
 
+        public static string room_change_CreatorAccount(string value)
+        {
+            string temp1;
+            //roomdata.RoomRootv2 root = JsonConvert.DeserializeObject(value);
+            roomdata.RoomRootv2 root = JsonConvert.DeserializeObject<RoomRootv2>(value);
+            root.CreatorAccountId = APIServer.CachedPlayerID;
+            temp1 = JsonConvert.SerializeObject(root);
+            root = JsonConvert.DeserializeObject<RoomRootv2>(temp1);
+            root.Roles.Add(new Roles
+            {
+                Role = 255,
+                InvitedRole = 0,
+                AccountId = (int)APIServer.CachedPlayerID,
+            });
+            Console.WriteLine(value);
+            Console.WriteLine(JsonConvert.SerializeObject(root));
+            return JsonConvert.SerializeObject(root);
+        }
+
         public static string find_room_with_id_lowercase(string rawUrl, int value)
         {
             Console.WriteLine(rawUrl + " | " + value);
@@ -72,7 +96,10 @@ namespace api
             Console.WriteLine("can't find room id : " + temp1);
             return new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt").ToString().ToLower();
         }
+
         public static string BlankResponse = "";
+
         public static string BracketResponse = "[]";
+
     }
 }

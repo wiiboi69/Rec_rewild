@@ -12,6 +12,10 @@ using api;
 using static api.AccountAuth;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Client;
+using static System.Net.Mime.MediaTypeNames;
+using System.Net.NetworkInformation;
+using OpenRec.api;
 
 namespace server
 {
@@ -60,10 +64,19 @@ namespace server
                             Console.WriteLine("API Requested (rawUrl): " + rawUrl);
                         }
                         string text;
+                        byte[] rawtext;
                         string s = "";
                         using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
                         {
                             text = streamReader.ReadToEnd();
+                        }
+                        byte[] array;
+                        string @string;
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            request.InputStream.CopyTo(memoryStream);
+                            array = memoryStream.ToArray();
+                            @string = Encoding.ASCII.GetString(array);
                         }
                         if (text.Length > 0xfff)
                         {
@@ -247,14 +260,12 @@ namespace server
                         }
                         if (rawUrl.Contains("quickPlay/v1/getandclear"))
                         {
-                            s = BracketResponse;
-                            /*
-                            s = JsonConvert.SerializeObject((object)new QuickPlayResponseDTO()
+                            s = JsonConvert.SerializeObject(new QuickPlayResponseDTO()
                             {
                                 TargetPlayerId = null,
                                 RoomName = (string)null,
                                 ActionCode = (string)null
-                            });*/
+                            });
                         }
                         if (Url == "equipment/v1/getUnlocked")
                         {
@@ -303,7 +314,7 @@ namespace server
                         }
                         if (Url.StartsWith("sanitize/v1/isPure"))
                         {
-                            text = "{\"IsPure\":true}";
+                            s = "{\"IsPure\":true}";
                         }
                         if (Url == "rooms/v2/baserooms")
                         {
@@ -316,7 +327,8 @@ namespace server
                         if (Url == "rooms/v1/myRecent?skip=0&take=10")
                         {
                             s = BracketResponse;
-                        }/*
+                        }
+                        /*
                         if (Url == "events/v3/list")
                         {
                             s = Events.list();
@@ -328,7 +340,7 @@ namespace server
                         if (Url == "activities/charades/v1/words")
                         {
                             s = Activities.Charades.words();
-                        }/*
+                        }
                         if (Url == "gamesessions/v2/joinrandom")
                         {
                             s = gamesesh.GameSessions.JoinRandom(text);
@@ -340,8 +352,32 @@ namespace server
                         if (Url == "gamesessions/v3/joinroom")
                         {
                             s = JsonConvert.SerializeObject(c000041.m000030(text));
+                        }
+                        */
+                        if (Url.StartsWith("images/v4/uploadsaved"))
+                        /*
+                        {
+
+                            bool flag1;
+                            string temp1 = image_util.SaveImageFile(array, out flag1);
+                            s = "\"ImageName\": " + "\"" + temp1 + "\"";
+                            if (!flag1)
+                            {
+                                s = "\"ImageName\": \"error\"";
+
+                            }
+
                         }*/
+                        {
+                            image_util.ImageUploadResponse imageUploadResponse = new image_util.ImageUploadResponse("rec-rewild_" + DateTime.Now.ToString("MM.dd.yyyy HH.mm.ss.fff") + "_image" + ".jpg");
+                            File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\" + imageUploadResponse.ImageName, image_util.MultiFormSplit(array));
+                            s = JsonConvert.SerializeObject(imageUploadResponse);
+                        }
                         if (rawUrl == "//api/sanitize/v1/isPure")
+                        {
+                            s = "{\"IsPure\":true}";
+                        }
+                        if (rawUrl == "/upload")
                         {
                             s = "{\"IsPure\":true}";
                         }
