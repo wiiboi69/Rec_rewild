@@ -184,6 +184,8 @@ namespace api
         {
             long gamesessionid = 20161L;
             long gamesessionsubroomid = 20161L;
+            string myuuidAsString = "hello";
+            
             if (scenename != "")
             {
                 Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\" in scene id : \"" + scenename + "\"");
@@ -192,13 +194,15 @@ namespace api
             {
                 Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\"");
             }
+            myuuidAsString = "hello";
+
             if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
             {
                 gamesessionid = new Random().Next(100000000, 999999999);
                 gamesessionsubroomid = new Random().Next(0, 0xffff);
+                Guid myuuid = Guid.NewGuid();
+                myuuidAsString = myuuid.ToString();
             }
-            Guid myuuid = Guid.NewGuid();
-            string myuuidAsString = myuuid.ToString();  
             if (roomdata.RROS.ContainsKey(roomname))
             {
                 Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
