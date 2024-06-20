@@ -63,10 +63,22 @@ namespace server
 				}
                 else if (rawUrl.StartsWith("/Community"))
                 {
-                    i = notfound;
-
-                    //i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
+					rawUrl = rawUrl.Substring("/Community".Length);
+                    try
+                    {
+                        string[] stringSeparators = new string[] { "?width=" };
+                        string[] subs = rawUrl.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                        rawUrl = subs[0];
+                        Console.WriteLine(rawUrl);
+                        i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images" + rawUrl);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net. using Default Room Image");
+                        i = notfound;
+                    }
                 }
+                //i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
                 else if (rawUrl.StartsWith("/Profile") || rawUrl.StartsWith("/profile"))
                 {
                     i = File.ReadAllBytes("SaveData\\profileimage.png");
@@ -75,7 +87,11 @@ namespace server
                 {
 					try
 					{
-						i = new WebClient().DownloadData("https://img.rec.net" + rawUrl);
+                        string[] stringSeparators = new string[] { "?width=" };
+                        string[] subs = rawUrl.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+						rawUrl = subs[0];
+						Console.WriteLine(rawUrl);
+						i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images" + rawUrl);
 					}
 					catch
 					{
