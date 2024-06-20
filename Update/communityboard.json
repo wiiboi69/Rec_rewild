@@ -5,8 +5,28 @@
     "UrlOverride": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
   },
   "FeaturedRoomGroup": {
+    "FeaturedRoomGroupId": 1,
     "Name": "rooms Highlights",
+    "StartAt": "2023-05-02T07:00:00Z",
+    "EndAt": "2023-05-09T07:00:00Z",
     "FeaturedRooms": [
+      {
+        "RoomName": "dormroom",
+        "RoomId": 1,
+        "ImageName": "Crescendo.png"
+      },
+      {
+        "RoomName": "hell",
+        "RoomId": 2,
+        "ImageName": "bowling.png"
+      },
+      {
+        "RoomName": "real helll",
+        "RoomId": 3,
+        "ImageName": "bowling.png"
+      }
+    ]
+    "Rooms": [
       {
         "RoomName": "dormroom",
         "RoomId": 1,
