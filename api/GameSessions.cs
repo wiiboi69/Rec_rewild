@@ -211,6 +211,7 @@ namespace api
                 if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
                 {
                     gamesessionid += (long)roomdata.RROS[roomname].Room.RoomId;
+
                 }
                 Config.GameSession = new GameSessions.JoinResult
                 {
@@ -250,6 +251,11 @@ namespace api
                     {
                         if (scene.Name == scenename)
                         {
+                            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
+                            {
+                                Config.GameSession.roomInstance.roomInstanceId + (10000000 * scene.RoomSceneId);
+
+                            }
                             Config.GameSession.roomInstance.subRoomId = scene.RoomSceneId;
                             Config.GameSession.roomInstance.location = scene.RoomSceneLocationId;
                             Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
