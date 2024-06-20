@@ -203,9 +203,15 @@ namespace api
                 Guid myuuid = Guid.NewGuid();
                 myuuidAsString = myuuid.ToString();
             }
+
+            
             if (roomdata.RROS.ContainsKey(roomname))
             {
                 Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
+                if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
+                {
+                    gamesessionid += (long)roomdata.RROS[roomname].Room.RoomId;
+                }
                 Config.GameSession = new GameSessions.JoinResult
                 {
                     isOnline = true,
