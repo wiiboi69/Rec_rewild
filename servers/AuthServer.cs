@@ -76,7 +76,8 @@ namespace server
                             temp1 = ClientSecurity.GenerateToken();
                             Guid myuuid = Guid.NewGuid();
                             temp2 = myuuid.ToString();
-                            s = "{\"access_token\":\"" + temp1 + "\",\"error_description\":\"\",\"error\":\"\",\"refresh_token\":\"" + temp2+"\",\"key\":\"\"}";
+                            s = "{\r\n   \"access_token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2Njk1NzUzOTksImV4cCI6MTY2OTU3ODk5OSwiaXNzIjoiaHR0cHM6Ly9hdXRoLnJlYy5uZXQiLCJjbGllbnRfaWQiOiJyZWNuZXQiLCJyb2xlIjoiZGV2ZWxvcGVyIiwic3ViIjoiNjIyNjgwNyIsImF1dGhfdGltZSI6MTY1Nzc3Mzk1NSwiaWRwIjoibG9jYWwiLCJqdGkiOiJEOUUwNTY2QjU2NTE4QkNEMjBBNjRDMkQ2MzUwQzRFMyIsInNpZCI6IjU2NEY5QUFGQzNBRjQxREQwQTQzOENDMTlFODk5NzYzIiwiaWF0IjoxNjY5NTc1Mzk5LCJzY29wZSI6WyJvcGVuaWQiLCJybi5hcGkiLCJybi5jb21tZXJjZSIsInJuLm5vdGlmeSIsInJuLm1hdGNoLnJlYWQiLCJybi5jaGF0Iiwicm4uYWNjb3VudHMiLCJybi5hdXRoIiwicm4ubGluayIsInJuLmNsdWJzIiwicm4ucm9vbXMiLCJybi5kaXNjb3ZlcnkiXSwiYW1yIjpbIm1mYSJdfQ.GdYHMcKKpDK8mQviYTFVUFTre3olRz8JGWPqNZ6Ke44\",\r\n   \"error\" : \"\",\r\n   \"error_description\" : \"\",\r\n   \"key\" : \"\",\r\n   \"refresh_token\" : \"43cf85ee-9f1e-49ec-b17a-8060e5bbd3db\"\r\n}";
+                            //s = "{\"access_token\":\"" + temp1 + "\",\"error_description\":\"\",\"error\":\"\",\"refresh_token\":\"" + temp2 + "\",\"key\":\"\"}";
                             Thread.Sleep(100);
                         }
                         else if (rawUrl.StartsWith("/cachedlogin/forplatformids"))

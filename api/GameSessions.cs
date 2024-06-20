@@ -290,13 +290,41 @@ namespace api
                 statusVisibility = 0,
                 vrMovementMode = 1,
                 //roomInstance = Config.GameSession.roomInstance,
-                roomInstance = null,
-                //roomInstance = roomInstance1,
+                //roomInstance = null,
+                roomInstance = roomInstance1,
                 platform = -1,
                 errorCode = 0,
                 lastOnline = APIServer.Cachedservertimestarted,
                 appVersion = APIServer.CachedversionID.ToString(),
             };
+        }
+
+        public static string GetDetails(string roomid)
+        {
+            string text;
+            try
+            {
+                foreach (KeyValuePair<string, roomdata.RoomRoot> room in roomdata.RROS)
+                {
+                    roomdata.RoomRoot root = room.Value;
+                    if (root.Room.RoomId == ulong.Parse(roomid))
+                    {
+                        root.LocalPlayerRole = 4;
+                        root.localPlayerRole = 4;
+                        root.CoOwners.Add(APIServer.CachedPlayerID);
+                        root.Room.creatorPlayerId = APIServer.CachedPlayerID;
+                        root.Room.RoomOrPlaylistId = root.Room.RoomId;
+                        return JsonConvert.SerializeObject(root);
+                    }
+                }
+                text = "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                text = "";
+            }
+            return text;
         }
 
         public enum JoinResultIDs

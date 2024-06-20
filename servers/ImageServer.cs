@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +29,9 @@ namespace server
 		private void StartListen()
 		{
 			this.listener.Prefixes.Add("http://localhost:20213/");
-			for (; ; )
+			byte[] notfound = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
+
+            for (; ; )
 			{
 				this.listener.Start();
 				Console.WriteLine("{ImageServer.cs] is listening.");
@@ -59,7 +63,9 @@ namespace server
 				}
                 else if (rawUrl.StartsWith("/Community"))
                 {
-                    i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
+                    i = notfound;
+
+                    //i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
                 }
                 else if (rawUrl.StartsWith("/Profile") || rawUrl.StartsWith("/profile"))
                 {
@@ -74,16 +80,8 @@ namespace server
 					catch
 					{
 						Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net. using Default Room Image");
-						try
-						{
-							i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
-						}
-						catch
-						{
-							Console.WriteLine("[ImageServer.cs] using Image.");
-							i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
-						}
-					}
+						i = notfound;
+                    }
 				}
 				if (rawUrl.StartsWith("/CustomRoom.png"))
                 {

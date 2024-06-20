@@ -21,7 +21,7 @@ namespace api
                     {
                         RoomId = 1,
                         Name = "DormRoom",
-                        Description = "Your own private dorm.",
+                        Description = "Your private dorm.",
                         CreatorPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                         ImageName = "DormRoom.png",
                         State = 0,
@@ -64,7 +64,7 @@ namespace api
                     CheerCount = 1,
                     FavoriteCount = 1,
                     VisitCount = 1,
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     Hosts = new List<int>(),
                     InvitedCoOwners = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -119,7 +119,7 @@ namespace api
                     CheerCount = 1,
                     FavoriteCount = 1,
                     VisitCount = 1,
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     Hosts = new List<int>(),
                     InvitedCoOwners = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -172,7 +172,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -230,7 +230,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -288,7 +288,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -401,7 +401,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -466,7 +466,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -519,7 +519,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -571,7 +571,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -623,7 +623,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -675,7 +675,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     LocalPlayerRole = 3,
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
@@ -729,7 +729,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -782,7 +782,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -835,7 +835,7 @@ namespace api
                             DataModifiedAt = DateTime.Now
                         }
                     },
-                    CoOwners = new List<int>(),
+                    CoOwners = new List<ulong>(),
                     InvitedCoOwners = new List<int>(),
                     Hosts = new List<int>(),
                     InvitedHosts = new List<int>(),
@@ -872,7 +872,7 @@ namespace api
         {
             public Room Room { get; set; }
             public List<Scene> Scenes { get; set; }
-            public List<int> CoOwners { get; set; }
+            public List<ulong> CoOwners { get; set; }
             public List<int> InvitedCoOwners { get; set; }
             public List<int> InvitedModerators { get; set; }
             public List<int> Moderators { get; set; }
@@ -911,7 +911,7 @@ namespace api
             public bool DisableMicAutoMute { get; set; }
             public int Type { get; set; }
             public int ListOrder { get; set; }
-            public int RoomOrPlaylistId { get; set; }
+            public ulong RoomOrPlaylistId { get; set; }
             public int RoomPlaylistId { get; set; }
             public bool DisableRoomComments { get; set; }
             public bool EncryptVoiceChat { get; set; }

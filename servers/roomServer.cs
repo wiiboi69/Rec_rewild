@@ -99,37 +99,9 @@ namespace server
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
-                            s = BlankResponse;
-                            Url = rawUrl.Remove(0, 7);
-                            string[] stringSeparators = new string[] { "?include=1325" };
-                            string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            stringSeparators = new string[] { "?include=301" };
-                            subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            temp1 = subs[0];
-                            temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
-                            if (temp2 != "")
-                            {
-                                try
-                                {
-                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + temp2.ToLower() + ".txt");
-                                    Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
-                                }
-                                catch
-                                {
-                                    goto roomfaileddownload;
-                                }
-                            }
-                            else
-                            {
-                                goto roomfaileddownload;
-                            }
-                            goto roomdownload;
-                            roomfaileddownload:
-                            Console.WriteLine("can't find room id : " + temp1);
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
+                            s = room_util.find_room_with_id(rawUrl, 7);
+                            //s = "[" + room_util.find_room_with_id(rawUrl, 7) + "]";
                         }
-                        roomdownload:
-
                         Console.WriteLine("room Response: " + s);
                         bytes = Encoding.UTF8.GetBytes(s);
                         response.ContentLength64 = (long)bytes.Length;
@@ -149,6 +121,7 @@ namespace server
                 new roomServer();
             }
         }
+
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
         public static ulong CachedPlatformID = 10000;
         public static int CachedVersionMonth = 01;

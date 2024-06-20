@@ -132,12 +132,10 @@ namespace server
                         if (rawUrl.StartsWith("/account/me"))
                         {
                             s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
-
                         }
                         if (Url.StartsWith("players/v1/progression/"))
                         {
                             s = AccountAuth.GetLevel();
-
                         }
                         if (Url.StartsWith("playerReputation/v1/"))
                         {
@@ -298,6 +296,15 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        if (Url.StartsWith("rooms/v4/details/"))
+                        {
+                            Url = Url.Substring(("rooms/v4/details/").Length);
+                            text = GameSessions.GetDetails(Url);
+                        }
+                        if (Url.StartsWith("sanitize/v1/isPure"))
+                        {
+                            text = "{\"IsPure\":true}";
+                        }
                         if (Url == "rooms/v2/baserooms")
                         {
                             s = File.ReadAllText("SaveData\\baserooms.txt");
@@ -385,7 +392,8 @@ namespace server
                         }*/
                         if (rawUrl.StartsWith("/account/create"))
                         {
-                            s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
+                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
+                            s = "{\"success\":true,\"error\":\"\"}";
                         }
                         if (Url == "consumables/v1/updateActive")
                         {

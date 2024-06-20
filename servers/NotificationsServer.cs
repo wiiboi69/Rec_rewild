@@ -27,7 +27,7 @@ namespace server
             this.listener.Prefixes.Add("http://localhost:20212/");
             for (; ; )
             {
-                this.listener.Start();
+                    this.listener.Start();
                 Console.WriteLine("{NotificationsServer.cs] is listening.");
                 HttpListenerContext context = this.listener.GetContext();
                 HttpListenerRequest request = context.Request;

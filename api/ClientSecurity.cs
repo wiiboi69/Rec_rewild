@@ -48,11 +48,13 @@ namespace Client
                     "rr.accounts"
                 },
                 client_id = "recroom",
+                role  = "developer",/*
                 role = new List<String> 
                 {
                     "gameClient", 
                     "screenshare",
-                },
+                    "developer",
+                },*/
                 RnPlat = "0",
                 RnPlatid = "1",
                 RnDeviceclass = "2",
