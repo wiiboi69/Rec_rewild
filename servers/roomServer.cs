@@ -94,8 +94,7 @@ namespace server
                         }
                         else if (rawUrl.StartsWith("/rooms/search?query=") || rawUrl.StartsWith("/rooms/hot"))
                         {
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
-                            s = "{\r\n\"Results\":[\r\n" + s + ",\r\n],\"TotalResults\": 1\r\n}";
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json");
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
