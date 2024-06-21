@@ -377,6 +377,10 @@ namespace server
                         {
                             s = "{\"IsPure\":true}";
                         }
+                        if (Url == "sanitize/v1")
+                        {
+                            s = SanitizeChatMessageRequest(text);
+                        }
                         if (rawUrl == "/upload")
                         {
                             s = "{\"IsPure\":true}";
@@ -615,7 +619,14 @@ namespace server
                 new APIServer();
             }
         }
+        public static string SanitizeChatMessageRequest(string postData) => "\"" + JsonConvert.DeserializeObject<SanitizePostDTO>(postData).Value + "\"";
 
+        public class SanitizePostDTO
+        {
+            public string Value { get; set; }
+
+            public int ReplacementChar { get; set; }
+        }
         public enum SubscriptionLevel
         {
             Gold,
