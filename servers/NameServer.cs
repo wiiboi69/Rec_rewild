@@ -34,10 +34,80 @@ namespace server
                 HttpListenerResponse response = context.Response;
                 string rawUrl = request.RawUrl;
                 string s = "";
-                //s = "{\r\n  \"Accounts\": \"http://localhost:20210/\",\r\n  \"API\":\"http://localhost:20210/\",\r\n  \"Auth\": \"http://localhost:20214/\",\r\n  \"BugReporting\": \"http://localhost:20210/\",\r\n  \"Cards\": \"http://localhost:20210/\",\r\n  \"CDN\": \"http://localhost:20210/\",\r\n  \"Chat\": \"http://localhost:20210/\",\r\n  \"Clubs\": \"http://localhost:20210/\",\r\n  \"CMS\": \"http://localhost:20210/\",  \r\n  \"Commerce\": \"http://localhost:20210/\",\r\n  \"Data\": \"http://localhost:20210/\", \r\n  \"DataCollection\": \"http://localhost:20210/\",\r\n  \"Discovery\": \"http://localhost:20210/\",\r\n  \"Econ\": \"http://localhost:20210/\",\r\n  \"GameLogs\": \"http://localhost:20210/\",\r\n  \"Geo\": \"http://localhost:20210/\",\r\n  \"Images\": \"http://localhost:20213/\",\r\n  \"Leaderboard\": \"http://localhost:20210/\",\r\n  \"Link\": \"http://localhost:20210/\",\r\n  \"Lists\": \"http://localhost:20210/\",\r\n  \"Matchmaking\": \"http://localhost:20215/\",\r\n  \"Moderation\": \"http://localhost:20210/\",\r\n  \"Notifications\": \"http://localhost:20212/\",\r\n    \r\n  \"PlayerSettings\": \"http://localhost:20210/\",\r\n  \"RoomComments\": \"http://localhost:20210/\",\r\n  \"Rooms\": \"http://localhost:20218/\",\r\n  \"Storage\": \"http://localhost:20210/\", \r\n  \"Strings\": \"http://localhost:20210/\",\r\n  \"StringsCDN\": \"http://localhost:20210/\",\r\n  \r\n  \"Thorn\": \"http://localhost:20210/\",\r\n  \"Videos\": \"http://localhost:20210/\",\r\n  \"WWW\": \"http://localhost:20210/\"\r\n} \r\n\r\n";
-                s = "{\r\n  \"Accounts\": \"http://localhost:20210/\",\r\n  \"API\":\"http://localhost:20210/\",\r\n  \"Auth\": \"http://localhost:20214/\",\r\n  \"BugReporting\": \"http://localhost:20210/\",\r\n  \"Cards\": \"http://localhost:20210/\",\r\n  \"CDN\": \"http://localhost:20210/\",\r\n  \"Chat\": \"http://localhost:20210/\",\r\n  \"Clubs\": \"http://localhost:20210/\",\r\n  \"CMS\": \"http://localhost:20210/\",  \r\n  \"Commerce\": \"http://localhost:20210/\",\r\n  \"Data\": \"http://localhost:20210/\", \r\n  \"DataCollection\": \"http://localhost:20210/\",\r\n  \"Discovery\": \"http://localhost:20210/\",\r\n  \"Econ\": \"http://localhost:20210/\",\r\n  \"GameLogs\": \"http://localhost:20210/\",\r\n  \"Geo\": \"http://localhost:20210/\",\r\n  \"Images\": \"http://localhost:20213/\",\r\n  \"Leaderboard\": \"http://localhost:20210/\",\r\n  \"Link\": \"http://localhost:20210/\",\r\n  \"Lists\": \"http://localhost:20210/\",\r\n  \"Matchmaking\": \"http://localhost:20215/\",\r\n  \"Moderation\": \"http://localhost:20210/\",\r\n  \"Notifications\": \"http://localhost:20212/\",\r\n    \r\n  \"PlayerSettings\": \"http://localhost:20210/\",\r\n  \"RoomComments\": \"http://localhost:20210/\",\r\n  \"Rooms\": \"http://localhost:20218/\",\r\n  \"Storage\": \"http://localhost:20210/\", \r\n  \"Strings\": \"http://localhost:20210/\",\r\n  \"StringsCDN\": \"http://localhost:20210/\",\r\n  \r\n  \"Thorn\": \"http://localhost:20210/\",\r\n  \"Videos\": \"http://localhost:20210/\",\r\n  \"WWW\": \"http://localhost:20210/\"\r\n} \r\n\r\n";
-                //s = "{\r\n  \"Studio\": \"http://example.com/roomstudio2022/\",\r\n  \"Accounts\": \"http://example.com/sv2022/\",\r\n  \"API\":\"http://example.com/sv2022/\",\r\n  \"Auth\": \"http://localhost:20214/\",\r\n  \"BugReporting\": \"http://example.com/sv2022/\",\r\n  \"Cards\": \"http://example.com/sv2022/\",\r\n  \"CDN\": \"http://example.com/sv2022/\",\r\n  \"Chat\": \"http://example.com/sv2022/\",\r\n  \"Clubs\": \"http://example.com/sv2022/\",\r\n  \"CMS\": \"http://example.com/sv2022/\",  \r\n  \"Commerce\": \"http://example.com/sv2022/\",\r\n  \"Data\": \"http://example.com/sv2022/\", \r\n  \"DataCollection\": \"http://example.com/sv2022/\",\r\n  \"Discovery\": \"http://example.com/sv2022/\",\r\n  \"Econ\": \"http://example.com/sv2022/\",\r\n  \"GameLogs\": \"http://example.com/sv2022/\",\r\n  \"Geo\": \"http://example.com/sv2022/\",\r\n  \"Images\": \"http://example.com/img2022/\",\r\n  \"Leaderboard\": \"http://example.com/sv2022/\",\r\n  \"Link\": \"http://example.com/sv2022/\",\r\n  \"Lists\": \"http://example.com/sv2022/\",\r\n  \"Matchmaking\": \"http://example.com/mod2022/\",\r\n  \"Moderation\": \"http://example.com/sv2022/\",\r\n  \"Notifications\": \"http://example.com/ps2022/\",\r\n    \r\n  \"PlayerSettings\": \"http://example.com/sv2022/\",\r\n  \"RoomComments\": \"http://example.com/sv2022/\",\r\n  \"Rooms\": \"http://example.com/room2022/\",\r\n  \"Storage\": \"http://example.com/sv2022/\", \r\n  \"Strings\": \"http://example.com/sv2022/\",\r\n  \"StringsCDN\": \"http://example.com/sv2022/\",\r\n  \r\n  \"Thorn\": \"http://example.com/sv2022/\",\r\n  \"Videos\": \"http://example.com/sv2022/\",\r\n  \"WWW\": \"http://example.com/sv2022/\"\r\n} \r\n\r\n";
-
+                if (Program.beta)
+                {
+                    s = "{" +
+                        "  \"Accounts\": \"http://localhost:20210/\"," +
+                        "  \"API\":\"http://localhost:20210/\"," +
+                        "  \"Auth\": \"http://localhost:20214/\"," +
+                        "  \"BugReporting\": \"http://localhost:20210/\"," +
+                        "  \"Cards\": \"http://localhost:20210/\"," +
+                        "  \"CDN\": \"http://localhost:20210/\"," +
+                        "  \"Chat\": \"http://localhost:20210/\"," +
+                        "  \"Clubs\": \"http://localhost:20210/\"," +
+                        "  \"CMS\": \"http://localhost:20210/\"," +
+                        "  \"Commerce\": \"http://localhost:20210/\"," +
+                        "  \"Data\": \"http://localhost:20210/\"," +
+                        "  \"DataCollection\": \"http://localhost:20210/\"," +
+                        "  \"Discovery\": \"http://localhost:20210/\"," +
+                        "  \"Econ\": \"http://localhost:20210/\"," +
+                        "  \"GameLogs\": \"http://localhost:20210/\"," +
+                        "  \"Geo\": \"http://localhost:20210/\"," +
+                        "  \"Images\": \"http://localhost:20213/\"," +
+                        "  \"Leaderboard\": \"http://localhost:20210/\"," +
+                        "  \"Link\": \"http://localhost:20210/\"," +
+                        "  \"Lists\": \"http://localhost:20210/\"," +
+                        "  \"Matchmaking\": \"http://localhost:20215/\"," +
+                        "  \"Moderation\": \"http://localhost:20210/\"," +
+                        "  \"Notifications\": \"http://localhost:20212/\"," +
+                        "  \"PlayerSettings\": \"http://localhost:20210/\"," +
+                        "  \"RoomComments\": \"http://localhost:20210/\"," +
+                        "  \"Rooms\": \"http://localhost:20218/\"," +
+                        "  \"Storage\": \"http://localhost:20210/\"," +
+                        "  \"Strings\": \"http://localhost:20210/\"," +
+                        "  \"StringsCDN\": \"http://localhost:20210/\"," +
+                        "  \"Thorn\": \"http://localhost:20210/\"," +
+                        "  \"Videos\": \"http://localhost:20210/\"," +
+                        "  \"WWW\": \"http://localhost:20210/\"" +
+                        "}";
+                }
+                else
+                {
+                    s = "{" +
+                        "  \"Accounts\": \"http://localhost:20210/\"," +
+                        "  \"API\":\"http://localhost:20210/\"," +
+                        "  \"Auth\": \"http://localhost:20214/\"," +
+                        "  \"BugReporting\": \"http://localhost:20210/\"," +
+                        "  \"Cards\": \"http://localhost:20210/\"," +
+                        "  \"CDN\": \"http://localhost:20210/\"," +
+                        "  \"Chat\": \"http://localhost:20210/\"," +
+                        "  \"Clubs\": \"http://localhost:20210/\"," +
+                        "  \"CMS\": \"http://localhost:20210/\"," +
+                        "  \"Commerce\": \"http://localhost:20210/\"," +
+                        "  \"Data\": \"http://localhost:20210/\"," +
+                        "  \"DataCollection\": \"http://localhost:20210/\"," +
+                        "  \"Discovery\": \"http://localhost:20210/\"," +
+                        "  \"Econ\": \"http://localhost:20210/\"," +
+                        "  \"GameLogs\": \"http://localhost:20210/\"," +
+                        "  \"Geo\": \"http://localhost:20210/\"," +
+                        "  \"Images\": \"http://localhost:20213/\"," +
+                        "  \"Leaderboard\": \"http://localhost:20210/\"," +
+                        "  \"Link\": \"http://localhost:20210/\"," +
+                        "  \"Lists\": \"http://localhost:20210/\"," +
+                        "  \"Matchmaking\": \"http://localhost:20215/\"," +
+                        "  \"Moderation\": \"http://localhost:20210/\"," +
+                        "  \"Notifications\": \"http://localhost:20212/\"," +
+                        "  \"PlayerSettings\": \"http://localhost:20210/\"," +
+                        "  \"RoomComments\": \"http://localhost:20210/\"," +
+                        "  \"Rooms\": \"http://localhost:20218/\"," +
+                        "  \"Storage\": \"http://localhost:20210/\"," +
+                        "  \"Strings\": \"http://localhost:20210/\"," +
+                        "  \"StringsCDN\": \"http://localhost:20210/\"," +
+                        "  \"Thorn\": \"http://localhost:20210/\"," +
+                        "  \"Videos\": \"http://localhost:20210/\"," +
+                        "  \"WWW\": \"http://localhost:20210/\"" +
+                        "}";
+                }
                 Console.WriteLine("NameServer Response: " + s);
                 byte[] bytes = Encoding.UTF8.GetBytes(s);
                 response.ContentLength64 = (long)bytes.Length;

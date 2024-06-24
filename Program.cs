@@ -221,7 +221,7 @@ namespace start
                     }
                     else if (readline4 == "3")
                     {
-                        /*
+                        
                         Console.WriteLine("Type a RecRoom @ username and press enter: ");
                         string username = Console.ReadLine();
                         if (username.StartsWith("@"))
@@ -241,21 +241,21 @@ namespace start
                                 Console.WriteLine("Failed to download profile...");
                                 goto Start;
                             }
-                        
+
                             List<ProfieStealer.Root> profile = JsonConvert.DeserializeObject<List<ProfieStealer.Root>>(data);
                             byte[] profileimage = new WebClient().DownloadData("https://img.rec.net/" + profile[0].profileImage + "?cropSquare=true&width=192&height=192");
                             File.WriteAllBytes("SaveData\\profileimage.png", profileimage);
-                            
+
                         }
                         catch
                         {
                             Console.Clear();
                             Console.WriteLine("Unable to download image...");
                             goto Profile;
+                        }
                         Console.Clear();
                         Console.WriteLine("Success!");
-                        }*/
-                        Console.WriteLine("not ready!");
+
                         goto Profile;
                     }
                     else if (readline4 == "4")
@@ -289,7 +289,7 @@ namespace start
                     
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
-                    Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to OpenRec.");
+                    Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to Rec_rewild.");
                     Console.WriteLine("Please type the @ username of the profile you would like:");
                     string readusername = Console.ReadLine();
                     if (readusername.StartsWith("@"))
@@ -312,8 +312,6 @@ namespace start
                     
                     Console.Clear();
                     Console.WriteLine("Success!");
-                    
-                    Console.WriteLine("not ready!");
                     goto Start;
                 }
                 else if (readline3 == "6")
@@ -341,6 +339,8 @@ namespace start
 
                 APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
 
+                beta = false;
+
                 //note: nameserver is at the same port as before
                 new NameServer();
                 new APIServer();
@@ -354,9 +354,33 @@ namespace start
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
             }
+            if (readline == "6")
+            {
+                Console.Title = "starting 2022 server";
+                Console.WriteLine("Please wait for server to start up");
+                version = "2022";
+
+                APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
+
+                beta = true;
+
+                //note: nameserver is at the same port as before
+                new NameServer();
+                new APIServer();
+                new AuthServer();
+                new ImageServer();
+                new matchServer();
+                new NotificationsServer();
+                new WebSocketHTTP();
+                new roomServer();
+
+                Console.Title = "Rec_rewild server started!";
+                Console.WriteLine(msg);
+            }
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
+        public static bool beta = false;
         public static string appversion = "0.0.2";
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
