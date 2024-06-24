@@ -16,6 +16,8 @@ using Client;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net.NetworkInformation;
 using OpenRec.api;
+using System.Collections.Specialized;
+using static OpenRec.api.image_util;
 
 namespace server
 {
@@ -77,6 +79,16 @@ namespace server
                             request.InputStream.CopyTo(memoryStream);
                             array = memoryStream.ToArray();
                             @string = Encoding.ASCII.GetString(array);
+                        }
+                        string str2 = "";
+                        NameValueCollection headers1 = request.Headers;
+                        for (int index = 0; index < request.Headers.Count; ++index)
+                        {
+                            string key = headers1.GetKey(index);
+                            if (key == "Authorization")
+                                auth = headers1.GetValues("Authorization")[0];
+                            if (key == "X-RNSIG")
+                                str2 = headers1.GetValues(key)[0];
                         }
                         if (text.Length > 0xfff)
                         {
@@ -170,7 +182,7 @@ namespace server
                         {
                             s = ModerationBlockDetails;
                         }
-                        if (Url == "//api/chat/v2/myChats?mode=0&count=50")
+                        if (Url == "/api/chat/v2/myChats?mode=0&count=50")
                         {
                             s = BracketResponse;
                         }
@@ -182,7 +194,7 @@ namespace server
                         {
                             s = File.ReadAllText("SaveData\\gameconfigs.txt");
                         }
-                        if (rawUrl.StartsWith("/api/relationships/v2/get") || rawUrl.StartsWith("/api/relationships/v1/get"))
+                        if (Url.StartsWith("relationships/v2/get") || Url.StartsWith("relationships/v1/get"))
                         {
                             //s = Relationships.Friends();
                             s = "[]";
@@ -242,7 +254,7 @@ namespace server
                         {
                             s = "{\"ChallengeMapId\":0,\"StartAt\":\"2021-12-27T21:27:38.188Z\",\"EndAt\":\"2025-12-27T21:27:38.188Z\",\"ServerTime\":\"2023-12-27T21:27:38.188Z\",\"Challenges\":[],\"Gift\":{\"GiftDropId\":1,\"AvatarItemDesc\":\"\",\"Xp\":2,\"Level\":0,\"EquipmentPrefabName\":\"[WaterBottle]\"},\"ChallengeThemeString\":\"RebornRec Water\"}";
                         }
-                        if (rawUrl == "//api/chat/v2/myChats?mode=0&count=50")
+                        if (rawUrl == "/api/chat/v2/myChats?mode=0&count=50")
                         {
                             s = BracketResponse;
                         }
@@ -369,11 +381,69 @@ namespace server
 
                         }*/
                         {
-                            image_util.ImageUploadResponse imageUploadResponse = new image_util.ImageUploadResponse("rec-rewild_" + DateTime.Now.ToString("MM.dd.yyyy HH.mm.ss.fff") + "_image" + ".jpg");
+                            // Create a stream reader to read the request's body
+                            StreamReader reader = new StreamReader(request.InputStream);
+                            bool flagerr = false;
+                            // Read the boundary string from the content type
+                            string contentType = request.ContentType;
+                            string boundary = contentType.Substring(contentType.IndexOf("boundary=") + "boundary=".Length);
+                            string fileName = "";
+                            // Split the body into its parts using the boundary as a separator
+                            string[] bodyParts = reader.ReadToEnd().Split(new string[] { boundary }, StringSplitOptions.RemoveEmptyEntries);
+                             
+                            // Loop through the parts and handle each one
+                            foreach (string part in bodyParts)
+                            {
+                                // If the part is a file, we handle it
+                                if (part.Contains("filename=\""))
+                                {
+                                    try 
+                                    {
+                                        // Get the name of the file
+                                        int fileNameStart = part.IndexOf("filename=\"") + "filename=\"".Length;
+                                        int fileNameEnd = part.IndexOf("\"", fileNameStart);
+                                        int fileNameLength = fileNameEnd - fileNameStart;
+                                        fileName = part.Substring(fileNameStart, fileNameLength);
+
+                                        // Get the file content
+                                        int fileContentStart = part.IndexOf("\r\n\r\n") + "\r\n\r\n".Length;
+                                        int fileContentEnd = part.IndexOf("\r\n", fileContentStart);
+                                        int fileContentLength = fileContentEnd - fileContentStart;
+                                        byte[] fileContent = Encoding.UTF8.GetBytes(part.Substring(fileContentStart, fileContentLength));
+
+                                        // Save the file to disk
+                                        File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\images\\" + fileName, fileContent);
+
+                                        Console.WriteLine("File saved: " + fileName);
+                                    }
+                                    catch
+                                    {
+                                        flagerr = true;
+                                        goto imgerr;
+                                    }
+                                }
+                            }
+                            imgerr:
+                            if (flagerr)
+                            {
+                                s = "{\"success\":false,\"error\":\"failed to uploaded image\"}";
+                            }
+                            else
+                            {
+                                s = "{\"success\":true,\"error\":\"\"File saved: " + fileName + "\"}";
+                            }
+                            //s = "{\"success\":true,\"error\":\"\"File saved: " + fileName + "\"}";
+                            //s = "\"ImageName\": \"error\"";
+                            /*
+                            image_util.ImageUploadResponse imageUploadResponse = new image_util.ImageUploadResponse("rec-rewild_" + ClientSecurity.GetTokenSubject(auth.Split(' ')[1]).ToString() + "-" + DateTime.Now.ToString("MM.dd.yyyy HH.mm.ss.fff") + ".jpg");
                             File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\" + imageUploadResponse.ImageName, image_util.MultiFormSplit(array));
                             s = JsonConvert.SerializeObject(imageUploadResponse);
+                            /*
+                            image_util.ImageUploadResponse imageUploadResponse = new image_util.ImageUploadResponse("rec-rewild_" + DateTime.Now.ToString("MM.dd.yyyy HH.mm.ss.fff") + "_image.jpg");
+                            File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\" + imageUploadResponse.ImageName, image_util.MultiFormSplit(array));
+                            s = JsonConvert.SerializeObject(imageUploadResponse);*/
                         }
-                        if (rawUrl == "//api/sanitize/v1/isPure")
+                        if (Url == "sanitize/v1/isPure")
                         {
                             s = "{\"IsPure\":true}";
                         }
@@ -503,7 +573,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-
                         if (Url == "rooms/v1/featuredRoomGroup")
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/dormslideshow.txt");
@@ -654,6 +723,8 @@ namespace server
             public string RoomName { get; set; }
             public string ActionCode { get; set; }
         }
+
+        public static string auth = "";
 
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
 

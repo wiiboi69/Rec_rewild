@@ -867,6 +867,180 @@ namespace api
                         }
                     }
                 }
+            },
+            {
+                "Crescendo",
+                new RoomRoot
+                {
+                    Room = new Room
+                    {
+                        RoomId = 21,
+                        Name = "Crescendo",
+                        Description = "Gather your vampire hunting crew, conquer a legendary castle, and restore peace to Rec Room!",
+                        CreatorPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                        ImageName = "Crescendo.png",
+                        State = 0,
+                        Accessibility = 1,
+                        SupportsLevelVoting = true,
+                        IsAGRoom = false,
+                        CloningAllowed = true,
+                        SupportsScreens = true,
+                        SupportsTeleportVR = true,
+                        SupportsWalkVR = true,
+                        SupportsVRLow = true
+                    },
+                    Scenes = new List<Scene>
+                    {
+                        new Scene
+                        {
+                            RoomSceneId = 27,
+                            RoomId = 21,
+                            RoomSceneLocationId = "49cb8993-a956-43e2-86f4-1318f279b22a",
+                            Name = "home",
+                            IsSandbox = true,
+                            DataBlobName = string.Empty,
+                            MaxPlayers = 20,
+                            CanMatchmakeInto = true,
+                            DataModifiedAt = DateTime.Now
+                        }
+                    },
+                    CoOwners = new List<ulong>(),
+                    InvitedCoOwners = new List<int>(),
+                    Hosts = new List<int>(),
+                    InvitedHosts = new List<int>(),
+                    CheerCount = 1,
+                    FavoriteCount = 1,
+                    VisitCount = 1,
+                    Tags = new List<Tags>
+                    {
+                        new Tags
+                        {
+                            Tag = "rro",
+                            Type = 2
+                        },
+                        new Tags
+                        {
+                            Tag = "quest",
+                            Type = 2
+                        }
+                    }
+                }
+            },
+            {
+                "GoldenTrophy",
+                new RoomRoot
+                {
+                    Room = new Room
+                    {
+                        RoomId = 22,
+                        Name = "GoldenTrophy",
+                        Description = "The goblin king stole Coach's Golden Trophy. Team up and embark on an epic quest to recover it!",
+                        CreatorPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                        ImageName = "GoldenTrophy.png",
+                        State = 0,
+                        Accessibility = 1,
+                        SupportsLevelVoting = true,
+                        IsAGRoom = false,
+                        CloningAllowed = true,
+                        SupportsScreens = true,
+                        SupportsTeleportVR = true,
+                        SupportsWalkVR = true,
+                        SupportsVRLow = true
+                    },
+                    Scenes = new List<Scene>
+                    {
+                        new Scene
+                        {
+                            RoomSceneId = 27,
+                            RoomId = 22,
+                            RoomSceneLocationId = "91e16e35-f48f-4700-ab8a-a1b79e50e51b",
+                            Name = "home",
+                            IsSandbox = true,
+                            DataBlobName = string.Empty,
+                            MaxPlayers = 20,
+                            CanMatchmakeInto = true,
+                            DataModifiedAt = DateTime.Now
+                        }
+                    },
+                    CoOwners = new List<ulong>(),
+                    InvitedCoOwners = new List<int>(),
+                    Hosts = new List<int>(),
+                    InvitedHosts = new List<int>(),
+                    CheerCount = 1,
+                    FavoriteCount = 1,
+                    VisitCount = 1,
+                    Tags = new List<Tags>
+                    {
+                        new Tags
+                        {
+                            Tag = "rro",
+                            Type = 2
+                        },
+                        new Tags
+                        {
+                            Tag = "quest",
+                            Type = 2
+                        }
+                    }
+                }
+            },
+            {
+                "TheRiseofJumbotron",
+                new RoomRoot
+                {
+                    Room = new Room
+                    {
+                        RoomId = 23,
+                        Name = "TheRiseofJumbotron",
+                        Description = "Robot invaders threaten the galaxy! Team up with your friends and bring the laser heat!",
+                        CreatorPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                        ImageName = "TheRiseofJumbotron.png",
+                        State = 0,
+                        Accessibility = 1,
+                        SupportsLevelVoting = true,
+                        IsAGRoom = false,
+                        CloningAllowed = true,
+                        SupportsScreens = true,
+                        SupportsTeleportVR = true,
+                        SupportsWalkVR = true,
+                        SupportsVRLow = true
+                    },
+                    Scenes = new List<Scene>
+                    {
+                        new Scene
+                        {
+                            RoomSceneId = 27,
+                            RoomId = 23,
+                            RoomSceneLocationId = "acc06e66-c2d0-4361-b0cd-46246a4c455c",
+                            Name = "home",
+                            IsSandbox = true,
+                            DataBlobName = string.Empty,
+                            MaxPlayers = 20,
+                            CanMatchmakeInto = true,
+                            DataModifiedAt = DateTime.Now
+                        }
+                    },
+                    CoOwners = new List<ulong>(),
+                    InvitedCoOwners = new List<int>(),
+                    Hosts = new List<int>(),
+                    InvitedHosts = new List<int>(),
+                    CheerCount = 1,
+                    FavoriteCount = 1,
+                    VisitCount = 1,
+                    Tags = new List<Tags>
+                    {
+                        new Tags
+                        {
+                            Tag = "rro",
+                            Type = 2
+                        },
+                        new Tags
+                        {
+                            Tag = "quest",
+                            Type = 2
+                        }
+                    }
+                }
             }
         };
         public class RoomRoot
@@ -932,7 +1106,7 @@ namespace api
             public List<Tags> Tags { get; set; }
             public List<dummy> PromoImages { get; set; }
             public List<dummy> PromoExternalContent { get; set; }
-            public List<dummy> LoadScreens { get; set; }
+            public List<LoadScreens> LoadScreens { get; set; }
             /*
             public bool beta { get; set; }
             public List<ulong> CoOwners { get; set; }
@@ -942,6 +1116,65 @@ namespace api
             public List<int> Hosts { get; set; }
             public List<int> PlayerIdsWithModPower { get; set; }
             public List<int> InvitedHosts { get; set; }
+            */
+
+        }
+        public class RoomRootv3
+        {
+            public ulong RoomId { get; set; }
+            public bool IsDorm { get; set; }
+            public int MaxPlayerCalculationMode { get; set; }
+            public int MaxPlayers { get; set; }
+            public bool CloningAllowed { get; set; }
+            public bool DisableMicAutoMute { get; set; }
+            public bool DisableRoomComments { get; set; }
+            public bool EncryptVoiceChat { get; set; }
+            public bool ToxmodEnabled { get; set; }
+            public bool LoadScreenLocked { get; set; }
+            public int PersistenceVersion { get; set; }
+            public bool AutoLocalizeRoom { get; set; }
+            public bool IsDeveloperOwned { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string ImageName { get; set; }
+            public WarningMaskType WarningMask { get; set; }
+            public string CustomWarning { get; set; }
+            public ulong CreatorAccountId { get; set; }
+            public int State { get; set; }
+            public int Accessibility { get; set; }
+            public bool SupportsLevelVoting { get; set; }
+            public bool IsRRO { get; set; }
+            public bool SupportsScreens { get; set; }
+            public bool SupportsWalkVR { get; set; }
+            public bool SupportsTeleportVR { get; set; }
+            public bool SupportsVRLow { get; set; }
+            public bool SupportsQuest2 { get; set; }
+            public bool SupportsMobile { get; set; }
+            public bool SupportsJuniors { get; set; }
+            public int MinLevel { get; set; }
+            public int SetType { get; set; }
+            public int Type { get; set; }
+            public string CreatedAt { get; set; }
+            public Statsv2 Stats { get; set; }
+            public string? RankedEntityId { get; set; }
+            public string? RankingContext { get; set; }
+            public List<SubRoomsv2> SubRooms { get; set; }
+            public List<Roles> Roles { get; set; }
+            public string? DataBlob { get; set; }
+            public int UgcVersion { get; set; }
+            public List<Tags> Tags { get; set; }
+            public List<dummy> PromoImages { get; set; }
+            public List<dummy> PromoExternalContent { get; set; }
+            public List<LoadScreens> LoadScreens { get; set; }
+            public List<ulong> CoOwners { get; set; }
+            public List<int> InvitedCoOwners { get; set; }
+            public List<int> InvitedModerators { get; set; }
+            public List<int> Moderators { get; set; }
+            public List<int> Hosts { get; set; }
+            public List<int> PlayerIdsWithModPower { get; set; }
+            public List<int> InvitedHosts { get; set; }
+            /*
+            public bool beta { get; set; }
             */
 
         }
@@ -1007,6 +1240,12 @@ namespace api
             public string Tag { get; set; }
             public int Type { get; set; }
         }
+        public class LoadScreens
+        {
+            public string ImageName { get; set; }
+            public string Title { get; set; }
+            public string Subtitle { get; set; }
+        }
         public class Stats
         {
             public int CheerCount { get; set; }
@@ -1023,6 +1262,29 @@ namespace api
         public class dummy
         { 
 
+        }
+        public class SubRoomsv2
+        {
+            public int Accessibility { get; set; }
+            public string? DataBlob { get; set; }
+            public string? DataBlobName { get; set; }
+            public string? DataBlobHash { get; set; }
+            public bool IsSandbox { get; set; }
+            public int MaxPlayers { get; set; }
+            public string Name { get; set; }
+            public int SubRoomId { get; set; }
+            public int RoomId { get; set; }
+            public string UnitySceneId { get; set; }
+            public string Location { get; set; }
+            public int SavedByAccountId { get; set; }
+        }
+        public class Statsv2
+        {
+            public int CheerCount { get; set; }
+            public int FavoriteCount { get; set; }
+            public ulong RoomId { get; set; }
+            public int VisitorCount { get; set; }
+            public int VisitCount { get; set; }
         }
     }
 }

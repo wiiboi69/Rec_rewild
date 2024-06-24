@@ -99,6 +99,10 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
                             s = room_util.find_room_with_id(rawUrl, 7);
+                            if (APIServer.CachedversionID > 20210899)
+                            {
+                                s = room_util.room_change_fix_room(s);
+                            } 
                             s = room_util.room_change_CreatorAccount(s);
                             //s = "[" + room_util.find_room_with_id(rawUrl, 7) + "]";
                         }
