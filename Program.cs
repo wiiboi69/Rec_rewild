@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using server;
+using api;
 
 namespace start
 {
@@ -285,7 +286,7 @@ namespace start
                 }
                 else if (readline3 == "5")
                 {
-                    /*
+                    
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
                     Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to OpenRec.");
@@ -311,7 +312,7 @@ namespace start
                     
                     Console.Clear();
                     Console.WriteLine("Success!");
-                    */
+                    
                     Console.WriteLine("not ready!");
                     goto Start;
                 }
