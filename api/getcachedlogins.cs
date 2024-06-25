@@ -14,14 +14,16 @@ namespace api
         public static string GetDebugLogin(ulong userid, ulong platformid)
         {
             int level = int.Parse(File.ReadAllText("SaveData\\Profile\\level.txt"));
+            //displayName
             string name = File.ReadAllText("SaveData\\Profile\\username.txt");
+            string displayName = File.ReadAllText("SaveData\\Profile\\displayName.txt");
             return JsonConvert.SerializeObject(new List<getcachedlogins>
             {
                 new getcachedlogins
                 {
                     Id = userid,
                     Username = name,
-                    DisplayName = name,
+                    DisplayName = displayName,
                     XP = 9999,
                     Level = level,
                     RegistrationStatus = 2,

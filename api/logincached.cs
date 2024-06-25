@@ -19,6 +19,7 @@ namespace api
         {
             int level = int.Parse(File.ReadAllText("SaveData\\Profile\\level.txt"));
             string name = File.ReadAllText("SaveData\\Profile\\username.txt");
+            string displayName = File.ReadAllText("SaveData\\Profile\\displayName.txt");
             return JsonConvert.SerializeObject(new logincached
             {
                 Error = "",
@@ -26,7 +27,7 @@ namespace api
                 {
                     Id = userid,
                     Username = name,
-                    DisplayName = name,
+                    DisplayName = displayName,
                     XP = 9999,
                     Level = level,
                     RegistrationStatus = 2,

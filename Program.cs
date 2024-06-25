@@ -65,6 +65,7 @@ namespace start
             Console.Title = "Rec_rewild Startup Menu";
             Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
+            Console.WriteLine("discord server here: https://discord.gg/qZhThdFMjy");
             Console.WriteLine("this is a full server rewite version" + Environment.NewLine);
             Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server" + Environment.NewLine + "(6) Start beta Server");
             string readline = Console.ReadLine();
@@ -131,6 +132,7 @@ namespace start
                     File.Delete("SaveData\\gameconfigs.txt");
                     File.Delete("SaveData\\storefronts2.txt");
                     File.Delete("SaveData\\Profile\\username.txt");
+                    File.Delete("SaveData\\Profile\\username.txt");
                     File.Delete("SaveData\\Profile\\level.txt"); 
                     File.Delete("SaveData\\Profile\\userid.txt");
                     File.Delete("SaveData\\myrooms.txt"); 
@@ -162,8 +164,9 @@ namespace start
             {
                 Console.Clear();
             Profile:
+                Console.WriteLine("quick tip: you can change them in game" + Environment.NewLine);
                 Console.Title = "Rec_rewild Profile Menu";
-                Console.WriteLine("(1) Change Username" + Environment.NewLine + "(2) Change Profile Image" + Environment.NewLine + "(3) Change Level" + Environment.NewLine + "(4) Change bio" + Environment.NewLine + "(5) Profile Downloader" + Environment.NewLine + "(6) Go Back");
+                Console.WriteLine("(1) Change Username" + Environment.NewLine + "(2) Change displayName" + Environment.NewLine + "(3) Change Profile Image" + Environment.NewLine + "(4) Change Level" + Environment.NewLine + "(5) Change bio" + Environment.NewLine + "(6) Profile Downloader" + Environment.NewLine + "(7) Go Back");
                 string readline3 = Console.ReadLine();
                 if (readline3 == "1")
                 {
@@ -176,6 +179,16 @@ namespace start
                     goto Profile;
                 }
                 else if (readline3 == "2")
+                {
+                    Console.WriteLine("Current displayName: " + File.ReadAllText("SaveData\\Profile\\displayName.txt"));
+                    Console.WriteLine("New displayName: ");
+                    string newdisplayName = Console.ReadLine();
+                    File.WriteAllText("SaveData\\Profile\\displayName.txt", newdisplayName);
+                    Console.Clear();
+                    Console.WriteLine("Success!");
+                    goto Profile;
+                }
+                else if (readline3 == "3")
                 {
                     Console.Clear();
                     Console.WriteLine("1) Upload Media Link" + Environment.NewLine + "2) Drag Image onto this window" + Environment.NewLine + "3) Download Rec.Net Profile Image" + Environment.NewLine + "4) Go Back");
@@ -264,7 +277,7 @@ namespace start
                         goto Start;
                     }
                 }
-                else if (readline3 == "3")
+                else if (readline3 == "4")
                 {
                     Console.WriteLine("Current Level: " + File.ReadAllText("SaveData\\Profile\\level.txt"));
                     Console.WriteLine("New Level: ");
@@ -274,7 +287,7 @@ namespace start
                     Console.WriteLine("Success!");
                     goto Profile;
                 }
-                else if (readline3 == "4")
+                else if (readline3 == "5")
                 {
                     Console.WriteLine("Current bio: " + File.ReadAllText("SaveData\\Profile\\bio.txt"));
                     Console.WriteLine("New bio: ");
@@ -284,7 +297,7 @@ namespace start
                     Console.WriteLine("Success!");
                     goto Profile;
                 }
-                else if (readline3 == "5")
+                else if (readline3 == "6")
                 {
                     
                     Console.Title = "Rec_rewild Profile Downloader";
@@ -314,7 +327,7 @@ namespace start
                     Console.WriteLine("Success!");
                     goto Start;
                 }
-                else if (readline3 == "6")
+                else if (readline3 == "7")
                 {
                     Console.Clear();
                     goto Start;

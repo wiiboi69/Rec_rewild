@@ -64,6 +64,11 @@ namespace start
             {
                 File.WriteAllText("SaveData\\Profile\\username.txt", "Rec_rewild User#" + new Random().Next(0, 1000000));
             }
+            if (!(File.Exists("SaveData\\Profile\\displayName.txt")))
+            {
+                File.WriteAllText("SaveData\\Profile\\displayName.txt", File.ReadAllText("SaveData\\Profile\\username.txt"));
+            }
+            //displayName
             if (!(File.Exists("SaveData\\Profile\\level.txt")))
             {
                 File.WriteAllText("SaveData\\Profile\\level.txt", "10");
@@ -166,6 +171,10 @@ namespace start
             if (!(File.Exists("SaveData\\Profile\\username.txt")))
             {
                 File.WriteAllText("SaveData\\Profile\\username.txt", "Rec_rewild User#" + new Random().Next(0, 1000000));
+            }
+            if (!(File.Exists("SaveData\\Profile\\displayName.txt")))
+            {
+                File.WriteAllText("SaveData\\Profile\\displayName.txt", File.ReadAllText("SaveData\\Profile\\username.txt"));
             }
             if (!(File.Exists("SaveData\\Profile\\level.txt")))
             {

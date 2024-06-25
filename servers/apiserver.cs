@@ -430,7 +430,7 @@ namespace server
                             }
                             else
                             {
-                                s = "{\"success\":true,\"error\":\"\"File saved: " + fileName + "\"}";
+                                s = "{\"success\":true,\"error\":\"\",\"value\":\"File saved: " + fileName + "\"}";
                             }
                             //s = "{\"success\":true,\"error\":\"\"File saved: " + fileName + "\"}";
                             //s = "\"ImageName\": \"error\"";
@@ -591,20 +591,31 @@ namespace server
                         }
                         if (rawUrl.StartsWith("/account/me/bio"))
                         {
+                            string temp = text.Substring("bio=".Length);
+                            File.WriteAllText(Program.ProfilePath + "\\bio.txt", temp);
+                            s = "{\"success\":true,\"error\":\"\"}";
+                        }
+                        else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
+                        {
                             s = JsonConvert.SerializeObject(new
                             {
                                 accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                                 bio = File.ReadAllText(Program.ProfilePath + "\\bio.txt")
-                            }) ;
+                            });
                         }
-                        else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
+                        if (rawUrl.StartsWith("/account/me/displayName"))
                         {
-                            s = "[" + JsonConvert.SerializeObject(new
+                            string temp = text.Substring("displayName=".Length);
+                            File.WriteAllText(Program.ProfilePath + "\\displayName.txt", temp);
+                            s = "{\"success\":true,\"error\":\"\",\"value\":\"None\"}";
+                        }
+                        else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/displayName"))
+                        {
+                            s = JsonConvert.SerializeObject(new
                             {
                                 accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                                bio = File.ReadAllText(Program.ProfilePath + "\\bio.txt")
-                            }
-                            ) + "]";
+                                Name = File.ReadAllText(Program.ProfilePath + "\\displayName.txt")
+                            }   );
                         }
                         if (Url == "announcement/v1/get")
                         {

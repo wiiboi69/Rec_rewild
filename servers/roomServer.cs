@@ -82,6 +82,7 @@ namespace server
                         }
                         else if (rawUrl.StartsWith("/rooms?name="))
                         {
+
                             Url = rawUrl.Remove(0, 12);
                             string[] stringSeparators = new string[] { "?include=1325" };
                             string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries); 
@@ -90,11 +91,20 @@ namespace server
                             stringSeparators = new string[] { "?include=301" };
                             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                             Console.WriteLine(subs[0] + ".txt");
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + subs[0].ToLower() + ".txt");
+                            try
+                            {
+                                s = room_util.room_find_CustomRooms(s);
+                            }
+                            catch
+                            {
+                                s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + subs[0].ToLower() + ".txt");
+                            }
                         }
                         else if (rawUrl.StartsWith("/rooms/search?query=") || rawUrl.StartsWith("/rooms/hot"))
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json");
+                            s = room_util.room_inject_CustomRooms_list(s);
+
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {

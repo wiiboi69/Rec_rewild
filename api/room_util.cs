@@ -220,6 +220,19 @@ namespace api
             return new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt").ToString().ToLower();
         }
 
+        public static string room_find_CustomRooms(string s)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string room_inject_CustomRooms_list(string s)
+        {
+            roomlist roomlist = new roomlist();
+            roomlist root = JsonConvert.DeserializeObject<roomlist>(s);
+
+            return s;
+        }
+
         public static string BlankResponse = "";
 
         public static string BracketResponse = "[]";

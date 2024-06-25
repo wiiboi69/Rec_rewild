@@ -1259,6 +1259,12 @@ namespace api
             public int Role { get; set; }
             public int InvitedRole { get; set; }
         }
+        public class roomlist
+        {
+
+            public List<RoomRootv2> Results { get; set; }
+            public long TotalResults { get; set; }
+        }
         public class dummy
         { 
 

@@ -30,7 +30,7 @@ namespace api
                 new Account
                 {
                     accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                    displayName = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
+                    displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
                     bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     createdAt = DateTime.Now,
                     isJunior = false,
