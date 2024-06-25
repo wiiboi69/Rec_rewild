@@ -17,6 +17,7 @@ namespace start
             Directory.CreateDirectory("SaveData\\Profile\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\Rooms\\");
+            Directory.CreateDirectory("SaveData\\Rooms\\custom\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
             if (!(File.Exists("SaveData\\App\\firsttime.txt")))
@@ -68,7 +69,6 @@ namespace start
             {
                 File.WriteAllText("SaveData\\Profile\\displayName.txt", File.ReadAllText("SaveData\\Profile\\username.txt"));
             }
-            //displayName
             if (!(File.Exists("SaveData\\Profile\\level.txt")))
             {
                 File.WriteAllText("SaveData\\Profile\\level.txt", "10");
@@ -104,6 +104,8 @@ namespace start
             goto tryagainroom;
 
         tryagainroom:
+            File.WriteAllText("SaveData\\Rooms\\custom\\test_room.json", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/test_room.json"));
+
             /*
             if (!File.Exists("SaveData\\Rooms\\Downloaded\\roomname.txt"))
             {
@@ -129,6 +131,7 @@ namespace start
             Directory.CreateDirectory("SaveData\\Profile\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\Rooms\\");
+            Directory.CreateDirectory("SaveData\\Rooms\\custom\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
 
