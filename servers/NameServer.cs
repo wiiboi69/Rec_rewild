@@ -34,8 +34,46 @@ namespace server
                 HttpListenerResponse response = context.Response;
                 string rawUrl = request.RawUrl;
                 string s = "";
+                
                 if (Program.beta)
                 {
+                    /*
+                    s = "{"+
+                      "\"Accounts\": \"https://accounts.rec.net\","+
+                      "\"API\": \"https://api.rec.net\","+
+                      "\"Auth\": \"https://auth.rec.net\","+
+                      "\"BugReporting\": \"https://bugreporting.rec.net\","+
+                      "\"Cards\": \"https://cards.rec.net\","+
+                      "\"CDN\": \"https://cdn.rec.net\","+
+                      "\"Chat\": \"https://chat.rec.net\","+
+                      "\"Clubs\": \"https://clubs.rec.net\","+
+                      "\"CMS\": \"https://cms.rec.net\","+
+                      "\"Commerce\": \"https://commerce.rec.net\","+
+                      "\"Data\": \"https://data.rec.net\","+
+                      "\"DataCollection\": \"https://datacollection.rec.net\","+
+                      "\"Discovery\": \"https://discovery.rec.net\","+
+                      "\"Econ\": \"https://econ.rec.net\"," +
+                      "\"GameLogs\": \"https://gamelogs.rec.net\"," +
+                      "\"Geo\": \"https://geo.rec.net\"," +
+                      "\"Images\": \"https://img.rec.net\"," +
+                      "\"Leaderboard\": \"https://leaderboard.rec.net\"," +
+                      "\"Link\": \"https://link.rec.net\"," +
+                      "\"Lists\": \"https://lists.rec.net\"," +
+                      "\"Matchmaking\": \"https://match.rec.net\"," +
+                      "\"Moderation\": \"https://moderation.rec.net\"," +
+                      "\"Notifications\": \"https://notify.rec.net\"," +
+                      "\"PlatformNotifications\": \"https://platformnotifications.rec.net\"," +
+                      "\"PlayerSettings\": \"https://playersettings.rec.net\"," +
+                      "\"RoomComments\": \"https://roomcomments.rec.net\"," +
+                      "\"Rooms\": \"https://rooms.rec.net\"," +
+                      "\"Storage\": \"https://storage.rec.net\"," +
+                      "\"Strings\": \"https://strings.rec.net\"," +
+                      "\"StringsCDN\": \"https://strings-cdn.rec.net\"," +
+                      "\"Studio\": \"https://studio.rec.net\"," +
+                      "\"Thorn\": \"https://thorn.rec.net\"," +
+                      "\"Videos\": \"https://videos.rec.net\"," +
+                      "\"WWW\": \"https://rec.net\""+
+                    "}";*/
                     s = "{" +
                         "  \"Accounts\": \"http://localhost:20210/\"," +
                         "  \"API\":\"http://localhost:20210/\"," +

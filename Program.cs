@@ -66,7 +66,7 @@ namespace start
             Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
             Console.WriteLine("this is a full server rewite version" + Environment.NewLine);
-            Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server");
+            Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server" + Environment.NewLine + "(6) Start beta Server");
             string readline = Console.ReadLine();
             if (readline == "1")
             {
@@ -356,7 +356,7 @@ namespace start
             }
             if (readline == "6")
             {
-                Console.Title = "starting 2022 server";
+                Console.Title = "starting beta server";
                 Console.WriteLine("Please wait for server to start up");
                 version = "2022";
 
