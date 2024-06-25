@@ -7,6 +7,7 @@ using System.ComponentModel.Design.Serialization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -44,7 +45,34 @@ namespace api
                 goto roomfaileddownload;
             }
             roomfaileddownload:
-            Console.WriteLine("can't find room id : " + temp1);
+            Console.WriteLine("finding custom room id: " + temp1);
+            roomlist roomlistdata = JsonConvert.DeserializeObject<roomlist>(s);
+
+            string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
+            foreach (string roomdir in roomlistdir)
+            {
+                roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(roomdir));
+                
+                if (roomdata.RoomId == ulong.Parse(temp1))
+                {
+                    Console.WriteLine("found room name: " + roomdir + " using room id: " + temp1);
+                    return File.ReadAllText(roomdir);
+                }
+                else
+                {
+                    int n = 0;
+                    List<SubRooms> subroomdata = roomdata.SubRooms;
+                    foreach (SubRooms sunroomdir in subroomdata)
+                    {
+                        if (sunroomdir.RoomId == int.Parse(temp1))
+                        {
+                            Console.WriteLine("found room name: " + roomdir + " using room id: " + temp1);
+                            return File.ReadAllText(roomdir);
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("can't find room id: " + temp1);
             return new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt").ToString();
         }
 
