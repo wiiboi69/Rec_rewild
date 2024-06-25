@@ -78,7 +78,22 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/bulk?name="))
                         {
                             Console.WriteLine(rawUrl.Remove(0, 17) + ".txt");
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0, 17).ToLower() + ".txt");
+                            try
+                            {
+                                s = "[" + room_util.room_find_CustomRooms(s) + "]";
+                            }
+                            catch
+                            {
+                                try
+                                {
+                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0, 17).ToLower() + ".txt");
+
+                                }
+                                catch
+                                {
+                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/dormroom.txt");
+                                }
+                            }
                         }
                         else if (rawUrl.StartsWith("/rooms?name="))
                         {
