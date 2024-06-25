@@ -1,0 +1,84 @@
+{
+    "Accessibility": 1,
+    "AutoLocalizeRoom": false,
+    "CloningAllowed": false,
+    "CreatedAt": "2024-02-24T19:11:14.000156",
+    "CreatorAccountId": 1,
+    "CustomWarning": "",
+    "DataBlob": null,
+    "Description": "fortnite robots.",
+    "DisableMicAutoMute": false,
+    "DisableRoomComments": false,
+    "EncryptVoiceChat": false,
+    "ImageName": "test.png",
+    "IsDeveloperOwned": true,
+    "IsDorm": false,
+    "IsRRO": true,
+    "LoadScreenLocked": false,
+    "LoadScreens": [],
+    "MaxPlayerCalculationMode": 1,
+    "MaxPlayers": 0,
+    "MinLevel": 0,
+    "Name": "dic",
+    "PersistenceVersion": 2,
+    "PromoExternalContent": [],
+    "PromoImages": [],
+    "RankedEntityId": null,
+    "RankingContext": null,
+    "Roles": [{
+        "AccountId": 1,
+        "InvitedRole": 0,
+        "Role": 255
+    }],
+    "RoomId": 102,
+    "State": 0,
+    "Stats": {
+        "CheerCount": 2,
+        "FavoriteCount": 2,
+        "VisitCount": 126,
+        "VisitorCount": 0
+    },
+    "SubRooms": [{
+            "Accessibility": 1,
+            "DataBlob": "",
+            "IsSandbox": false,
+            "MaxPlayers": 8,
+            "Name": "CyberJunkCity",
+            "RoomId": 102,
+            "SavedByAccountId": -1,
+            "SubRoomId": 1,
+            "UnitySceneId": "9d6456ce-6264-48b4-808d-2d96b3d91038"
+        },
+        {
+            "Accessibility": 1,
+            "DataBlob": "",
+            "IsSandbox": false,
+            "MaxPlayers": 8,
+            "Name": "Hanagar",
+            "RoomId": 103,
+            "SavedByAccountId": -1,
+            "SubRoomId": 2,
+            "UnitySceneId": "239e676c-f12f-489f-bf3a-d4c383d692c3"
+        }
+    ],
+    "SupportsJuniors": true,
+    "SupportsLevelVoting": true,
+    "SupportsMobile": true,
+    "SupportsQuest2": true,
+    "SupportsScreens": true,
+    "SupportsTeleportVR": true,
+    "SupportsVRLow": true,
+    "SupportsWalkVR": true,
+    "Tags": [{
+            "Tag": "pvp",
+            "Type": 0
+        },
+        {
+            "Tag": "rro",
+            "Type": 0
+        }
+    ],
+    "ToxmodEnabled": false,
+    "UgcVersion": 1,
+    "WarningMask": 0
+}
