@@ -4,6 +4,7 @@ using server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -226,6 +227,23 @@ namespace api
         }
 
         public static string room_inject_CustomRooms_list(string s)
+        {
+            roomlist roomlistdata = JsonConvert.DeserializeObject<roomlist>(s);
+            long rooms = roomlistdata.TotalResults;
+
+            string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
+            foreach (string roomdir in roomlistdir)
+            {
+                roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(roomdir));
+
+                roomlistdata.Results.Add(roomdata);
+                rooms ++;
+            }
+            roomlistdata.TotalResults = rooms;
+            return JsonConvert.SerializeObject(roomlistdata);
+        }
+
+        public static string room_inject_MyRooms_list(string s)
         {
             roomlist roomlist = new roomlist();
             roomlist root = JsonConvert.DeserializeObject<roomlist>(s);
