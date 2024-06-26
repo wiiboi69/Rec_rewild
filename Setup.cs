@@ -75,7 +75,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\Profile\\userid.txt")))
             {
-                File.WriteAllText("SaveData\\Profile\\userid.txt", "10000000");
+                File.WriteAllText("SaveData\\Profile\\userid.txt", new Random().Next(10000000, 999999999).ToString());
             }
             if (!(File.Exists("SaveData\\myrooms.txt")))
             {
@@ -189,7 +189,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\Profile\\userid.txt")))
             {
-                File.WriteAllText("SaveData\\Profile\\userid.txt", "10000000");
+                File.WriteAllText("SaveData\\Profile\\userid.txt", new Random().Next(10000000, 999999999).ToString());
             }
             if (!(File.Exists("SaveData\\myrooms.txt")))
             {
