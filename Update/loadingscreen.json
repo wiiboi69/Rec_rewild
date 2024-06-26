@@ -9,7 +9,7 @@
     "Visibility": 1,
     "AllowCycling": false,
     "RestrictToNewUsers": false,
-    "ImageName": "Community/Kuti/site.png",
+    "ImageName": "Community/room/Kuti/site.png",
     "PlatformMask": 239,
     "CreatedAt": "2022-12-06T20:31:28Z"
   },
@@ -23,7 +23,7 @@
     "Visibility": 1,
     "AllowCycling": false,
     "RestrictToNewUsers": false,
-    "ImageName": "Community/intro/intro.png",
+    "ImageName": "Community/room/intro/intro.png",
     "PlatformMask": 239,
     "CreatedAt": "2022-12-06T20:31:28Z"
   },
