@@ -12,14 +12,15 @@ namespace OpenRec.api
 {
     internal class image_util
     {
-        public static string SaveImageFile(byte[] request, out bool flag)
+        public static string SaveImageFile(byte[] request, out bool flag, out string rnfn)
         {
+            rnfn = "";
             bool flag1;
             byte[] rnimg = ParceData(request, "image.dat", out flag1);
-
+            rnimg = MultiFormSplit(request);
             if (!flag1)
             {
-                flag = false;
+                flag = true;
                 return "error.png";
             }
 
@@ -32,7 +33,8 @@ namespace OpenRec.api
             FileStream file = File.Create("SaveData\\images\\" + fname);
             file.Write(rnimg);
             file.Close();
-            flag = flag1;
+            flag = false;
+            rnfn = "SaveData\\images\\" + fname;
             return imagefname;
         }
         public class ImageUploadResponse
@@ -211,6 +213,7 @@ namespace OpenRec.api
                 Console.WriteLine("failed to parse data " + ex.ToString());
             }
             DidItParced = false;
+            Console.WriteLine("can't find: \"" + name + "\" in the form data");
             return null;
         }
 

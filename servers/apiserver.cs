@@ -68,17 +68,21 @@ namespace server
                         string text;
                         byte[] rawtext;
                         string s = "";
+                        byte[] array;
                         using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
                         {
                             text = streamReader.ReadToEnd();
                         }
-                        byte[] array;
                         string @string;
                         using (MemoryStream memoryStream = new MemoryStream())
                         {
-                            request.InputStream.CopyTo(memoryStream);
+                            context.Request.InputStream.CopyTo(memoryStream);
                             array = memoryStream.ToArray();
                             @string = Encoding.ASCII.GetString(array);
+                        }
+                        if (array.Length < 1)
+                        {
+                            array = Encoding.UTF8.GetBytes(text);
                         }
                         string str2 = "";
                         NameValueCollection headers1 = request.Headers;
@@ -367,81 +371,21 @@ namespace server
                         }
                         */
                         if (Url.StartsWith("images/v4/uploadsaved"))
-                        /*
                         {
 
                             bool flag1;
-                            string temp1 = image_util.SaveImageFile(array, out flag1);
-                            s = "\"ImageName\": " + "\"" + temp1 + "\"";
-                            if (!flag1)
+                            string rnfn;
+                            File.WriteAllBytes("SaveData\\image.dat", array);
+                            string temp1 = SaveImageFile(array, out flag1, out rnfn);
+                            if (flag1)
                             {
-                                s = "\"ImageName\": \"error\"";
-
-                            }
-
-                        }*/
-                        {
-                            // Create a stream reader to read the request's body
-                            StreamReader reader = new StreamReader(request.InputStream);
-                            bool flagerr = false;
-                            // Read the boundary string from the content type
-                            string contentType = request.ContentType;
-                            string boundary = contentType.Substring(contentType.IndexOf("boundary=") + "boundary=".Length);
-                            string fileName = "";
-                            // Split the body into its parts using the boundary as a separator
-                            string[] bodyParts = reader.ReadToEnd().Split(new string[] { boundary }, StringSplitOptions.RemoveEmptyEntries);
-                             
-                            // Loop through the parts and handle each one
-                            foreach (string part in bodyParts)
-                            {
-                                // If the part is a file, we handle it
-                                if (part.Contains("filename=\""))
-                                {
-                                    try 
-                                    {
-                                        // Get the name of the file
-                                        int fileNameStart = part.IndexOf("filename=\"") + "filename=\"".Length;
-                                        int fileNameEnd = part.IndexOf("\"", fileNameStart);
-                                        int fileNameLength = fileNameEnd - fileNameStart;
-                                        fileName = part.Substring(fileNameStart, fileNameLength);
-
-                                        // Get the file content
-                                        int fileContentStart = part.IndexOf("\r\n\r\n") + "\r\n\r\n".Length;
-                                        int fileContentEnd = part.IndexOf("\r\n", fileContentStart);
-                                        int fileContentLength = fileContentEnd - fileContentStart;
-                                        byte[] fileContent = Encoding.UTF8.GetBytes(part.Substring(fileContentStart, fileContentLength));
-
-                                        // Save the file to disk
-                                        File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\images\\" + fileName, fileContent);
-
-                                        Console.WriteLine("File saved: " + fileName);
-                                    }
-                                    catch
-                                    {
-                                        flagerr = true;
-                                        goto imgerr;
-                                    }
-                                }
-                            }
-                            imgerr:
-                            if (flagerr)
-                            {
-                                s = "{\"success\":false,\"error\":\"failed to uploaded image\"}";
+                                s = "{\"success\":false,\"error\":\"failed to uploaded image\",\"ImageName\":\"\"}";
                             }
                             else
                             {
-                                s = "{\"success\":true,\"error\":\"\",\"value\":\"File saved: " + fileName + "\"}";
+                                s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
                             }
-                            //s = "{\"success\":true,\"error\":\"\"File saved: " + fileName + "\"}";
-                            //s = "\"ImageName\": \"error\"";
-                            /*
-                            image_util.ImageUploadResponse imageUploadResponse = new image_util.ImageUploadResponse("rec-rewild_" + ClientSecurity.GetTokenSubject(auth.Split(' ')[1]).ToString() + "-" + DateTime.Now.ToString("MM.dd.yyyy HH.mm.ss.fff") + ".jpg");
-                            File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\" + imageUploadResponse.ImageName, image_util.MultiFormSplit(array));
-                            s = JsonConvert.SerializeObject(imageUploadResponse);
-                            /*
-                            image_util.ImageUploadResponse imageUploadResponse = new image_util.ImageUploadResponse("rec-rewild_" + DateTime.Now.ToString("MM.dd.yyyy HH.mm.ss.fff") + "_image.jpg");
-                            File.WriteAllBytes(Environment.CurrentDirectory + "\\SaveData\\" + imageUploadResponse.ImageName, image_util.MultiFormSplit(array));
-                            s = JsonConvert.SerializeObject(imageUploadResponse);*/
+                        
                         }
                         if (Url == "sanitize/v1/isPure")
                         {
