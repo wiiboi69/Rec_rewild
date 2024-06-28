@@ -6,6 +6,7 @@ using System.IO;
 using static api.GameSessions;
 using System.Collections.Generic;
 using System.Numerics;
+using static api.roomdata;
 
 namespace api
 {
@@ -204,7 +205,7 @@ namespace api
                 myuuidAsString = myuuid.ToString();
             }
 
-            
+
             if (roomdata.RROS.ContainsKey(roomname))
             {
                 Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
@@ -263,6 +264,77 @@ namespace api
                     }
                 }
                 return JsonConvert.SerializeObject(Config.GameSession);
+            }
+            else
+            {
+                string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
+                foreach (string roomdir in roomlistdir)
+                {
+                    roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(roomdir));
+
+                    if (roomdata.Name.Contains(roomname))
+                    {
+                        Console.WriteLine("found room name: " + roomdir + " using room name: " + roomname);
+                        string roomrootdata = File.ReadAllText(roomdir);
+                        RoomRootv2 roomRoot = JsonConvert.DeserializeObject<RoomRootv2>(roomrootdata); 
+                        if (scenename != "")
+                        {
+                            Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
+                            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
+                            {
+                                gamesessionid += (long)roomdata.RoomId;
+
+                            }
+                            Config.GameSession = new GameSessions.JoinResult
+                            {
+                                isOnline = true,
+                                deviceClass = 0,
+                                playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                                statusVisibility = 0,
+                                vrMovementMode = 1,
+                                errorCode = 0,
+                                appVersion = APIServer.CachedversionID.ToString(),
+                                roomInstance = new GameSessions.SessionInstance
+                                {
+                                    encryptVoiceChat = false,
+                                    clubId = null,
+                                    dataBlob = roomdata.DataBlob,
+                                    eventId = 0,
+                                    isFull = false,
+                                    isInProgress = false,
+                                    isPrivate = true,
+                                    location = roomdata.SubRooms[0].UnitySceneId,
+                                    maxCapacity = roomdata.MaxPlayers,
+                                    name = roomname,
+                                    photonRegionId = "us",
+                                    photonRegion = "us",
+                                    photonRoomId = roomname + "-" + myuuidAsString + "-room",
+                                    roomCode = null,
+                                    roomId = (long)roomdata.RoomId,
+                                    roomInstanceId = gamesessionid,
+                                    roomInstanceType = 0,
+                                    subRoomId = 0,
+                                    matchmakingPolicy = 0,
+                                }
+                            };
+                            foreach (SubRooms scene in roomRoot.SubRooms)
+                            {
+                                if (scene.Name == scenename)
+                                {
+                                    if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
+                                    {
+                                        Config.GameSession.roomInstance.roomInstanceId += (10000000 * scene.RoomId);
+
+                                    }
+                                    Config.GameSession.roomInstance.subRoomId = scene.SubRoomId;
+                                    Config.GameSession.roomInstance.location = scene.UnitySceneId;
+                                    Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
+                                }
+                            }
+                        }
+                        return JsonConvert.SerializeObject(Config.GameSession);
+                    }
+                }
             }
             Console.WriteLine("rec_rewild: " + roomname + " doesn't exist.");
             return "aaaaaaaa";

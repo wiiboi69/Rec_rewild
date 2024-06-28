@@ -505,10 +505,16 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (Url.StartsWith("playerReputation/v2/"))
+                        if (Url.StartsWith("playerReputation/v2/bulk"))
+                        {
+                            string temp = Url.Substring("playerReputation/v2/bulk?id=".Length);
+                            s = "{\"AccountId\":" + temp + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}";
+                        }
+                        /*
+                        else if (Url.StartsWith("playerReputation/v2/"))
                         {
                             s = "[{\"AccountId\":" + Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")) + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}]";
-                        }
+                        }*/
                         if (rawUrl == "/config/LoadingScreenTipData")
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/loadingscreen.json"); ;
@@ -585,9 +591,10 @@ namespace server
                         {
                             //CustomRooms.RoomGet(Url.Remove(0, 22));
                         }
-                        if (Url.StartsWith("players/v2/progression/bulk"))
+                        if (Url.StartsWith("players/v2/progression/bulk?"))
                         {
-                            s = "[" + AccountAuth.GetLevel() + "]";
+                            string temp = Url.Substring("players/v2/progression/bulk?id=".Length);
+                            s = AccountAuth.GetLevel(temp);
                         }
                         if (Url.StartsWith("messages/v1/favoriteFriendOnlineStatus"))
                         {

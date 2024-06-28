@@ -53,22 +53,42 @@ namespace server
 				}
 				if (rawUrl == "/goto/none")
 				{
-					s = JsonConvert.SerializeObject(GameSessions.Createnone());
+                    gameinprogress = false;
+                    s = JsonConvert.SerializeObject(GameSessions.Createnone());
 				}
 				else if (rawUrl.StartsWith("/goto/room/"))
 				{
-					s = GameSessions.Createroom(rawUrl.Remove(0, 11));
+                    gameinprogress = false;
+                    s = GameSessions.Createroom(rawUrl.Remove(0, 11));	
+                    if (Config.GameSession.roomInstance is not null)
+                    {
+                        Config.GameSession.roomInstance.isInProgress = gameinprogress;
+                    }
 				}
 				else if (rawUrl.StartsWith("/goto/player/"))
 				{
-					Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
+                    gameinprogress = false;
+                    Console.WriteLine("\"/goto/player/\" api not ready. \nGoing to dormroom!");
 					s = GameSessions.Createdorm();
+                    if (Config.GameSession.roomInstance is not null)
+                    {
+                        Config.GameSession.roomInstance.isInProgress = gameinprogress;
+                    }
 				}
-				if (rawUrl.StartsWith("/roominstance/"))
+                if (rawUrl.StartsWith("/roominstance/") && rawUrl.EndsWith("/inprogress"))
+                {
+					gameinprogress = bool.Parse(text.Substring("inProgress=".Length));
+                    if (Config.GameSession.roomInstance is not null)
+					{
+						Config.GameSession.roomInstance.isInProgress = gameinprogress;
+                    }
+                    s = "{\"Success\":true,\"Message\":\"\"}";
+                }
+				else if (rawUrl.StartsWith("/roominstance/"))
 				{
 					s = "{\"Success\":true,\"Message\":\"\"}";
 				}
-				if (rawUrl.StartsWith("/player/statusvisibility"))
+                if (rawUrl.StartsWith("/player/statusvisibility"))
 				{
 					s = "{}";
 				}
@@ -89,6 +109,8 @@ namespace server
 		public static string VersionCheckResponse = "{\"ValidVersion\":true}";
 		public static string BlankResponse = "";
 
-		private HttpListener listener = new HttpListener();
+		public static bool gameinprogress;
+
+        private HttpListener listener = new HttpListener();
 	}
 }

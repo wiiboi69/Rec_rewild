@@ -59,6 +59,15 @@ namespace api
                 XP = 0
             });
         }
+        public static string GetLevel(string playerid)
+        {
+            return JsonConvert.SerializeObject(new Progress
+            {
+                PlayerId = int.Parse(playerid),
+                Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
+                XP = 0
+            });
+        }
         public static string GetRep()
         {
             return JsonConvert.SerializeObject(new Rep
