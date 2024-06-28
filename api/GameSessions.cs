@@ -197,9 +197,9 @@ namespace api
             }
             myuuidAsString = "hello";
 
+            gamesessionid = new Random().Next(100000000, 0x7fffffff);
             if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
             {
-                gamesessionid = new Random().Next(100000000, 999999999);
                 gamesessionsubroomid = new Random().Next(0, 0xffff);
                 Guid myuuid = Guid.NewGuid();
                 myuuidAsString = myuuid.ToString();
