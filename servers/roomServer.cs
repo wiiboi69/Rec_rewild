@@ -86,12 +86,21 @@ namespace server
                             {
                                 try
                                 {
-                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/" + rawUrl.Remove(0, 17).ToLower() + ".txt");
-
+                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + rawUrl.Remove(0, 17).ToLower() + ".txt");
+                                    if (APIServer.CachedversionID > 20210899)
+                                    {
+                                        s = room_util.room_change_fix_room(s);
+                                    }
+                                    s = "[" + s + "]";
                                 }
                                 catch
                                 {
-                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms/dormroom.txt");
+                                    s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt");
+                                    if (APIServer.CachedversionID > 20210899)
+                                    {
+                                        s = room_util.room_change_fix_room(s);
+                                    }
+                                    s = "[" + s + "]";
                                 }
                             }
                         }
@@ -114,6 +123,10 @@ namespace server
                             {
                                 s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + subs[0].ToLower() + ".txt");
                             }
+                            if (APIServer.CachedversionID > 20210899)
+                            {
+                                s = room_util.room_change_fix_room(s);
+                            }
                         }
                         else if (rawUrl.StartsWith("/rooms/search?query=") || rawUrl.StartsWith("/rooms/hot"))
                         {
@@ -124,11 +137,13 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
                             s = room_util.find_room_with_id(rawUrl, 7);
+
+                            s = room_util.room_change_CreatorAccount(s);
+
                             if (APIServer.CachedversionID > 20210899)
                             {
                                 s = room_util.room_change_fix_room(s);
                             } 
-                            s = room_util.room_change_CreatorAccount(s);
                             //s = "[" + room_util.find_room_with_id(rawUrl, 7) + "]";
                         }
                         Console.WriteLine("room Response: " + s);

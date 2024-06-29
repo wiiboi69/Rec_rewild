@@ -1173,9 +1173,18 @@ namespace api
             public List<int> Hosts { get; set; }
             public List<int> PlayerIdsWithModPower { get; set; }
             public List<int> InvitedHosts { get; set; }
+            public int Version { get; internal set; }
+            public int CheerCount { get; internal set; }
+            public int FavoriteCount { get; internal set; }
+            public int VisitCount { get; internal set; }
+            public int VisitorCount { get; internal set; }
+            public string CustomRoomWarning { get; internal set; }
+            public int RoomWarningMask { get; internal set; }
+            public ulong CreatorPlayerId { get; internal set; }
+            public bool AllowsJuniors { get; internal set; }
             /*
-            public bool beta { get; set; }
-            */
+public bool beta { get; set; }
+*/
 
         }
         public class Room
@@ -1283,6 +1292,10 @@ namespace api
             public string UnitySceneId { get; set; }
             public string Location { get; set; }
             public int SavedByAccountId { get; set; }
+            public DateTime DataModifiedAt { get; internal set; }
+            public int RoomSceneId { get; internal set; }
+            public DateTime DataSavedAt { get; internal set; }
+            public string RoomSceneLocationId { get; internal set; }
         }
         public class Statsv2
         {
