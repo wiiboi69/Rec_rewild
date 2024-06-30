@@ -1270,8 +1270,12 @@ public bool beta { get; set; }
         }
         public class roomlist
         {
-
             public List<RoomRootv2> Results { get; set; }
+            public long TotalResults { get; set; }
+        }
+        public class roomlistv2
+        {
+            public List<RoomRootv3> Results { get; set; }
             public long TotalResults { get; set; }
         }
         public class dummy

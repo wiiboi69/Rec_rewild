@@ -61,7 +61,8 @@ namespace server
                         }
                         else if (rawUrl == "/rooms/ownedby/me")
                         {
-                            s = BracketResponse;
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json");
+                            //s = BracketResponse;
                         }
                         else if (rawUrl == "/rooms/favoritedby/me")
                         {
@@ -132,6 +133,10 @@ namespace server
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json");
                             s = room_util.room_inject_CustomRooms_list(s);
+                            if (APIServer.CachedversionID > 20210899)
+                            {
+                                s = room_util.room_fix_Rooms_list(s);
+                            }
 
                         }
                         else if (rawUrl.StartsWith("/rooms/"))

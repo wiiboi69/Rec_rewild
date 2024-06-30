@@ -459,6 +459,26 @@ namespace api
             return s;
         }
 
+        internal static string room_fix_Rooms_list(string s)
+        {
+            roomlist roomlistdata = JsonConvert.DeserializeObject<roomlist>(s);
+            roomlistv2 roomlistdatav2 = new roomlistv2
+            {
+                Results = [],
+                TotalResults = roomlistdata.TotalResults,
+            };
+
+            foreach (roomdata.RoomRootv2 roomrootdata in roomlistdata.Results)
+            {
+                string temp = room_util.room_change_fix_room(JsonConvert.SerializeObject(roomrootdata));
+                roomdata.RoomRootv3 roomrootdatav2 = JsonConvert.DeserializeObject<roomdata.RoomRootv3>(temp);
+
+                roomlistdatav2.Results.Add(roomrootdatav2);
+            }
+
+            return JsonConvert.SerializeObject(roomlistdatav2);
+        }
+
         public static string BlankResponse = "";
 
         public static string BracketResponse = "[]";
