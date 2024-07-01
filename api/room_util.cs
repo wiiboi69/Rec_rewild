@@ -202,7 +202,7 @@ namespace api
                 CustomRoomWarning = root.CustomWarning,
                 //"CustomRoomWarning": "",
 
-                RoomWarningMask = 0,
+                RoomWarningMask = root.WarningMask,
                 //"RoomWarningMask": 0,
 
                 CloningAllowed = root.CloningAllowed,
@@ -244,10 +244,10 @@ namespace api
                 IsRRO = root.IsRRO,
                 //"IsRRO": true,
 
-                LoadScreenLocked = false,
+                LoadScreenLocked = root.LoadScreenLocked,
                 //"LoadScreenLocked": false,
 
-                LoadScreens = [],
+                LoadScreens = root.LoadScreens,
                 //"LoadScreens": [],
 
                 MaxPlayerCalculationMode = 0,
@@ -262,7 +262,7 @@ namespace api
                 Name = root.Name,
                 //"Name": "DormRoom",
 
-                PromoExternalContent = [],
+                PromoExternalContent = root.PromoExternalContent,
                 //"PromoExternalContent": [],
 
                 PromoImages = root.PromoImages,

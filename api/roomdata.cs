@@ -1179,7 +1179,7 @@ namespace api
             public int VisitCount { get; internal set; }
             public int VisitorCount { get; internal set; }
             public string CustomRoomWarning { get; internal set; }
-            public int RoomWarningMask { get; internal set; }
+            public WarningMask.WarningMaskType RoomWarningMask { get; internal set; }
             public ulong CreatorPlayerId { get; internal set; }
             public bool AllowsJuniors { get; internal set; }
             /*

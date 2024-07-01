@@ -37,6 +37,31 @@ namespace OpenRec.api
             rnfn = "SaveData\\images\\" + fname;
             return imagefname;
         }
+        public static string SaveRoomFile(byte[] request, out bool flag, out string rnfn)
+        {
+            rnfn = "";
+            bool flag1;
+            byte[] rnimg = ParceData(request, "File", out flag1);
+            //rnimg = MultiFormSplit(request);
+            if (!flag1)
+            {
+                flag = true;
+                return "error";
+            }
+
+            string fname = "room_data_";
+            string imagefname = "";
+            //"SaveData\\images\\camera_" + new Random().Next(1000, 99999999) + "_image.png"
+
+            fname = fname + new Random().Next(1000, 99999999) + ".room";
+            imagefname = fname;
+            FileStream file = File.Create("SaveData\\Rooms\\" + fname);
+            file.Write(rnimg);
+            file.Close();
+            flag = false;
+            rnfn = "SaveData\\Rooms\\" + fname;
+            return imagefname;
+        }
         public class ImageUploadResponse
         {
             public string ImageName { get; set; }

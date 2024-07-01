@@ -11,14 +11,16 @@ namespace start
 		public static bool firsttime = false;
         public static void setup()
         {
-            //sets up all the important files so openrec doesnt crash like lame vaultserver xD
+            //sets up all the important files so Rec_rewild doesnt crash
             Console.WriteLine("Setting up... (May take a minute to download everything.)");
             Directory.CreateDirectory("SaveData\\App\\");
             Directory.CreateDirectory("SaveData\\Profile\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\Rooms\\");
             Directory.CreateDirectory("SaveData\\Rooms\\custom\\");
+            Directory.CreateDirectory("SaveData\\Rooms\\cdn\\");
             Directory.CreateDirectory("SaveData\\Images\\");
+            Directory.CreateDirectory("SaveData\\video\\");
             Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
             if (!(File.Exists("SaveData\\App\\firsttime.txt")))
             {
@@ -125,14 +127,16 @@ namespace start
         public static void quicksetup()
         {
             //check all the important files so rec_rewild doesnt crash
-            //and for updates
+            //and check for updates
 
             Directory.CreateDirectory("SaveData\\App\\");
             Directory.CreateDirectory("SaveData\\Profile\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\Rooms\\");
             Directory.CreateDirectory("SaveData\\Rooms\\custom\\");
+            Directory.CreateDirectory("SaveData\\Rooms\\cdn\\");
             Directory.CreateDirectory("SaveData\\Images\\");
+            Directory.CreateDirectory("SaveData\\video\\");
             Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
 
             if (!(File.Exists("SaveData\\avatar.txt")))

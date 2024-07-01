@@ -52,6 +52,8 @@ namespace server
                         string rawUrl = request.RawUrl;
                         string Url = "";
                         byte[] bytes = null;
+                        byte[] roomdatabytes = null;
+                        bool roomdata = false;
                         string signature = request.Headers.Get("X-RNSIG");
                         if (rawUrl.StartsWith("/api/"))
                         {
@@ -372,7 +374,6 @@ namespace server
                         */
                         if (Url.StartsWith("images/v4/uploadsaved"))
                         {
-
                             bool flag1;
                             string rnfn;
                             File.WriteAllBytes("SaveData\\image.dat", array);
@@ -397,7 +398,17 @@ namespace server
                         }
                         if (rawUrl == "/upload")
                         {
-                            s = "{\"IsPure\":true}";
+                            bool flag1;
+                            string rnfn;
+                            string temp1 = SaveRoomFile(array, out flag1, out rnfn);
+                            if (flag1)
+                            {
+                                s = "{\"success\":false,\"error\":\"failed to uploaded\"}";
+                            }
+                            else
+                            {
+                                s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
+                            }
                         }
                         if (Url == "avatar/v1/defaultunlocked")
                         {
@@ -418,6 +429,28 @@ namespace server
                         if (Url == "challenge/v1/getCurrent")
                         {
                             s = ChallengesV1GetCurrent;
+                        }
+                        ///data/
+                        if (rawUrl.StartsWith("/data/"))
+                        {
+                            string temp = rawUrl.Substring("/data/".Length);
+                            try
+                            {
+                                roomdatabytes = File.ReadAllBytes("SaveData\\Rooms\\cdn\\htr\\" + temp);
+
+                            }
+                            catch
+                            {
+                                File.WriteAllBytes("SaveData\\Rooms\\cdn\\htr\\" + temp, new WebClient().DownloadData("https://cdn.rec.net/data/" + temp));
+                                roomdatabytes = File.ReadAllBytes("SaveData\\Rooms\\cdn\\htr\\" + temp);
+                            }
+                            roomdata = true;
+                        }
+                        if (rawUrl.StartsWith("/room/"))
+                        {
+                            string temp = rawUrl.Substring("/room/".Length);
+                            roomdatabytes = File.ReadAllBytes("SaveData\\Rooms\\cdn\\" + temp + ".room");
+                            roomdata = true;
                         }
                         if (Url == "rooms/v1/featuredRoomGroup")
                         {
@@ -632,7 +665,14 @@ namespace server
                         {
                             Console.WriteLine("api Response: " + s);
                         }
-                        bytes = Encoding.UTF8.GetBytes(s);
+                        if (roomdata == true)
+                        {
+                            bytes = roomdatabytes;
+                        }
+                        else
+                        {
+                            bytes = Encoding.UTF8.GetBytes(s);
+                        }
                         response.ContentLength64 = (long)bytes.Length;
                         Stream outputStream = response.OutputStream;
                         outputStream.Write(bytes, 0, bytes.Length);
