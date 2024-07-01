@@ -430,6 +430,10 @@ namespace server
                         {
                             s = ChallengesV1GetCurrent;
                         }
+                        if (Url == "rooms/v1/verifyRole")
+                        {
+                            s = "true";
+                        }
                         ///data/
                         if (rawUrl.StartsWith("/data/"))
                         {

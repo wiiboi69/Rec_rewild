@@ -66,9 +66,15 @@ namespace server
                             text = streamReader.ReadToEnd();
                         }
                         Console.WriteLine("Auth Data: " + text);
+                        //
                         if (rawUrl == "/eac/challenge")
                         {
                             s = challengesResponse;
+                            Thread.Sleep(100);
+                        }
+                        else if(rawUrl.StartsWith("/role/developer/"))
+                        {
+                            s = "true";
                             Thread.Sleep(100);
                         }
                         else if (rawUrl == "/connect/token")
