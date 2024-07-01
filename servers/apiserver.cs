@@ -396,6 +396,9 @@ namespace server
                         {
                             s = SanitizeChatMessageRequest(text);
                         }
+                        /*{
+                             "FileName": ""
+                        }*/
                         if (rawUrl == "/upload")
                         {
                             bool flag1;
