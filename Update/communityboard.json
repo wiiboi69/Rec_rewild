@@ -8,7 +8,7 @@
     "FeaturedRoomGroupId": 1,
     "Name": "rooms Highlights",
     "StartAt": "2023-05-02T07:00:00Z",
-    "EndAt": "2023-05-09T07:00:00Z",
+    "EndAt": "9999-05-09T07:00:00Z",
     "FeaturedRooms": [
       {
         "RoomName": "dormroom",
