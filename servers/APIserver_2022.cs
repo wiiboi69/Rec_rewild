@@ -756,7 +756,7 @@ namespace server
 
         public static string BlankResponse = "";
         public static string BracketResponse = "[]";
-        public static string VersionCheckResponse = "{\"VersionStatus\":1,\"UpdateNotificationStage\":0}";
+        public static string VersionCheckResponse = "{\"VersionStatus\":0,\"UpdateNotificationStage\":0}";
 
         private HttpListener listener = new HttpListener();
     }
