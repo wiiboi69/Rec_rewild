@@ -75,38 +75,40 @@ namespace server
                       "\"WWW\": \"https://rec.net\""+
                     "}";*/
                     s = "{" +
-                        "  \"Accounts\": \"http://localhost:20210/\"," +
-                        "  \"API\":\"http://localhost:20210/\"," +
-                        "  \"Auth\": \"http://localhost:20214/\"," +
-                        "  \"BugReporting\": \"http://localhost:20210/\"," +
-                        "  \"Cards\": \"http://localhost:20210/\"," +
-                        "  \"CDN\": \"http://localhost:20210/\"," +
-                        "  \"Chat\": \"http://localhost:20210/\"," +
-                        "  \"Clubs\": \"http://localhost:20210/\"," +
-                        "  \"CMS\": \"http://localhost:20210/\"," +
-                        "  \"Commerce\": \"http://localhost:20210/\"," +
-                        "  \"Data\": \"http://localhost:20210/\"," +
-                        "  \"DataCollection\": \"http://localhost:20210/\"," +
-                        "  \"Discovery\": \"http://localhost:20210/\"," +
-                        "  \"Econ\": \"http://localhost:20210/\"," +
-                        "  \"GameLogs\": \"http://localhost:20210/\"," +
-                        "  \"Geo\": \"http://localhost:20210/\"," +
-                        "  \"Images\": \"http://localhost:20213/\"," +
-                        "  \"Leaderboard\": \"http://localhost:20210/\"," +
-                        "  \"Link\": \"http://localhost:20210/\"," +
-                        "  \"Lists\": \"http://localhost:20210/\"," +
-                        "  \"Matchmaking\": \"http://localhost:20215/\"," +
-                        "  \"Moderation\": \"http://localhost:20210/\"," +
-                        "  \"Notifications\": \"http://localhost:20212/\"," +
-                        "  \"PlayerSettings\": \"http://localhost:20210/\"," +
-                        "  \"RoomComments\": \"http://localhost:20210/\"," +
-                        "  \"Rooms\": \"http://localhost:20218/\"," +
-                        "  \"Storage\": \"http://localhost:20210/\"," +
-                        "  \"Strings\": \"http://localhost:20210/\"," +
-                        "  \"StringsCDN\": \"http://localhost:20210/\"," +
-                        "  \"Thorn\": \"http://localhost:20210/\"," +
-                        "  \"Videos\": \"http://localhost:20210/\"," +
-                        "  \"WWW\": \"http://localhost:20210/\"" +
+                        "  \"Accounts\": \"https://example.com/\"," +
+                        "  \"API\":\"https://example.com/\"," +
+                        "  \"Auth\": \"https://example.com/auth/\"," +
+                        "  \"BugReporting\": \"https://example.com/\"," +
+                        "  \"Cards\": \"https://example.com/\"," +
+                        "  \"CDN\": \"https://example.com/\"," +
+                        "  \"Chat\": \"https://example.com/\"," +
+                        "  \"Clubs\": \"https://example.com/\"," +
+                        "  \"CMS\": \"https://example.com/\"," +
+                        "  \"Commerce\": \"https://example.com/\"," +
+                        "  \"Data\": \"https://example.com/\"," +
+                        "  \"DataCollection\": \"https://example.com/\"," +
+                        "  \"Discovery\": \"https://example.com/\"," +
+                        "  \"Econ\": \"https://example.com/\"," +
+                        "  \"GameLogs\": \"https://example.com/\"," +
+                        "  \"Geo\": \"https://example.com/\"," +
+                        "  \"Images\": \"https://example.com/img/\"," +
+                        "  \"Leaderboard\": \"https://example.com/\"," +
+                        "  \"Link\": \"https://example.com/\"," +
+                        "  \"Lists\": \"https://example.com/\"," +
+                        "  \"Matchmaking\": \"https://example.com/Matchmaking/\"," +
+                        "  \"Moderation\": \"https://example.com/\"," +
+                        "  \"Notifications\": \"https://example.com/Notifications/\"," +
+                        //"  \"PlatformNotifications\": \"https://example.com/platformnotifications/\"," +
+                        "  \"PlayerSettings\": \"https://example.com/\"," +
+                        "  \"RoomComments\": \"https://example.com/\"," +
+                        "  \"Rooms\": \"https://example.com/roomserver/\"," +
+                        "  \"Storage\": \"https://example.com/Storage/\"," +
+                        "  \"Strings\": \"https://example.com/\"," +
+                        "  \"StringsCDN\": \"https://example.com/\"," +
+                        "  \"Studio\": \"https://example.com/Studio/\"," +
+                        "  \"Thorn\": \"https://example.com/\"," +
+                        "  \"Videos\": \"https://example.com/\"," +
+                        "  \"WWW\": \"https://example.com/\"" +
                         "}";
                 }
                 else

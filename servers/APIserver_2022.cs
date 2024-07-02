@@ -21,13 +21,13 @@ using static OpenRec.api.image_util;
 
 namespace server
 {
-    internal class APIServer
+    internal class APIServer_2022
     {
-        public APIServer()
+        public APIServer_2022()
         {
             try
             {
-                Console.WriteLine("[APIServer.cs] has started.");
+                Console.WriteLine("[APIServer_2022.cs] has started.");
                 new Thread(new ThreadStart(this.StartListen)).Start();
             }
             catch (Exception ex)
@@ -44,7 +44,7 @@ namespace server
                     for (; ; )
                     {
                         this.listener.Start();
-                        Console.WriteLine("[APIServer.cs] is listening.");
+                        Console.WriteLine("[APIServer_2022.cs] is listening.");
                         HttpListenerContext context = this.listener.GetContext();
                         HttpListenerRequest request = context.Request;
                         HttpListenerResponse response = context.Response;
@@ -178,7 +178,7 @@ namespace server
                         }
                         if (Url == "config/v1/amplitude")
                         {
-                            s = Amplitude.amplitude();
+                            s = Amplitude_2022.amplitude_2022();
                         }
                         if (Url == "images/v2/named")
                         {
@@ -198,7 +198,8 @@ namespace server
                         }
                         if (Url == "gameconfigs/v1/all")
                         {
-                            s = File.ReadAllText("SaveData\\gameconfigs.txt");
+                            s = File.ReadAllText("SaveData_2022\\gameconfigs.txt");
+                            //s = Avatar_Item_Util.inject_gameconfig_list(s);
                         }
                         if (Url.StartsWith("relationships/v2/get") || Url.StartsWith("relationships/v1/get"))
                         {
@@ -696,9 +697,9 @@ namespace server
             catch (Exception ex4)
             {
                 Console.WriteLine(ex4);
-                File.WriteAllText("crashdump.txt", Convert.ToString(ex4));
+                File.WriteAllText("crashdump_APIServer_2022.txt", Convert.ToString(ex4));
                 this.listener.Close();
-                new APIServer();
+                new APIServer_2022();
             }
         }
         public static string SanitizeChatMessageRequest(string postData) => "\"" + JsonConvert.DeserializeObject<SanitizePostDTO>(postData).Value + "\"";
@@ -754,7 +755,7 @@ namespace server
 
         public static string BlankResponse = "";
         public static string BracketResponse = "[]";
-        public static string VersionCheckResponse = "{\"VersionStatus\":0}";
+        public static string VersionCheckResponse = "{\"VersionStatus\":1,\"UpdateNotificationStage\":0}";
 
         private HttpListener listener = new HttpListener();
     }

@@ -67,7 +67,7 @@ namespace start
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
             Console.WriteLine("discord server here: https://discord.gg/qZhThdFMjy");
             Console.WriteLine("this is a full server rewite version" + Environment.NewLine);
-            Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server" + Environment.NewLine + "(6) Start beta Server");
+            Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server" + Environment.NewLine + "(6) Start beta 2022 Server");
             string readline = Console.ReadLine();
             if (readline == "1")
             {
@@ -369,17 +369,17 @@ namespace start
             }
             if (readline == "6")
             {
-                Console.Title = "starting beta server";
+                Console.Title = "starting beta server for 2022 build";
                 Console.WriteLine("Please wait for server to start up");
                 version = "2022";
 
-                APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
+                APIServer_2022.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
 
                 beta = true;
 
                 //note: nameserver is at the same port as before
                 new NameServer();
-                new APIServer();
+                new APIServer_2022();
                 new AuthServer();
                 new ImageServer();
                 new matchServer();
