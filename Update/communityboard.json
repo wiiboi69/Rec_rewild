@@ -30,17 +30,17 @@
       {
         "RoomName": "dormroom",
         "RoomId": 1,
-        "ImageName": "Crescendo.png"
+        "ImageName": "dorm_room.png"
       },
       {
         "RoomName": "hell",
-        "RoomId": 2,
+        "RoomId": 20,
         "ImageName": "bowling.png"
       },
       {
         "RoomName": "real helll",
-        "RoomId": 3,
-        "ImageName": "bowling.png"
+        "RoomId": 21,
+        "ImageName": "crescendo.png"
       }
     ]
   },
