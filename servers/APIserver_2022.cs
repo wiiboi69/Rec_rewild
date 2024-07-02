@@ -178,7 +178,8 @@ namespace server
                         }
                         if (Url == "config/v1/amplitude")
                         {
-                            s = Amplitude_2022.amplitude_2022();
+                            //s = Amplitude_2022.amplitude_2022();
+                            s = "{\r\n  \"AmplitudeKey\": \"e1693a1003671058b6abc356c8ba8d59\",\r\n  \"UseRudderStack\": true,\r\n  \"RudderStackKey\": \"23NiJHIgu3koaGNCZIiuYvIQNCu\",\r\n  \"UseStatSig\": true,\r\n  \"StatSigKey\": \"client-SBZkOrjD3r1Cat3f3W8K6sBd11WKlXZXIlCWj6l4Aje\",\r\n  \"StatSigEnvironment\": 0\r\n}";
                         }
                         if (Url == "images/v2/named")
                         {
