@@ -17,9 +17,22 @@ namespace OpenRec.api
             string[] AvatarItemdir = Directory.GetFiles("SaveData\\custom\\avatar items\\");
             foreach (string AvatarItemdata in AvatarItemdir)
             {
-                AvatarItem avataritem_data = JsonConvert.DeserializeObject<AvatarItem>(File.ReadAllText(AvatarItemdata));
+                try
+                {
+                    AvatarItem avataritem_data = JsonConvert.DeserializeObject<AvatarItem>(File.ReadAllText(AvatarItemdata));
+                    AvatarItemlistdata.Add(avataritem_data);
 
-                AvatarItemlistdata.Add(avataritem_data);
+                }
+                catch
+                {
+
+                    List<AvatarItem> AvatarItem_dir_list = JsonConvert.DeserializeObject<List<AvatarItem>>(File.ReadAllText(AvatarItemdata));
+                    foreach (AvatarItem AvatarItem_data_item in AvatarItem_dir_list)
+                    {
+
+                        AvatarItemlistdata.Add(AvatarItem_data_item);
+                    }
+                }
             }
 
             return JsonConvert.SerializeObject(AvatarItemlistdata);
