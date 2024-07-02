@@ -21,7 +21,12 @@ namespace start
             Directory.CreateDirectory("SaveData\\Rooms\\cdn\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\video\\");
-            Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
+            Directory.CreateDirectory("SaveData\\custom\\");
+            Directory.CreateDirectory("SaveData\\custom\\items\\");
+            Directory.CreateDirectory("SaveData\\custom\\avatar items\\");
+            Directory.CreateDirectory("SaveData\\custom\\skins\\");
+            Directory.CreateDirectory("SaveData_2022\\");
+
             if (!(File.Exists("SaveData\\App\\firsttime.txt")))
             {
                 File.WriteAllText("SaveData\\App\\firsttime.txt", "this text file has no use other than to tell the program whether to bring up the intro or not");
@@ -138,6 +143,11 @@ namespace start
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\video\\");
             Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
+            Directory.CreateDirectory("SaveData\\custom\\");
+            Directory.CreateDirectory("SaveData\\custom\\items\\");
+            Directory.CreateDirectory("SaveData\\custom\\avatar items\\");
+            Directory.CreateDirectory("SaveData\\custom\\skins\\");
+            Directory.CreateDirectory("SaveData_2022\\");
 
             if (!(File.Exists("SaveData\\avatar.txt")))
             {
