@@ -136,6 +136,12 @@ namespace server
                             if (APIServer.CachedversionID > 20210899)
                             {
                                 s = room_util.room_fix_Rooms_list(s);
+                                //s = new WebClient().DownloadString("https://rooms.rec.net/rooms/hot?take=4");
+                                /*
+                                s = "{\"Results\":[" +
+                                    File.ReadAllText("test4.txt") +
+                                    "],\"TotalResults\":1}";
+                                //https://rooms.rec.net/rooms/hot*/
                             }
 
                         }

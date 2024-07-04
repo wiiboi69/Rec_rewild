@@ -1062,6 +1062,7 @@ namespace api
             public List<Tags> Tags { get; set; }
             public bool beta { get; set; }
         }
+
         public class RoomRootv2
         {
             public ulong RoomId { get; set; }
@@ -1119,6 +1120,7 @@ namespace api
             */
 
         }
+
         public class RoomRootv3
         {
             public ulong RoomId { get; set; }
@@ -1185,6 +1187,65 @@ namespace api
             /*
 public bool beta { get; set; }
 */
+
+        }
+
+        public class RoomRootv3_1
+        {
+            public ulong RoomId { get; set; }
+            public bool IsDorm { get; set; }
+            public int MaxPlayerCalculationMode { get; set; }
+            public int MaxPlayers { get; set; }
+            public bool CloningAllowed { get; set; }
+            public bool DisableMicAutoMute { get; set; }
+            public bool DisableRoomComments { get; set; }
+            public bool EncryptVoiceChat { get; set; }
+            public bool ToxmodEnabled { get; set; }
+            public bool LoadScreenLocked { get; set; }
+            public int PersistenceVersion { get; set; }
+            public bool AutoLocalizeRoom { get; set; }
+            public bool IsDeveloperOwned { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string ImageName { get; set; }
+            public WarningMaskType WarningMask { get; set; }
+            public string CustomWarning { get; set; }
+            public ulong CreatorAccountId { get; set; }
+            public int State { get; set; }
+            public int Accessibility { get; set; }
+            public bool SupportsLevelVoting { get; set; }
+            public bool IsRRO { get; set; }
+            public bool SupportsScreens { get; set; }
+            public bool SupportsWalkVR { get; set; }
+            public bool SupportsTeleportVR { get; set; }
+            public bool SupportsVRLow { get; set; }
+            public bool SupportsQuest2 { get; set; }
+            public bool SupportsMobile { get; set; }
+            public bool SupportsJuniors { get; set; }
+            public int MinLevel { get; set; }
+            public string CreatedAt { get; set; }
+            public Stats Stats { get; set; }
+            public string? RankedEntityId { get; set; }
+            public string? RankingContext { get; set; }
+            public List<SubRooms> SubRooms { get; set; }
+            public List<Roles> Roles { get; set; }
+            public string? DataBlob { get; set; }
+            public int UgcVersion { get; set; }
+            public int Version { get; set; }
+            public List<Tags> Tags { get; set; }
+            public List<dummy> PromoImages { get; set; }
+            public List<dummy> PromoExternalContent { get; set; }
+            public List<LoadScreens> LoadScreens { get; set; }
+            /*
+            public bool beta { get; set; }
+            public List<ulong> CoOwners { get; set; }
+            public List<int> InvitedCoOwners { get; set; }
+            public List<int> InvitedModerators { get; set; }
+            public List<int> Moderators { get; set; }
+            public List<int> Hosts { get; set; }
+            public List<int> PlayerIdsWithModPower { get; set; }
+            public List<int> InvitedHosts { get; set; }
+            */
 
         }
         public class Room
@@ -1276,6 +1337,11 @@ public bool beta { get; set; }
         public class roomlistv2
         {
             public List<RoomRootv3> Results { get; set; }
+            public long TotalResults { get; set; }
+        }
+        public class roomlistv2_1
+        {
+            public List<RoomRootv3_1> Results { get; set; }
             public long TotalResults { get; set; }
         }
         public class dummy
