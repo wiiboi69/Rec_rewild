@@ -284,6 +284,7 @@ namespace api
                 PlayerIdsWithModPower = [],
                 RankedEntityId = null,
                 Roles = root.Roles,
+                //RoomId = root.RoomId,
                 RoomId = root.RoomId,
                 SetType = 0,
                 State = 0,
@@ -339,57 +340,6 @@ namespace api
             };
 
             rootv2.SubRooms = subroomsv2data;
-
-            n = 0;
-            do
-            {
-                rootv2.SubRooms[n].Accessibility = root.SubRooms[n].Accessibility;
-                //"Accessibility": 1,
-
-                rootv2.SubRooms[n].DataBlob = root.SubRooms[n].DataBlob;
-                //"DataBlob": "",
-
-                rootv2.SubRooms[n].DataBlobName = root.SubRooms[n].DataBlob;
-                //"DataBlobName": "",
-
-                rootv2.SubRooms[n].DataBlobHash = "";
-                //"DataBlobHash": "",
-
-                rootv2.SubRooms[n].DataSavedAt = DateTime.UtcNow;
-                //"DataSavedAt": "2024-04-29T00:50:31.3734855",
-
-                rootv2.SubRooms[n].IsSandbox = root.SubRooms[n].IsSandbox;
-                //"IsSandbox": true,
-
-                rootv2.SubRooms[n].MaxPlayers = root.SubRooms[n].MaxPlayers;
-                //"MaxPlayers": 4,
-
-                rootv2.SubRooms[n].Name = root.SubRooms[n].Name;
-                //"Name": "Home",
-
-                rootv2.SubRooms[n].RoomSceneId = root.SubRooms[n].RoomId;
-                //"RoomSceneId": 1,
-
-                rootv2.SubRooms[n].RoomId = root.SubRooms[n].RoomId;
-                //"RoomId": 1,
-
-                rootv2.SubRooms[n].SubRoomId = root.SubRooms[n].SubRoomId;
-                //"SubRoomId": 1,
-
-                rootv2.SubRooms[n].DataModifiedAt = DateTime.UtcNow;
-                //"DataModifiedAt" : "2024-04-29T00:50:31.3734855",
-
-                rootv2.SubRooms[n].UnitySceneId = root.SubRooms[n].UnitySceneId;
-                //"UnitySceneId": "76d98498-60a1-430c-ab76-b54a29b7a163",
-
-                rootv2.SubRooms[n].RoomSceneLocationId = root.SubRooms[n].UnitySceneId;
-                //"RoomSceneLocationId": "76d98498-60a1-430c-ab76-b54a29b7a163",
-
-                rootv2.SubRooms[n].Location = root.SubRooms[n].UnitySceneId;
-                //"Location": "76d98498-60a1-430c-ab76-b54a29b7a163",
-
-                n++;
-            } while (n < root.SubRooms.Count);
 
             Console.WriteLine(value);
             Console.WriteLine(JsonConvert.SerializeObject(rootv2));
