@@ -94,6 +94,20 @@ namespace server
                         {
                             s = AccountAuth.CachedLogins();
                         }
+                        else if (rawUrl.StartsWith("/connect/deviceauthorization"))
+                        {
+                            DateTime utcNow = DateTime.UtcNow;
+                            utcNow.AddHours(1); 
+                            s = JsonConvert.SerializeObject(new DeviceAuthorization.DeviceAuthorizationResponse
+                            {
+                                device_code = "123456_bottom",
+                                user_code = "123456_bottom",
+                                verification_uri = "http://localhost:" + start.Program.version + "0/api/studio/connect",
+                                verification_uri_complete = "http://localhost:" + start.Program.version + "0/api/studio/connect",
+                                expires_in = (int)utcNow.Ticks,
+                                interval = 8000000
+                            });
+                        }
                         Console.WriteLine("Auth Response: " + s);
                         bytes = Encoding.UTF8.GetBytes(s);
                         response.ContentLength64 = (long)bytes.Length;

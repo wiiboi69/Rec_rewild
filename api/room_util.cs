@@ -21,7 +21,8 @@ namespace api
         {
             Console.WriteLine(rawUrl + " | " + value);
             string s = BlankResponse;
-            string Url = rawUrl.Remove(0, value);
+            //string Url = rawUrl.Remove(0, value);
+            string Url = rawUrl.Substring(value);
             string[] stringSeparators = new string[] { "?include=1325" };
             string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
             stringSeparators = new string[] { "?include=301" };

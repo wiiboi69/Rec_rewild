@@ -18,6 +18,7 @@ using System.Net.NetworkInformation;
 using OpenRec.api;
 using System.Collections.Specialized;
 using static OpenRec.api.image_util;
+using HttpMultipartParser;
 
 namespace server
 {
@@ -68,24 +69,47 @@ namespace server
                             Console.WriteLine("API Requested (rawUrl): " + rawUrl);
                         }
                         string text;
-                        byte[] rawtext;
                         string s = "";
                         byte[] array;
-                        using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
+                        MultipartFormDataParser parser = null;
+                        /*
+                        try
                         {
-                            text = streamReader.ReadToEnd();
+                            using (MemoryStream memoryStream = new MemoryStream())
+                            {
+                                MemoryStream memoryStream_2 = new MemoryStream();
+                                context.Request.InputStream.CopyTo(memoryStream);
+                                memoryStream_2 = memoryStream;
+                                if (memoryStream_2 is null)
+                                {
+                                    Console.WriteLine("memoryStream_2 is null!!!!!!");
+                                }
+                                if (context.Request.InputStream is null)
+                                {
+                                    Console.WriteLine("context.Request.InputStream is null!!!!!!");
+                                }
+                                array = memoryStream.ToArray();
+                                text = Encoding.ASCII.GetString(array);
+                                try
+                                {
+                                    parser = MultipartFormDataParser.Parse(memoryStream_2, ignoreInvalidParts: true, boundary: "");
+                                }
+                                finally
+                                {}
+
+                            }
                         }
-                        string @string;
-                        using (MemoryStream memoryStream = new MemoryStream())
+                        catch (Exception ex)*/
                         {
-                            context.Request.InputStream.CopyTo(memoryStream);
-                            array = memoryStream.ToArray();
-                            @string = Encoding.ASCII.GetString(array);
+                            //Console.WriteLine(ex);
+                            using (MemoryStream memoryStream = new MemoryStream())
+                            {
+                                context.Request.InputStream.CopyTo(memoryStream);
+                                array = memoryStream.ToArray();
+                                text = Encoding.ASCII.GetString(array);
+                            }
                         }
-                        if (array.Length < 1)
-                        {
-                            array = Encoding.UTF8.GetBytes(text);
-                        }
+
                         string str2 = "";
                         NameValueCollection headers1 = request.Headers;
                         for (int index = 0; index < request.Headers.Count; ++index)
@@ -376,10 +400,12 @@ namespace server
                         */
                         if (Url.StartsWith("images/v4/uploadsaved"))
                         {
+        
                             bool flag1;
                             string rnfn;
-                            File.WriteAllBytes("SaveData\\image.dat", array);
+                            //File.WriteAllBytes("SaveData\\image.dat", array);
                             string temp1 = SaveImageFile(array, out flag1, out rnfn);
+                            
                             if (flag1)
                             {
                                 s = "{\"success\":false,\"error\":\"failed to uploaded image\",\"ImageName\":\"\"}";
@@ -388,7 +414,7 @@ namespace server
                             {
                                 s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
                             }
-                        
+
                         }
                         if (Url == "sanitize/v1/isPure")
                         {
@@ -403,19 +429,31 @@ namespace server
                         }*/
                         if (rawUrl == "/upload")
                         {
-                            s = "{\"FileName\": \"\"}";
-                            /*
-                            bool flag1;
-                            string rnfn;
-                            string temp1 = SaveRoomFile(array, out flag1, out rnfn);
+                            FileType data_type = GetFileType(array);
+                            File.WriteAllBytes("SaveData\\data.dat", array);
+                            bool flag1 = false;
+                            string rnfn = string.Empty;
+                            string temp1 = string.Empty;
+                            if (data_type == FileType.RoomSave)
+                            {
+                                temp1 = SaveRoomFile(array, out flag1, out rnfn);
+                            }
+                            else
+                            {
+                                goto data_type_unknowed;
+                            }
                             if (flag1)
                             {
                                 s = "{\"success\":false,\"error\":\"failed to uploaded\"}";
                             }
                             else
                             {
-                                s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
-                            }*/
+                                s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + temp1 + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
+                            }
+                            goto send_data;
+                            data_type_unknowed:
+                            s = "{\"success\":false,\"error\":\"data type unknowed or not yet inpermeted\"}";
+
                         }
                         if (Url == "avatar/v1/defaultunlocked")
                         {
@@ -488,6 +526,18 @@ namespace server
                             File.WriteAllText(c000004.m000007() + c000041.f000043.Room.Name + "\\RoomDetails.json", JsonConvert.SerializeObject(c000041.f000043));
                             s = JsonConvert.SerializeObject(c00005d.m000035());
                         }*/
+                        ///leaderboard/GetRanks
+                        ///
+                        if (rawUrl.StartsWith("/leaderboard/GetRanks"))
+                        {
+                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
+                            s = "[{\"PlayerId\":" + CachedPlayerID + ",\"Score\":69,\"Rank\":0}]";
+                        }
+                        if (rawUrl.StartsWith("/leaderboard/GetNearbyScores"))
+                        {
+                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
+                            s = "[{\"PlayerId\":" + CachedPlayerID + ",\"Score\":69,\"Rank\":0}]";
+                        }
                         if (rawUrl.StartsWith("/account/create"))
                         {
                             //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
@@ -638,7 +688,7 @@ namespace server
                         if (Url.StartsWith("players/v2/progression/bulk?"))
                         {
                             string temp = Url.Substring("players/v2/progression/bulk?id=".Length);
-                            s = AccountAuth.GetLevel(temp);
+                            s = GetLevel(temp);
                         }
                         if (Url.StartsWith("messages/v1/favoriteFriendOnlineStatus"))
                         {
@@ -668,6 +718,7 @@ namespace server
                         {
                             Settings.SetPlayerSettings(text);
                         }
+                        send_data:
                         if (s.Length > 400)
                         {
                             Console.WriteLine("api Response: " + s.Length);

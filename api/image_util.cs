@@ -37,6 +37,29 @@ namespace OpenRec.api
             rnfn = "SaveData\\images\\" + fname;
             return imagefname;
         }
+        public static FileType GetFileType(byte[] request)
+        {
+
+            byte[] filetype = ParceData(request, "FileType");
+            return (FileType)filetype[0];
+        }
+
+        public enum FileType
+        {
+            // Token: 0x04009138 RID: 37176
+            Unknown,
+            // Token: 0x04009139 RID: 37177
+            RoomSave,
+            // Token: 0x0400913A RID: 37178
+            Holotar,
+            // Token: 0x0400913B RID: 37179
+            Image,
+            // Token: 0x0400913C RID: 37180
+            Video,
+            // Token: 0x0400913D RID: 37181
+            Invention
+        }
+
         public static string SaveRoomFile(byte[] request, out bool flag, out string rnfn)
         {
             rnfn = "";
@@ -125,7 +148,7 @@ namespace OpenRec.api
                         binaryReader.ReadBytes(multiFormData.ContentLength);
                 }
             }
-            return (byte[])null;
+            return null;
         }
         public class MultiFormData
         {
@@ -239,6 +262,103 @@ namespace OpenRec.api
             }
             DidItParced = false;
             Console.WriteLine("can't find: \"" + name + "\" in the form data");
+            return null;
+        }
+
+        public static byte[] ParceData(byte[] data, string name)
+        {
+            BinaryReader reader = new BinaryReader(new MemoryStream(data));
+
+            while (reader.BaseStream.Position != reader.BaseStream.Length)
+            {
+                bool isReading = true;
+                while (isReading)
+                {
+                    List<byte> list = new List<byte>();
+                    bool loop = true;
+                    while (loop)
+                    {
+                        byte b = reader.ReadByte();
+                        if (reader.BaseStream.Position != reader.BaseStream.Length)
+                        {
+                            if (b == 13)
+                            {
+                                reader.ReadByte();
+                                loop = false;
+                            }
+                            else
+                            {
+                                list.Add(b);
+                            }
+                        }
+                        else
+                        {
+                            loop = false;
+                        }
+                    }
+                    string content = Encoding.ASCII.GetString(list.ToArray());
+                    Console.WriteLine("data: " + content);
+                    if (content.StartsWith("Content-Length: "))
+                    {
+                        ContentLength = int.Parse(content.Remove(0, 16));
+                    }
+                    if (content.Contains(name))
+                    {
+                        Console.WriteLine("file: " + name);
+                        isFile = true;
+                    }
+                    if (reader.BaseStream.Position != reader.BaseStream.Length)
+                    {
+                        if (reader.ReadByte() == 13)
+                        {
+                            isReading = false;
+                            reader.ReadByte();
+                        }
+                        else
+                        {
+                            reader.BaseStream.Position -= 1L;
+                        }
+                    }
+                    else
+                    {
+                        isReading = false;
+                    }
+                }
+                if (isFile)
+                {
+                    List<byte> file = new List<byte>();
+                    for (; ; )
+                    {
+                        if (reader.ReadByte() == 13)
+                        {
+                            if (reader.ReadByte() == 10)
+                            {
+                                if (reader.ReadByte() == 45)
+                                {
+                                    break;
+                                }
+                                reader.BaseStream.Position -= 3L;
+                            }
+                            else
+                            {
+                                reader.BaseStream.Position -= 2L;
+                            }
+                        }
+                        else
+                        {
+                            reader.BaseStream.Position -= 1L;
+                        }
+                        byte item = reader.ReadByte();
+                        file.Add(item);
+                    }
+                    return file.ToArray();
+                }
+                if (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    reader.ReadBytes(ContentLength);
+                }
+            }
+
             return null;
         }
 

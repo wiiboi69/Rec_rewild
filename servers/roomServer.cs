@@ -61,8 +61,8 @@ namespace server
                         }
                         else if (rawUrl == "/rooms/ownedby/me")
                         {
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json");
-                            //s = BracketResponse;
+                            //s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json");
+                            s = BracketResponse;
                         }
                         else if (rawUrl == "/rooms/favoritedby/me")
                         {
@@ -145,16 +145,33 @@ namespace server
                             }
 
                         }
+                        else if (rawUrl.StartsWith("/rooms/base"))
+                        {
+                            s = File.ReadAllText("SaveData\\baserooms.txt");
+                        }
+                        ///rooms/2/clone
+                        else if (rawUrl.StartsWith("/rooms/") & rawUrl.EndsWith("/clone"))
+                        {
+                            //SaveData\Rooms\custom
+                            temp1 = text.Substring("name=".Length);
+                            string[] stringSeparators = new string[] { "/clone" };
+                            string[] subs = rawUrl.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            s = room_util.find_room_with_id(rawUrl, 7);
+                            File.WriteAllText("SaveData\\Rooms\\custom\\room_" + temp1 + ".json", s);
+                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create or copy rooms yet,\n[code: create]\"}";
+                            s = "{\"success\":true,\"error\":\"\"}";
+
+                        }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
-                            s = room_util.find_room_with_id(rawUrl, 7);
+                            s = room_util.find_room_with_id(rawUrl, "/rooms/".Length);
 
                             s = room_util.room_change_CreatorAccount(s);
 
                             if (APIServer.CachedversionID > 20210899)
                             {
                                 s = room_util.room_change_fix_room(s);
-                            } 
+                            }
                             //s = "[" + room_util.find_room_with_id(rawUrl, 7) + "]";
                         }
                         Console.WriteLine("room Response: " + s);
