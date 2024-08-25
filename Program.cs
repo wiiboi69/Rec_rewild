@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using server;
 using api;
+using System.Threading;
+using System.Linq;
+using System.Security.Cryptography.Xml;
 
 namespace start
 {
@@ -361,11 +364,68 @@ namespace start
                 new ImageServer();
                 new matchServer();
                 new NotificationsServer();
-                new WebSocketHTTP();
+                //new WebSocketHTTP();
+                //new WebSocketHTTP_New_test();
+                new WebSocketHTTP_new();
                 new roomServer();                
                 
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
+
+                var input = Console.ReadLine();
+                for (; ; )
+                {
+                    if (input == "!mod")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_box")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_box()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_msg")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_msg()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_time")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_time()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_give")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_give()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!exit")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(" closing the server");
+                        Console.WriteLine();
+                        Environment.Exit(0);
+                        goto input_server;
+                    }
+                    input_server:
+                    input = Console.ReadLine();
+                }
             }
             if (readline == "6")
             {
@@ -390,6 +450,7 @@ namespace start
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
             }
+
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
@@ -398,5 +459,456 @@ namespace start
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
         public static string CustomImages = Program.DataPath + "\\Images";
+
+        public class Reponse
+        {
+            public WebSocketHTTP_new.ResponseResults Id { get; set; }
+
+            public object Msg { get; set; }
+        }
+
+        public static Reponse createResponse()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.ModerationKick,
+                Msg = new ModerationBlockDetails()
+                {
+                    ReportCategory = 1,
+                    Duration = 0,
+                    IsHostKick = true,
+                    GameSessionId = 100L,
+                    Message = "test of websocket"
+                }
+            };
+        }
+        //MessageReceived
+        public static Reponse createResponse_box()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.RelationshipChanged,
+                Msg = new Relationship_Detail()
+                {
+                    PlayerID = 1,
+                    Favorited = ReciprocalStatus.None,
+                    Ignored = ReciprocalStatus.None,
+                    Muted = ReciprocalStatus.None,
+                    Type = RelationshipType.FriendRequestReceived,
+                }
+            };
+        }
+
+        public static Reponse createResponse_msg()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
+                Msg = new Message_Detail()
+                {
+                    FromPlayerId = 1,
+                    Id = 1,
+                    SentTime = DateTime.Today,
+                    Type = MessageType.FriendInvite,
+                    Data = "ddddddddd",
+                    RoomId = 20,
+
+                }
+            };
+        }
+
+        public static Reponse createResponse_FriendInvite()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
+                Msg = new Message_Detail()
+                {
+                    FromPlayerId = 1,
+                    Id = 1,
+                    SentTime = DateTime.Today,
+                    Type = MessageType.FriendInvite,
+                    Data = "ddddddddd",
+                    RoomId = 20,
+
+                }
+            };
+        }
+
+        public static Reponse createResponse_FriendRequestAccepted()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
+                Msg = new Message_Detail()
+                {
+                    FromPlayerId = 1,
+                    Id = 1,
+                    SentTime = DateTime.Today,
+                    Type = MessageType.FriendRequestAccepted,
+                    Data = "ddddddddd",
+                    RoomId = 20,
+
+                }
+            };
+        }
+        public static Reponse createResponse_FriendStatusOnline()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
+                Msg = new Message_Detail()
+                {
+                    FromPlayerId = 1,
+                    Id = 1,
+                    SentTime = DateTime.Today,
+                    Type = MessageType.FriendStatusOnline,
+                    Data = "ddddddddd",
+                    RoomId = 20,
+
+                }
+            };
+        }
+
+        public static Reponse createResponse_give()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceivedImmediate,
+                Msg = new GiftPackage()
+                {
+                    Id = 1,
+                    CurrencyType = CurrencyType.RecCenterTokens,
+                    Currency = 100000,
+                    GiftRarity = GiftRarity.Legendary,
+                    GiftContext = GiftContext.Default,
+                    Message = "fnaf",
+                    FromPlayerId = 1,
+                    Platform = PlatformType.All,
+
+                }
+            };
+        }
+
+        public static Reponse createResponse_time()
+        {
+            return new Reponse
+            {
+                Id = WebSocketHTTP_new.ResponseResults.ServerMaintenance,
+                Msg = new StartsInMinutes_Detail()
+                {
+                    StartsInMinutes = 10,
+
+                }
+            };
+        }
+
+        public enum AvatarItemType
+        {
+            Outfit,
+            HairDye
+        }
+
+        public enum CurrencyType
+        {
+            Invalid,
+            LaserTagTickets,
+            RecCenterTokens,
+            LostSkullsGold = 100,
+            DraculaSilver,
+            RecRoyale_Season1 = 200
+        }
+
+        public class GiftPackage
+        {
+            public long Id { get; set; }
+
+            public int FromPlayerId { get; set; }
+
+            public string ConsumableItemDesc { get; set; }
+
+            public AvatarItemType AvatarItemType { get; set; }
+
+            public string AvatarItemDescOrHairDyeDesc { get; set; }
+
+            public string EquipmentPrefabName { get; set; }
+
+            public string EquipmentModificationGuid { get; set; }
+
+            public CurrencyType CurrencyType { get; set; }
+
+            public int Currency { get; set; }
+
+            public int Xp { get; set; }
+
+            public int Level { get; set; }
+
+            public GiftContext GiftContext { get; set; }
+
+            public GiftRarity GiftRarity { get; set; }
+
+            public string Message { get; set; }
+
+            public PlatformType Platform { get; set; }
+
+            public string ErrorMessage { get; set; }
+            public string SupportsCurrentPlatform { get; set; }
+            public string HasAvatarItemOrHairDye { get; set; }
+            public string HasEquipment { get; set; }
+            public string Consumed { get; set; }
+            public string IsValid { get; set; }
+
+
+
+
+
+
+
+
+        }
+
+        public enum PlatformType
+        {
+            All = -1,
+            Steam,
+            Oculus,
+            PlayStation,
+            Microsoft,
+            HeadlessBot,
+            IOS
+        }
+
+        public enum GiftBoxContents
+        {
+            Unspecified = -1,
+            XP,
+            OutfitItem,
+            Equipment,
+            Currency,
+            Consumable,
+            Query,
+            HairDye
+        }
+
+        public enum GiftRarity
+        {
+            None = -1,
+            Common,
+            Uncommon = 10,
+            Rare = 20,
+            Epic = 30,
+            Legendary = 50
+        }
+
+        public enum GiftContext
+        {
+            None = -1, // 0xFFFFFFFF
+            Default = 0,
+            First_Activity = 1,
+            Game_Drop = 2,
+            All_Daily_Challenges_Complete = 3,
+            All_Weekly_Challenge_Complete = 4,
+            Daily_Challenge_Complete = 5,
+            Weekly_Challenge_Complete = 6,
+            Unassigned_Equipment = 10, // 0x0000000A
+            Unassigned_Avatar = 11, // 0x0000000B
+            Unassigned_Consumable = 12, // 0x0000000C
+            Reacquisition = 20, // 0x00000014
+            Membership = 21, // 0x00000015
+            NUX_TokensAndDressUp = 30, // 0x0000001E
+            NUX_Experiment1 = 31, // 0x0000001F
+            NUX_Experiment2 = 32, // 0x00000020
+            NUX_Experiment3 = 33, // 0x00000021
+            NUX_Experiment4 = 34, // 0x00000022
+            NUX_Experiment5 = 35, // 0x00000023
+            LevelUp = 100, // 0x00000064
+            Purchased_Gift_A = 500, // 0x000001F4
+            Purchased_Gift_B = 501, // 0x000001F5
+            Purchased_Gift_C = 502, // 0x000001F6
+            Purchased_Gift_D = 503, // 0x000001F7
+            Holiday = 1000, // 0x000003E8
+            Contest = 1001, // 0x000003E9
+            Promotion = 1002, // 0x000003EA
+            SubscribersOnly = 1003, // 0x000003EB
+            Deprecated = 1100, // 0x0000044C
+            RecRoyale = 1200, // 0x000004B0
+            Paintball_ClearCut = 2000, // 0x000007D0
+            Paintball_Homestead = 2001, // 0x000007D1
+            Paintball_Quarry = 2002, // 0x000007D2
+            Paintball_River = 2003, // 0x000007D3
+            Paintball_Dam = 2004, // 0x000007D4
+            Paintball_DriveIn = 2005, // 0x000007D5
+            Discgolf_Propulsion = 3000, // 0x00000BB8
+            Discgolf_Lake = 3001, // 0x00000BB9
+            Discgolf_Mode_CoopCatch = 3500, // 0x00000DAC
+            Quest_Goblin_A = 4000, // 0x00000FA0
+            Quest_Goblin_B = 4001, // 0x00000FA1
+            Quest_Goblin_C = 4002, // 0x00000FA2
+            Quest_Goblin_S = 4003, // 0x00000FA3
+            Quest_Goblin_Consumable = 4004, // 0x00000FA4
+            Quest_Cauldron_A = 4010, // 0x00000FAA
+            Quest_Cauldron_B = 4011, // 0x00000FAB
+            Quest_Cauldron_C = 4012, // 0x00000FAC
+            Quest_Cauldron_S = 4013, // 0x00000FAD
+            Quest_Cauldron_Consumable = 4014, // 0x00000FAE
+            Quest_Pirate1_A = 4100, // 0x00001004
+            Quest_Pirate1_B = 4101, // 0x00001005
+            Quest_Pirate1_C = 4102, // 0x00001006
+            Quest_Pirate1_S = 4103, // 0x00001007
+            Quest_Pirate1_X = 4104, // 0x00001008
+            Quest_Pirate1_Consumable = 4105, // 0x00001009
+            Quest_Dracula1_A = 4200, // 0x00001068
+            Quest_Dracula1_B = 4201, // 0x00001069
+            Quest_Dracula1_C = 4202, // 0x0000106A
+            Quest_Dracula1_S = 4203, // 0x0000106B
+            Quest_Dracula1_X = 4204, // 0x0000106C
+            Quest_Dracula1_Consumable = 4205, // 0x0000106D
+            Quest_Dracula1_SS = 4206, // 0x0000106E
+            Quest_SciFi_A = 4500, // 0x00001194
+            Quest_SciFi_B = 4501, // 0x00001195
+            Quest_SciFi_C = 4502, // 0x00001196
+            Quest_SciFi_S = 4503, // 0x00001197
+            Quest_Scifi_Consumable = 4504, // 0x00001198
+            Charades = 5000, // 0x00001388
+            Soccer = 6000, // 0x00001770
+            Paddleball = 7000, // 0x00001B58
+            Dodgeball = 8000, // 0x00001F40
+            Lasertag = 9000, // 0x00002328
+            Bowling = 10000, // 0x00002710
+            StuntRunner_TheMainEvent_A = 11000, // 0x00002AF8
+            StuntRunner_TheMainEvent_B = 11001, // 0x00002AF9
+            StuntRunner_TheMainEvent_C = 11002, // 0x00002AFA
+            StuntRunner_TheMainEvent_D = 11003, // 0x00002AFB
+            StuntRunner_TheMainEvent_S = 11004, // 0x00002AFC
+            StuntRunner_TheMainEvent_X = 11005, // 0x00002AFD
+            StuntRunner_TheMainEvent_Consumable = 11006, // 0x00002AFE
+            StuntRunner_TheMainEvent_SS = 11007, // 0x00002AFF
+            Store_LaserTag = 100000, // 0x000186A0
+            Store_RecCenter = 100010, // 0x000186AA
+            Consumable = 110000, // 0x0001ADB0
+            Token = 110100, // 0x0001AE14
+            Punchcard_Challenge_Complete = 110200, // 0x0001AE78
+            All_Punchcard_Challenges_Complete = 110201, // 0x0001AE79
+            Commerce_Purchase = 200000, // 0x00030D40
+        }
+
+        public class ModerationBlockDetails
+        {
+            public int ReportCategory { get; set; }
+            public int Duration { get; set; }
+            public bool IsHostKick { get; set; }
+            public long GameSessionId { get; set; }
+            public string Message { get; set; }
+        }
+        public class baseDetail
+        {
+            public string Message { get; set; }
+        }
+
+        public class StartsInMinutes_Detail
+        {
+            public int StartsInMinutes { get; set; }
+        }
+
+        public class Message_Detail
+        {
+            public int Id { get; set; }
+            public int FromPlayerId { get; set; }
+            public DateTime SentTime { get; set; }
+
+            public MessageType Type { get; set; }
+            public string Data { get; set; }
+            public int RoomId { get; set; }
+            public int PlayerEventId { get; set; }
+
+            public object Details { get; set; }
+            public DateTime DeserializedAt { get; set; }
+        }
+
+        public enum MessageType
+        {
+            // Token: 0x040089EA RID: 35306
+            GameInvite,
+            // Token: 0x040089EB RID: 35307
+            GameInviteDeclined,
+            // Token: 0x040089EC RID: 35308
+            GameJoinFailed,
+            // Token: 0x040089ED RID: 35309
+            PartyActivitySwitch,
+            // Token: 0x040089EE RID: 35310
+            FriendInvite,
+            // Token: 0x040089EF RID: 35311
+            VoteToKick,
+            // Token: 0x040089F0 RID: 35312
+            GameInviteV2,
+            // Token: 0x040089F1 RID: 35313
+            PartyActivitySwitchV2,
+            // Token: 0x040089F2 RID: 35314
+            RequestGameInvite = 10,
+            // Token: 0x040089F3 RID: 35315
+            RequestGameInviteDeclined,
+            // Token: 0x040089F4 RID: 35316
+            FriendStatusOnline = 20,
+            // Token: 0x040089F5 RID: 35317
+            TextMessage = 30,
+            // Token: 0x040089F6 RID: 35318
+            FriendRequestAccepted = 40,
+            // Token: 0x040089F7 RID: 35319
+            PlayerCheer = 50,
+            // Token: 0x040089F8 RID: 35320
+            PlayerCheerAnonymous,
+            // Token: 0x040089F9 RID: 35321
+            RoomCoOwnerAdded = 60,
+            // Token: 0x040089FA RID: 35322
+            RoomCoOwnerRemoved,
+            // Token: 0x040089FB RID: 35323
+            RoomCoOwnerInvited,
+            // Token: 0x040089FC RID: 35324
+            CreatorPublishedNewRoom = 70,
+            // Token: 0x040089FD RID: 35325
+            PlayerAttendingEvent = 80,
+            // Token: 0x040089FE RID: 35326
+            PlayerEventInvitation,
+            // Token: 0x040089FF RID: 35327
+            GroupInvitation = 90,
+            // Token: 0x04008A00 RID: 35328
+            PlayerJoinedGroup,
+            // Token: 0x04008A01 RID: 35329
+            CoachMessage = 100
+        }
+
+        public class Relationship_Detail
+        {
+            public int PlayerID { get; set; }
+            public RelationshipType Type { get; set; }
+            public ReciprocalStatus Muted { get; set; }
+            public ReciprocalStatus Ignored { get; set; }
+            public ReciprocalStatus Favorited { get; set; }
+        }
+
+        public enum RelationshipType
+        {
+            // Token: 0x04008D54 RID: 36180
+            None,
+            // Token: 0x04008D55 RID: 36181
+            FriendRequestSent,
+            // Token: 0x04008D56 RID: 36182
+            FriendRequestReceived,
+            // Token: 0x04008D57 RID: 36183
+            Friend
+        }
+
+        // Token: 0x02000CE6 RID: 3302
+        public enum ReciprocalStatus
+        {
+            // Token: 0x04008D59 RID: 36185
+            None,
+            // Token: 0x04008D5A RID: 36186
+            Local,
+            // Token: 0x04008D5B RID: 36187
+            Remote,
+            // Token: 0x04008D5C RID: 36188
+            Mutual
+        }
     }
 }

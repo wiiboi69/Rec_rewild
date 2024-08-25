@@ -54,7 +54,7 @@ namespace server
 				if (rawUrl == "/goto/none")
 				{
                     gameinprogress = false;
-                    s = JsonConvert.SerializeObject(GameSessions.Createnone());
+                    s = JsonConvert.SerializeObject(GameSessions.Createdorm());
 				}
 				else if (rawUrl.StartsWith("/goto/room/"))
 				{

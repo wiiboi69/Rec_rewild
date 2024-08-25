@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using server;
+using System.Collections;
 
 namespace OpenRec.api
 {
@@ -39,25 +40,37 @@ namespace OpenRec.api
         }
         public static FileType GetFileType(byte[] request)
         {
+            byte[] filetype = ParceData(request, "FileType", 1);
 
-            byte[] filetype = ParceData(request, "FileType");
+            File.WriteAllBytes("SaveData\\data_filetype.dat", filetype);
+
+
             return (FileType)filetype[0];
         }
 
         public enum FileType
         {
-            // Token: 0x04009138 RID: 37176
+            // Token: 0x0400CF28 RID: 53032
             Unknown,
-            // Token: 0x04009139 RID: 37177
+            // Token: 0x0400CF29 RID: 53033
             RoomSave,
-            // Token: 0x0400913A RID: 37178
+            // Token: 0x0400CF2A RID: 53034
             Holotar,
-            // Token: 0x0400913B RID: 37179
+            // Token: 0x0400CF2B RID: 53035
             Image,
-            // Token: 0x0400913C RID: 37180
+            // Token: 0x0400CF2C RID: 53036
             Video,
-            // Token: 0x0400913D RID: 37181
-            Invention
+            // Token: 0x0400CF2D RID: 53037
+            Invention,
+            // Token: 0x0400CF2E RID: 53038
+            RoomMetadata
+        }
+
+        public static string SavedummyFile(byte[] request, out bool flag, out string rnfn)
+        {
+            flag = false;
+            rnfn = "";
+            return "";
         }
 
         public static string SaveRoomFile(byte[] request, out bool flag, out string rnfn)
@@ -265,6 +278,65 @@ namespace OpenRec.api
             return null;
         }
 
+        public static FileType GetType(byte[] data,out byte[] data_out)
+        {
+            int header = IndexOfSequence(data, [0x0D, 0x0A])[0];
+            string result = Encoding.UTF8.GetString(data[0..header]);
+            int offset = Search(data, Encoding.UTF8.GetBytes(result));
+            List<int> offsetdata = IndexOfSequence(data, Encoding.UTF8.GetBytes(result));
+
+            byte[] datatype = data[offsetdata[1]..(offsetdata[2] + header + 4)];
+            byte[] data_main = Combine(data[offsetdata[0]..offsetdata[1]],data[offsetdata[2]..(offsetdata[2] + header + 4)]);
+
+            data_out = data_main;
+            byte[] rnimg = ParceData(datatype, "FileType");
+            return (FileType)int.Parse(Encoding.UTF8.GetString(rnimg));
+        }
+
+        public static List<int> IndexOfSequence(byte[] buffer, byte[] pattern, int startIndex = 0)
+        {
+            
+            List<int> positions = new List<int>();
+            int i = Array.IndexOf(buffer, pattern[0], startIndex);
+            while (i >= 0 && i <= buffer.Length - pattern.Length)
+            {
+                byte[] segment = new byte[pattern.Length];
+                Buffer.BlockCopy(buffer, i, segment, 0, pattern.Length);
+                if (segment.SequenceEqual(pattern))
+                    positions.Add(i);
+                i = Array.IndexOf(buffer, pattern[0], i + 1);
+            }
+            return positions;
+
+        }
+
+        public static byte[] Combine(byte[] first, byte[] second)
+        {
+            byte[] ret = new byte[first.Length + second.Length];
+            Buffer.BlockCopy(first, 0, ret, 0, first.Length);
+            Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
+            return ret;
+        }
+
+        public static int Search(byte[] src, byte[] pattern)
+        {
+            int maxFirstCharSlot = src.Length - pattern.Length + 1;
+            for (int i = 0; i < maxFirstCharSlot; i++)
+            {
+                if (src[i] != pattern[0]) // compare only first byte
+                    continue;
+
+                // found a match on first byte, now try to match rest of the pattern
+                for (int j = pattern.Length - 1; j >= 1; j--)
+                {
+                    if (src[i + j] != pattern[j]) break;
+                    if (j == 1) return i;
+                }
+            }
+            return -1;
+        }
+
+
         public static byte[] ParceData(byte[] data, string name)
         {
             BinaryReader reader = new BinaryReader(new MemoryStream(data));
@@ -353,6 +425,113 @@ namespace OpenRec.api
                     }
                     return file.ToArray();
                 }
+                if (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    reader.ReadBytes(ContentLength);
+                }
+            }
+
+            return null;
+        }
+
+
+        public static byte[] ParceData(byte[] data, string name, int file_idx = 0)
+        {
+            BinaryReader reader = new BinaryReader(new MemoryStream(data));
+            int idx = 0;
+            while (reader.BaseStream.Position != reader.BaseStream.Length)
+            {
+                bool isReading = true;
+                while (isReading)
+                {
+                    List<byte> list = new List<byte>();
+                    bool loop = true;
+                    while (loop)
+                    {
+                        byte b = reader.ReadByte();
+                        if (reader.BaseStream.Position != reader.BaseStream.Length)
+                        {
+                            if (b == 13)
+                            {
+                                reader.ReadByte();
+                                loop = false;
+                            }
+                            else
+                            {
+                                list.Add(b);
+                            }
+                        }
+                        else
+                        {
+                            loop = false;
+                        }
+                    }
+                    string content = Encoding.ASCII.GetString(list.ToArray());
+                    Console.WriteLine("data: " + content);
+                    if (content.StartsWith("Content-Length: "))
+                    {
+                        ContentLength = int.Parse(content.Remove(0, 16));
+                    }
+                    if (content.Contains(name))
+                    {
+                        Console.WriteLine("file: " + name);
+                        isFile = true;
+                    }
+                    if (reader.BaseStream.Position != reader.BaseStream.Length)
+                    {
+                        if (reader.ReadByte() == 13)
+                        {
+                            isReading = false;
+                            reader.ReadByte();
+                        }
+                        else
+                        {
+                            reader.BaseStream.Position -= 1L;
+                        }
+                    }
+                    else
+                    {
+                        isReading = false;
+                    }
+                }
+                if (isFile)
+                {
+                    List<byte> file = new List<byte>();
+                    if (file_idx == idx)
+                    {
+                        idx += 1;
+                        isFile = false;
+                        goto skip_file;
+                    }
+                    for (; ; )
+                    {
+                        if (reader.ReadByte() == 13)
+                        {
+                            if (reader.ReadByte() == 10)
+                            {
+                                if (reader.ReadByte() == 45)
+                                {
+                                    break;
+                                }
+                                reader.BaseStream.Position -= 3L;
+                            }
+                            else
+                            {
+                                reader.BaseStream.Position -= 2L;
+                            }
+                        }
+                        else
+                        {
+                            reader.BaseStream.Position -= 1L;
+                        }
+                        byte item = reader.ReadByte();
+                        file.Add(item);
+                    }
+
+                    idx += 1;
+                    return file.ToArray();
+                }
+                skip_file:
                 if (reader.BaseStream.Position != reader.BaseStream.Length)
                 {
                     reader.ReadBytes(ContentLength);

@@ -54,7 +54,7 @@ namespace server
                         ConnectionId = "skull",
                         negotiateVersion = 0,
                         SupportedTransports = new List<string>(),
-                        url = new Uri("http://localhost:20199/")
+                        url = new Uri("ws://localhost:20199/")
                     });
                 }
                 if (rawUrl.StartsWith("versioncheck"))
@@ -62,7 +62,7 @@ namespace server
                     text = APIServer.VersionCheckResponse;
                 }
                 Console.WriteLine("Notifications Data: " + text2);
-                Console.WriteLine("Notifications Response: ");
+                Console.WriteLine("Notifications Response: " + text);
                 byte[] bytes = Encoding.UTF8.GetBytes(text);
                 response.ContentLength64 = (long)bytes.Length;
                 response.OutputStream.Write(bytes, 0, bytes.Length);

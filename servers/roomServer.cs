@@ -72,6 +72,15 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        //interactionby/me
+                        else if (rawUrl.StartsWith("/rooms/") && rawUrl.EndsWith("/interactionby/me"))
+                        {
+                            s = JsonConvert.SerializeObject(new {
+                                Cheered = false,
+                                Favorited = false,
+                                LastVisitedAt = ""
+                            });
+                        }
                         else if (rawUrl.StartsWith("/rooms/") && rawUrl.EndsWith("/playerdata/me"))
                         {
                             s = BlankResponse;
@@ -149,6 +158,7 @@ namespace server
                         {
                             s = File.ReadAllText("SaveData\\baserooms.txt");
                         }
+
                         ///rooms/2/clone
                         else if (rawUrl.StartsWith("/rooms/") & rawUrl.EndsWith("/clone"))
                         {

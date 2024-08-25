@@ -9,21 +9,18 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using api;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using server;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace server
 {
-    internal class WebSocketHTTP
+    internal class WebSocketHTTP_new
     {
-        public WebSocketHTTP()
+        public WebSocketHTTP_new()
         {
             try
             {
                 Console.WriteLine("{ws} server started!");
-                WebSocketHTTP.listen.Start();
-                WebSocketHTTP.server.Start();
+                WebSocketHTTP_new.listen.Start();
+                WebSocketHTTP_new.server.Start();
             }
             catch (Exception)
             {
@@ -31,7 +28,7 @@ namespace server
         }
         public static void ADListen()
         {
-            WebSocketHTTP.server.Prefixes.Add("http://localhost:20199/");
+            server.Prefixes.Add("http://localhost:20199/");
             for (; ; )
             {
                 Console.WriteLine("{ws} listening");
@@ -55,7 +52,7 @@ namespace server
                 }
                 Console.WriteLine("{ws} requested!");
                 Console.WriteLine(text2);
-                WebSocketHTTP.ProcessRequest(context);
+                ProcessRequest(context);
             IL_BA:
                 Console.WriteLine("{ws} connected!");
                 continue;
@@ -72,7 +69,7 @@ namespace server
         {
             HttpListenerWebSocketContext httpListenerWebSocketContext = await ctx.AcceptWebSocketAsync(null);
             CancellationTokenSource src = new CancellationTokenSource();
-            System.Net.WebSockets.WebSocket ws = httpListenerWebSocketContext.WebSocket;
+            ws = httpListenerWebSocketContext.WebSocket;
             while (ws.State == WebSocketState.Open)
             {
                 string temp1 = "";
@@ -109,16 +106,16 @@ namespace server
                 {
                     string @string = Encoding.ASCII.GetString(received);
                     //Console.WriteLine(@string);
-                    WebSocketHTTP.id++;
+                    id++;
                     temp2 = JsonConvert.SerializeObject(new
                     {
                         Id = "PresenceUpdate",
                         Msg = temp1
                     });
                     byte[] array;
-                    temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
+                    temp3 = JsonConvert.SerializeObject(new SockSignalR
                     {
-                        type = WebSocketHTTP.MessageTypes.Invocation,
+                        type = MessageTypes.Invocation,
                         result = "200 OK",
                         nonblocking = true,
                         target = "Notification",
@@ -140,9 +137,9 @@ namespace server
                     else if (@string.Contains("SubscribeToPlayers"))    
                     {
                         Console.WriteLine("{ws} game request presence!");
-                        temp3 = JsonConvert.SerializeObject(new WebSocketHTTP.SockSignalR
+                        temp3 = JsonConvert.SerializeObject(new SockSignalR
                         {
-                            type = WebSocketHTTP.MessageTypes.Invocation,
+                            type = MessageTypes.Invocation,
                             result = "200 OK",
                             nonblocking = true,
                             target = "Notification",
@@ -159,18 +156,6 @@ namespace server
                     }
                     Console.WriteLine(temp3 + "\u001e");
 
-                    /*temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
-                    //Console.WriteLine(temp3 + "\u001e");
-
-                    temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
-                    //Console.WriteLine(temp3 + "\u001e");
-
-                    temp3 = temp3.Replace("\"{\\u0022Success\\u0022:true}\"", "\\\"{\\\"success\\\":true}\\\"");
-                    //Console.WriteLine(temp3 + "\u001e");
-
-                    temp3 = temp3.Replace("{\\u0022Id\\u0022:\\u0022PresenceUpdate\\u0022,\\u0022Msg\\u0022:", "{\\\"Id\\\":\\\"PresenceUpdate\\\",\\\"Msg\\\":");*/
-                    //Console.WriteLine(temp3 + "\u001e");
-
                     array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
 
                     await ws.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
@@ -180,159 +165,31 @@ namespace server
             }
         }
 
+        public static WebSocket ws;
 
 
         public static async void SendRequest(string json)
         {
-            HttpListenerContext context = WebSocketHTTP.server.GetContext();
-            HttpListenerWebSocketContext httpListenerWebSocketContext = await context.AcceptWebSocketAsync(null);
             CancellationTokenSource src = new CancellationTokenSource();
-            byte[] array = Encoding.ASCII.GetBytes(json + "\u001e");
-            await httpListenerWebSocketContext.WebSocket.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
-
-        }
-
-
-        static string EncodeNonAsciiCharacters(string value)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in value)
+            string temp3 = JsonConvert.SerializeObject(new SockSignalR
             {
-                if (c > 127)
-                {
-                    // This character is too big for ASCII
-                    string encodedValue = "\\u" + ((int)c).ToString("x4");
-                    sb.Append(encodedValue);
-                }
-                else
-                {
-                    sb.Append(c);
-                }
-            }
-            return sb.ToString();
+                type = MessageTypes.Invocation,
+                result = "200 OK",
+                nonblocking = true,
+                target = "Notification",
+                arguments = new object[] { json },
+                error = null,
+                invocationId = null,
+                item = null
+            });
+
+            byte[] array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
+
+            await ws.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
+
+
         }
 
-        static string fixNonAsciiString(string value, char value1, int value2, int value3)
-        {
-            StringBuilder sb = new StringBuilder();
-            int tempval = 0;
-            foreach (char c in value)
-            {
-                if (value1 == c)
-                {
-                    tempval++;
-                    // This character is too big for ASCII
-                    if (tempval == value2)
-                    {
-                        tempval = 0;
-                        sb.Append(c);
-                    }
-                    else if (tempval <= value3)
-                    {
-                        sb.Append(c);
-                    }
-
-                }
-                else
-                {
-                    tempval = 0;
-                    sb.Append(c);
-                }
-            }
-            return sb.ToString();
-        }
-        static string fixNonAsciiStringdata(string value, char value2, string value1, string value3)
-        {
-            StringBuilder sb = new StringBuilder();
-            StringBuilder sb2 = new StringBuilder();
-            int tempval = 0;
-            int tempval1 = 0;
-            int tempval2 = 0;
-            int skipval = 0;
-            bool skip = false;
-            char t = 'a';
-            foreach (char c in value)
-            {
-                if (skipval > 0)
-                {
-                    skipval = -1;
-                    tempval++;
-                    continue;
-                }
-                skiptoadd:
-                if (value2 == c && !skip)
-                {
-                    t = value[tempval + 1];
-                    if (t != value1[1])
-                    {
-                        skip = true;
-                        goto skiptoadd;
-                    }
-                    foreach (char r in value1)
-                    {
-                        sb2.Append(r);
-                        if (r == value[tempval + 1])
-                        tempval1 ++;
-
-                    }
-
-                    skipval = 2;
-                    tempval++;
-                    continue;
-                }
-                else
-                {
-                    sb.Append(c);
-                }
-                skip = false;
-                tempval++;
-            }
-            return sb.ToString();
-        }
-        static string fixNonAsciiStringset(string value, char value2, string value3)
-        {
-            StringBuilder sb = new StringBuilder();
-            int tempval = 0;
-            int skipval = 0;
-            char t = 'a';
-            foreach (char c in value)
-            {
-                if (skipval > 0)
-                {
-                    skipval =- 1;
-                    tempval++;
-                    continue;
-                }
-                if (value2 == c)
-                {
-                    t = value[tempval + 1];
-                    if (t == '"')
-                    {
-                        foreach (char r in value3)
-                        {
-                            sb.Append(r);  
-                        }
-                        skipval = 2;
-                        tempval++;  
-                        continue;
-                    }
-                    if (t == 'u' || t == 'U')
-                    { 
-                        sb.Append(c);
-                        sb.Append(t);
-                        skipval = 2;
-                        tempval++;
-                        continue;
-                    }
-                }
-                else
-                {
-                    sb.Append(c);
-                }
-                tempval++;
-            }
-            return sb.ToString();
-        }
         static string EncodeNonAsciiCharacters(string value, char value1)
         {
             StringBuilder sb = new StringBuilder();
@@ -352,16 +209,6 @@ namespace server
             return sb.ToString();
         }
 
-        static string DecodeEncodedNonAsciiCharacters(string value)
-        {
-            return Regex.Replace(
-                value,
-                @"\\u(?<Value>[a-fA-F0-9]{4})",
-                m => {
-                    return ((char)int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString();
-                });
-        }
-
         public class Respond
         {
             public object Id { get; set; }
@@ -372,7 +219,7 @@ namespace server
         public static HttpListener server = new HttpListener();
 
         // Token: 0x04000295 RID: 661
-        public static Thread listen = new Thread(new ThreadStart(WebSocketHTTP.ADListen));
+        public static Thread listen = new Thread(new ThreadStart(ADListen));
 
         // Token: 0x04000296 RID: 662
         public static Dictionary<string, string> missingApis;
@@ -384,7 +231,7 @@ namespace server
         public class SockSignalR
         {
             // Token: 0x04000298 RID: 664
-            public WebSocketHTTP.MessageTypes type;
+            public WebSocketHTTP_new.MessageTypes type;
 
             // Token: 0x04000299 RID: 665
             public string invocationId;

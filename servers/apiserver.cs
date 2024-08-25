@@ -429,14 +429,24 @@ namespace server
                         }*/
                         if (rawUrl == "/upload")
                         {
-                            FileType data_type = GetFileType(array);
+                            byte[] temp_data;
+                            //FileType data_type = GetFileType(array);
+                            FileType data_type = image_util.GetType(array,out temp_data);
                             File.WriteAllBytes("SaveData\\data.dat", array);
                             bool flag1 = false;
                             string rnfn = string.Empty;
                             string temp1 = string.Empty;
                             if (data_type == FileType.RoomSave)
                             {
-                                temp1 = SaveRoomFile(array, out flag1, out rnfn);
+                                temp1 = SaveRoomFile(temp_data, out flag1, out rnfn);
+                            }
+                            else if (data_type == FileType.RoomMetadata)
+                            {
+                                temp1 = SavedummyFile(temp_data, out flag1, out rnfn);
+                            }
+                            else if (data_type == FileType.Holotar)
+                            {
+                                temp1 = SavedummyFile(temp_data, out flag1, out rnfn);
                             }
                             else
                             {
@@ -452,15 +462,24 @@ namespace server
                             }
                             goto send_data;
                             data_type_unknowed:
-                            s = "{\"success\":false,\"error\":\"data type unknowed or not yet inpermeted\"}";
+                            s = "{\"success\":false,\"error\":\"data type unknowed or not yet inpermeted: " + data_type + " \"}";
 
                         }
                         if (Url == "avatar/v1/defaultunlocked")
                         {
                             s = BracketResponse;
                         }
-                        if (Url == "avatar/v3/saved")
+                        //playerevents/v1/room
+                        if (Url.StartsWith("images/v4/room"))
                         {
+                            s = BracketResponse;
+                        }
+                        if (Url.StartsWith("playerevents/v1/room"))
+                        {
+                            s = BracketResponse;
+                        }
+                        if (Url == "avatar/v3/saved")
+                            {
                             s = BracketResponse;
                         }
                         if (Url == "checklist/v1/current")
