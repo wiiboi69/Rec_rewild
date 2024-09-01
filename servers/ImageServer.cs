@@ -61,6 +61,7 @@ namespace server
 				{
 					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
 				}
+                //SaveData\\images\\
                 else if (rawUrl.StartsWith("/Community"))
                 {
 					rawUrl = rawUrl.Substring("/Community".Length);
@@ -79,6 +80,11 @@ namespace server
                     }
                 }
                 //i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
+                else if (rawUrl.StartsWith("SaveData/images/"))
+                {
+					string temp = rawUrl.Substring("SaveData/images/".Length);
+                    i = File.ReadAllBytes("SaveData\\images\\" + temp);
+                }
                 else if (rawUrl.StartsWith("/Profile") || rawUrl.StartsWith("/profile"))
                 {
                     i = File.ReadAllBytes("SaveData\\profileimage.png");

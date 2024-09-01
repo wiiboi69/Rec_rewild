@@ -189,7 +189,7 @@ namespace api
             
             if (scenename != "")
             {
-                Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\" in scene id : \"" + scenename + "\"");
+                Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\" with scene id : \"" + scenename + "\"");
             }
             else
             {
@@ -518,7 +518,7 @@ namespace api
             public int platform { get; set; }
             public int deviceClass { get; set; }
             public int vrMovementMode { get; set; }
-            public GameSessions.SessionInstance? roomInstance { get; set; }
+            public SessionInstance? roomInstance { get; set; }
             public bool isOnline { get; set; }
             public int? errorCode { get; set; } //todo: errorCode list
             public ulong? lastOnline { get; set; }

@@ -20,7 +20,6 @@ namespace server
             {
                 Console.WriteLine("{ws} server started!");
                 WebSocketHTTP_new.listen.Start();
-                WebSocketHTTP_new.server.Start();
             }
             catch (Exception)
             {
@@ -29,6 +28,8 @@ namespace server
         public static void ADListen()
         {
             server.Prefixes.Add("http://localhost:20199/");
+            WebSocketHTTP_new.server.Start();
+
             for (; ; )
             {
                 Console.WriteLine("{ws} listening");

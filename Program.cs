@@ -444,11 +444,66 @@ namespace start
                 new ImageServer();
                 new matchServer();
                 new NotificationsServer();
-                new WebSocketHTTP();
+                new WebSocketHTTP_new();
                 new roomServer();
 
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
+
+                var input = Console.ReadLine();
+                for (; ; )
+                {
+                    if (input == "!mod")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_box")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_box()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_msg")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_msg()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_time")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_time()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_give")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_give()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!exit")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(" closing the server");
+                        Console.WriteLine();
+                        Environment.Exit(0);
+                        goto input_server;
+                    }
+                input_server:
+                    input = Console.ReadLine();
+                }
             }
 
         }
@@ -509,7 +564,7 @@ namespace start
                     FromPlayerId = 1,
                     Id = 1,
                     SentTime = DateTime.Today,
-                    Type = MessageType.FriendInvite,
+                    Type = MessageType.TextMessage,
                     Data = "ddddddddd",
                     RoomId = 20,
 
@@ -585,7 +640,13 @@ namespace start
                     Message = "fnaf",
                     FromPlayerId = 1,
                     Platform = PlatformType.All,
-
+                    ConsumableItemDesc = "",
+                    AvatarItemDescOrHairDyeDesc = "",
+                    EquipmentPrefabName = "",
+                    EquipmentModificationGuid = "",
+                    AvatarItemType = AvatarItemType.Outfit,
+                    Xp = 0,
+                    Level = 0,
                 }
             };
         }

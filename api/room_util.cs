@@ -348,6 +348,179 @@ namespace api
             return JsonConvert.SerializeObject(rootv2);
         }
 
+        public static string room_change_fix_room_2020(string value)
+        {
+            string temp1;
+            //roomdata.RoomRootv2 root = JsonConvert.DeserializeObject(value);
+            RoomRootv2 root = JsonConvert.DeserializeObject<RoomRootv2>(value);
+            root.CreatorAccountId = APIServer.CachedPlayerID;
+            temp1 = JsonConvert.SerializeObject(root);
+            root = JsonConvert.DeserializeObject<RoomRootv2>(temp1);
+            List<Scene> subroomsv2data = new List<Scene>
+            {
+
+            };
+
+            Scene subroomdata = new Scene
+            {
+                DataBlobName = "",
+                IsSandbox = true,
+                MaxPlayers = 0,
+                Name = "",
+                SubRoomId = 0,
+                RoomId = 0,
+                RoomSceneId = 0,
+                RoomSceneLocationId = "",
+                DataModifiedAt = DateTime.UtcNow,
+                Location = "",
+                CanMatchmakeInto = true,
+            };
+
+            int n = 0;
+            do
+            {
+
+                subroomdata.DataBlobName = root.SubRooms[n].DataBlob;
+                //"DataBlobName": "",
+
+                subroomdata.IsSandbox = root.SubRooms[n].IsSandbox;
+                //"IsSandbox": true,
+
+                subroomdata.MaxPlayers = root.SubRooms[n].MaxPlayers;
+                //"MaxPlayers": 4,
+
+                subroomdata.Name = root.SubRooms[n].Name;
+                //"Name": "Home",
+
+                subroomdata.RoomSceneId = root.SubRooms[n].RoomId;
+                //"RoomSceneId": 1,
+
+                subroomdata.RoomId = root.SubRooms[n].RoomId;
+                //"RoomId": 1,
+
+                subroomdata.SubRoomId = root.SubRooms[n].SubRoomId;
+                //"SubRoomId": 1,
+
+                subroomdata.DataModifiedAt = DateTime.UtcNow;
+                //"DataModifiedAt" : "2024-04-29T00:50:31.3734855",
+
+                subroomdata.RoomSceneLocationId = root.SubRooms[n].UnitySceneId;
+                //"RoomSceneLocationId": "76d98498-60a1-430c-ab76-b54a29b7a163",
+
+                subroomdata.Location = root.SubRooms[n].UnitySceneId;
+                //"Location": "76d98498-60a1-430c-ab76-b54a29b7a163",
+
+                subroomdata.CanMatchmakeInto = true;
+
+                subroomsv2data.Add(subroomdata);
+
+                n++;
+            } while (n < root.SubRooms.Count);
+
+            Room rootv2 = new Room
+            {
+                Accessibility = root.Accessibility,
+                //"Accessibility": 2,
+
+                AllowsJuniors = root.SupportsJuniors,
+                //"AllowsJuniors": true,    
+
+                CustomRoomWarning = root.CustomWarning,
+                //"CustomRoomWarning": "",
+
+                RoomWarningMask = root.WarningMask,
+                //"RoomWarningMask": 0,
+
+                CloningAllowed = root.CloningAllowed,
+                //"CloningAllowed": true,
+                
+                creatorPlayerId = APIServer.CachedPlayerID,
+                //"CreatorAccountId": 1,
+
+                CreatorPlayerId = APIServer.CachedPlayerID,
+                //"CreatorPlayerId": 1,
+
+                Description = root.Description,
+                //"Description": "",
+
+                DisableMicAutoMute = root.DisableMicAutoMute,
+                //"DisableMicAutoMute": false,
+
+                DisableRoomComments = root.DisableRoomComments,
+                //"DisableRoomComments": false,
+
+                EncryptVoiceChat = root.EncryptVoiceChat,
+                //"EncryptVoiceChat": false,
+
+                ImageName = root.ImageName,
+                //"ImageName": "Dorm_Room",
+
+                IsDormRoom = root.IsDorm,
+                //"IsDorm": true,
+
+                IsAGRoom = root.IsRRO,
+                //"IsRRO": true,
+
+                Name = root.Name,
+                //"Name": "DormRoom",
+
+                //RoomId = root.RoomId,
+                RoomId = root.RoomId,
+                SetType = 0,
+                State = 0,
+
+                SupportsLevelVoting = true,
+                //"SupportsLevelVoting": true,
+
+                SupportsMobile = true,
+                //"SupportsMobile": true,
+
+                SupportsScreens = true,
+                //"SupportsScreens": true,
+
+                SupportsTeleportVR = true,
+                //"SupportsTeleportVR": true,
+
+                SupportsVRLow = true,
+                //"SupportsVRLow": true,
+
+                SupportsWalkVR = true,
+                //"SupportsWalkVR": true,
+
+                Type = 0,
+            };
+
+            RoomRoot main_root = new RoomRoot
+            {
+                CheerCount = root.Stats.CheerCount,
+                FavoriteCount = root.Stats.FavoriteCount,
+                VisitCount = root.Stats.VisitCount,
+                Tags = root.Tags,
+                beta = false,
+                CoOwners =
+                [
+                    APIServer.CachedPlayerID
+                ],
+                Moderators = [],
+                InvitedModerators = [],
+                Hosts = [],
+                InvitedCoOwners = [],
+                InvitedHosts = [],
+                PlayerIdsWithModPower = [],
+                
+            };
+
+            main_root.Scenes = subroomsv2data;
+
+
+            main_root.Room = rootv2;
+
+            Console.WriteLine(value);
+            Console.WriteLine(JsonConvert.SerializeObject(main_root));
+            Console.WriteLine(JsonConvert.SerializeObject(subroomsv2data));
+            return JsonConvert.SerializeObject(main_root);
+        }
+
         public static string find_room_with_id_lowercase(string rawUrl, int value)
         {
             Console.WriteLine(rawUrl + " | " + value);

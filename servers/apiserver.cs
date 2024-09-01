@@ -180,14 +180,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl.StartsWith("/account/bulk"))
-                        {
-                            s = AccountAuth.GetAccountsBulk();
-                        }
-                        if (rawUrl.StartsWith("/account/me"))
-                        {
-                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
-                        }
                         if (Url.StartsWith("players/v1/progression/"))
                         {
                             s = AccountAuth.GetLevel();
@@ -242,6 +234,7 @@ namespace server
                         {
                             s = "[]";
                         }*/
+
                         if (Url.StartsWith("storefronts/v3/giftdropstore"))
                         {
                             s = BracketResponse;
@@ -353,8 +346,16 @@ namespace server
                         }
                         if (Url.StartsWith("rooms/v4/details/"))
                         {
-                            Url = Url.Substring(("rooms/v4/details/").Length);
-                            text = GameSessions.GetDetails(Url);
+                            //Url = Url.Substring(("rooms/v4/details/").Length);
+                            //s = GameSessions.GetDetails(Url);
+                            s = room_util.find_room_with_id(Url, "rooms/v4/details/".Length);
+
+                            s = room_util.room_change_CreatorAccount(s);
+                            if (CachedversionID < 20209906)
+                            {
+                                s = room_util.room_change_fix_room_2020(s);
+                            }
+
                         }
                         if (Url.StartsWith("sanitize/v1/isPure"))
                         {
@@ -412,7 +413,7 @@ namespace server
                             }
                             else
                             {
-                                s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
+                                s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\",\"value\":\"File saved: " + rnfn + "\"}";
                             }
 
                         }
@@ -448,6 +449,10 @@ namespace server
                             {
                                 temp1 = SavedummyFile(temp_data, out flag1, out rnfn);
                             }
+                            else if (data_type == FileType.Image)
+                            {
+                                temp1 = SaveImageFile(temp_data, out flag1, out rnfn);
+                            }
                             else
                             {
                                 goto data_type_unknowed;
@@ -458,7 +463,16 @@ namespace server
                             }
                             else
                             {
-                                s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + temp1 + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
+                                if (data_type == FileType.Image)
+                                {
+                                    s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + temp1 + "\",\"value\":\"File saved: " + rnfn + "\"}";
+                                    goto send_data;
+                                }
+                                else
+                                {
+
+                                    s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + temp1 + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
+                                }
                             }
                             goto send_data;
                             data_type_unknowed:
@@ -652,7 +666,11 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl.StartsWith("/account/me/bio"))
+                        if (rawUrl.StartsWith("/account/bulk"))
+                        {
+                            s = AccountAuth.GetAccountsBulk();
+                        }
+                        else if(rawUrl.StartsWith("/account/me/bio"))
                         {
                             string temp = text.Substring("bio=".Length);
                             File.WriteAllText(Program.ProfilePath + "\\bio.txt", temp);
@@ -666,7 +684,7 @@ namespace server
                                 bio = File.ReadAllText(Program.ProfilePath + "\\bio.txt")
                             });
                         }
-                        if (rawUrl.StartsWith("/account/me/displayName"))
+                        else if (rawUrl.StartsWith("/account/me/displayName"))
                         {
                             string temp = text.Substring("displayName=".Length);
                             File.WriteAllText(Program.ProfilePath + "\\displayName.txt", temp);
@@ -679,6 +697,14 @@ namespace server
                                 accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                                 Name = File.ReadAllText(Program.ProfilePath + "\\displayName.txt")
                             }   );
+                        }
+                        else if (rawUrl.StartsWith("/account/me"))
+                        {
+                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
+                        }
+                        else if (rawUrl.StartsWith("/account/"))
+                        {
+                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
                         }
                         if (Url == "announcement/v1/get")
                         {

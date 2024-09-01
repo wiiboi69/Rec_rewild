@@ -35,7 +35,7 @@ namespace OpenRec.api
             file.Write(rnimg);
             file.Close();
             flag = false;
-            rnfn = "SaveData\\images\\" + fname;
+            rnfn = "SaveData/images/" + fname;
             return imagefname;
         }
         public static FileType GetFileType(byte[] request)
