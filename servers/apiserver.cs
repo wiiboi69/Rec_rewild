@@ -465,7 +465,7 @@ namespace server
                             {
                                 if (data_type == FileType.Image)
                                 {
-                                    s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + temp1 + "\",\"value\":\"File saved: " + rnfn + "\"}";
+                                    s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\",\"value\":\"File saved: " + rnfn + "\"}";
                                     goto send_data;
                                 }
                                 else

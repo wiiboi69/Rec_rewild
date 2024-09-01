@@ -18,7 +18,7 @@ namespace OpenRec.api
             rnfn = "";
             bool flag1;
             byte[] rnimg = ParceData(request, "image.dat", out flag1);
-            rnimg = MultiFormSplit(request);
+            //rnimg = MultiFormSplit(request);
             if (!flag1)
             {
                 flag = true;
