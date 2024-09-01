@@ -465,14 +465,13 @@ namespace server
                             {
                                 if (data_type == FileType.Image)
                                 {
-                                    s = "{\"success\":true,\"error\":\"\",\"ImageName\":\"" + rnfn + "\",\"value\":\"File saved: " + rnfn + "\"}";
+                                    s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + rnfn + "\",\"value\":\"File saved: " + rnfn + "\"}";
                                     goto send_data;
                                 }
-                                else
-                                {
+                                
 
-                                    s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + temp1 + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
-                                }
+                                s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + temp1 + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
+                                
                             }
                             goto send_data;
                             data_type_unknowed:
