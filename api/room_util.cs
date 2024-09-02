@@ -49,7 +49,7 @@ namespace api
                 try
                 {
                     Console.WriteLine("finding room id: " + temp1);
-                    temp2 = WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_id/" + temp1 + ".txt").ToString();
+                    temp2 = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_id/" + temp1 + ".txt").ToString();
                     goto roomdownload;
                     
                 }
