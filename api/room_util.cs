@@ -29,8 +29,11 @@ namespace api
             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
             string temp1 = subs[0];
             string temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
+            
+            roomdownload:
             if (temp2 != "")
             {
+                
                 try
                 {
                     Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
@@ -43,7 +46,19 @@ namespace api
             }
             else
             {
+                try
+                {
+                    Console.WriteLine("finding room id: " + temp1);
+                    temp2 = WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_id/" + temp1 + ".txt").ToString();
+                    goto roomdownload;
+                    
+                }
+                catch
+                {
+                    goto roomfaileddownload;
+                }
                 goto roomfaileddownload;
+                
             }
             roomfaileddownload:
             Console.WriteLine("finding custom room id: " + temp1);
