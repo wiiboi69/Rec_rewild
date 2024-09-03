@@ -169,7 +169,12 @@ namespace server
                             s = room_util.find_room_with_id(subs[0], 7);
                             File.WriteAllText("SaveData\\Rooms\\custom\\room_" + temp1 + ".json", s);
                             //s = "{\"success\":false,\"error\":\"oops!\nyou cant create or copy rooms yet,\n[code: create]\"}";
-                            s = "{\"success\":true,\"error\":\"\"}";
+
+                            s = JsonConvert.SerializeObject( new{
+                                success = true,
+                                error = "",
+                                value = s 
+                            });
 
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
