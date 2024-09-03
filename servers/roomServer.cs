@@ -166,7 +166,7 @@ namespace server
                             temp1 = text.Substring("name=".Length);
                             string[] stringSeparators = new string[] { "/clone" };
                             string[] subs = rawUrl.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                            s = room_util.find_room_with_id(rawUrl, 7);
+                            s = room_util.find_room_with_id(subs[0], 7);
                             File.WriteAllText("SaveData\\Rooms\\custom\\room_" + temp1 + ".json", s);
                             //s = "{\"success\":false,\"error\":\"oops!\nyou cant create or copy rooms yet,\n[code: create]\"}";
                             s = "{\"success\":true,\"error\":\"\"}";
