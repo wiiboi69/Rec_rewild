@@ -37,6 +37,8 @@ namespace api
                 try
                 {
                     Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
+                    string replaceWith = "";
+                    temp2 = temp2.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
                     return new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + temp2.ToLower() + ".txt").ToString();
                 }
                 catch (Exception e)
