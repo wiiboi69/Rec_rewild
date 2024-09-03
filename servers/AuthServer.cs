@@ -77,6 +77,11 @@ namespace server
                             s = "true";
                             Thread.Sleep(100);
                         }
+                        else if(rawUrl.StartsWith("/account/me/email"))
+                        {
+                            s = "{"error":"failed: error code: not implemented","success":false,"value":null}";
+                            Thread.Sleep(100);
+                        }
                         else if (rawUrl == "/connect/token")
                         {
                             temp1 = ClientSecurity.GenerateToken();
