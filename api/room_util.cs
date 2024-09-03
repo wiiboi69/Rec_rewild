@@ -53,8 +53,9 @@ namespace api
                     goto roomdownload;
                     
                 }
-                catch
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                     goto roomfaileddownload;
                 }
                 goto roomfaileddownload;
