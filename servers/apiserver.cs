@@ -669,7 +669,7 @@ namespace server
                         {
                             s = AccountAuth.GetAccountsBulk();
                         }
-                        else if (rawUrl.StartsWith("/account/me/email"))
+                        else if (rawUrl.Contains("/account/me/email"))
                         {
                             s = "{\"error\":\"failed: error code: not implemented\",\"success\":false,\"value\":\"\"}";
                         }
