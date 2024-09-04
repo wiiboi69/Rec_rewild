@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Web;
@@ -176,6 +176,10 @@ namespace server
                                 value = s 
                             });
 
+                        }
+                        else if (rawUrl.StartsWith("/rooms/") & rawUrl.EndsWith("/name"))
+                        {
+                            s = "{\"error\":\"failed: [error_code:not_implemented]\",\"success\":false,\"value\":\"\"}";
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {
