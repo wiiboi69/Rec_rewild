@@ -1,4 +1,4 @@
-Feature Patch v0.0.1:
+Feature Patch v0.0.2:
 -forked openrec
 
 
@@ -6,8 +6,10 @@ Feature Patch v0.0.1:
 Credits Rec_Rewild:
 
 me for the 2021 server
+@Nito9999 aka e12354 on discord for adding and fixing stuff
+@eggrecroom on discord for fixing photon
 
-Credits openrec:
+Credits OpenRec:
 @Nexus0821 - Programmed and helped add in a lot of new features
 
 @LucasOnDiscord#0210 - Adding potions
