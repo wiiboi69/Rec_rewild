@@ -25,7 +25,7 @@ namespace server
         private void StartListen()
         {
             this.listener.Prefixes.Add("http://localhost:20211/");
-            this.listener.Prefixes.Add("http://localhost:2059/");
+            //this.listener.Prefixes.Add("http://localhost:2059/");
             for (; ; )
             {
                 this.listener.Start();
@@ -34,9 +34,10 @@ namespace server
                 HttpListenerRequest request = context.Request;
                 HttpListenerResponse response = context.Response;
                 string rawUrl = request.RawUrl;
-                string s = "";
+                string s = "";  
                 
-                if (Program.beta)
+                //if (Program.beta)
+                if (false)
                 {
                     /*
                     s = "{"+
