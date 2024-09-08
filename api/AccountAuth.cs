@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -37,6 +37,23 @@ namespace api
                     platforms = 1,
                     profileImage = "Profile.png",
                     username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
+                }
+            });
+        }
+        public static string GetCoachyWoachy()
+        {
+            return JsonConvert.SerializeObject(new List<Account>
+            {
+                new Account
+                {
+                    accountId = 1,
+                    displayName = "Coach",
+                    bannerImage = "Coach.png",
+                    createdAt = DateTime.Now,
+                    isJunior = false,
+                    platforms = 1,
+                    profileImage = "Coach.png",
+                    username = "Coach",
                 }
             });
         }
