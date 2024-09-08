@@ -1,8 +1,8 @@
 {
   "FeaturedPlayer": {
     "Id": 1,
-    "TitleOverride": "Zenex",
-    "UrlOverride": "https://www.youtube.com/watch?v=zd_Fu4mW2po"
+    "TitleOverride": "Featured Player",
+    "UrlOverride": "https://example.com"
   },
   "FeaturedRoomGroup": {
     "FeaturedRoomGroupId": 1,
@@ -45,8 +45,8 @@
     ]
   },
   "CurrentAnnouncement": {
-    "Message": "",
-    "MoreInfoUrl": ""
+    "Message": "dont click :3",
+    "MoreInfoUrl": "https://e621.net"
   },
   "InstagramImages": [
     {
@@ -56,10 +56,10 @@
   ],
   "Videos": [
     {
-      "BlobName": "Help",
-      "Title": "AHHHHHHH",
-      "Description": "AM PRO",
-      "ThumbnailBlobName": "IDK.png",
+      "BlobName": "botton gear",
+      "Title": "bottom gear",
+      "Description": "wow",
+      "ThumbnailBlobName": "bottom.png",
       "SourceUrl": "https://www.youtube.com/watch?v=zd_Fu4mW2po"
     },
     {
