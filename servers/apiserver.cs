@@ -665,17 +665,17 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl.StartsWith("/account/bulk"))
+                        if (rawUrl.StartsWith("/account/bulk?id="))
                         {
-                            s = AccountAuth.GetAccountsBulk();
+                            string temp = rawUrl.Substring("/account/bulk?id=".Length);
+                            if (temp == "1")
+                                s = AccountAuth.GetCoachyWoachy();
+                            else
+                                s = AccountAuth.GetAccountsBulk();
                         }
                         else if (rawUrl.Contains("/account/me/email"))
                         {
                             s = "{\"error\":\"failed: error code: not implemented\",\"success\":false,\"value\":\"\"}";
-                        }
-                        else if (rawUrl.Contains("/account/bulk?id=1"))
-                        {
-                            s = AccountAuth.GetCoachyWoachy();
                         }
                         else if(rawUrl.StartsWith("/account/me/bio"))
                         {
