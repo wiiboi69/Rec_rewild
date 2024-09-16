@@ -46,12 +46,12 @@
   },
   "CurrentAnnouncement": {
     "Message": "dont click :3",
-    "MoreInfoUrl": "https://.net"
+    "MoreInfoUrl": "https://"
   },
   "InstagramImages": [
     {
-      "ImageName": "Community/Instagram/Welcome.png",
-      "ImageUrl": "https://www.instagram.com/p/Ckb55YeMEFX/"
+      "ImageName": "test.png",
+      "ImageUrl": "https://www.discord.cim"
     }    
   ],
   "Videos": [
@@ -64,14 +64,14 @@
     },
     {
       "BlobName": "u.webm",
-      "Title": "November 15th",
+      "Title": "Placeholder 2",
       "Description": "",
       "ThumbnailBlobName": "IDK.png",
       "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     },
     {
       "BlobName": "deez.mp4",
-      "Title": "When the imposter is sus",
+      "Title": "Placeholder 3",
       "Description": "",
       "ThumbnailBlobName": "Community/Videos/deez.png",
       "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
