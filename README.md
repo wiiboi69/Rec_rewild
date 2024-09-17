@@ -1,6 +1,6 @@
 # Welcome to Rec_rewild!
 ---
-Rec_rewild is a forked of OpenRec!
+Rec_rewild is a fork of OpenRec!
 
 ### Branches
  - Master
@@ -20,8 +20,8 @@ https://download.visualstudio.microsoft.com/download/pr/76e5dbb2-6ae3-4629-9a84-
 ---
 # getting a build
 
-todo
+https://sites.google.com/view/rec-rewild/
 
 ---
-https://sites.google.com/view/rec-rewild
+
 
