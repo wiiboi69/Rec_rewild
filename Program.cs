@@ -42,9 +42,9 @@ namespace start
                     Console.Title = "Rec_rewild Tutorial";
                     Console.WriteLine("In that case, welcome to Rec_rewild!");
                     Console.WriteLine("Rec_rewild is server software that emulates the old servers of previous RecRoom versions.");
-                    Console.WriteLine("it emulate server for rec room versions from 2020 to 2021");
+                    Console.WriteLine("It emulates servers for Rec Room versions from 2020 to 2021.");
                     Console.WriteLine("To use Rec_rewild, you'll need to have builds aswell!");
-                    Console.WriteLine("To download builds, either go to the builds channel or use the links below: (these links are also available from the #builds channel)" + Environment.NewLine);
+                    Console.WriteLine("To download builds, either go to the #rec-room-builds channel or use the links below: (these links are also available from the #builds channel)" + Environment.NewLine);
                     Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
                     Console.WriteLine("Download a build and press any key to continue:");
                     Console.ReadKey();
@@ -52,7 +52,7 @@ namespace start
                     Console.WriteLine("Now that you have a build, what you're going to do is as follows:" + Environment.NewLine);
                     Console.WriteLine("1. Unzip the build");
                     Console.WriteLine("2. Start the server by pressing 5 on the main menu");
-                    Console.WriteLine("3. Run Recroom_Release.exe from the folder of the build you downloaded." + Environment.NewLine);
+                    Console.WriteLine("3. Run RecRoom.exe from the folder of the build you downloaded." + Environment.NewLine);
                     Console.WriteLine("And that's it! Press any key to go to the main menu, where you will be able to start the server:");
                     Console.ReadKey();
                     Console.Clear();
@@ -78,15 +78,14 @@ namespace start
 
             Console.Title = "Rec_rewild Startup Menu";
 
-            Console.WriteLine("Rec_rewild - a fork of openrec for rec room 2021. (Version: " + appversion + ")");
+            Console.WriteLine("Rec_rewild - a fork of OpenRec for rec room 2021. (Version: " + appversion + ")");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
 
             if (!(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt").Contains(appversion)))
             {
                 Console.WriteLine("This version of Rec_rewild is outdated. We recommend you install the latest version, Rec_rewild " + new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt"));
             }
-            
-            Console.WriteLine("//Custom Room Downloader has been moved to the settings tab!" + Environment.NewLine);
+    
             Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server");
             string readline = Console.ReadLine();
             if (readline == "1")
@@ -126,7 +125,7 @@ namespace start
                 {
                     Console.Title = "Rec_rewild Custom Room Downloader";
                     Console.Clear();
-                    Console.WriteLine("Custom Room Downloader: This tool takes the room data of any room you type in and imports it into ^CustomRoom in September 27th 2018.");
+                    Console.WriteLine("Custom Room Downloader: This tool takes the room data of any room you type in and imports it into your custom room folder in 2021.");
                     Console.WriteLine("Please type in the name of the room you would like to download: (Case sensitive)");
                     string roomname = Console.ReadLine();
                     string text = "";
@@ -357,8 +356,8 @@ namespace start
             }
             if (readline == "5")
             {
-                Console.Title = "starting server";
-                Console.WriteLine("Please wait for server to start up");
+                Console.Title = "Starting Server";
+                Console.WriteLine("Please wait for the server to start up...");
                 
                 version = "2021";
 
