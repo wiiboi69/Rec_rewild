@@ -25,11 +25,23 @@ namespace OpenRec.api
                 return "error.png";
             }
 
-            string fname = "image_data_";
+            string fname = string.Concat(new string[]
+            {
+                "Rec_rewild_",
+                DateTime.Now.Month.ToString(),
+                "-",
+                DateTime.Now.Day.ToString(),
+                "-",
+                DateTime.Now.Year.ToString(),
+                "-",
+                DateTime.Now.Hour.ToString(),
+                "_",
+                DateTime.Now.Minute.ToString(),
+            });
             string imagefname = "";
             //"SaveData\\images\\camera_" + new Random().Next(1000, 99999999) + "_image.png"
 
-            fname = fname + new Random().Next(1000, 99999999) + "_image.png";
+            fname = fname + "_image.png";
             imagefname = fname;
             FileStream file = File.Create("SaveData\\images\\" + fname);
             file.Write(rnimg);
@@ -271,10 +283,10 @@ namespace OpenRec.api
             }
             catch (Exception ex)
             {
-                Console.WriteLine("failed to parse data " + ex.ToString());
+                Console.WriteLine("Failed to parse data " + ex.ToString());
             }
             DidItParced = false;
-            Console.WriteLine("can't find: \"" + name + "\" in the form data");
+            Console.WriteLine("Can't find: \"" + name + "\" in the form data");
             return null;
         }
 
