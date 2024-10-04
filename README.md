@@ -7,18 +7,18 @@ Rec_rewild is a fork of OpenRec for 2021!
  - dev
  - serverr_rewit
 
-The master branch where all the experimental updates that are needed to be tested before release are.
+The master branch is where all the experimental updates need to be tested before release.
 
-The dev branch where all the breaking changes that are needed to be tested before release are.
+The dev branch is where all the breaking changes need to be tested before release.
 
-The serverr_rewit branch is a full server rewite.
+The serverr_rewit branch is a full server rewrite.
 
 ---
-# what is needed
+# What is needed
 - .net8
 https://download.visualstudio.microsoft.com/download/pr/76e5dbb2-6ae3-4629-9a84-527f8feb709c/09002599b32d5d01dc3aa5dcdffcc984/windowsdesktop-runtime-8.0.6-win-x64.exe
 ---
-# getting a build
+# Getting a build
 
 https://sites.google.com/view/rec-rewild/
 
