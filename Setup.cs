@@ -82,7 +82,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\Profile\\userid.txt")))
             {
-                File.WriteAllText("SaveData\\Profile\\userid.txt", new Random().Next(10000000, 999999999).ToString());
+                File.WriteAllText("SaveData\\Profile\\userid.txt", new Random().Next(100000, 999999999).ToString());
             }
             if (!(File.Exists("SaveData\\myrooms.txt")))
             {
@@ -99,10 +99,6 @@ namespace start
             if (!(File.Exists("SaveData\\App\\privaterooms.txt")))
             {
                 File.WriteAllText("SaveData\\App\\privaterooms.txt", "Enabled");
-            }
-            if (!(File.Exists("SaveData\\App\\showopenrecinfo.txt")))
-            {
-                File.WriteAllText("SaveData\\App\\showopenrecinfo.txt", "Enabled");
             }
             if (!(File.Exists("SaveData\\App\\facefeaturesadd.txt")))
             {
@@ -220,10 +216,6 @@ namespace start
             if (!(File.Exists("SaveData\\App\\privaterooms.txt")))
             {
                 File.WriteAllText("SaveData\\App\\privaterooms.txt", "Enabled");
-            }
-            if (!(File.Exists("SaveData\\App\\showopenrecinfo.txt")))
-            {
-                File.WriteAllText("SaveData\\App\\showopenrecinfo.txt", "Enabled");
             }
             if (!(File.Exists("SaveData\\App\\facefeaturesadd.txt")))
             {
