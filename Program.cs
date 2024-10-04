@@ -496,7 +496,7 @@ namespace start
                     else if (input == "!exit")
                     {
                         Console.WriteLine();
-                        Console.WriteLine(" closing the server");
+                        Console.WriteLine("closing the server");
                         Console.WriteLine();
                         Environment.Exit(0);
                         goto input_server;
@@ -510,7 +510,7 @@ namespace start
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
         public static bool beta = false;
-        public static string appversion = "0.0.2";
+        public static string appversion = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt");
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
         public static string CustomImages = Program.DataPath + "\\Images";
