@@ -40,6 +40,10 @@ namespace start
                     Console.WriteLine("Rec_rewild is server software that emulates the old servers of previous RecRoom versions.");
                     Console.WriteLine("It emulates servers for Rec Room versions from 2020 to 2021.");
                     Console.WriteLine("To use Rec_rewild, you'll need to have builds aswell!");
+                    Console.WriteLine("Please enter the username you would like to use:");
+                    string newusername = Console.ReadLine();
+                    File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
+                    File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
                     Console.WriteLine("To download builds, either go to the #rec-room-builds channel or use the links below: (these links are also available from the #rec-room-builds channel)" + Environment.NewLine);
                     Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
                     Console.WriteLine("Download a build and press any key to continue:");
@@ -87,7 +91,7 @@ namespace start
                 Console.Clear();
                 Settings:
                 Console.Title = "Rec_rewild Settings Menu";
-                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader " + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Go Back");
+                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader " + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
                 string readline4 = Console.ReadLine();
                 if (readline4 == "1")
                 {
@@ -107,7 +111,7 @@ namespace start
                 {
                     Console.Title = "Rec_rewild Custom Room Downloader";
                     Console.Clear();
-                    Console.WriteLine("Custom Room Downloader: This tool takes the room data of any room you type in and imports it into ^CustomRoom in September 27th 2018.");
+                    Console.WriteLine("Custom Room Downloader: This tool takes the room data of any room you type in and imports it into Room folder in 2021");
                     Console.WriteLine("Please type in the name of the room you would like to download: (Case sensitive)");
                     string roomname = Console.ReadLine();
                     string text = "";
@@ -158,6 +162,29 @@ namespace start
                     goto Settings;
                 }
                 else if (readline4 == "4")
+                {
+                    if (!(File.Exists("SaveData\\avataritems.txt")))
+                    {
+                        File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));
+                    }
+                    if (!(File.Exists("SaveData\\avataritems2.txt")))
+                    {
+                        File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
+                    }
+                    if (!(File.Exists("SaveData\\equipment.txt")))
+                    {
+                        File.WriteAllText("SaveData\\equipment.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/equipment.txt"));
+                    }
+                    if (!(File.Exists("SaveData\\consumables.txt")))
+                    {
+                        File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/consumables.txt"));
+                    }
+                    Console.WriteLine("Updated successfully");
+                    Thread.Sleep(400); // to show the user that it success
+                    Console.Clear();
+                    goto Settings;
+                }
+                else if (readline4 == "5")
                 {
                     Console.Clear();
                     goto Start;
