@@ -5344,6 +5344,14 @@
     "Rarity": 0
   },
   {
+    "AvatarItemDesc": "1b37d6cd-0a89-4604-a046-e5cff55b0cf6,8XajS2adOEOqzqnLy6-zcQ,P12CUkIg8EuFihGQsvPlxg,",
+    "AvatarItemType": 0,
+    "PlatformMask": 0,
+    "FriendlyName": "Skid FirefighterTorso",
+     "Tooltip": "Yesir!",
+    "Rarity": 0
+  },
+  {
     "AvatarItemDesc": "439d1e24-d67f-4b8a-8fb3-8bf589d5a8ee,Yr0mF1EWzEaIyRMOWFiY6w,Rk18_7icF0Srgh7M1_G-hA,",
     "AvatarItemType": 0,
     "PlatformMask": 0,
