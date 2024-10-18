@@ -98,7 +98,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\App\\privaterooms.txt")))
             {
-                File.WriteAllText("SaveData\\App\\privaterooms.txt", "Enabled");
+                File.WriteAllText("SaveData\\App\\privaterooms.txt", "Disabled");
             }
             if (!(File.Exists("SaveData\\App\\facefeaturesadd.txt")))
             {
