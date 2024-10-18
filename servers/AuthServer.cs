@@ -65,9 +65,16 @@ namespace server
                         {
                             text = streamReader.ReadToEnd();
                         }
+                        ///account/me/haspassword
                         Console.WriteLine("Auth Data: " + text);
                         //
-                        if (rawUrl == "/eac/challenge")
+                        //
+                        if (rawUrl == "/account/me/haspassword")
+                        {
+                            s = "True";
+                            Thread.Sleep(100);
+                        }
+                        else if (rawUrl == "/eac/challenge")
                         {
                             s = challengesResponse;
                             Thread.Sleep(100);

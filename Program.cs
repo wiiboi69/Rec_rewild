@@ -629,7 +629,7 @@ namespace start
         {
             return new Reponse
             {
-                Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceivedImmediate,
+                Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceived,
                 Msg = new GiftPackage()
                 {
                     Id = 1,
@@ -680,6 +680,9 @@ namespace start
             RecRoyale_Season1 = 200
         }
 
+
+
+
         public class GiftPackage
         {
             public long Id { get; set; }
@@ -718,15 +721,23 @@ namespace start
             public string HasEquipment { get; set; }
             public string Consumed { get; set; }
             public string IsValid { get; set; }
-
-
-
-
-
-
-
-
         }
+
+        public class ChallengeGift
+        {
+            public long GiftDropId { get; set; }
+            public string ConsumableItemDesc { get; set; }
+            public string AvatarItemDesc { get; set; }
+            public AvatarItemType? AvatarItemType { get; set; }
+            public string EquipmentPrefabName { get; set; }
+            public string EquipmentModificationGuid { get; set; }
+            public StorefrontTypes StorefrontType { get; set; }
+            public int Xp { get; set; }
+            public int Level { get; set; }
+            public GiftContext GiftContext { get; set; }
+            public GiftRarity GiftRarity { get; set; }
+        }
+
 
         public enum PlatformType
         {
@@ -853,6 +864,49 @@ namespace start
             Commerce_Purchase = 200000, // 0x00030D40
         }
 
+        public enum StorefrontTypes
+        {
+            // Token: 0x04009148 RID: 37192
+            None,
+            // Token: 0x04009149 RID: 37193
+            LaserTag,
+            // Token: 0x0400914A RID: 37194
+            RecCenter,
+            // Token: 0x0400914B RID: 37195
+            Watch,
+            // Token: 0x0400914C RID: 37196
+            Quest_LostSkulls = 100,
+            // Token: 0x0400914D RID: 37197
+            Quest_Dracula,
+            // Token: 0x0400914E RID: 37198
+            Quest_GoldenTrophy,
+            // Token: 0x0400914F RID: 37199
+            Quest_CrimsonCauldron,
+            // Token: 0x04009150 RID: 37200
+            RecRoyale = 200,
+            // Token: 0x04009151 RID: 37201
+            Cafe = 300,
+            // Token: 0x04009152 RID: 37202
+            Paintball = 400,
+            // Token: 0x04009153 RID: 37203
+            Paintball_River,
+            // Token: 0x04009154 RID: 37204
+            Paintball_Homestead,
+            // Token: 0x04009155 RID: 37205
+            Paintball_Quarry,
+            // Token: 0x04009156 RID: 37206
+            Paintball_ClearCut,
+            // Token: 0x04009157 RID: 37207
+            Paintball_Spillway,
+            // Token: 0x04009158 RID: 37208
+            Paintball_SunsetDriveIn,
+            // Token: 0x04009159 RID: 37209
+            Bowling = 500,
+            // Token: 0x0400915A RID: 37210
+            StuntRunner = 600,
+            // Token: 0x0400915B RID: 37211
+            DormMirror = 700
+        }
         public class ModerationBlockDetails
         {
             public int ReportCategory { get; set; }

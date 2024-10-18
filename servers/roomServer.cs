@@ -78,7 +78,7 @@ namespace server
                             s = JsonConvert.SerializeObject(new {
                                 Cheered = false,
                                 Favorited = false,
-                                LastVisitedAt = ""
+                                LastVisitedAt = DateTime.Now
                             });
                         }
                         else if (rawUrl.StartsWith("/rooms/") && rawUrl.EndsWith("/playerdata/me"))
@@ -180,6 +180,20 @@ namespace server
                         else if (rawUrl.StartsWith("/rooms/") & rawUrl.EndsWith("/name"))
                         {
                             s = "{\"error\":\"failed: [error_code:not_implemented]\",\"success\":false,\"value\":\"\"}";
+                        }
+                        else if (rawUrl.StartsWith("/rooms/") & rawUrl.Contains("/subrooms/") & rawUrl.EndsWith("/data"))
+                        {
+
+                            string[] temp = rawUrl.Split('/');
+                            foreach (var item in temp)
+                            {
+                                Console.WriteLine(item);
+                            }
+                            Console.WriteLine(temp[2]);
+                            Console.WriteLine(temp[4]);
+
+                            s = room_util.Saveroom(text, temp[2], temp[4]);
+
                         }
                         else if (rawUrl.StartsWith("/rooms/"))
                         {

@@ -695,7 +695,8 @@ namespace server
                         {
                             string temp = text.Substring("displayName=".Length);
                             File.WriteAllText(Program.ProfilePath + "\\displayName.txt", temp);
-                            s = "{\"success\":true,\"error\":\"\",\"value\":\"None\"}";
+                            s = "{\"success\":true,\"error\":\"\",\"value\":\"" + temp + "\"}";
+                            goto send_data;
                         }
                         else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/displayName"))
                         {
@@ -770,7 +771,15 @@ namespace server
                         {
                             Settings.SetPlayerSettings(text);
                         }
-                        send_data:
+                        if (Url == "mod_settings/v2/")
+                        {
+                            s = Settings.LoadmodSettings_file();
+                        }
+                        if (Url == "mod_settings/v2/set")
+                        {
+                            Settings.SetmodSettings(text);
+                        }
+                    send_data:
                         if (s.Length > 400)
                         {
                             Console.WriteLine("api Response: " + s.Length);

@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using static api.roomdata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace api
 {
@@ -804,6 +805,20 @@ namespace api
             File.WriteAllText("test.txt", s);
             File.WriteAllText("test2.txt", JsonConvert.SerializeObject(roomlistdatav2));
             return JsonConvert.SerializeObject(roomlistdatav2);
+        }
+
+        public static string Saveroom(string text, string roomid, string subroom)
+        {
+
+
+
+
+            return JsonConvert.SerializeObject(new
+            {
+                error = "failed: [error_code:not_implemented]",
+                value = "",
+                success = false
+            });// "{\"error\":\"failed: [error_code:not_implemented]\",\"success\":false,\"value\":\"\"}";
         }
 
         public static string BlankResponse = "";
