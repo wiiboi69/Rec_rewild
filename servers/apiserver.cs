@@ -293,6 +293,7 @@ namespace server
                         if (Url == "avatar/v4/items")
                         {
                             s = File.ReadAllText("SaveData\\avataritems2.txt");
+                            Console.WriteLine("Got avatar items");
                             s = Avatar_Item_Util.inject_AvatarItem_list(s);
                         }
                         if (rawUrl.Contains("quickPlay/v1/getandclear"))
@@ -709,6 +710,7 @@ namespace server
                         else if (rawUrl.StartsWith("/account/me"))
                         {
                             s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
+                            Console.WriteLine("checking: " + File.ReadAllText("SaveData\\Profile\\username.txt"));
                         }
                         else if (rawUrl.StartsWith("/account/"))
                         {

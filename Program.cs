@@ -162,23 +162,16 @@ namespace start
                     goto Settings;
                 }
                 else if (readline4 == "4")
-                {
-                    if (!(File.Exists("SaveData\\avataritems.txt")))
-                    {
-                        File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));
-                    }
-                    if (!(File.Exists("SaveData\\avataritems2.txt")))
-                    {
-                        File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
-                    }
-                    if (!(File.Exists("SaveData\\equipment.txt")))
-                    {
-                        File.WriteAllText("SaveData\\equipment.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/equipment.txt"));
-                    }
-                    if (!(File.Exists("SaveData\\consumables.txt")))
-                    {
-                        File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/consumables.txt"));
-                    }
+                {            
+                    File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));                  
+                    File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
+                    Console.WriteLine("Downloaded avatar items");
+                    File.WriteAllText("SaveData\\equipment.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/equipment.txt"));
+                    Console.WriteLine("Downloaded equipment");
+                    File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/consumables.txt"));
+                    Console.WriteLine("Downloaded fresh consumables");
+                    File.WriteAllText("SaveData\\gameconfigs.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/gameconfigs.txt"));
+                    Console.WriteLine("Downloaded game configs");
                     Console.WriteLine("Updated successfully");
                     Thread.Sleep(400); // to show the user that it success
                     Console.Clear();
