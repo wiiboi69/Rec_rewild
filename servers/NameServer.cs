@@ -76,6 +76,7 @@ namespace server
                       "\"Videos\": \"https://videos.rec.net\"," +
                       "\"WWW\": \"https://rec.net\""+
                     "}";*/
+                    /*
                     s = "{" +
                         "  \"Accounts\": \"https://example.com/\"," +
                         "  \"API\":\"https://example.com/\"," +
@@ -111,7 +112,7 @@ namespace server
                         "  \"Thorn\": \"https://example.com/\"," +
                         "  \"Videos\": \"https://example.com/\"," +
                         "  \"WWW\": \"https://example.com/\"" +
-                        "}";
+                        "}";*/
                 }
                 else
                 {

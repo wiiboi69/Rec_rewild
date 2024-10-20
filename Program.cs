@@ -193,15 +193,16 @@ namespace start
             Profile:
                 Console.WriteLine("quick tip: you can change them in game" + Environment.NewLine);
                 Console.Title = "Rec_rewild Profile Menu";
-                Console.WriteLine("(1) Change Username" 
+                Console.WriteLine(
+                      "(1) Change Username      " + File.ReadAllText("SaveData\\Profile\\username.txt")
                     + Environment.NewLine 
-                    + "(2) Change displayName" 
+                    + "(2) Change displayName   " + File.ReadAllText("SaveData\\Profile\\displayName.txt")
                     + Environment.NewLine 
-                    + "(3) Change Profile Image" 
+                    + "(3) Change Profile Image " 
                     + Environment.NewLine 
-                    + "(4) Change Level" 
+                    + "(4) Change Level         " + File.ReadAllText("SaveData\\Profile\\level.txt")
                     + Environment.NewLine 
-                    + "(5) Change bio" 
+                    + "(5) Change bio           " + File.ReadAllText("SaveData\\Profile\\bio.txt")
                     + Environment.NewLine 
                     + "(6) Profile Downloader" 
                     + Environment.NewLine 
@@ -285,7 +286,7 @@ namespace start
                             string data = "";
                             try
                             {
-                                data = new WebClient().DownloadString("https://accounts.rec.net/account/search?name=" + username);
+                                data = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + username);
                             }
                             catch
                             {
@@ -338,7 +339,7 @@ namespace start
                 }
                 else if (readline3 == "6")
                 {
-                    
+                    download_profile:
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
                     Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to Rec_rewild.");
@@ -353,13 +354,16 @@ namespace start
                     {
                         Console.Clear();
                         Console.WriteLine("Failed to download profile...");
-                        goto Start;
+                        goto Profile;
                     }
                     
-                    ProfieStealer.Profilefind(data2, take_int: 12);
+                    if (!ProfieStealer.Profilefind(data2, take_int: 12))
+                    {
+                        goto download_profile;
+                    }
                     
                     Console.Clear();
-                    goto Start;
+                    goto Profile;
                 }
                 else if (readline3 == "7")
                 {

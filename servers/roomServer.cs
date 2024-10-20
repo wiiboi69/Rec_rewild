@@ -8,8 +8,6 @@ using api;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Security.AccessControl;
-using static server.WebSocketHTTP;
-
 
 namespace server
 {
@@ -46,7 +44,6 @@ namespace server
                         byte[] bytes = null;
                         string signature = request.Headers.Get("X-RNSIG");
                         string temp1 = "";
-                        string temp2 = "";
                         Console.WriteLine("room Requested: " + rawUrl);
                         string text;
                         string s = "";

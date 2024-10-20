@@ -112,7 +112,7 @@ namespace server
                         }
                         if (Url.StartsWith("platformlogin/v2/getcachedlogins"))
                         {
-                            s = getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
+                            s = Getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
                             CachedPlayerID = ulong.Parse(text.Remove(0, 32));
                             CachedPlatformID = ulong.Parse(text.Remove(0, 22));
                             File.WriteAllText("SaveData\\Profile\\userid.txt", Convert.ToString(CachedPlayerID));
@@ -131,22 +131,22 @@ namespace server
                         }
                         if (Url == "platformlogin/v1/getcachedlogins")
                         {
-                            s = getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
+                            s = Getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
                             CachedPlayerID = ulong.Parse(text.Remove(0, 32));
                             CachedPlatformID = ulong.Parse(text.Remove(0, 22));
                             File.WriteAllText("SaveData\\Profile\\userid.txt", Convert.ToString(CachedPlayerID));
                         }
                         if (Url == "platformlogin/v1/loginaccount")
                         {
-                            s = logincached.loginCache(CachedPlayerID, CachedPlatformID);
+                            s = Logincached.loginCache(CachedPlayerID, CachedPlatformID);
                         }
                         if (Url == "platformlogin/v1/createaccount")
                         {
-                            s = logincached.loginCache(CachedPlayerID, CachedPlatformID);
+                            s = Logincached.loginCache(CachedPlayerID, CachedPlatformID);
                         }
                         if (Url == "platformlogin/v1/logincached")
                         {
-                            s = logincached.loginCache(CachedPlayerID, CachedPlatformID);
+                            s = Logincached.loginCache(CachedPlayerID, CachedPlatformID);
                         }
                         if (Url == "relationships/v1/bulkignoreplatformusers")
                         {

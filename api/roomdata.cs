@@ -10,7 +10,7 @@ using static api.WarningMask;
 
 namespace api
 {
-    internal class roomdata
+    internal class Roomdata
     {
         public static Dictionary<string, RoomRoot> RROS = new Dictionary<string, RoomRoot>
         {
@@ -1105,8 +1105,8 @@ namespace api
             public string? DataBlob { get; set; }
             public int UgcVersion { get; set; }
             public List<Tags> Tags { get; set; }
-            public List<dummy> PromoImages { get; set; }
-            public List<dummy> PromoExternalContent { get; set; }
+            public List<Dummy> PromoImages { get; set; }
+            public List<Dummy> PromoExternalContent { get; set; }
             public List<LoadScreens> LoadScreens { get; set; }
             /*
             public bool beta { get; set; }
@@ -1165,8 +1165,8 @@ namespace api
             public string? DataBlob { get; set; }
             public int UgcVersion { get; set; }
             public List<Tags> Tags { get; set; }
-            public List<dummy> PromoImages { get; set; }
-            public List<dummy> PromoExternalContent { get; set; }
+            public List<Dummy> PromoImages { get; set; }
+            public List<Dummy> PromoExternalContent { get; set; }
             public List<LoadScreens> LoadScreens { get; set; }
             public List<ulong> CoOwners { get; set; }
             public List<int> InvitedCoOwners { get; set; }
@@ -1233,8 +1233,8 @@ public bool beta { get; set; }
             public int UgcVersion { get; set; }
             public int Version { get; set; }
             public List<Tags> Tags { get; set; }
-            public List<dummy> PromoImages { get; set; }
-            public List<dummy> PromoExternalContent { get; set; }
+            public List<Dummy> PromoImages { get; set; }
+            public List<Dummy> PromoExternalContent { get; set; }
             public List<LoadScreens> LoadScreens { get; set; }
             /*
             public bool beta { get; set; }
@@ -1329,7 +1329,7 @@ public bool beta { get; set; }
             public int Role { get; set; }
             public int InvitedRole { get; set; }
         }
-        public class roomlist
+        public class Roomlist
         {
             public List<RoomRootv2> Results { get; set; }
             public long TotalResults { get; set; }
@@ -1344,7 +1344,7 @@ public bool beta { get; set; }
             public List<RoomRootv3_1> Results { get; set; }
             public long TotalResults { get; set; }
         }
-        public class dummy
+        public class Dummy
         { 
 
         }

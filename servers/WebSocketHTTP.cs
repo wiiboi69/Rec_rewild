@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -159,18 +160,6 @@ namespace server
                     }
                     Console.WriteLine(temp3 + "\u001e");
 
-                    /*temp3 = fixNonAsciiString(temp3, '\\', 5, 1);
-                    //Console.WriteLine(temp3 + "\u001e");
-
-                    temp3 = fixNonAsciiStringset(temp3,'\\', "\\u0022");
-                    //Console.WriteLine(temp3 + "\u001e");
-
-                    temp3 = temp3.Replace("\"{\\u0022Success\\u0022:true}\"", "\\\"{\\\"success\\\":true}\\\"");
-                    //Console.WriteLine(temp3 + "\u001e");
-
-                    temp3 = temp3.Replace("{\\u0022Id\\u0022:\\u0022PresenceUpdate\\u0022,\\u0022Msg\\u0022:", "{\\\"Id\\\":\\\"PresenceUpdate\\\",\\\"Msg\\\":");*/
-                    //Console.WriteLine(temp3 + "\u001e");
-
                     array = Encoding.ASCII.GetBytes(temp3 + "\u001e");
 
                     await ws.SendAsync(new ArraySegment<byte>(array, 0, array.Length), WebSocketMessageType.Text, true, src.Token);
@@ -247,7 +236,7 @@ namespace server
             StringBuilder sb2 = new StringBuilder();
             int tempval = 0;
             int tempval1 = 0;
-            int tempval2 = 0;
+            //int tempval2 = 0;
             int skipval = 0;
             bool skip = false;
             char t = 'a';
@@ -514,3 +503,4 @@ namespace server
         }
     }
 }
+*/

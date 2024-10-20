@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-using static api.roomdata;
+using static api.Roomdata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace api
@@ -62,17 +62,15 @@ namespace api
                     Console.WriteLine(e.Message);
                     goto roomfaileddownload;
                 }
-                goto roomfaileddownload;
-                
             }
             roomfaileddownload:
             Console.WriteLine("finding custom room id: " + temp1);
-            roomlist roomlistdata = JsonConvert.DeserializeObject<roomlist>(s);
+            Roomlist roomlistdata = JsonConvert.DeserializeObject<Roomlist>(s);
 
             string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
             foreach (string roomdir in roomlistdir)
             {
-                roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(roomdir));
+                Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(roomdir));
                 
                 if (roomdata.RoomId == ulong.Parse(temp1))
                 {
@@ -101,7 +99,7 @@ namespace api
         {
             string temp1;
             //roomdata.RoomRootv2 root = JsonConvert.DeserializeObject(value);
-            roomdata.RoomRootv2 root = JsonConvert.DeserializeObject<RoomRootv2>(value);
+            Roomdata.RoomRootv2 root = JsonConvert.DeserializeObject<RoomRootv2>(value);
             root.CreatorAccountId = APIServer.CachedPlayerID;
             temp1 = JsonConvert.SerializeObject(root);
             root = JsonConvert.DeserializeObject<RoomRootv2>(temp1);
@@ -580,13 +578,13 @@ namespace api
 
         public static string room_inject_CustomRooms_list(string s)
         {
-            roomlist roomlistdata = JsonConvert.DeserializeObject<roomlist>(s);
+            Roomlist roomlistdata = JsonConvert.DeserializeObject<Roomlist>(s);
             long rooms = roomlistdata.TotalResults;
 
             string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
             foreach (string roomdir in roomlistdir)
             {
-                roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(roomdir));
+                Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(roomdir));
 
                 roomlistdata.Results.Add(roomdata);
                 rooms ++;
@@ -597,22 +595,22 @@ namespace api
 
         public static string room_inject_MyRooms_list(string s)
         {
-            roomlist roomlist = new roomlist();
-            roomlist root = JsonConvert.DeserializeObject<roomlist>(s);
+            Roomlist roomlist = new Roomlist();
+            Roomlist root = JsonConvert.DeserializeObject<Roomlist>(s);
 
             return s;
         }
 
         internal static string room_fix_Rooms_list(string s)
         {
-            roomlist roomlistdata = JsonConvert.DeserializeObject<roomlist>(s);
+            Roomlist roomlistdata = JsonConvert.DeserializeObject<Roomlist>(s);
             roomlistv2_1 roomlistdatav2 = new roomlistv2_1
             {
                 Results = [],
                 TotalResults = roomlistdata.TotalResults,
             };
 
-            foreach (roomdata.RoomRootv2 roomrootdata in roomlistdata.Results)
+            foreach (Roomdata.RoomRootv2 roomrootdata in roomlistdata.Results)
             {
                 /*
                 string temp = room_util.room_change_fix_room(JsonConvert.SerializeObject(roomrootdata));

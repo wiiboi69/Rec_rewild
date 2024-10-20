@@ -8,7 +8,7 @@ using static api.AccountAuth;
 namespace api
 {
     // Token: 0x02000076 RID: 118
-    public class getcachedlogins
+    public class Getcachedlogins
     {
         // Token: 0x0600033C RID: 828 RVA: 0x00008F30 File Offset: 0x00007130
         public static string GetDebugLogin(ulong userid, ulong platformid)
@@ -17,9 +17,9 @@ namespace api
             //displayName
             string name = File.ReadAllText("SaveData\\Profile\\username.txt");
             string displayName = File.ReadAllText("SaveData\\Profile\\displayName.txt");
-            return JsonConvert.SerializeObject(new List<getcachedlogins>
+            return JsonConvert.SerializeObject(new List<Getcachedlogins>
             {
-                new getcachedlogins
+                new Getcachedlogins
                 {
                     Id = userid,
                     Username = name,

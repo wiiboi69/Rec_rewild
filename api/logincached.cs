@@ -7,10 +7,10 @@ using api;
 namespace api
 {
     // Token: 0x02000078 RID: 120
-    public class logincached
+    public class Logincached
     {
         public string Error { get; set; }
-        public getcachedlogins Player { get; set; }
+        public Getcachedlogins Player { get; set; }
         public string Token { get; set; }
         public bool FirstLoginOfTheDay { get; set; }
         public ulong AnalyticsSessionId { get; set; }
@@ -20,10 +20,10 @@ namespace api
             int level = int.Parse(File.ReadAllText("SaveData\\Profile\\level.txt"));
             string name = File.ReadAllText("SaveData\\Profile\\username.txt");
             string displayName = File.ReadAllText("SaveData\\Profile\\displayName.txt");
-            return JsonConvert.SerializeObject(new logincached
+            return JsonConvert.SerializeObject(new Logincached
             {
                 Error = "",
-                Player = new getcachedlogins
+                Player = new Getcachedlogins
                 {
                     Id = userid,
                     Username = name,

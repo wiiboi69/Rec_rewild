@@ -10,7 +10,7 @@ namespace api
 {
     class ProfieStealer
     {
-        public static void Profilefind(string data, int skip_int = 0, int take_int = 0)
+        public static bool Profilefind(string data, int skip_int = 0, int take_int = 0)
         {
             List<Root> profile = JsonConvert.DeserializeObject<List<Root>>(data);
             if (take_int == 0)
@@ -76,7 +76,7 @@ namespace api
                 input = Console.ReadLine();
                 if (input == "E" )
                 {
-                    break;
+                    return false;
                 }
                 else if ( input == "P")
                 {
@@ -104,7 +104,7 @@ namespace api
                         if (value < 0 || value > take_int)
                         {
                             ProfileSteal(data,value);
-                            break;
+                            return true;
                         }
                         else
                         {
@@ -117,7 +117,7 @@ namespace api
                     }
                 }
             }
-            return;
+            return true;
         error:
             Console.Clear();
             Console.WriteLine($"{input} was not a valued int or out of range");
@@ -166,7 +166,7 @@ namespace api
             public string username { get; set; }
             public string displayName { get; set; }
             public string profileImage { get; set; }
-            public bool isJunior { get; set; }
+            public bool? isJunior { get; set; }
             public int platforms { get; set; }
             public int personalPronouns { get; set; }
             public int identityFlags { get; set; }

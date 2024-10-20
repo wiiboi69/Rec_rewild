@@ -16,7 +16,7 @@ namespace api
         public static void RoomDecode(string text)
         {
 
-            roomdata.RoomRootv2 root2 = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(text);
+            Roomdata.RoomRootv2 root2 = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(text);
             File.WriteAllText("SaveData\\Rooms\\Downloaded\\roomname.txt", root2.Name);
             File.WriteAllText("SaveData\\Rooms\\Downloaded\\roomid.txt", Convert.ToString(root2.RoomId));
             File.WriteAllText("SaveData\\Rooms\\Downloaded\\datablob.txt", root2.SubRooms[0].DataBlob);
@@ -92,7 +92,7 @@ namespace api
         public static void RoomGet(string roomnames)
         {
             string webdata = new WebClient().DownloadString("https://rooms.rec.net/rooms?name=" + roomnames + "&include=297");
-            roomdata.RoomRootv2 root2 = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(webdata);
+            Roomdata.RoomRootv2 root2 = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(webdata);
             room = new Room
             {
                 RoomId = 29,

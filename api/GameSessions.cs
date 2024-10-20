@@ -6,7 +6,7 @@ using System.IO;
 using static api.GameSessions;
 using System.Collections.Generic;
 using System.Numerics;
-using static api.roomdata;
+using static api.Roomdata;
 using System.Net;
 using System.Security.AccessControl;
 
@@ -208,12 +208,12 @@ namespace api
             }
 
 
-            if (roomdata.RROS.ContainsKey(roomname))
+            if (Roomdata.RROS.ContainsKey(roomname))
             {
                 Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
                 if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
                 {
-                    gamesessionid += (long)roomdata.RROS[roomname].Room.RoomId;
+                    gamesessionid += (long)Roomdata.RROS[roomname].Room.RoomId;
 
                 }
                 Config.GameSession = new GameSessions.JoinResult
@@ -229,19 +229,19 @@ namespace api
                     {
                         encryptVoiceChat = false,
                         clubId = null,
-                        dataBlob = roomdata.RROS[roomname].Scenes[0].DataBlobName,
+                        dataBlob = Roomdata.RROS[roomname].Scenes[0].DataBlobName,
                         eventId = 0,
                         isFull = false,
                         isInProgress = false,
                         isPrivate = true,
-                        location = roomdata.RROS[roomname].Scenes[0].RoomSceneLocationId,
-                        maxCapacity = roomdata.RROS[roomname].Scenes[0].MaxPlayers,
+                        location = Roomdata.RROS[roomname].Scenes[0].RoomSceneLocationId,
+                        maxCapacity = Roomdata.RROS[roomname].Scenes[0].MaxPlayers,
                         name = roomname,
                         photonRegionId = "us",
                         photonRegion = "us",
                         photonRoomId = roomname + "-" + myuuidAsString + "-room",
                         roomCode = null,
-                        roomId = (long)roomdata.RROS[roomname].Room.RoomId,
+                        roomId = (long)Roomdata.RROS[roomname].Room.RoomId,
                         roomInstanceId = gamesessionid,
                         roomInstanceType = 0,
                         subRoomId = 0,
@@ -250,7 +250,7 @@ namespace api
                 };
                 if (scenename != "")
                 {
-                    foreach (roomdata.Scene scene in roomdata.RROS[roomname].Scenes)
+                    foreach (Roomdata.Scene scene in Roomdata.RROS[roomname].Scenes)
                     {
                         if (scene.Name == scenename)
                         {
@@ -273,7 +273,7 @@ namespace api
                 try
                 {
 
-                    roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(
+                    Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(
                         new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" 
                         + roomname
                         + ".txt")
@@ -324,7 +324,7 @@ namespace api
                     };
                     if (scenename != "")
                     {
-                        foreach (roomdata.SubRooms subroom in roomdata.SubRooms)
+                        foreach (Roomdata.SubRooms subroom in roomdata.SubRooms)
                         {
                             if (subroom.Name == scenename)
                             {
@@ -347,7 +347,7 @@ namespace api
                     string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
                     foreach (string roomdir in roomlistdir)
                     {
-                        roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<roomdata.RoomRootv2>(File.ReadAllText(roomdir));
+                        Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(roomdir));
 
                         if (roomdata.Name.Contains(roomname))
                         {
@@ -431,7 +431,7 @@ namespace api
 
         public static string FindRoomid(ulong roomname)
         {
-            foreach (KeyValuePair<string, roomdata.RoomRoot> keyValuePair in roomdata.RROS)
+            foreach (KeyValuePair<string, Roomdata.RoomRoot> keyValuePair in Roomdata.RROS)
             {
                 bool flag = keyValuePair.Value.Room.RoomId == (ulong)roomname;
                 if (flag)
@@ -481,9 +481,9 @@ namespace api
             string text;
             try
             {
-                foreach (KeyValuePair<string, roomdata.RoomRoot> room in roomdata.RROS)
+                foreach (KeyValuePair<string, Roomdata.RoomRoot> room in Roomdata.RROS)
                 {
-                    roomdata.RoomRoot root = room.Value;
+                    Roomdata.RoomRoot root = room.Value;
                     if (root.Room.RoomId == ulong.Parse(roomid))
                     {
                         root.LocalPlayerRole = 4;
