@@ -1,11 +1,11 @@
-Feature Patch v0.0.14:
-Changed how images work, shows the time
-idk what else
-Fixed code 3 and code 4 I think
+Feature Patch v0.0.15:
+
+redesigned profile dounloader ui to make it work with the new apim.rec.net
+updated setup to allow importing rec net profile
 
 Credits Rec_Rewild:
 
-me for the 2021 server
+@Waeboi69 for the 2021 server
 @Nito9999 aka e12354 on discord for adding and fixing stuff
 @eggrecroom on discord for fixing photon
 
