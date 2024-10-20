@@ -15,9 +15,9 @@ using System.Threading.Tasks;
 using Client;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net.NetworkInformation;
-using OpenRec.api;
+using Rec_rewild.api;
 using System.Collections.Specialized;
-using static OpenRec.api.image_util;
+using static Rec_rewild.api.image_util;
 
 namespace server
 {

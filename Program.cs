@@ -40,10 +40,40 @@ namespace start
                     Console.WriteLine("Rec_rewild is server software that emulates the old servers of previous RecRoom versions.");
                     Console.WriteLine("It emulates servers for Rec Room versions from 2020 to 2021.");
                     Console.WriteLine("To use Rec_rewild, you'll need to have builds aswell!");
+                    Console.WriteLine("do you want to import your rec net profile\nYes or No");
+                    string mode = Console.ReadLine();
+                    if (mode.ToLower() == "y")
+                    {
+                        download_profile_setup:
+                        Console.Title = "Rec_rewild Profile Downloader";
+                        Console.Clear();
+                        Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to Rec_rewild.");
+                        Console.WriteLine("Please type the username of the profile you would like: ");
+                        string readusername_setup = Console.ReadLine();
+                        string data2_setup = "";
+                        try
+                        {
+                            data2_setup = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername_setup + "&take=5");
+                        }
+                        catch
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Failed to download profile...");
+                            goto rec_net_profile_notimported;
+                        }
+
+                        if (!ProfieStealer.Profilefind(data2_setup, take_int: 12))
+                        {
+                            goto download_profile_setup;
+                        }
+                        goto rec_net_profile_imported;
+                    }
+                rec_net_profile_notimported:
                     Console.WriteLine("Please enter the username you would like to use:");
                     string newusername = Console.ReadLine();
                     File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
                     File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
+                rec_net_profile_imported:
                     Console.WriteLine("To download builds, either go to the #rec-room-builds channel or use the links below: (these links are also available from the #rec-room-builds channel)" + Environment.NewLine);
                     Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
                     Console.WriteLine("Download a build and press any key to continue:");

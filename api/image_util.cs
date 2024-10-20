@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 using server;
 using System.Collections;
 
-namespace OpenRec.api
+namespace Rec_rewild.api
 {
     internal class image_util
     {

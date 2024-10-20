@@ -5,20 +5,13 @@ using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Security.AccessControl;
 using start;
-using System.Security.Principal;
 using api;
 using static api.AccountAuth;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Client;
-using static System.Net.Mime.MediaTypeNames;
-using System.Net.NetworkInformation;
-using OpenRec.api;
+using Rec_rewild.api;
 using System.Collections.Specialized;
-using static OpenRec.api.image_util;
-using HttpMultipartParser;
+using static Rec_rewild.api.image_util;
+
 
 namespace server
 {
@@ -71,44 +64,15 @@ namespace server
                         string text;
                         string s = "";
                         byte[] array;
-                        MultipartFormDataParser parser = null;
-                        /*
-                        try
+                        
+                        
+                        using (MemoryStream memoryStream = new MemoryStream())
                         {
-                            using (MemoryStream memoryStream = new MemoryStream())
-                            {
-                                MemoryStream memoryStream_2 = new MemoryStream();
-                                context.Request.InputStream.CopyTo(memoryStream);
-                                memoryStream_2 = memoryStream;
-                                if (memoryStream_2 is null)
-                                {
-                                    Console.WriteLine("memoryStream_2 is null!!!!!!");
-                                }
-                                if (context.Request.InputStream is null)
-                                {
-                                    Console.WriteLine("context.Request.InputStream is null!!!!!!");
-                                }
-                                array = memoryStream.ToArray();
-                                text = Encoding.ASCII.GetString(array);
-                                try
-                                {
-                                    parser = MultipartFormDataParser.Parse(memoryStream_2, ignoreInvalidParts: true, boundary: "");
-                                }
-                                finally
-                                {}
-
-                            }
+                            context.Request.InputStream.CopyTo(memoryStream);
+                            array = memoryStream.ToArray();
+                            text = Encoding.ASCII.GetString(array);
                         }
-                        catch (Exception ex)*/
-                        {
-                            //Console.WriteLine(ex);
-                            using (MemoryStream memoryStream = new MemoryStream())
-                            {
-                                context.Request.InputStream.CopyTo(memoryStream);
-                                array = memoryStream.ToArray();
-                                text = Encoding.ASCII.GetString(array);
-                            }
-                        }
+                        
 
                         string str2 = "";
                         NameValueCollection headers1 = request.Headers;

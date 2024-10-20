@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace OpenRec.api
+namespace Rec_rewild.api
 {
     internal class Avatar_Item_Util
     {

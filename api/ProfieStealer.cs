@@ -101,7 +101,7 @@ namespace api
                 {
                     if (int.TryParse(input, out int value))
                     {
-                        if (value < 0 || value > take_int)
+                        if (value >= 0 || value < take_int)
                         {
                             ProfileSteal(data,value);
                             return true;
@@ -136,7 +136,7 @@ namespace api
 
             File.WriteAllText("SaveData\\Profile\\bio.txt", bio.bio);
             File.WriteAllText("SaveData\\Profile\\displayName.txt", profile[value].displayName);
-            byte[] profileimage = new WebClient().DownloadData("https://img.rec.net/" + profile[value].profileImage + "?cropSquare=true&width=192&height=192");
+            byte[] profileimage = new WebClient().DownloadData("https://img.rec.net/" + profile[value].profileImage + "?cropSquare=true");
             File.WriteAllBytes("SaveData\\profileimage.png", profileimage);
         }
 
