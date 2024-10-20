@@ -70,6 +70,10 @@ namespace start
             }
         Start:
             Console.Title = "Rec_rewild Startup Menu";
+
+            appversion = appversion.Replace("\n", String.Empty);
+            appversion = appversion.Replace("\r", String.Empty);
+            appversion = appversion.Replace("\t", String.Empty);
             Console.WriteLine("Rec_rewild - a fork of OpenRec for Rec Room 2021. (Version: " + appversion + ")");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
             Console.WriteLine("Discord server here: https://discord.gg/qZhThdFMjy");
@@ -189,7 +193,19 @@ namespace start
             Profile:
                 Console.WriteLine("quick tip: you can change them in game" + Environment.NewLine);
                 Console.Title = "Rec_rewild Profile Menu";
-                Console.WriteLine("(1) Change Username" + Environment.NewLine + "(2) Change displayName" + Environment.NewLine + "(3) Change Profile Image" + Environment.NewLine + "(4) Change Level" + Environment.NewLine + "(5) Change bio" + Environment.NewLine + "(6) Profile Downloader" + Environment.NewLine + "(7) Go Back");
+                Console.WriteLine("(1) Change Username" 
+                    + Environment.NewLine 
+                    + "(2) Change displayName" 
+                    + Environment.NewLine 
+                    + "(3) Change Profile Image" 
+                    + Environment.NewLine 
+                    + "(4) Change Level" 
+                    + Environment.NewLine 
+                    + "(5) Change bio" 
+                    + Environment.NewLine 
+                    + "(6) Profile Downloader" 
+                    + Environment.NewLine 
+                    + "(7) Go Back");
                 string readline3 = Console.ReadLine();
                 if (readline3 == "1")
                 {
@@ -326,16 +342,12 @@ namespace start
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
                     Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to Rec_rewild.");
-                    Console.WriteLine("Please type the @ username of the profile you would like:");
+                    Console.WriteLine("Please type the username of the profile you would like: ");
                     string readusername = Console.ReadLine();
-                    if (readusername.StartsWith("@"))
-                    {
-                        readusername = readusername.Remove(0, 1);
-                    }
                     string data2 = "";
                     try
                     {
-                        data2 = new WebClient().DownloadString("https://accounts.rec.net/account/search?name=" + readusername);
+                        data2 = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername + "&take=5");
                     }
                     catch
                     {
@@ -344,10 +356,9 @@ namespace start
                         goto Start;
                     }
                     
-                    ProfieStealer.ProfileSteal(data2);
+                    ProfieStealer.Profilefind(data2, take_int: 12);
                     
                     Console.Clear();
-                    Console.WriteLine("Success!");
                     goto Start;
                 }
                 else if (readline3 == "7")
@@ -399,7 +410,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -407,7 +418,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_box()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_box()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -415,7 +426,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_msg()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_msg()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -423,7 +434,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_time()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_time()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -431,7 +442,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_give()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_give()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -477,7 +488,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -485,7 +496,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_box()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_box()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -493,7 +504,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_msg()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_msg()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -501,7 +512,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_time()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_time()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -509,7 +520,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_give()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_give()));
                         Console.WriteLine();
                         goto input_server;
                     }
@@ -540,160 +551,6 @@ namespace start
             public WebSocketHTTP_new.ResponseResults Id { get; set; }
 
             public object Msg { get; set; }
-        }
-
-        public static Reponse createResponse()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.ModerationKick,
-                Msg = new ModerationBlockDetails()
-                {
-                    ReportCategory = 1,
-                    Duration = 0,
-                    IsHostKick = true,
-                    GameSessionId = 100L,
-                    Message = "test of websocket"
-                }
-            };
-        }
-        //MessageReceived
-        public static Reponse createResponse_box()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.RelationshipChanged,
-                Msg = new Relationship_Detail()
-                {
-                    PlayerID = 1,
-                    Favorited = ReciprocalStatus.None,
-                    Ignored = ReciprocalStatus.None,
-                    Muted = ReciprocalStatus.None,
-                    Type = RelationshipType.FriendRequestReceived,
-                }
-            };
-        }
-
-        public static Reponse createResponse_msg()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
-                Msg = new Message_Detail()
-                {
-                    FromPlayerId = 1,
-                    Id = 1,
-                    SentTime = DateTime.Today,
-                    Type = MessageType.TextMessage,
-                    Data = "ddddddddd",
-                    RoomId = 20,
-
-                }
-            };
-        }
-
-        public static Reponse createResponse_FriendInvite()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
-                Msg = new Message_Detail()
-                {
-                    FromPlayerId = 1,
-                    Id = 1,
-                    SentTime = DateTime.Today,
-                    Type = MessageType.FriendInvite,
-                    Data = "ddddddddd",
-                    RoomId = 20,
-
-                }
-            };
-        }
-
-        public static Reponse createResponse_FriendRequestAccepted()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
-                Msg = new Message_Detail()
-                {
-                    FromPlayerId = 1,
-                    Id = 1,
-                    SentTime = DateTime.Today,
-                    Type = MessageType.FriendRequestAccepted,
-                    Data = "ddddddddd",
-                    RoomId = 20,
-
-                }
-            };
-        }
-        public static Reponse createResponse_FriendStatusOnline()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
-                Msg = new Message_Detail()
-                {
-                    FromPlayerId = 1,
-                    Id = 1,
-                    SentTime = DateTime.Today,
-                    Type = MessageType.FriendStatusOnline,
-                    Data = "ddddddddd",
-                    RoomId = 20,
-
-                }
-            };
-        }
-
-        public static Reponse createResponse_give()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceived,
-                Msg = new ChallengeGift()
-                {
-                    /*
-                    Id = 1,
-                    CurrencyType = CurrencyType.RecCenterTokens,
-                    Currency = 100000,
-                    GiftRarity = GiftRarity.Legendary,
-                    GiftContext = GiftContext.Default,
-                    Message = "fnaf",
-                    FromPlayerId = 1,
-                    Platform = PlatformType.All,
-                    ConsumableItemDesc = "",
-                    AvatarItemDescOrHairDyeDesc = "",
-                    EquipmentPrefabName = "",
-                    EquipmentModificationGuid = "",
-                    AvatarItemType = AvatarItemType.Outfit,
-                    Xp = 0,
-                    Level = 0,
-                    */
-                    GiftDropId = 2,
-                    GiftRarity = GiftRarity.Legendary,
-                    GiftContext = GiftContext.None,
-                    ConsumableItemDesc = "",   
-                    StorefrontType = StorefrontTypes.None,
-                    AvatarItemDesc = "",
-                    EquipmentPrefabName = "",
-                    EquipmentModificationGuid = "",
-                    Xp = 100000,
-                    Level = 0,
-                }
-            };
-        }
-
-        public static Reponse createResponse_time()
-        {
-            return new Reponse
-            {
-                Id = WebSocketHTTP_new.ResponseResults.ServerMaintenance,
-                Msg = new StartsInMinutes_Detail()
-                {
-                    StartsInMinutes = 10,
-
-                }
-            };
         }
 
         public enum AvatarItemType
