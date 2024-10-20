@@ -2,7 +2,7 @@
   {
     "Name": "hello there",
     "Title": "We're all on rec.net!",
-    "Message": "Log into your Rec Net profile to stay in touch with your friends any time!",
+    "Message": "Log into your Rec Net profile (which don't exists at all) to stay in touch with your friends any time!",
     "RoomNames": [],
     "Context": 3,
     "InputType": 0,
@@ -64,11 +64,11 @@
   {
     "Name": "550bdee9e43c4954bccd5d9916c0e5a9",
     "Title": "Get Free Tokens!",
-    "Message": "We're giving out 1 token to celebrate Rec Room's 69th birthday! Invite your websocking and earn up to 1 tokens. Find out more at waeboi.com/friendfest",
+    "Message": "We're giving out 1 token to celebrate Rec Room's 69420th birthday! Invite your websocking and earn up to 1 tokens.",
     "RoomNames": [],
     "Context": 0,
     "InputType": 0,
-    "Visibility": 0,
+    "Visibility": 1,
     "AllowCycling": true,
     "RestrictToNewUsers": false,
     "ImageName": "token.png",
