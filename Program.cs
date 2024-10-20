@@ -657,8 +657,9 @@ namespace start
             return new Reponse
             {
                 Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceived,
-                Msg = new GiftPackage()
+                Msg = new ChallengeGift()
                 {
+                    /*
                     Id = 1,
                     CurrencyType = CurrencyType.RecCenterTokens,
                     Currency = 100000,
@@ -673,6 +674,17 @@ namespace start
                     EquipmentModificationGuid = "",
                     AvatarItemType = AvatarItemType.Outfit,
                     Xp = 0,
+                    Level = 0,
+                    */
+                    GiftDropId = 2,
+                    GiftRarity = GiftRarity.Legendary,
+                    GiftContext = GiftContext.None,
+                    ConsumableItemDesc = "",   
+                    StorefrontType = StorefrontTypes.None,
+                    AvatarItemDesc = "",
+                    EquipmentPrefabName = "",
+                    EquipmentModificationGuid = "",
+                    Xp = 100000,
                     Level = 0,
                 }
             };
