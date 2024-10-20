@@ -1,7 +1,7 @@
-Feature Patch v0.0.2:
--forked openrec
-
-
+Feature Patch v0.0.14:
+Changed how images work, shows the time
+idk what else
+Fixed code 3 and code 4 I think
 
 Credits Rec_Rewild:
 
