@@ -26,7 +26,9 @@ namespace start
             goto Tutorial;
         Tutorial:
             if (Setup.firsttime == true)
+
             {
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Title = "Rec_rewild Intro";
                 Console.WriteLine("Welcome to Rec_rewild!");
                 Console.WriteLine("Is this your first time using Rec_rewild?");
@@ -36,11 +38,11 @@ namespace start
                 {
                     Console.Clear();
                     Console.Title = "Rec_rewild Tutorial";
-                    Console.WriteLine("In that case, welcome to Rec_rewild!");
-                    Console.WriteLine("Rec_rewild is server software that emulates the old servers of previous RecRoom versions.");
+                    Console.WriteLine("Welcome to Rec_rewild!");
+                    Console.WriteLine("Rec_rewild is localhost server software that emulates the old servers of previous RecRoom versions.");
                     Console.WriteLine("It emulates servers for Rec Room versions from 2020 to 2021.");
                     Console.WriteLine("To use Rec_rewild, you'll need to have builds aswell!");
-                    Console.WriteLine("do you want to import your rec net profile\nYes or No");
+                    Console.WriteLine("Do you want to import your Rec Net profile?\nYes or No (Y, N)");
                     string mode = Console.ReadLine();
                     if (mode.ToLower() == "y")
                     {
@@ -125,7 +127,7 @@ namespace start
                 Console.Clear();
                 Settings:
                 Console.Title = "Rec_rewild Settings Menu";
-                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader " + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
+                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader (Not Available)" + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
                 string readline4 = Console.ReadLine();
                 if (readline4 == "1")
                 {
@@ -143,6 +145,9 @@ namespace start
                 }
                 else if (readline4 == "2")
                 {
+                    Console.Clear();
+                    goto Settings;
+                    /*
                     Console.Title = "Rec_rewild Custom Room Downloader";
                     Console.Clear();
                     Console.WriteLine("Custom Room Downloader: This tool takes the room data of any room you type in and imports it into Room folder in 2021");
@@ -163,6 +168,7 @@ namespace start
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Settings;
+                    */
                 }
                 else if (readline4 == "3")
                 {
@@ -221,18 +227,18 @@ namespace start
             {
                 Console.Clear();
             Profile:
-                Console.WriteLine("quick tip: you can change them in game" + Environment.NewLine);
+                Console.WriteLine("Quick Tip: You can change them in-game." + Environment.NewLine);
                 Console.Title = "Rec_rewild Profile Menu";
                 Console.WriteLine(
                       "(1) Change Username      " + File.ReadAllText("SaveData\\Profile\\username.txt")
                     + Environment.NewLine 
-                    + "(2) Change displayName   " + File.ReadAllText("SaveData\\Profile\\displayName.txt")
+                    + "(2) Change Display Name   " + File.ReadAllText("SaveData\\Profile\\displayName.txt")
                     + Environment.NewLine 
                     + "(3) Change Profile Image " 
                     + Environment.NewLine 
                     + "(4) Change Level         " + File.ReadAllText("SaveData\\Profile\\level.txt")
                     + Environment.NewLine 
-                    + "(5) Change bio           " + File.ReadAllText("SaveData\\Profile\\bio.txt")
+                    + "(5) Change Bio           " + File.ReadAllText("SaveData\\Profile\\bio.txt")
                     + Environment.NewLine 
                     + "(6) Profile Downloader" 
                     + Environment.NewLine 
@@ -405,7 +411,7 @@ namespace start
             {
                 Console.Title = "Rec_rewild Build Downloads";
                 Console.Clear();
-                Console.WriteLine("To download builds,  use the links below: " + Environment.NewLine);
+                Console.WriteLine("To download builds, use the links below: " + Environment.NewLine);
                 Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
                 Console.WriteLine("Download a build and press any key to continue:");
                 Console.ReadKey();
