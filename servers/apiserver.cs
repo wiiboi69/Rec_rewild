@@ -580,6 +580,10 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        if (Url == "club/home/me")
+                        {
+                            s = BracketResponse;
+                        }
                         if (Url.StartsWith("roomconsumables/v1/roomConsumable/"))
                         {
                             s = BracketResponse;
