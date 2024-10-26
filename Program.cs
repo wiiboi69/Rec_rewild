@@ -275,7 +275,7 @@ namespace start
                         string medialink = Console.ReadLine();
                         try
                         {
-                            File.WriteAllBytes("SaveData\\profileimage.png", new WebClient().DownloadData(medialink));
+                            File.WriteAllBytes("SaveData\\profileimage.png", new WebClient().DownloadData(medialink)); // web client is obsolete, well guess what i dont care!
                         }
                         catch
                         {

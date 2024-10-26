@@ -440,7 +440,7 @@ namespace server
                             }
                             goto send_data;
                             data_type_unknowed:
-                            s = "{\"success\":false,\"error\":\"data type unknowed or not yet inpermeted: " + data_type + " \"}";
+                            s = "{\"success\":false,\"error\":\"data type unknown or not yet implemented: " + data_type + " \"}";
 
                         }
                         if (Url == "avatar/v1/defaultunlocked")
