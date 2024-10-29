@@ -76,6 +76,10 @@
     {
       "ImageName": "message.png",
       "ImageUrl": "https://www.discord.cim"
+    },
+    {
+      "ImageName": "image.png",
+      "ImageUrl": "https://www.discord.cim"
     }
   ],
   "Videos": [
