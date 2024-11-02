@@ -66,8 +66,21 @@ namespace server
                         i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/room" + rawUrl);
                     }
                 }
-				
-				else if (rawUrl.StartsWith("//data/"))
+                else if (rawUrl.StartsWith("//video/"))
+                {
+                    rawUrl = rawUrl.Substring("//video".Length);
+                    try
+                    {
+                        i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"[ImageServer.cs] {rawUrl} video not found on cdn.rec.net. trying to download from github");
+                        i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/video" + rawUrl);
+                    }
+                }
+
+                else if (rawUrl.StartsWith("//data/"))
 				{
 					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
 				}
