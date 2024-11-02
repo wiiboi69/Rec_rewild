@@ -153,7 +153,7 @@ namespace server
                         }
                         else if (rawUrl.StartsWith("/rooms/base"))
                         {
-                            s = File.ReadAllText("SaveData\\baserooms.txt");
+                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/base.json");
                         }
 
                         ///rooms/2/clone

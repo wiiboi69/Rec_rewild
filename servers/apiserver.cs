@@ -631,6 +631,10 @@ namespace server
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/hotrooms.txt");
                         }
+                        if (Url.StartsWith("rooms/v1/filters"))
+                        {
+                            s = "{\r\n   \"PinnedFilters\" : [\r\n      \"rro\",\r\n      \"community\",\r\n      \"featured\",\r\n      \"quest\",\r\n      \"pvp\",\r\n      \"hangout\",\r\n      \"game\",\r\n      \"art\",\r\n      \"horror\",\r\n      \"silly\",\r\n      \"beta\"\r\n   ],\r\n   \"PopularFilters\" : [ \"pvp\", \"quest\", \"game\", \"hangout\", \"art\" ],\r\n   \"TrendingFilters\" : [ \"featured\", \"game\", \"horror\", \"quest\" ]\r\n}\r\n";
+                        }
                         if (Url.StartsWith("rooms/v2/instancedetails"))
                         {
                             s = BracketResponse;
