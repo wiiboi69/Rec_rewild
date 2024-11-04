@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace start
 {
@@ -19,6 +20,7 @@ namespace start
             Directory.CreateDirectory("SaveData\\Rooms\\");
             Directory.CreateDirectory("SaveData\\Rooms\\custom\\");
             Directory.CreateDirectory("SaveData\\Rooms\\cdn\\");
+            Directory.CreateDirectory("SaveData\\Rooms\\custom\\Downloaded\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\video\\");
             Directory.CreateDirectory("SaveData\\custom\\");
@@ -90,7 +92,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\settings.txt")))
             {
-                File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
+                File.WriteAllText("SaveData\\settings.txt", JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
             }
             if (!(File.Exists("SaveData\\profileimage.png")))
             {
@@ -127,9 +129,10 @@ namespace start
         }
         public static void quicksetup()
         {
-            //check all the important files so rec_rewild doesnt crash
-            //and check for updates
-
+            /*
+             * check all the important files so rec_rewild doesnt crash
+             * and check for updates
+            */
             Directory.CreateDirectory("SaveData\\App\\");
             Directory.CreateDirectory("SaveData\\Profile\\");
             Directory.CreateDirectory("SaveData\\Images\\");
@@ -138,7 +141,7 @@ namespace start
             Directory.CreateDirectory("SaveData\\Rooms\\cdn\\");
             Directory.CreateDirectory("SaveData\\Images\\");
             Directory.CreateDirectory("SaveData\\video\\");
-            Directory.CreateDirectory("SaveData\\Rooms\\Downloaded\\");
+            Directory.CreateDirectory("SaveData\\Rooms\\custom\\Downloaded\\");
             Directory.CreateDirectory("SaveData\\custom\\");
             Directory.CreateDirectory("SaveData\\custom\\items\\");
             Directory.CreateDirectory("SaveData\\custom\\avatar items\\");
@@ -207,7 +210,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\settings.txt")))
             {
-                File.WriteAllText("SaveData\\settings.txt", Newtonsoft.Json.JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
+                File.WriteAllText("SaveData\\settings.txt", JsonConvert.SerializeObject(api.Settings.CreateDefaultSettings()));
             }
             if (!(File.Exists("SaveData\\profileimage.png")))
             {
@@ -221,7 +224,6 @@ namespace start
             {
                 File.WriteAllText("SaveData\\App\\facefeaturesadd.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/facefeaturesadd.txt"));
             }
-
         }
     }
 }

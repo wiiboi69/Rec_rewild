@@ -10,8 +10,8 @@ using api;
 using static api.AccountAuth;
 using Rec_rewild.api;
 using System.Collections.Specialized;
-using static Rec_rewild.api.image_util;
-
+using static Rec_rewild.api.file_util;
+using util;
 
 namespace server
 {
@@ -46,7 +46,6 @@ namespace server
                         string rawUrl = request.RawUrl;
                         string Url = "";
                         byte[] bytes = null;
-
                         byte[] roomdatabytes = null;
                         bool roomdata = false;
                         string signature = request.Headers.Get("X-RNSIG");
@@ -99,13 +98,6 @@ namespace server
                             Console.WriteLine(CachedversionID);
                             s = VersionCheckResponse;
                         }
-                        if (Url.StartsWith("platformlogin/v2/getcachedlogins"))
-                        {
-                            s = Getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
-                            CachedPlayerID = ulong.Parse(text.Remove(0, 32));
-                            CachedPlatformID = ulong.Parse(text.Remove(0, 22));
-                            File.WriteAllText("SaveData\\Profile\\userid.txt", Convert.ToString(CachedPlayerID));
-                        }
                         if (Url == "equipment/v1/getUnlocked")
                         {
                             s = File.ReadAllText("SaveData\\equipment.txt");
@@ -117,25 +109,6 @@ namespace server
                         if (Url == ("config/v2"))
                         {
                             s = Config.GetDebugConfig();
-                        }
-                        if (Url == "platformlogin/v1/getcachedlogins")
-                        {
-                            s = Getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
-                            CachedPlayerID = ulong.Parse(text.Remove(0, 32));
-                            CachedPlatformID = ulong.Parse(text.Remove(0, 22));
-                            File.WriteAllText("SaveData\\Profile\\userid.txt", Convert.ToString(CachedPlayerID));
-                        }
-                        if (Url == "platformlogin/v1/loginaccount")
-                        {
-                            s = Logincached.loginCache(CachedPlayerID, CachedPlatformID);
-                        }
-                        if (Url == "platformlogin/v1/createaccount")
-                        {
-                            s = Logincached.loginCache(CachedPlayerID, CachedPlatformID);
-                        }
-                        if (Url == "platformlogin/v1/logincached")
-                        {
-                            s = Logincached.loginCache(CachedPlayerID, CachedPlatformID);
                         }
                         if (Url == "relationships/v1/bulkignoreplatformusers")
                         {
@@ -168,10 +141,6 @@ namespace server
                         if (Url == "PlayerReporting/v1/moderationBlockDetails")
                         {
                             s = ModerationBlockDetails;
-                        }
-                        if (Url == "PlayerReporting/v1/deviceId")
-                        {
-                            s = BracketResponse;
                         }
                         if (Url == "/api/chat/v2/myChats?mode=0&count=50")
                         {
@@ -402,7 +371,7 @@ namespace server
                         {
                             byte[] temp_data;
                             //FileType data_type = GetFileType(array);
-                            FileType data_type = image_util.GetType(array,out temp_data);
+                            FileType data_type = file_util.GetType(array,out temp_data);
                             File.WriteAllBytes("SaveData\\data.dat", array);
                             bool flag1 = false;
                             string rnfn = string.Empty;
@@ -429,7 +398,7 @@ namespace server
                             }
                             if (flag1)
                             {
-                                s = "{\"success\":false,\"error\":\"failed to upload\"}";
+                                s = "{\"success\":false,\"error\":\"failed to uploaded\"}";
                             }
                             else
                             {
@@ -438,7 +407,6 @@ namespace server
                                     s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + rnfn + "\",\"value\":\"File saved: " + rnfn + "\"}";
                                     goto send_data;
                                 }
-                                
 
                                 s = "{\"success\":true,\"error\":\"\",\"Filename\":\"" + temp1 + "\" ,\"value\":\"File saved: " + rnfn + "\"}";
                                 
@@ -481,7 +449,6 @@ namespace server
                         {
                             s = "true";
                         }
-                        ///data/
                         if (rawUrl.StartsWith("/data/"))
                         {
                             string temp = rawUrl.Substring("/data/".Length);
@@ -532,17 +499,14 @@ namespace server
                         ///
                         if (rawUrl.StartsWith("/leaderboard/GetRanks"))
                         {
-                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
                             s = "[{\"PlayerId\":" + CachedPlayerID + ",\"Score\":69,\"Rank\":0}]";
                         }
                         if (rawUrl.StartsWith("/leaderboard/GetNearbyScores"))
                         {
-                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
                             s = "[{\"PlayerId\":" + CachedPlayerID + ",\"Score\":69,\"Rank\":0}]";
                         }
                         if (rawUrl.StartsWith("/account/create"))
                         {
-                            //s = "{\"success\":false,\"error\":\"oops!\nyou cant create new account yet,\n[code: create]\"}";
                             s = "{\"success\":true,\"error\":\"\"}";
                         }
                         if (Url == "consumables/v1/updateActive")
@@ -581,9 +545,9 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (Url == "PlayerReporting/v1/voteToKickReasons") // this is localhost so we dont need votekicks
+                        if (Url == "PlayerReporting/v1/voteToKickReasons")
                         {
-                            s = "[\r\n   {\r\n      \"Reason\" : \"Discriminatory language\",\r\n      \"ReportCategory\" : 102\r\n   },\r\n   {\r\n      \"Reason\" : \"Discriminatory behavior\",\r\n      \"ReportCategory\" : 102\r\n   },\r\n   {\r\n      \"Reason\" : \"Threats or encouraging suicide\",\r\n      \"ReportCategory\" : 102\r\n   },\r\n   {\r\n      \"Reason\" : \"Toxic behavior\",\r\n      \"ReportCategory\" : 102\r\n   },\r\n   {\r\n      \"Reason\" : \"Sexual behavior in public\",\r\n      \"ReportCategory\" : 101\r\n   },\r\n   {\r\n      \"Reason\" : \"Sexual language in public\",\r\n      \"ReportCategory\" : 101\r\n   },\r\n   {\r\n      \"Reason\" : \"Non-consensual sexual behavior\",\r\n      \"ReportCategory\" : 101\r\n   },\r\n   {\r\n      \"Reason\" : \"Player in walls or floor\",\r\n      \"ReportCategory\" : 103\r\n   },\r\n   {\r\n      \"Reason\" : \"Friendly fire\",\r\n      \"ReportCategory\" : 103\r\n   },\r\n   {\r\n      \"Reason\" : \"Microphone spam\",\r\n      \"ReportCategory\" : 103\r\n   },\r\n   {\r\n      \"Reason\" : \"Abusing bugs or exploits\",\r\n      \"ReportCategory\" : 103\r\n   },\r\n   {\r\n      \"Reason\" : \"Spawn camping\",\r\n      \"ReportCategory\" : 103\r\n   },\r\n   {\r\n      \"Reason\" : \"Inactive in games (AFK)\",\r\n      \"ReportCategory\" : 6\r\n   },\r\n   {\r\n      \"Reason\" : \"Prefab swapping\",\r\n      \"ReportCategory\" : 6\r\n   },\r\n   {\r\n      \"Reason\" : \"Not following game rules\",\r\n      \"ReportCategory\" : 6\r\n   }\r\n]\r\n";
+                            s = BracketResponse;
                         }
                         if (Url == "club/home/me")
                         {
@@ -631,10 +595,6 @@ namespace server
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/hotrooms.txt");
                         }
-                        if (Url.StartsWith("rooms/v1/filters"))
-                        {
-                            s = "{\r\n   \"PinnedFilters\" : [\r\n      \"rro\",\r\n      \"community\",\r\n      \"featured\",\r\n      \"quest\",\r\n      \"pvp\",\r\n      \"hangout\",\r\n      \"game\",\r\n      \"art\",\r\n      \"horror\",\r\n      \"silly\",\r\n      \"beta\"\r\n   ],\r\n   \"PopularFilters\" : [ \"pvp\", \"quest\", \"game\", \"hangout\", \"art\" ],\r\n   \"TrendingFilters\" : [ \"featured\", \"game\", \"horror\", \"quest\" ]\r\n}\r\n";
-                        }
                         if (Url.StartsWith("rooms/v2/instancedetails"))
                         {
                             s = BracketResponse;
@@ -643,7 +603,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-
                         if (rawUrl.StartsWith("/account/bulk?id="))
                         {
                             string temp = rawUrl.Substring("/account/bulk?id=".Length);
@@ -694,14 +653,17 @@ namespace server
                         {
                             s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
                         }
-                       
+                        if (Url == "announcement/v1/get")
+                        {
+                            s = BracketResponse;
+                        }
                         if (rawUrl == "/rooms/createdby/me")
                         {
                             s = BracketResponse;
                         }
                         if (Url == "announcement/v1/get")
                         {
-                            s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/master/CDN/announcements.json");
+                            s = BracketResponse;
                         }
                         if (Url == "communityboard/v2/current")
                         {
@@ -727,19 +689,6 @@ namespace server
                         if (rawUrl.StartsWith("/announcements/v2/"))
                         {
                             s = BracketResponse;
-                        }
-                        else if (rawUrl.StartsWith("//video/"))
-                        {
-                            rawUrl = rawUrl.Substring("//video".Length);
-                            try
-                            {
-                                array = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
-                            }
-                            catch
-                            {
-                                Console.WriteLine($"[apiserver.cs] {rawUrl} video not found on cdn.rec.net. trying to download from github");
-                                array = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/video" + rawUrl);
-                            }
                         }
                         if (Url == "images/v1/slideshow")
                         {

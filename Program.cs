@@ -9,6 +9,7 @@ using api;
 using System.Threading;
 using System.Linq;
 using System.Security.Cryptography.Xml;
+using util;
 
 namespace start
 {
@@ -16,14 +17,19 @@ namespace start
     {
         static void Main()
         {
-            //startup for Rec_rewild
-            if ((File.Exists("SaveData\\App\\firsttime.txt")))
+            //check for Rec_rewild important files
+
+            if (File.Exists("SaveData\\App\\firsttime.txt"))
             {
                 Setup.quicksetup();
                 goto Start;
             }
+
+            //startup for Rec_rewild
+
             Setup.setup();
             goto Tutorial;
+
         Tutorial:
             if (Setup.firsttime == true)
 
@@ -127,7 +133,7 @@ namespace start
                 Console.Clear();
                 Settings:
                 Console.Title = "Rec_rewild Settings Menu";
-                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader (Not Available)" + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
+                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
                 string readline4 = Console.ReadLine();
                 if (readline4 == "1")
                 {
@@ -146,17 +152,16 @@ namespace start
                 else if (readline4 == "2")
                 {
                     Console.Clear();
-                    goto Settings;
-                    /*
-                    Console.Title = "Rec_rewild Custom Room Downloader";
+                download_Room:
+                    Console.Title = "Rec_rewild room Downloader";
                     Console.Clear();
-                    Console.WriteLine("Custom Room Downloader: This tool takes the room data of any room you type in and imports it into Room folder in 2021");
-                    Console.WriteLine("Please type in the name of the room you would like to download: (Case sensitive)");
-                    string roomname = Console.ReadLine();
-                    string text = "";
+                    Console.WriteLine("room Downloader: This tool takes the room and the data of any name you type in and download and import it to Rec_rewild.");
+                    Console.WriteLine("Please type the roomname of the room you would like to download: ");
+                    string readusername_setup = Console.ReadLine();
+                    string data2_setup = "";
                     try
                     {
-                        text = new WebClient().DownloadString("https://rooms.rec.net/rooms?name=" + roomname + "&include=297");
+                        data2_setup = new WebClient().DownloadString("https://rooms.rec.net/rooms/search?query=" + readusername_setup);
                     }
                     catch
                     {
@@ -164,11 +169,13 @@ namespace start
                         Console.WriteLine("Failed to download room...");
                         goto Settings;
                     }
-                    //CustomRooms.RoomDecode(text);
+                    if (!roomdownloader.room_find(data2_setup, take_int: 12))
+                    {
+                        goto download_Room;
+                    }
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Settings;
-                    */
                 }
                 else if (readline4 == "3")
                 {
@@ -203,6 +210,7 @@ namespace start
                 }
                 else if (readline4 == "4")
                 {            
+                    Console.Clear();
                     File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));                  
                     File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
                     Console.WriteLine("Downloaded avatar items");
@@ -214,7 +222,6 @@ namespace start
                     Console.WriteLine("Downloaded game configs");
                     Console.WriteLine("Updated successfully");
                     Thread.Sleep(400); // to show the user that it success
-                    Console.Clear();
                     goto Settings;
                 }
                 else if (readline4 == "5")
@@ -427,6 +434,8 @@ namespace start
                 APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
 
                 beta = false;
+
+                //ConsoleEMU.OpenNewConsole();
 
                 //note: nameserver is at the same port as before
                 new NameServer();

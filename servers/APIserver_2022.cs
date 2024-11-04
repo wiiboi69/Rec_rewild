@@ -17,7 +17,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Net.NetworkInformation;
 using Rec_rewild.api;
 using System.Collections.Specialized;
-using static Rec_rewild.api.image_util;
+using static Rec_rewild.api.file_util;
 
 namespace server
 {
