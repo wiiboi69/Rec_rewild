@@ -678,13 +678,16 @@ namespace server
                         }
                         if (Url == "announcement/v1/get")
                         {
-                            s = BracketResponse;
+                            try
+                            {
+                                s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/master/CDN/announcements.json");
+                            }
+                            catch
+                            {
+                                s = "";
+                            }
                         }
                         if (rawUrl == "/rooms/createdby/me")
-                        {
-                            s = BracketResponse;
-                        }
-                        if (Url == "announcement/v1/get")
                         {
                             s = BracketResponse;
                         }
@@ -740,6 +743,20 @@ namespace server
                         if (Url == "mod_settings/v2/set")
                         {
                             Settings.SetmodSettings(text);
+                        }
+                        if (rawUrl.StartsWith("//video/"))
+                        {
+                            rawUrl = rawUrl.Substring("//video".Length);
+                            roomdata = true;
+                            try
+                            {
+                                roomdatabytes = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
+                            }
+                            catch
+                            {
+                                Console.WriteLine($"[apiserver.cs] {rawUrl} video not found on cdn.rec.net. trying to download from github");
+                                roomdatabytes = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/video" + rawUrl);
+                            }
                         }
                     send_data:
                         if (s.Length > 400)
