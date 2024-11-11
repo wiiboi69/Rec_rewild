@@ -1,5 +1,6 @@
 ﻿using server;
 using System;
+using System.IO;
 using static start.Program;
 
 internal static class ProgramHelpers
@@ -94,36 +95,29 @@ internal static class ProgramHelpers
     {
         return new Reponse
         {
-            Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceived,
-            Msg = new ChallengeGift()
+            Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceivedImmediate,
+            Msg = new GiftPackage()
             {
-                /*
                 Id = 1,
-                CurrencyType = CurrencyType.RecCenterTokens,
-                Currency = 100000,
-                GiftRarity = GiftRarity.Legendary,
-                GiftContext = GiftContext.Default,
-                Message = "fnaf",
+                PlayerId = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                 FromPlayerId = 1,
-                Platform = PlatformType.All,
-                ConsumableItemDesc = "",
-                AvatarItemDescOrHairDyeDesc = "",
-                EquipmentPrefabName = "",
-                EquipmentModificationGuid = "",
-                AvatarItemType = AvatarItemType.Outfit,
-                Xp = 0,
-                Level = 0,
-                */
-                GiftDropId = 2,
-                GiftRarity = GiftRarity.Legendary,
-                GiftContext = GiftContext.None,
-                ConsumableItemDesc = "",
-                StorefrontType = StorefrontTypes.None,
+                ConsumableItemDesc = "frOMH6WxDEG1fBqC4_83vg",
+                ConsumableCount = 3,
                 AvatarItemDesc = "",
+                AvatarItemType = null,
+                CurrencyType = 0,
+                Currency = 0,
+                Xp = 0,
+                PackageType = 0,
+                Message = "A gift for you <3",
                 EquipmentPrefabName = "",
                 EquipmentModificationGuid = "",
-                Xp = 100000,
-                Level = 0,
+                GiftContext = (GiftContext)500,
+                GiftRarity = 0,
+                Platform = PlatformType.All,
+                platformsToSpawnOn = PlatformType.All,
+                balanceType = null,
+                createdAt = DateTime.Now
             }
         };
     }

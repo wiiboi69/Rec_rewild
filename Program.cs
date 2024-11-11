@@ -623,35 +623,40 @@ namespace start
 
         public class GiftPackage
         {
-            public long Id { get; set; }
+            public ulong Id { get; set; }
 
-            public int FromPlayerId { get; set; }
+            public ulong PlayerId { get; set; }
+            public ulong FromPlayerId { get; set; }
 
             public string ConsumableItemDesc { get; set; }
+            public ulong ConsumableCount { get; set; }
+            public string AvatarItemDesc { get; set; } = "";
+            public AvatarItemType? AvatarItemType { get; set; }
+            public CurrencyType CurrencyType { get; set; }
+            public int Currency { get; set; }
+            public int Xp { get; set; }
+            public int Level { get; set; }
+            public int PackageType { get; set; } //TODO: get enum for it
+            public string Message { get; set; }
+            public string EquipmentPrefabName { get; set; } 
+            public string EquipmentModificationGuid { get; set; }
+            public GiftContext GiftContext { get; set; } = GiftContext.Weekly_Challenge_Complete;
+            public GiftRarity GiftRarity { get; set; }
+            public PlatformType Platform { get; set; } = PlatformType.All;
+            public PlatformType platformsToSpawnOn { get; set; } = PlatformType.All;
+            public int? balanceType { get; set; }
+            public DateTime? createdAt { get; set; }
 
-            public AvatarItemType AvatarItemType { get; set; }
 
             public string AvatarItemDescOrHairDyeDesc { get; set; }
 
-            public string EquipmentPrefabName { get; set; }
 
-            public string EquipmentModificationGuid { get; set; }
 
-            public CurrencyType CurrencyType { get; set; }
 
-            public int Currency { get; set; }
 
-            public int Xp { get; set; }
 
-            public int Level { get; set; }
 
-            public GiftContext GiftContext { get; set; }
 
-            public GiftRarity GiftRarity { get; set; }
-
-            public string Message { get; set; }
-
-            public PlatformType Platform { get; set; }
 
             public string ErrorMessage { get; set; }
             public string SupportsCurrentPlatform { get; set; }
@@ -663,7 +668,7 @@ namespace start
 
         public class ChallengeGift
         {
-            public long GiftDropId { get; set; }
+            public long Id { get; set; }
             public string ConsumableItemDesc { get; set; }
             public string AvatarItemDesc { get; set; }
             public AvatarItemType? AvatarItemType { get; set; }
