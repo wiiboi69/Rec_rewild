@@ -573,10 +573,20 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (Url.StartsWith("storefronts/v4/balance/"))
+                        if (Url.StartsWith("storefronts/v4/balance/2"))
                         {
-                            s = BracketResponse;
+                            var balance = new[]
+                            {
+                             new
+                             {
+                                 Balance = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\tokens.txt")),
+                                 BalanceType = -2,
+                                 CurrencyType = 2
+                             }
+                           };
+                            s = JsonConvert.SerializeObject(balance);
                         }
+
                         if (Url == "gamerewards/v1/pending")
                         {
                             s = BracketResponse;
@@ -825,7 +835,6 @@ namespace server
             Gold,
             Platinum,
         }
-
         public enum SubscriptionPeriod
         {
             Month,
@@ -849,20 +858,16 @@ namespace server
         }
 
         public static string auth = "";
-
         public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
-
         public static ulong CachedPlatformID = 10000;
-        public static ulong CachedversionID = 20200600;
+        public static ulong CachedversionID = 20210804;
         public static ulong Cachedservertimestarted = 20206000;
         public static int CachedVersionMonth = 01;
-
         public static string PlayerEventsResponse = "{\"Created\":[],\"Responses\":[]}";
         public static string ModerationBlockDetails = "{\r\n   \"Duration\" : 0,\r\n   \"GameSessionId\" : 0,\r\n   \"IsBan\" : false,\r\n   \"IsHostKick\" : false,\r\n   \"Message\" : \"\",\r\n   \"PlayerIdReporter\" : 0,\r\n   \"ReportCategory\" : 0\r\n}";
         public static string ImagesV2Named = "[{\"FriendlyImageName\":\"DormRoomBucket\",\"ImageName\":\"DormRoomBucket\",\"StartTime\":\"2021-12-27T21:27:38.1880175-08:00\",\"EndTime\":\"2025-12-27T21:27:38.1880399-08:00\"}";
-        public static string ChallengesV1GetCurrent = "{\"Success\":true,\"Message\":\"OpenRec\"}";
+        public static string ChallengesV1GetCurrent = "{\"Success\":true,\"Message\":\"Rec_rewild\"}";
         public static string ChecklistV1Current = "[{\"Order\":0,\"Objective\":3000,\"Count\":3,\"CreditAmount\":100},{\"Order\":1,\"Objective\":3001,\"Count\":3,\"CreditAmount\":100},{\"Order\":2,\"Objective\":3002,\"Count\":3,\"CreditAmount\":100}]";
-
         public static string BlankResponse = "";
         public static string BracketResponse = "[]";
         public static string VersionCheckResponse = "{\"VersionStatus\":0}";

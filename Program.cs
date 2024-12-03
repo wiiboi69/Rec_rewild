@@ -187,7 +187,8 @@ namespace start
                     File.Delete("SaveData\\storefronts2.txt");
                     File.Delete("SaveData\\Profile\\username.txt");
                     File.Delete("SaveData\\Profile\\username.txt");
-                    File.Delete("SaveData\\Profile\\level.txt"); 
+                    File.Delete("SaveData\\Profile\\level.txt");
+                    File.Delete("SaveData\\Profile\\tokens.txt");
                     File.Delete("SaveData\\Profile\\userid.txt");
                     File.Delete("SaveData\\myrooms.txt"); 
                     File.Delete("SaveData\\settings.txt");
@@ -244,12 +245,14 @@ namespace start
                     + "(3) Change Profile Image " 
                     + Environment.NewLine 
                     + "(4) Change Level         " + File.ReadAllText("SaveData\\Profile\\level.txt")
+                    + Environment.NewLine
+                    + "(5) Change Tokens        " + File.ReadAllText("SaveData\\Profile\\tokens.txt")
                     + Environment.NewLine 
-                    + "(5) Change Bio           " + File.ReadAllText("SaveData\\Profile\\bio.txt")
+                    + "(6) Change Bio           " + File.ReadAllText("SaveData\\Profile\\bio.txt")
                     + Environment.NewLine 
-                    + "(6) Profile Downloader" 
+                    + "(7) Profile Downloader" 
                     + Environment.NewLine 
-                    + "(7) Go Back");
+                    + "(8) Go Back");
                 string readline3 = Console.ReadLine();
                 if (readline3 == "1")
                 {
@@ -372,6 +375,16 @@ namespace start
                 }
                 else if (readline3 == "5")
                 {
+                    Console.WriteLine("Current tokens: " + File.ReadAllText("SaveData\\Profile\\tokens.txt"));
+                    Console.WriteLine("New Tokens: ");
+                    string newtokens = Console.ReadLine();
+                    File.WriteAllText("SaveData\\Profile\\tokens.txt", newtokens);
+                    Console.Clear();
+                    Console.WriteLine("Success!");
+                    goto Profile;
+                }
+                else if (readline3 == "6")
+                {
                     Console.WriteLine("Current bio: " + File.ReadAllText("SaveData\\Profile\\bio.txt"));
                     Console.WriteLine("New bio: ");
                     string newlevel = Console.ReadLine();
@@ -380,7 +393,7 @@ namespace start
                     Console.WriteLine("Success!");
                     goto Profile;
                 }
-                else if (readline3 == "6")
+                else if (readline3 == "7")
                 {
                     download_profile:
                     Console.Title = "Rec_rewild Profile Downloader";
@@ -408,7 +421,7 @@ namespace start
                     Console.Clear();
                     goto Profile;
                 }
-                else if (readline3 == "7")
+                else if (readline3 == "8")
                 {
                     Console.Clear();
                     goto Start;
