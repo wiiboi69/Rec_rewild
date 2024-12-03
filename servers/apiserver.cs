@@ -130,6 +130,18 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        if (Url.StartsWith("subscription/details/"))
+                        {
+                            string temp = Url.Substring("subscription/details/".Length);
+                            var subscription = new
+                            {
+                                accountId = temp,
+                                clubId = 1,
+                                subscriberCount = 0
+                            };
+                            s = JsonConvert.SerializeObject(subscription);
+                        }
+
                         if (Url == "config/v1/amplitude")
                         {
                             s = Amplitude.amplitude();
@@ -572,7 +584,7 @@ namespace server
                         if (Url.StartsWith("playerReputation/v2/bulk"))
                         {
                             string temp = Url.Substring("playerReputation/v2/bulk?id=".Length);
-                            s = "{\"AccountId\":" + temp + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}";
+                            s = "[{\"AccountId\":" + temp + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}]";
                         }
                         /*
                         else if (Url.StartsWith("playerReputation/v2/"))
@@ -691,6 +703,14 @@ namespace server
                         {
                             s = BracketResponse;
                         }
+                        if (Url == "avatar/v2/gift/generate")
+                        {
+                            s = "{\r\n   \"CreatedAt\" : \"2024-12-03T08:52:17.5460759Z\",\r\n   \"GiftContext\" : 0,\r\n   \"GiftDrop1\" : {\r\n      \"AvatarItemDesc\" : \"\",\r\n      \"AvatarItemType\" : 0,\r\n      \"ConsumableItemDesc\" : \"\",\r\n      \"Context\" : 0,\r\n      \"Currency\" : 1,\r\n      \"CurrencyType\" : 2,\r\n      \"EquipmentModificationGuid\" : \"\",\r\n      \"EquipmentPrefabName\" : \"\",\r\n      \"FriendlyName\" : \"1 Token\",\r\n      \"GiftDropId\" : 2166,\r\n      \"IsQuery\" : false,\r\n      \"ItemSetFriendlyName\" : \"\",\r\n      \"ItemSetId\" : 1,\r\n      \"Rarity\" : 20,\r\n      \"SubscribersOnly\" : false,\r\n      \"Tooltip\" : \"Winner!\",\r\n      \"Unique\" : false\r\n   },\r\n   \"GiftDrop2\" : {\r\n      \"AvatarItemDesc\" : \"\",\r\n      \"AvatarItemType\" : 0,\r\n      \"ConsumableItemDesc\" : \"\",\r\n      \"Context\" : 0,\r\n      \"Currency\" : 0,\r\n      \"CurrencyType\" : 0,\r\n      \"EquipmentModificationGuid\" : \"db91b61b-ab32-4895-8f5a-0212c1283cbb\",\r\n      \"EquipmentPrefabName\" : \"[Arena_Jumbotron_Mainframe]\",\r\n      \"FriendlyName\" : \"the rewild special\",\r\n      \"GiftDropId\" : 1997,\r\n      \"IsQuery\" : false,\r\n      \"ItemSetFriendlyName\" : \"\",\r\n      \"ItemSetId\" : 1,\r\n      \"Rarity\" : 5,\r\n      \"SubscribersOnly\" : false,\r\n      \"Tooltip\" : \"the rewild special\",\r\n      \"Unique\" : true\r\n   },\r\n   \"GiftDrop3\" : {\r\n      \"AvatarItemDesc\" : \"\",\r\n      \"AvatarItemType\" : 0,\r\n      \"ConsumableItemDesc\" : \"mq23W-RSP0G8iGNLdrcpUw\",\r\n      \"Context\" : 110000,\r\n      \"Currency\" : 0,\r\n      \"CurrencyType\" : 0,\r\n      \"EquipmentModificationGuid\" : \"\",\r\n      \"EquipmentPrefabName\" : \"\",\r\n      \"FriendlyName\" : \"Pepperoni Pizza\",\r\n      \"GiftDropId\" : 2193,\r\n      \"IsQuery\" : false,\r\n      \"ItemSetFriendlyName\" : \"\",\r\n      \"ItemSetId\" : 1,\r\n      \"Rarity\" : 10,\r\n      \"SubscribersOnly\" : false,\r\n      \"Tooltip\" : \"A pepperoni pizza to share with friends.\",\r\n      \"Unique\" : false\r\n   },\r\n   \"Message\" : \"what am i doing with life\",\r\n   \"RewardSelectionId\" : 1,\r\n   \"RewardType\" : 2\r\n}";
+                        }
+                        if (Url == "gamerewards/v1/select")
+                        {
+                            s = "{\r\n   \"AvatarItemDesc\" : \"\",\r\n   \"AvatarItemType\" : 0,\r\n   \"ConsumableItemDesc\" : \"xwQWBB_fekmTqRc2LB92cg\",\r\n   \"Context\" : 110000,\r\n   \"Currency\" : 2147483647,\r\n   \"CurrencyType\" : 0,\r\n   \"EquipmentModificationGuid\" : \"\",\r\n   \"EquipmentPrefabName\" : \"\",\r\n   \"FriendlyName\" : \"2147483647\",\r\n   \"GiftDropId\" : 2181,\r\n   \"IsQuery\" : false,\r\n   \"ItemSetFriendlyName\" : \"\",\r\n   \"ItemSetId\" : 1,\r\n   \"Rarity\" : 30,\r\n   \"SubscribersOnly\" : false,\r\n   \"Tooltip\" : \"2147483647\",\r\n   \"Unique\" : false\r\n}";
+                        }
                         if (Url == "communityboard/v2/current")
                         {
                             s = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/communityboard.json");
@@ -706,7 +726,7 @@ namespace server
                         if (Url.StartsWith("players/v2/progression/bulk?"))
                         {
                             string temp = Url.Substring("players/v2/progression/bulk?id=".Length);
-                            s = GetLevel(temp);
+                            s = "[" + GetLevel(temp) + "]";
                         }
                         if (Url.StartsWith("messages/v1/favoriteFriendOnlineStatus"))
                         {
@@ -838,7 +858,7 @@ namespace server
         public static int CachedVersionMonth = 01;
 
         public static string PlayerEventsResponse = "{\"Created\":[],\"Responses\":[]}";
-        public static string ModerationBlockDetails = "{\"ReportCategory\":0,\"Duration\":0,\"GameSessionId\":0,\"Message\":\"\"}";
+        public static string ModerationBlockDetails = "{\r\n   \"Duration\" : 0,\r\n   \"GameSessionId\" : 0,\r\n   \"IsBan\" : false,\r\n   \"IsHostKick\" : false,\r\n   \"Message\" : \"\",\r\n   \"PlayerIdReporter\" : 0,\r\n   \"ReportCategory\" : 0\r\n}";
         public static string ImagesV2Named = "[{\"FriendlyImageName\":\"DormRoomBucket\",\"ImageName\":\"DormRoomBucket\",\"StartTime\":\"2021-12-27T21:27:38.1880175-08:00\",\"EndTime\":\"2025-12-27T21:27:38.1880399-08:00\"}";
         public static string ChallengesV1GetCurrent = "{\"Success\":true,\"Message\":\"OpenRec\"}";
         public static string ChecklistV1Current = "[{\"Order\":0,\"Objective\":3000,\"Count\":3,\"CreditAmount\":100},{\"Order\":1,\"Objective\":3001,\"Count\":3,\"CreditAmount\":100},{\"Order\":2,\"Objective\":3002,\"Count\":3,\"CreditAmount\":100}]";
