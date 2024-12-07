@@ -157,9 +157,9 @@ namespace api
         public static GameSessions.JoinResult Createnone()
         {
             Console.WriteLine("Rec_Rewild GameSession noroom");
-            
-			Config.localGameSession = null;
-			
+
+            Config.localGameSession = null;
+
             return new GameSessions.JoinResult
             {
                 appVersion = APIServer.CachedversionID.ToString(),
@@ -188,7 +188,7 @@ namespace api
             long gamesessionid = 20161L;
             long gamesessionsubroomid = 20161L;
             string myuuidAsString = "hello";
-            
+
             if (scenename != "")
             {
                 Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\" with scene id : \"" + scenename + "\"");
@@ -233,7 +233,7 @@ namespace api
                         eventId = 0,
                         isFull = false,
                         isInProgress = false,
-                        isPrivate = false,
+                        isPrivate = true,
                         location = Roomdata.RROS[roomname].Scenes[0].RoomSceneLocationId,
                         maxCapacity = Roomdata.RROS[roomname].Scenes[0].MaxPlayers,
                         name = roomname,
@@ -262,7 +262,6 @@ namespace api
                             Config.GameSession.roomInstance.subRoomId = scene.RoomSceneId;
                             Config.GameSession.roomInstance.location = scene.RoomSceneLocationId;
                             Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
-                          
                         }
                     }
                 }
@@ -275,7 +274,7 @@ namespace api
                 {
 
                     Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(
-                        new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" 
+                        new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/"
                         + roomname
                         + ".txt")
 
@@ -308,7 +307,7 @@ namespace api
                             eventId = 0,
                             isFull = false,
                             isInProgress = false,
-                            isPrivate = false,
+                            isPrivate = true,
                             location = roomdata.SubRooms[0].UnitySceneId,
                             maxCapacity = roomdata.SubRooms[0].MaxPlayers,
                             name = roomname,
@@ -354,7 +353,7 @@ namespace api
                         {
                             Console.WriteLine("found room name: " + roomdir + " using room name: " + roomname);
                             string roomrootdata = File.ReadAllText(roomdir);
-                            RoomRootv2 roomRoot = JsonConvert.DeserializeObject<RoomRootv2>(roomrootdata); 
+                            RoomRootv2 roomRoot = JsonConvert.DeserializeObject<RoomRootv2>(roomrootdata);
                             if (scenename != "")
                             {
                                 Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
@@ -448,14 +447,14 @@ namespace api
             bool flag = Config.GameSession == null;
             GameSessions.SessionInstance roomInstance1;
             roomInstance1 = null;
-            if (!flag) 
+            if (!flag)
             {
-                try 
-                { 
+                try
+                {
                     roomInstance1 = Config.GameSession.roomInstance;
                 }
-                catch 
-                { 
+                catch
+                {
                     roomInstance1 = null;
                 }
 
