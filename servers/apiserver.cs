@@ -599,7 +599,6 @@ namespace server
                         if (Url.StartsWith("playerReputation/v2/bulk"))
                         {
                             string temp = Url.Substring("playerReputation/v2/bulk?id=".Length);
-<<<<<<< HEAD
                             s = JsonConvert.SerializeObject(new List<mPlayerReputation>
                             {
                                 new mPlayerReputation
@@ -620,9 +619,6 @@ namespace server
                                     SubscriberCount = 0
                                 }
                             });
-=======
-                            s = "[{\"AccountId\":" + temp + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}]";
->>>>>>> c75f39a616e6eb7c54696131839e7882ff7d9cd2
                         }
                         /*
                         else if (Url.StartsWith("playerReputation/v2/"))
