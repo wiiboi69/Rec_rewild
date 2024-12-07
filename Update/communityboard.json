@@ -1,7 +1,7 @@
 {
   "FeaturedPlayer": {
     "Id": 1,
-    "TitleOverride": "Featured Player",
+    "TitleOverride": "a player here [|=)]",
     "UrlOverride": "https://example.com"
   },
   "FeaturedRoomGroup": {
