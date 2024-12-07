@@ -22,7 +22,6 @@ namespace api
         {
             Console.WriteLine(rawUrl + " | " + value);
             string s = BlankResponse;
-            //string Url = rawUrl.Remove(0, value);
             string Url = rawUrl.Substring(value);
             string[] stringSeparators = new string[] { "?include=1325" };
             string[] subs = Url.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
@@ -30,11 +29,10 @@ namespace api
             subs = subs[0].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
             string temp1 = subs[0];
             string temp2 = GameSessions.FindRoomid(ulong.Parse(temp1));
-            
-            roomdownload:
+
+        roomdownload:
             if (temp2 != "")
             {
-                
                 try
                 {
                     Console.WriteLine("found room name: " + temp2 + " using room id: " + temp1);
@@ -45,7 +43,7 @@ namespace api
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    goto roomfaileddownload;
+                    return s; 
                 }
             }
             else
@@ -55,45 +53,17 @@ namespace api
                     Console.WriteLine("finding room id: " + temp1);
                     temp2 = new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_id/" + temp1 + ".txt").ToString();
                     goto roomdownload;
-                    
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    goto roomfaileddownload;
+                    return s; 
                 }
             }
-            roomfaileddownload:
-            Console.WriteLine("finding custom room id: " + temp1);
-            Roomlist roomlistdata = JsonConvert.DeserializeObject<Roomlist>(s);
 
-            string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
-            foreach (string roomdir in roomlistdir)
-            {
-                Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(roomdir));
-                
-                if (roomdata.RoomId == ulong.Parse(temp1))
-                {
-                    Console.WriteLine("found room name: " + roomdir + " using room id: " + temp1);
-                    return File.ReadAllText(roomdir);
-                }
-                else
-                {
-                    int n = 0;
-                    List<SubRooms> subroomdata = roomdata.SubRooms;
-                    foreach (SubRooms sunroomdir in subroomdata)
-                    {
-                        if (sunroomdir.RoomId == int.Parse(temp1))
-                        {
-                            Console.WriteLine("found room name: " + roomdir + " using room id: " + temp1);
-                            return File.ReadAllText(roomdir);
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("can't find room id: " + temp1);
-            return new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/dormroom.txt").ToString();
+            return s; 
         }
+
 
         public static string room_change_CreatorAccount(string value)
         {
