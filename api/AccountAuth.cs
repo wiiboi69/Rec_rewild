@@ -69,20 +69,26 @@ namespace api
         }
         public static string GetLevel()
         {
-            return JsonConvert.SerializeObject(new Progress
+            return JsonConvert.SerializeObject(new List<Progress>
             {
-                PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
-                XP = 0
+                new Progress
+                {
+                    PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                    Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
+                    XP = 0    
+                }
             });
         }
         public static string GetLevel(string playerid)
         {
-            return JsonConvert.SerializeObject(new Progress
+            return JsonConvert.SerializeObject(new List<Progress>
             {
-                PlayerId = int.Parse(playerid),
-                Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
-                XP = 0
+                new Progress
+                {
+                    PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                    Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
+                    XP = 0
+                }
             });
         }
         public static string GetRep()
@@ -149,6 +155,24 @@ namespace api
             public bool isJunior { get; set; }
             public int platforms { get; set; }
             public DateTime createdAt { get; set; }
+        }
+        public class Account_update
+        {
+            public int availableUsernameChanges { get; set; } = 9999;
+            public string email { get; set; } = "";
+            public DateTime birthday { get; set; } = DateTime.Now;
+            public bool? isFakeJuniorBirthday { get; set; } = null;
+            public int accountId { get; set; }
+            public string username { get; set; }
+            public string displayName { get; set; }
+            public string profileImage { get; set; }
+            public string bannerImage { get; set; }
+            public bool isJunior { get; set; }
+            public int platforms { get; set; }
+            public int personalPronouns { get; set; }
+            public int identityFlags { get; set; }
+            public DateTime createdAt { get; set; }
+            public bool isMetaPlatformBlocked { get; set; } = false;
         }
     }
 }

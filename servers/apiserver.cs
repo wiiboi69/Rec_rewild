@@ -247,6 +247,11 @@ namespace server
                         {
                             s = File.ReadAllText("SaveData\\equipment.txt");
                         }
+                        if (Url == "platformlogin/v1/getcachedlogins" || Url == "platformlogin/v2/getcachedlogins")
+                        {
+                            s = Getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
+
+                        }
                         if (Url == "avatar/v1/saved")
                         {
                             s = BracketResponse;
@@ -430,7 +435,7 @@ namespace server
                             s = BracketResponse;
                         }
                         if (Url == "avatar/v3/saved")
-                            {
+                        {
                             s = BracketResponse;
                         }
                         if (Url == "checklist/v1/current")
@@ -572,7 +577,26 @@ namespace server
                         if (Url.StartsWith("playerReputation/v2/bulk"))
                         {
                             string temp = Url.Substring("playerReputation/v2/bulk?id=".Length);
-                            s = "{\"AccountId\":" + temp + ",\"Noteriety\":0,\"CheerGeneral\":1,\"CheerHelpful\":1,\"CheerGreatHost\":1,\"CheerSportsman\":1,\"CheerCreative\":1,\"CheerCredit\":77,\"SubscriberCount\":2,\"SubscribedCount\":0,\"SelectedCheer\":40}";
+                            s = JsonConvert.SerializeObject(new List<mPlayerReputation>
+                            {
+                                new mPlayerReputation
+                                {
+                                    AccountId = ulong.Parse(temp),
+                                    PlayerId = ulong.Parse(temp),
+                                    IsInGoodStanding = true,
+                                    IsCheerful = true,
+                                    Noteriety = 0,
+                                    CheerCreative = 10,
+                                    CheerCredit = 9999,
+                                    CheerGeneral = 10,
+                                    CheerGreatHost = 10,
+                                    CheerHelpful = 10,
+                                    CheerSportsman = 10,
+                                    SelectedCheer = null,
+                                    SubscribedCount = 0,
+                                    SubscriberCount = 0
+                                }
+                            });
                         }
                         /*
                         else if (Url.StartsWith("playerReputation/v2/"))
@@ -630,9 +654,9 @@ namespace server
                         {
                             string temp = rawUrl.Substring("/account/bulk?id=".Length);
                             if (temp == "1")
-                                s = AccountAuth.GetCoachyWoachy();
+                                s = GetCoachyWoachy();
                             else
-                                s = AccountAuth.GetAccountsBulk();
+                                s = GetAccountsBulk();
                         }
                         else if (rawUrl.Contains("/account/me/email"))
                         {
@@ -643,6 +667,8 @@ namespace server
                             string temp = text.Substring("bio=".Length);
                             File.WriteAllText(Program.ProfilePath + "\\bio.txt", temp);
                             s = "{\"success\":true,\"error\":\"\"}";
+                            ProgramHelpers.SelfAccountUpdate();
+                            goto send_data;
                         }
                         else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/bio"))
                         {
@@ -657,6 +683,8 @@ namespace server
                             string temp = text.Substring("displayName=".Length);
                             File.WriteAllText(Program.ProfilePath + "\\displayName.txt", temp);
                             s = "{\"success\":true,\"error\":\"\",\"value\":\"" + temp + "\"}";
+                            ProgramHelpers.SelfAccountUpdate();
+
                             goto send_data;
                         }
                         else if (rawUrl.StartsWith("/account/") && rawUrl.EndsWith("/displayName"))
@@ -665,7 +693,18 @@ namespace server
                             {
                                 accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                                 Name = File.ReadAllText(Program.ProfilePath + "\\displayName.txt")
-                            }   );
+                            });
+                        }
+                        ///account/me/profileimage
+                        else if (rawUrl.StartsWith("/account/me/profileimage"))
+                        {
+                            string temp = text.Substring("imageName=".Length);
+                            temp = Uri.UnescapeDataString(temp);
+                            File.Copy(temp,"SaveData\\profile.png",true);
+                            s = "{\"success\":True,\"error\":\"\",\"value\":\"\"}";
+                            ProgramHelpers.SelfAccountUpdate();
+                            goto send_data;
+
                         }
                         else if (rawUrl.StartsWith("/account/me"))
                         {
@@ -793,13 +832,14 @@ namespace server
             }
         }
         public static string SanitizeChatMessageRequest(string postData) => "\"" + JsonConvert.DeserializeObject<SanitizePostDTO>(postData).Value + "\"";
-
+        //playerReputation
         public class SanitizePostDTO
         {
             public string Value { get; set; }
 
             public int ReplacementChar { get; set; }
         }
+        
         public enum SubscriptionLevel
         {
             Gold,

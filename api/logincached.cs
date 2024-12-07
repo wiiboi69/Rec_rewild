@@ -10,7 +10,7 @@ namespace api
     public class Logincached
     {
         public string Error { get; set; }
-        public Getcachedlogins Player { get; set; }
+        public Getcachedlogins.profile Player { get; set; }
         public string Token { get; set; }
         public bool FirstLoginOfTheDay { get; set; }
         public ulong AnalyticsSessionId { get; set; }
@@ -23,14 +23,15 @@ namespace api
             return JsonConvert.SerializeObject(new Logincached
             {
                 Error = "",
-                Player = new Getcachedlogins
+                Player = new Getcachedlogins.profile
                 {
                     Id = userid,
                     Username = name,
+                    RawUsername = name,
                     DisplayName = displayName,
                     XP = 9999,
                     Level = level,
-                    RegistrationStatus = 2,
+                    RegistrationStatus = Getcachedlogins.RegistrationStatus.Registered,
                     Developer = true,
                     CanReceiveInvites = false,
                     ProfileImageName = name,

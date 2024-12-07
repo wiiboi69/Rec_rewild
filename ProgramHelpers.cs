@@ -1,4 +1,5 @@
-﻿using server;
+﻿using Newtonsoft.Json;
+using server;
 using System;
 using System.IO;
 using static start.Program;
@@ -6,9 +7,9 @@ using static start.Program;
 internal static class ProgramHelpers
 {
 
-    public static Reponse createResponse()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.ModerationKick,
             Msg = new ModerationBlockDetails()
@@ -22,9 +23,9 @@ internal static class ProgramHelpers
         };
     }
     //MessageReceived
-    public static Reponse createResponse_box()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_box()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.RelationshipChanged,
             Msg = new Relationship_Detail()
@@ -38,9 +39,9 @@ internal static class ProgramHelpers
         };
     }
 
-    public static Reponse createResponse_FriendInvite()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_FriendInvite()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
             Msg = new Message_Detail()
@@ -56,9 +57,9 @@ internal static class ProgramHelpers
         };
     }
 
-    public static Reponse createResponse_FriendRequestAccepted()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_FriendRequestAccepted()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
             Msg = new Message_Detail()
@@ -73,9 +74,9 @@ internal static class ProgramHelpers
             }
         };
     }
-    public static Reponse createResponse_FriendStatusOnline()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_FriendStatusOnline()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
             Msg = new Message_Detail()
@@ -91,9 +92,9 @@ internal static class ProgramHelpers
         };
     }
 
-    public static Reponse createResponse_give()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_give()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceivedImmediate,
             Msg = new GiftPackage()
@@ -109,11 +110,11 @@ internal static class ProgramHelpers
                 Currency = 0,
                 Xp = 0,
                 PackageType = 0,
-                Message = "A gift for you <3",
+                Message = "you got mail",
                 EquipmentPrefabName = "",
                 EquipmentModificationGuid = "",
-                GiftContext = (GiftContext)500,
-                GiftRarity = 0,
+                GiftContext = GiftContext.Quest_Dracula1_SS,
+                GiftRarity = GiftRarity.Epic,
                 Platform = PlatformType.All,
                 platformsToSpawnOn = PlatformType.All,
                 balanceType = null,
@@ -122,9 +123,9 @@ internal static class ProgramHelpers
         };
     }
 
-    public static Reponse createResponse_msg()
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_msg()
     {
-        return new Reponse
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.MessageReceived,
             Msg = new Message_Detail()
@@ -139,10 +140,37 @@ internal static class ProgramHelpers
             }
         };
     }
-
-    public static Reponse createResponse_time()
+    public static void SelfAccountUpdate()
     {
-        return new Reponse
+        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_SelfAccountUpdate()));
+    }
+
+    public static Reponse<string> createResponse_SelfAccountUpdate()
+    {
+        return new Reponse<string>
+        {
+            Id = "SelfAccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
+            Msg = new api.AccountAuth.Account_update
+            {
+                accountId = int.Parse(File.ReadAllText(ProfilePath + "\\userid.txt")),
+                displayName = File.ReadAllText(ProfilePath + "\\displayName.txt"),
+                bannerImage = File.ReadAllText(ProfilePath + "\\username.txt"),
+                createdAt = DateTime.Now,
+                isJunior = false,
+                platforms = 1,
+                profileImage = "Profile.png",
+                username = File.ReadAllText(ProfilePath + "\\username.txt"),
+                identityFlags = 0,
+                personalPronouns = 0,
+                availableUsernameChanges = 9999,
+                isMetaPlatformBlocked = false,
+            }
+        };
+    }
+
+    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_time()
+    {
+        return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.ServerMaintenance,
             Msg = new StartsInMinutes_Detail()

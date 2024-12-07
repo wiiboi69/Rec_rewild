@@ -51,7 +51,12 @@ namespace server
 				}
 				else if (rawUrl.StartsWith("/" + File.ReadAllText("SaveData\\Profile\\username.txt")))
 				{
-					i = File.ReadAllBytes("SaveData\\profile.png");
+					try
+					{
+						i = File.ReadAllBytes("SaveData\\profile.png");
+					}
+					catch
+					{ }
 				}
 				else if (rawUrl.StartsWith("//room/"))
 				{
@@ -110,7 +115,12 @@ namespace server
                 }
                 else if (rawUrl.StartsWith("/Profile") || rawUrl.StartsWith("/profile"))
                 {
-                    i = File.ReadAllBytes("SaveData\\profileimage.png");
+                    try
+                    {
+                        i = File.ReadAllBytes("SaveData\\profile.png");
+                    }
+                    catch
+                    { }
                 }
                 else
                 {
@@ -128,18 +138,7 @@ namespace server
 						i = notfound;
                     }
 				}
-				if (rawUrl.StartsWith("/CustomRoom.png"))
-                {
-					try
-					{
-						i = new WebClient().DownloadData("https://img.rec.net/" + File.ReadAllText("SaveData\\Rooms\\Downloaded\\imagename.txt"));
-					}
-					catch
-					{
-                        Console.WriteLine($"[ImageServer.cs] {rawUrl} Image not found on img.rec.net. using Default Room Image");
-                        i = new WebClient().DownloadData("https://img.rec.net/DefaultRoomImage.jpg");
-					}
-				}
+
 				Console.WriteLine("Image Requested: " + rawUrl);
 				Console.WriteLine("Image Data: " + text);
 				Console.WriteLine("Image Response: ");

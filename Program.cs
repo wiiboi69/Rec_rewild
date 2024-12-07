@@ -595,9 +595,9 @@ namespace start
         public static string ProfilePath = Program.DataPath + "\\Profile";
         public static string CustomImages = Program.DataPath + "\\Images";
 
-        public class Reponse
+        public class Reponse<T>
         {
-            public WebSocketHTTP_new.ResponseResults Id { get; set; }
+            public T? Id { get; set; }
 
             public object Msg { get; set; }
         }
@@ -624,10 +624,8 @@ namespace start
         public class GiftPackage
         {
             public ulong Id { get; set; }
-
             public ulong PlayerId { get; set; }
             public ulong FromPlayerId { get; set; }
-
             public string ConsumableItemDesc { get; set; }
             public ulong ConsumableCount { get; set; }
             public string AvatarItemDesc { get; set; } = "";
@@ -646,24 +644,6 @@ namespace start
             public PlatformType platformsToSpawnOn { get; set; } = PlatformType.All;
             public int? balanceType { get; set; }
             public DateTime? createdAt { get; set; }
-
-
-            public string AvatarItemDescOrHairDyeDesc { get; set; }
-
-
-
-
-
-
-
-
-
-            public string ErrorMessage { get; set; }
-            public string SupportsCurrentPlatform { get; set; }
-            public string HasAvatarItemOrHairDye { get; set; }
-            public string HasEquipment { get; set; }
-            public string Consumed { get; set; }
-            public string IsValid { get; set; }
         }
 
         public class ChallengeGift
@@ -717,138 +697,269 @@ namespace start
 
         public enum GiftContext
         {
-            None = -1, // 0xFFFFFFFF
-            Default = 0,
-            First_Activity = 1,
-            Game_Drop = 2,
-            All_Daily_Challenges_Complete = 3,
-            All_Weekly_Challenge_Complete = 4,
-            Daily_Challenge_Complete = 5,
-            Weekly_Challenge_Complete = 6,
-            Unassigned_Equipment = 10, // 0x0000000A
-            Unassigned_Avatar = 11, // 0x0000000B
-            Unassigned_Consumable = 12, // 0x0000000C
-            Reacquisition = 20, // 0x00000014
-            Membership = 21, // 0x00000015
-            NUX_TokensAndDressUp = 30, // 0x0000001E
-            NUX_Experiment1 = 31, // 0x0000001F
-            NUX_Experiment2 = 32, // 0x00000020
-            NUX_Experiment3 = 33, // 0x00000021
-            NUX_Experiment4 = 34, // 0x00000022
-            NUX_Experiment5 = 35, // 0x00000023
-            LevelUp = 100, // 0x00000064
-            Purchased_Gift_A = 500, // 0x000001F4
-            Purchased_Gift_B = 501, // 0x000001F5
-            Purchased_Gift_C = 502, // 0x000001F6
-            Purchased_Gift_D = 503, // 0x000001F7
-            Holiday = 1000, // 0x000003E8
-            Contest = 1001, // 0x000003E9
-            Promotion = 1002, // 0x000003EA
-            SubscribersOnly = 1003, // 0x000003EB
-            Deprecated = 1100, // 0x0000044C
-            RecRoyale = 1200, // 0x000004B0
-            Paintball_ClearCut = 2000, // 0x000007D0
-            Paintball_Homestead = 2001, // 0x000007D1
-            Paintball_Quarry = 2002, // 0x000007D2
-            Paintball_River = 2003, // 0x000007D3
-            Paintball_Dam = 2004, // 0x000007D4
-            Paintball_DriveIn = 2005, // 0x000007D5
-            Discgolf_Propulsion = 3000, // 0x00000BB8
-            Discgolf_Lake = 3001, // 0x00000BB9
-            Discgolf_Mode_CoopCatch = 3500, // 0x00000DAC
-            Quest_Goblin_A = 4000, // 0x00000FA0
-            Quest_Goblin_B = 4001, // 0x00000FA1
-            Quest_Goblin_C = 4002, // 0x00000FA2
-            Quest_Goblin_S = 4003, // 0x00000FA3
-            Quest_Goblin_Consumable = 4004, // 0x00000FA4
-            Quest_Cauldron_A = 4010, // 0x00000FAA
-            Quest_Cauldron_B = 4011, // 0x00000FAB
-            Quest_Cauldron_C = 4012, // 0x00000FAC
-            Quest_Cauldron_S = 4013, // 0x00000FAD
-            Quest_Cauldron_Consumable = 4014, // 0x00000FAE
-            Quest_Pirate1_A = 4100, // 0x00001004
-            Quest_Pirate1_B = 4101, // 0x00001005
-            Quest_Pirate1_C = 4102, // 0x00001006
-            Quest_Pirate1_S = 4103, // 0x00001007
-            Quest_Pirate1_X = 4104, // 0x00001008
-            Quest_Pirate1_Consumable = 4105, // 0x00001009
-            Quest_Dracula1_A = 4200, // 0x00001068
-            Quest_Dracula1_B = 4201, // 0x00001069
-            Quest_Dracula1_C = 4202, // 0x0000106A
-            Quest_Dracula1_S = 4203, // 0x0000106B
-            Quest_Dracula1_X = 4204, // 0x0000106C
-            Quest_Dracula1_Consumable = 4205, // 0x0000106D
-            Quest_Dracula1_SS = 4206, // 0x0000106E
-            Quest_SciFi_A = 4500, // 0x00001194
-            Quest_SciFi_B = 4501, // 0x00001195
-            Quest_SciFi_C = 4502, // 0x00001196
-            Quest_SciFi_S = 4503, // 0x00001197
-            Quest_Scifi_Consumable = 4504, // 0x00001198
-            Charades = 5000, // 0x00001388
-            Soccer = 6000, // 0x00001770
-            Paddleball = 7000, // 0x00001B58
-            Dodgeball = 8000, // 0x00001F40
-            Lasertag = 9000, // 0x00002328
-            Bowling = 10000, // 0x00002710
-            StuntRunner_TheMainEvent_A = 11000, // 0x00002AF8
-            StuntRunner_TheMainEvent_B = 11001, // 0x00002AF9
-            StuntRunner_TheMainEvent_C = 11002, // 0x00002AFA
-            StuntRunner_TheMainEvent_D = 11003, // 0x00002AFB
-            StuntRunner_TheMainEvent_S = 11004, // 0x00002AFC
-            StuntRunner_TheMainEvent_X = 11005, // 0x00002AFD
-            StuntRunner_TheMainEvent_Consumable = 11006, // 0x00002AFE
-            StuntRunner_TheMainEvent_SS = 11007, // 0x00002AFF
-            Store_LaserTag = 100000, // 0x000186A0
-            Store_RecCenter = 100010, // 0x000186AA
-            Consumable = 110000, // 0x0001ADB0
-            Token = 110100, // 0x0001AE14
-            Punchcard_Challenge_Complete = 110200, // 0x0001AE78
-            All_Punchcard_Challenges_Complete = 110201, // 0x0001AE79
-            Commerce_Purchase = 200000, // 0x00030D40
+            None = -1,
+            // Token: 0x0400CF97 RID: 53143
+            Default,
+            // Token: 0x0400CF98 RID: 53144
+            First_Activity,
+            // Token: 0x0400CF99 RID: 53145
+            Game_Drop,
+            // Token: 0x0400CF9A RID: 53146
+            All_Daily_Challenges_Complete,
+            // Token: 0x0400CF9B RID: 53147
+            All_Weekly_Challenge_Complete,
+            // Token: 0x0400CF9C RID: 53148
+            Daily_Challenge_Complete,
+            // Token: 0x0400CF9D RID: 53149
+            Weekly_Challenge_Complete,
+            // Token: 0x0400CF9E RID: 53150
+            Unassigned_Equipment = 10,
+            // Token: 0x0400CF9F RID: 53151
+            Unassigned_Avatar,
+            // Token: 0x0400CFA0 RID: 53152
+            Unassigned_Consumable,
+            // Token: 0x0400CFA1 RID: 53153
+            Reacquisition = 20,
+            // Token: 0x0400CFA2 RID: 53154
+            Membership,
+            // Token: 0x0400CFA3 RID: 53155
+            NUX_TokensAndDressUp = 30,
+            // Token: 0x0400CFA4 RID: 53156
+            NUX_Experiment1,
+            // Token: 0x0400CFA5 RID: 53157
+            NUX_Experiment2,
+            // Token: 0x0400CFA6 RID: 53158
+            NUX_Experiment3,
+            // Token: 0x0400CFA7 RID: 53159
+            NUX_Experiment4,
+            // Token: 0x0400CFA8 RID: 53160
+            NUX_Experiment5,
+            // Token: 0x0400CFA9 RID: 53161
+            GameRewards = 50,
+            // Token: 0x0400CFAA RID: 53162
+            GameRewards_Tokens,
+            // Token: 0x0400CFAB RID: 53163
+            LevelUp = 100,
+            // Token: 0x0400CFAC RID: 53164
+            Purchased_Gift_A = 500,
+            // Token: 0x0400CFAD RID: 53165
+            Purchased_Gift_B,
+            // Token: 0x0400CFAE RID: 53166
+            Purchased_Gift_C,
+            // Token: 0x0400CFAF RID: 53167
+            Purchased_Gift_D,
+            // Token: 0x0400CFB0 RID: 53168
+            Holiday = 1000,
+            // Token: 0x0400CFB1 RID: 53169
+            Contest,
+            // Token: 0x0400CFB2 RID: 53170
+            Promotion,
+            // Token: 0x0400CFB3 RID: 53171
+            SubscribersOnly,
+            // Token: 0x0400CFB4 RID: 53172
+            Deprecated = 1100,
+            // Token: 0x0400CFB5 RID: 53173
+            RecRoyale = 1200,
+            // Token: 0x0400CFB6 RID: 53174
+            DEPRECATED_Paintball_ClearCut = 2000,
+            // Token: 0x0400CFB7 RID: 53175
+            DEPRECATED_Paintball_Homestead,
+            // Token: 0x0400CFB8 RID: 53176
+            DEPRECATED_Paintball_Quarry,
+            // Token: 0x0400CFB9 RID: 53177
+            DEPRECATED_Paintball_River,
+            // Token: 0x0400CFBA RID: 53178
+            DEPRECATED_Paintball_Dam,
+            // Token: 0x0400CFBB RID: 53179
+            DEPRECATED_Paintball_DriveIn,
+            // Token: 0x0400CFBC RID: 53180
+            Paintball_ClearCut = 2010,
+            // Token: 0x0400CFBD RID: 53181
+            Paintball_Homestead,
+            // Token: 0x0400CFBE RID: 53182
+            Paintball_Quarry,
+            // Token: 0x0400CFBF RID: 53183
+            Paintball_River,
+            // Token: 0x0400CFC0 RID: 53184
+            Paintball_Dam,
+            // Token: 0x0400CFC1 RID: 53185
+            Paintball_DriveIn,
+            // Token: 0x0400CFC2 RID: 53186
+            DEPRECATED_Discgolf_Propulsion = 3000,
+            // Token: 0x0400CFC3 RID: 53187
+            DEPRECATED_Discgolf_Lake,
+            // Token: 0x0400CFC4 RID: 53188
+            Discgolf_Propulsion = 3010,
+            // Token: 0x0400CFC5 RID: 53189
+            Discgolf_Lake,
+            // Token: 0x0400CFC6 RID: 53190
+            Discgolf_Mode_CoopCatch = 3500,
+            // Token: 0x0400CFC7 RID: 53191
+            Quest_Goblin_A = 4000,
+            // Token: 0x0400CFC8 RID: 53192
+            Quest_Goblin_B,
+            // Token: 0x0400CFC9 RID: 53193
+            Quest_Goblin_C,
+            // Token: 0x0400CFCA RID: 53194
+            Quest_Goblin_S,
+            // Token: 0x0400CFCB RID: 53195
+            Quest_Goblin_Consumable,
+            // Token: 0x0400CFCC RID: 53196
+            Quest_Cauldron_A = 4010,
+            // Token: 0x0400CFCD RID: 53197
+            Quest_Cauldron_B,
+            // Token: 0x0400CFCE RID: 53198
+            Quest_Cauldron_C,
+            // Token: 0x0400CFCF RID: 53199
+            Quest_Cauldron_S,
+            // Token: 0x0400CFD0 RID: 53200
+            Quest_Cauldron_Consumable,
+            // Token: 0x0400CFD1 RID: 53201
+            Quest_Pirate1_A = 4100,
+            // Token: 0x0400CFD2 RID: 53202
+            Quest_Pirate1_B,
+            // Token: 0x0400CFD3 RID: 53203
+            Quest_Pirate1_C,
+            // Token: 0x0400CFD4 RID: 53204
+            Quest_Pirate1_S,
+            // Token: 0x0400CFD5 RID: 53205
+            Quest_Pirate1_X,
+            // Token: 0x0400CFD6 RID: 53206
+            Quest_Pirate1_Consumable,
+            // Token: 0x0400CFD7 RID: 53207
+            Quest_Dracula1_A = 4200,
+            // Token: 0x0400CFD8 RID: 53208
+            Quest_Dracula1_B,
+            // Token: 0x0400CFD9 RID: 53209
+            Quest_Dracula1_C,
+            // Token: 0x0400CFDA RID: 53210
+            Quest_Dracula1_S,
+            // Token: 0x0400CFDB RID: 53211
+            Quest_Dracula1_X,
+            // Token: 0x0400CFDC RID: 53212
+            Quest_Dracula1_Consumable,
+            // Token: 0x0400CFDD RID: 53213
+            Quest_Dracula1_SS,
+            // Token: 0x0400CFDE RID: 53214
+            Quest_SciFi_A = 4500,
+            // Token: 0x0400CFDF RID: 53215
+            Quest_SciFi_B,
+            // Token: 0x0400CFE0 RID: 53216
+            Quest_SciFi_C,
+            // Token: 0x0400CFE1 RID: 53217
+            Quest_SciFi_S,
+            // Token: 0x0400CFE2 RID: 53218
+            Quest_Scifi_Consumable,
+            // Token: 0x0400CFE3 RID: 53219
+            DEPRECATED_Charades = 5000,
+            // Token: 0x0400CFE4 RID: 53220
+            Charades,
+            // Token: 0x0400CFE5 RID: 53221
+            DEPRECATED_Soccer = 6000,
+            // Token: 0x0400CFE6 RID: 53222
+            Soccer,
+            // Token: 0x0400CFE7 RID: 53223
+            DEPRECATED_Paddleball = 7000,
+            // Token: 0x0400CFE8 RID: 53224
+            Paddleball,
+            // Token: 0x0400CFE9 RID: 53225
+            DEPRECATED_Dodgeball = 8000,
+            // Token: 0x0400CFEA RID: 53226
+            Dodgeball,
+            // Token: 0x0400CFEB RID: 53227
+            DEPRECATED_Lasertag = 9000,
+            // Token: 0x0400CFEC RID: 53228
+            Lasertag,
+            // Token: 0x0400CFED RID: 53229
+            DEPRECATED_Bowling = 10000,
+            // Token: 0x0400CFEE RID: 53230
+            Bowling,
+            // Token: 0x0400CFEF RID: 53231
+            StuntRunner_TheMainEvent_A = 11000,
+            // Token: 0x0400CFF0 RID: 53232
+            StuntRunner_TheMainEvent_B,
+            // Token: 0x0400CFF1 RID: 53233
+            StuntRunner_TheMainEvent_C,
+            // Token: 0x0400CFF2 RID: 53234
+            StuntRunner_TheMainEvent_D,
+            // Token: 0x0400CFF3 RID: 53235
+            StuntRunner_TheMainEvent_S,
+            // Token: 0x0400CFF4 RID: 53236
+            StuntRunner_TheMainEvent_X,
+            // Token: 0x0400CFF5 RID: 53237
+            StuntRunner_TheMainEvent_Consumable,
+            // Token: 0x0400CFF6 RID: 53238
+            StuntRunner_TheMainEvent_SS,
+            // Token: 0x0400CFF7 RID: 53239
+            Store_LaserTag = 100000,
+            // Token: 0x0400CFF8 RID: 53240
+            Store_RecCenter = 100010,
+            // Token: 0x0400CFF9 RID: 53241
+            Consumable = 110000,
+            // Token: 0x0400CFFA RID: 53242
+            Token = 110100,
+            // Token: 0x0400CFFB RID: 53243
+            Punchcard_Challenge_Complete = 110200,
+            // Token: 0x0400CFFC RID: 53244
+            All_Punchcard_Challenges_Complete,
+            // Token: 0x0400CFFD RID: 53245
+            Commerce_Purchase = 200000
         }
 
         public enum StorefrontTypes
         {
-            // Token: 0x04009148 RID: 37192
+            // Token: 0x0400CF39 RID: 53049
             None,
-            // Token: 0x04009149 RID: 37193
+            // Token: 0x0400CF3A RID: 53050
             LaserTag,
-            // Token: 0x0400914A RID: 37194
+            // Token: 0x0400CF3B RID: 53051
             RecCenter,
-            // Token: 0x0400914B RID: 37195
+            // Token: 0x0400CF3C RID: 53052
             Watch,
-            // Token: 0x0400914C RID: 37196
+            // Token: 0x0400CF3D RID: 53053
             Quest_LostSkulls = 100,
-            // Token: 0x0400914D RID: 37197
+            // Token: 0x0400CF3E RID: 53054
             Quest_Dracula,
-            // Token: 0x0400914E RID: 37198
+            // Token: 0x0400CF3F RID: 53055
             Quest_GoldenTrophy,
-            // Token: 0x0400914F RID: 37199
+            // Token: 0x0400CF40 RID: 53056
             Quest_CrimsonCauldron,
-            // Token: 0x04009150 RID: 37200
+            // Token: 0x0400CF41 RID: 53057
             RecRoyale = 200,
-            // Token: 0x04009151 RID: 37201
+            // Token: 0x0400CF42 RID: 53058
             Cafe = 300,
-            // Token: 0x04009152 RID: 37202
+            // Token: 0x0400CF43 RID: 53059
             Paintball = 400,
-            // Token: 0x04009153 RID: 37203
+            // Token: 0x0400CF44 RID: 53060
             Paintball_River,
-            // Token: 0x04009154 RID: 37204
+            // Token: 0x0400CF45 RID: 53061
             Paintball_Homestead,
-            // Token: 0x04009155 RID: 37205
+            // Token: 0x0400CF46 RID: 53062
             Paintball_Quarry,
-            // Token: 0x04009156 RID: 37206
+            // Token: 0x0400CF47 RID: 53063
             Paintball_ClearCut,
-            // Token: 0x04009157 RID: 37207
+            // Token: 0x0400CF48 RID: 53064
             Paintball_Spillway,
-            // Token: 0x04009158 RID: 37208
+            // Token: 0x0400CF49 RID: 53065
             Paintball_SunsetDriveIn,
-            // Token: 0x04009159 RID: 37209
+            // Token: 0x0400CF4A RID: 53066
             Bowling = 500,
-            // Token: 0x0400915A RID: 37210
+            // Token: 0x0400CF4B RID: 53067
             StuntRunner = 600,
-            // Token: 0x0400915B RID: 37211
-            DormMirror = 700
+            // Token: 0x0400CF4C RID: 53068
+            DormMirror = 700,
+            // Token: 0x0400CF4D RID: 53069
+            InventionStore = 800,
+            // Token: 0x0400CF4E RID: 53070
+            RoomKeys = 900,
+            // Token: 0x0400CF4F RID: 53071
+            Player_Profile = 1000,
+            // Token: 0x0400CF50 RID: 53072
+            Room_Save = 1100,
+            // Token: 0x0400CF51 RID: 53073
+            RoomCurrency = 1200,
+            // Token: 0x0400CF52 RID: 53074
+            Wishlist = 1300
         }
         public class ModerationBlockDetails
         {
