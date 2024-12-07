@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
@@ -47,7 +48,8 @@ namespace server
                 {
                     Console.WriteLine("Notifications Requested (rawUrl): " + rawUrl);
                 }
-                if (rawUrl.StartsWith("/hub/v1/negotiate"))
+               
+                if (rawUrl.Contains("negotiate"))
                 {
                     text = JsonConvert.SerializeObject(new
                     {
@@ -56,6 +58,7 @@ namespace server
                         SupportedTransports = new List<string>(),
                         url = new Uri("ws://localhost:20199/")
                     });
+                                   
                 }
                 if (rawUrl.StartsWith("versioncheck"))
                 {

@@ -82,6 +82,10 @@ namespace start
             {
                 File.WriteAllText("SaveData\\Profile\\level.txt", "10");
             }
+            if (!(File.Exists("SaveData\\Profile\\tokens.txt")))
+            {
+                File.WriteAllText("SaveData\\Profile\\tokens.txt", "1500");
+            }
             if (!(File.Exists("SaveData\\Profile\\userid.txt")))
             {
                 File.WriteAllText("SaveData\\Profile\\userid.txt", new Random().Next(100000, 999999999).ToString());
@@ -179,6 +183,10 @@ namespace start
             if (!(File.Exists("SaveData\\storefronts2.txt")))
             {
                 File.WriteAllText("SaveData\\storefronts2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/storefront2.txt"));
+            }
+            if (!(File.Exists("SaveData\\Profile\\tokens.txt")))
+            {
+                File.WriteAllText("SaveData\\Profile\\tokens.txt", "1500");
             }
             if (!(File.Exists("SaveData\\baserooms.txt")))
             {

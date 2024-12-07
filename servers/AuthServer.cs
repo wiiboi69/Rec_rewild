@@ -76,10 +76,11 @@ namespace server
                         }
                         else if (rawUrl == "/eac/challenge")
                         {
-                            s = challengesResponse;
+                            Guid randomGuid = Guid.NewGuid();
+                            s = "\"" + randomGuid.ToString("D") + "\"";
                             Thread.Sleep(100);
                         }
-                        else if(rawUrl.StartsWith("/role/developer/"))
+                        else if (rawUrl.StartsWith("/role/developer/"))
                         {
                             s = "true";
                             Thread.Sleep(100);

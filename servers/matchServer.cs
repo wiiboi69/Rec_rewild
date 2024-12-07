@@ -49,7 +49,7 @@ namespace server
 				}
 				if (rawUrl.StartsWith("/player/login"))
 				{
-					s = AccountAuth.ConnectToken();
+					s = "0";
 				}
 				if (rawUrl == "/goto/none")
 				{
