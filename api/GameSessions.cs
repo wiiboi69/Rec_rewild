@@ -233,7 +233,7 @@ namespace api
                         eventId = 0,
                         isFull = false,
                         isInProgress = false,
-                        isPrivate = true,
+                        isPrivate = false,
                         location = Roomdata.RROS[roomname].Scenes[0].RoomSceneLocationId,
                         maxCapacity = Roomdata.RROS[roomname].Scenes[0].MaxPlayers,
                         name = roomname,
@@ -262,6 +262,7 @@ namespace api
                             Config.GameSession.roomInstance.subRoomId = scene.RoomSceneId;
                             Config.GameSession.roomInstance.location = scene.RoomSceneLocationId;
                             Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
+                          
                         }
                     }
                 }
@@ -307,7 +308,7 @@ namespace api
                             eventId = 0,
                             isFull = false,
                             isInProgress = false,
-                            isPrivate = true,
+                            isPrivate = false,
                             location = roomdata.SubRooms[0].UnitySceneId,
                             maxCapacity = roomdata.SubRooms[0].MaxPlayers,
                             name = roomname,
