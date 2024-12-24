@@ -273,12 +273,9 @@ namespace api
                 try
                 {
 
-                    Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(
-                        new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" 
-                        + roomname
-                        + ".txt")
-
-                        ));
+                    string roomFilePath = "https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + roomname + ".txt";
+                    string roomFileContent = new WebClient().DownloadString(roomFilePath);
+                    Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(roomFileContent);
 
 
                     Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
