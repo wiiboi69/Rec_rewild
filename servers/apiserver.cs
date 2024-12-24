@@ -12,6 +12,7 @@ using Rec_rewild.api;
 using System.Collections.Specialized;
 using static Rec_rewild.api.file_util;
 using util;
+using System.Diagnostics.Eventing.Reader;
 
 namespace server
 {
@@ -484,9 +485,18 @@ namespace server
                         if (rawUrl.StartsWith("/room/"))
                         {
                             string temp = rawUrl.Substring("/room/".Length);
-                            roomdatabytes = File.ReadAllBytes("SaveData\\Rooms\\cdn\\" + temp + ".room");
-                            roomdata = true;
+                            try
+                            {
+                                roomdatabytes = File.ReadAllBytes("SaveData\\Rooms\\cdn\\" + temp + ".room");
+                                roomdata = true;
+                            }
+                            catch (FileNotFoundException)
+                            {
+                                roomdatabytes = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/room/" + temp);
+                                roomdata = true;
+                            }
                         }
+
                         if (Url == "rooms/v1/featuredRoomGroup")
                         {
                             s = BracketResponse;
