@@ -148,8 +148,8 @@ namespace server
                 context.Response.AppendHeader("content-signature", "key-id=KEY:RSA:p1.rec.net; data=IWwe/pZ5vWWqNSkSM/54isgDxlZkdrP0sUrppKCbNktO2yCOTjq746xWiiLsueGuVcAGQqkjeRTimxolHckS/YXSYkEJxtiCXbLlsRia2DyAqtWVkGWsfczzFhp/56U66FVzolTspPCvjScOVlGO7dDIK7sJ+ndcRauWjsQsC6g3e7rUc6uwY099a6gy7sw6xr5BFZQSz8wg+fqyHYD/Sc4nQQVOTFZNNASqbJYhpNhEMXRnafCMuLl8a3mkGwvy3t4q2D/7SM48xrGZjEV47qNx1A91KCe28XVToFh4BzwEUU8nZ0d+KwV79MGarLo1cY8igc8FcoThKcovI4ClOg==");
                 outputStream.Write(bytes, 0, bytes.Length);
                 Thread.Sleep(1);
-				outputStream.Close();
-				this.listener.Stop();
+				outputStream.Flush();
+				
 			}
 		}
 		public static string VersionCheckResponse = "{\"ValidVersion\":true}";
