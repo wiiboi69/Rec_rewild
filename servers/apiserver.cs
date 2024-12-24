@@ -723,7 +723,7 @@ namespace server
                             string temp = text.Substring("imageName=".Length);
                             temp = Uri.UnescapeDataString(temp);
                             File.Copy(temp,"SaveData\\profile.png",true);
-                            s = "{\"success\":True,\"error\":\"\",\"value\":\"\"}";
+                            s = "{\"success\":true}";
                             ProgramHelpers.SelfAccountUpdate();
                             goto send_data;
 
