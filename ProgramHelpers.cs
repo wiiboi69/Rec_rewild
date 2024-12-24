@@ -14,8 +14,8 @@ internal static class ProgramHelpers
             Id = WebSocketHTTP_new.ResponseResults.ModerationKick,
             Msg = new ModerationBlockDetails()
             {
-                ReportCategory = 1,
-                Duration = 0,
+                ReportCategory = (int)VotekickTypes.Moderator,
+                Duration = 2,
                 IsHostKick = true,
                 GameSessionId = 100L,
                 Message = "test of websocket"
@@ -34,7 +34,7 @@ internal static class ProgramHelpers
                 Favorited = ReciprocalStatus.None,
                 Ignored = ReciprocalStatus.None,
                 Muted = ReciprocalStatus.None,
-                Type = RelationshipType.FriendRequestReceived,
+                Type = RelationshipType.Friend,
             }
         };
     }

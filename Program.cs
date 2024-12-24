@@ -1068,6 +1068,44 @@ namespace start
             public ReciprocalStatus Favorited { get; set; }
         }
 
+        public enum VotekickTypes
+        {
+            // Token: 0x0400CC67 RID: 52327
+            Moderator = -1,
+            // Token: 0x0400CC68 RID: 52328
+            Unknown,
+            // Token: 0x0400CC69 RID: 52329
+            DEPRECATED_MicrophoneAbuse,
+            // Token: 0x0400CC6A RID: 52330
+            Harassment,
+            // Token: 0x0400CC6B RID: 52331
+            Cheating,
+            // Token: 0x0400CC6C RID: 52332
+            DEPRECATED_ImmatureBehavior,
+            // Token: 0x0400CC6D RID: 52333
+            AFK,
+            // Token: 0x0400CC6E RID: 52334
+            Misc,
+            // Token: 0x0400CC6F RID: 52335
+            Underage,
+            // Token: 0x0400CC70 RID: 52336
+            VoteKick = 10,
+            // Token: 0x0400CC71 RID: 52337
+            MisleadingPurchases,
+            // Token: 0x0400CC72 RID: 52338
+            CoC_Underage = 100,
+            // Token: 0x0400CC73 RID: 52339
+            CoC_Sexual,
+            // Token: 0x0400CC74 RID: 52340
+            CoC_Discrimination,
+            // Token: 0x0400CC75 RID: 52341
+            CoC_Trolling,
+            // Token: 0x0400CC76 RID: 52342
+            CoC_NameOrProfile,
+            // Token: 0x0400CC77 RID: 52343
+            IssuingInaccurateReports = 1000
+        }
+
         public enum RelationshipType
         {
             // Token: 0x04008D54 RID: 36180
