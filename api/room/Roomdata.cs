@@ -748,14 +748,14 @@ namespace api
                 }
             },
             {
-                "Regestration",
+                "Registration",
                 new RoomRoot
                 {
                     Room = new Room
                     {
                         RoomId = 19,
-                        Name = "Regestration",
-                        Description = "Regester your account and make your game die",
+                        Name = "Registration",
+                        Description = "Register your account and make your game die",
                         CreatorPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
                         ImageName = "Regestration.png",
                         State = 0,
