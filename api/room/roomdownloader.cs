@@ -132,6 +132,7 @@ namespace api
             RoomRoot roomRoot = rooms.Results[value];
             Console.WriteLine($"downloading room {roomRoot.Name}");
             string webdata = new WebClient().DownloadString("https://rooms.rec.net/rooms?name=" + roomRoot.Name + "&include=297");
+            Directory.CreateDirectory($"savedata\\rooms\\Downloaded\\{roomRoot.Name}\\);
             File.WriteAllText($"savedata\\rooms\\Downloaded\\{roomRoot.Name}\\room.json", webdata);
             RoomRoot room = JsonConvert.DeserializeObject<RoomRoot>(webdata);
             foreach (SubRooms subrooms in room.SubRooms)
