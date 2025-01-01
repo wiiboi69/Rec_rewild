@@ -78,6 +78,10 @@ namespace api
                 {
                     return false;
                 }
+                if (input == "e")
+                {
+                    return false;
+                }
                 else if ( input == "P")
                 {
                     if (skippage > 1)

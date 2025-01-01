@@ -210,7 +210,9 @@ namespace start
                         Directory.Delete("SaveData", true);
                         Console.Clear();
                         Console.WriteLine("Success!");
-                        goto Tutorial;
+                        Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+                        Environment.Exit(0);
+                        // goto Tutorial; // not work
                     }
                     else
                     {
