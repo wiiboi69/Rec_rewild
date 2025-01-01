@@ -1,7 +1,7 @@
-Feature Patch v0.0.15:
+Feature Patch v0.0.16:
 
-redesigned profile dounloader ui to make it work with the new apim.rec.net
-updated setup to allow importing rec net profile
+make the server speed faster
+fix rooms
 
 Credits Rec_Rewild:
 
