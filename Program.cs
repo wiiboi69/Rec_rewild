@@ -45,7 +45,7 @@ namespace start
                     Console.Clear();
                     Console.Title = "Rec_rewild Tutorial";
                     Console.WriteLine("Welcome to Rec_rewild!");
-                    Console.WriteLine("Rec_rewild is localhost server software that emulates the old servers of previous RecRoom versions.");
+                    Console.WriteLine("Rec_rewild is localhost server software that emulates RecNet for previous RecRoom versions.");
                     Console.WriteLine("It emulates servers for Rec Room versions from 2020 to 2021.");
                     Console.WriteLine("To use Rec_rewild, you'll need to have builds aswell!");
                     Console.WriteLine("Do you want to import your Rec Net profile?\nYes or No (Y, N)");
@@ -133,7 +133,7 @@ namespace start
                 Console.Clear();
                 Settings:
                 Console.Title = "Rec_rewild Settings Menu";
-                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Reset SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
+                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Delete All SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
                 string readline4 = Console.ReadLine();
                 if (readline4 == "1")
                 {
@@ -179,40 +179,26 @@ namespace start
                 }
                 else if (readline4 == "3")
                 {
-                    File.Delete("SaveData\\avatar.txt");
-                    File.Delete("SaveData\\avataritems.txt");
-                    File.Delete("SaveData\\equipment.txt");
-                    File.Delete("SaveData\\consumables.txt");
-                    File.Delete("SaveData\\gameconfigs.txt");
-                    File.Delete("SaveData\\storefronts2.txt");
-                    File.Delete("SaveData\\Profile\\username.txt");
-                    File.Delete("SaveData\\Profile\\username.txt");
-                    File.Delete("SaveData\\Profile\\level.txt");
-                    File.Delete("SaveData\\Profile\\tokens.txt");
-                    File.Delete("SaveData\\Profile\\userid.txt");
-                    File.Delete("SaveData\\myrooms.txt"); 
-                    File.Delete("SaveData\\settings.txt");
-                    File.Delete("SaveData\\App\\privaterooms.txt");
-                    File.Delete("SaveData\\App\\facefeaturesadd.txt");
-                    File.Delete("SaveData\\profileimage.png");
-                    File.Delete("SaveData\\App\\firsttime.txt");
-                    File.Delete("SaveData\\avataritems2.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\roomname.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\roomid.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\datablob.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\roomsceneid.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\imagename.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\cheercount.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\favcount.txt");
-                    File.Delete("SaveData\\Rooms\\Downloaded\\visitcount.txt");
-                    Console.WriteLine("Success!");
-                    Setup.setup();
-                    goto Settings;
+                    Console.Clear();
+                    Console.WriteLine("are you sure you want to delete all your SaveData (Y, N)");
+                    string readlinee = Console.ReadLine();
+                    if (readlinee == "y" || readlinee == "Y")
+                    {
+                        Directory.Delete("SaveData", true);
+                        Console.Clear();
+                        Console.WriteLine("Success!");
+                        goto Tutorial;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        goto Settings;
+                    }
                 }
                 else if (readline4 == "4")
-                {            
+                {
                     Console.Clear();
-                    File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));                  
+                    File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));
                     File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
                     Console.WriteLine("Downloaded avatar items");
                     File.WriteAllText("SaveData\\equipment.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/equipment.txt"));
