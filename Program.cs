@@ -32,7 +32,7 @@ namespace start
 
         Tutorial:
             if (Setup.firsttime == true)
-
+              
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Title = "Rec_rewild Intro";
@@ -116,8 +116,31 @@ namespace start
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
             Console.WriteLine("Discord server here: https://discord.gg/qZhThdFMjy");
             Console.WriteLine("This is a full server rewrite version" + Environment.NewLine);
-            Console.WriteLine("(1) What's New" + Environment.NewLine +"(2) Change Settings" + Environment.NewLine + "(3) Modify Profile" + Environment.NewLine + "(4) Build Download Links" + Environment.NewLine + "(5) Start Server" + Environment.NewLine + "(6) Start beta 2022 Server");
+            Console.WriteLine("(1) What's New" 
+                + Environment.NewLine 
+                + "(2) Change Settings" 
+                + Environment.NewLine 
+                + "(3) Modify Profile" 
+                + Environment.NewLine 
+                + "(4) Build Download Links" 
+                + Environment.NewLine 
+                + "(5) Start Server" 
+                + Environment.NewLine 
+                + "(6) Start beta 2022 Server");
+
             string readline = Console.ReadLine();
+            if (!int.TryParse(readline, out int choice))
+            {
+                Console.WriteLine("only enter numbers");
+                Console.Clear();
+                goto Start;
+            }
+            if (!int.TryParse(readline, out int choice1) || choice < 1 || choice > 6)
+            {
+                Console.WriteLine("invalid");
+                Console.Clear();
+                goto Start; 
+            }
             if (readline == "1")
             {
                 Console.Title = "Rec_rewild Changelog";
