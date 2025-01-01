@@ -131,7 +131,16 @@ namespace api
             listRoot<RoomRoot> rooms = JsonConvert.DeserializeObject<listRoot<RoomRoot>>(data);
             RoomRoot roomRoot = rooms.Results[value];
             Console.WriteLine($"downloading room {roomRoot.Name}");
-            string webdata = new WebClient().DownloadString("https://rooms.rec.net/rooms?name=" + roomRoot.Name + "&include=297");
+            string webdata = "";
+
+            try
+            {
+                webdata = new WebClient().DownloadString("https://rooms.rec.net/rooms?name=" + roomRoot.Name + "&include=297");
+            }
+            catch
+            {
+                return;
+            }
             Directory.CreateDirectory($"savedata\\rooms\\Downloaded\\{roomRoot.Name}\\");
             File.WriteAllText($"savedata\\rooms\\Downloaded\\{roomRoot.Name}\\room.json", webdata);
             RoomRoot room = JsonConvert.DeserializeObject<RoomRoot>(webdata);
