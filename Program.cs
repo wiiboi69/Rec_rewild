@@ -233,7 +233,7 @@ namespace start
                     File.WriteAllText("SaveData\\gameconfigs.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/gameconfigs.txt"));
                     Console.WriteLine("Downloaded game configs");
                     Console.WriteLine("Updated successfully");
-                    Thread.Sleep(400); // to show the user that it success
+                    Thread.Sleep(400); 
                     goto Settings;
                 }
                 else if (readline4 == "5")
