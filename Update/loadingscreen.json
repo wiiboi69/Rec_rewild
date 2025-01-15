@@ -1,92 +1,34 @@
 [
   {
-    "Name": "hello there",
-    "Title": "We're all on rec.net!",
-    "Message": "Log into your Rec Net profile (which don't exists at all) to stay in touch with your friends any time!",
+    "ImageName": "token.png",
+    "Message": "We're giving out 1 token to celebrate Rec Room's 69420th birthday! Invite your websockets and earn up to 1 token.",
+    "PlatformMask": -1,
     "RoomNames": [],
-    "Context": 3,
-    "InputType": 0,
-    "Visibility": 1,
-    "AllowCycling": false,
-    "RestrictToNewUsers": false,
-    "ImageName": "Community/room/Kuti/site.png",
-    "PlatformMask": 239,
-    "CreatedAt": "2022-12-06T20:31:28Z"
+    "Title": "Get Free Tokens!"
   },
   {
-    "Name": "intro",
-    "Title": "Welcome to Rec Room",
+    "ImageName": "Community/room/DormRoom.png",
+    "Message": "Check out your own personal space!",
+    "PlatformMask": -1,
+    "RoomNames": [],
+    "Title": "Welcome to your Dorm Room!"
+  },
+  {
+    "ImageName": "Community/room/intro/intro.png",
     "Message": "Let's see what Rec Room is all about. Head inside to start playing!",
+    "PlatformMask": -1,
     "RoomNames": [
       "orientation"
     ],
-    "Context": 3,
-    "InputType": 0,
-    "Visibility": 1,
-    "AllowCycling": false,
-    "RestrictToNewUsers": false,
-    "ImageName": "Community/room/intro/intro.png",
-    "PlatformMask": 239,
-    "CreatedAt": "2022-12-06T20:31:28Z"
+    "Title": "Welcome to Rec Room"
   },
-  {
-    "Name": "dormroom",
-    "Title": "Welcome to your Dorm Room!",
-    "Message": "Check out your own personal space!",
+   {
+    "ImageName": "friend.png",
+    "Message": "To make a friend in localhost server (hope websockets work), open the fucking people menu in your <sprite name=\"MenuIcon_Sprites_4(HR)_Watch\"> or start a handshake by holding <sprite name=\"MenuIcon_Sprites_4(HR)_XboxWest\"> or <sprite name=\"MenuIcon_Sprites_4(HR)_XboxDPadEast\"> then selecting <sprite name=\"MenuIcon_Sprites_4(HR)_ShakeHands\"> from the shortcut menu",
+    "PlatformMask": -1,
     "RoomNames": [
-      "dormroom"
+      "orientation"
     ],
-    "Context": 3,
-    "InputType": 0,
-    "Visibility": 1,
-    "AllowCycling": false,
-    "RestrictToNewUsers": false,
-    "ImageName": "Community/room/DormRoom.png",
-    "PlatformMask": 239,
-    "CreatedAt": "2022-12-06T20:31:28Z"
-  },
-  {
-    "Name": "RecCenter",
-    "Title": "",
-    "Message": "",
-    "RoomNames": [
-      "RecCenter"
-    ],
-    "Context": 3,
-    "InputType": 0,
-    "Visibility": 1,
-    "AllowCycling": false,
-    "RestrictToNewUsers": false,
-    "ImageName": "Community/room/RecCenter.png",
-    "PlatformMask": 239,
-    "CreatedAt": "2022-12-06T20:31:28Z"
-  },
-  {
-    "Name": "550bdee9e43c4954bccd5d9916c0e5a9",
-    "Title": "Get Free Tokens!",
-    "Message": "We're giving out 1 token to celebrate Rec Room's 69420th birthday! Invite your websocking and earn up to 1 tokens.",
-    "RoomNames": [],
-    "Context": 0,
-    "InputType": 0,
-    "Visibility": 1,
-    "AllowCycling": true,
-    "RestrictToNewUsers": false,
-    "ImageName": "token.png",
-    "PlatformMask": 111,
-    "CreatedAt": "2021-06-18T20:31:28Z"
-  },
-  {
-    "Name": "06c6f0e4e0604149bdfc7f50c3d8cad5",
-    "Title": "Interacting with people",
-    "Message": "To make a friend (hope websockets work), open the People menu in your <sprite name=\"MenuIcon_Sprites_4(HR)_Watch\"> or start a handshake by holding <sprite name=\"MenuIcon_Sprites_4(HR)_XboxWest\"> or <sprite name=\"MenuIcon_Sprites_4(HR)_XboxDPadEast\"> then selecting <sprite name=\"MenuIcon_Sprites_4(HR)_ShakeHands\"> from the shortcut menu",
-    "RoomNames": [],
-    "Context": 0,
-    "InputType": 2,
-    "Visibility": 0,
-    "AllowCycling": true,
-    "RestrictToNewUsers": true,
-    "ImageName": "355724cad6c04a8fb71a4be1110fb575.png",
-    "PlatformMask": 9,
-    "CreatedAt": "2021-07-02T18:50:07Z"
+    "Title": "Interacting with your mum"
   }
 ]
