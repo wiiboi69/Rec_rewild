@@ -9,7 +9,10 @@ using api;
 using System.Threading;
 using System.Linq;
 using System.Security.Cryptography.Xml;
+using System.Security.AccessControl;
+using System.Net.Http;
 using util;
+
 
 namespace start
 {
@@ -17,16 +20,11 @@ namespace start
     {
         static void Main()
         {
-            //check for Rec_rewild important files
-
             if (File.Exists("SaveData\\App\\firsttime.txt"))
             {
                 Setup.quicksetup();
                 goto Start;
             }
-
-            //startup for Rec_rewild
-
             Setup.setup();
             goto Tutorial;
 
@@ -108,7 +106,7 @@ namespace start
             }
         Start:
             Console.Title = "Rec_rewild Startup Menu";
-
+            var client = new HttpClient();
             appversion = appversion.Replace("\n", String.Empty);
             appversion = appversion.Replace("\r", String.Empty);
             appversion = appversion.Replace("\t", String.Empty);
@@ -145,7 +143,7 @@ namespace start
             {
                 Console.Title = "Rec_rewild Changelog";
                 Console.Clear();
-                Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/changelog.txt"));
+                Console.WriteLine(client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/changelog.txt").Result);
                 Console.WriteLine("Press any key to continue:");
                 Console.ReadKey();
                 Console.Clear();
@@ -203,7 +201,7 @@ namespace start
                 else if (readline4 == "3")
                 {
                     Console.Clear();
-                    Console.WriteLine("are you sure you want to delete all your SaveData (Y, N)");
+                    Console.WriteLine("Are you sure you want to delete all your SaveData (Y, N)");
                     string readlinee = Console.ReadLine();
                     if (readlinee == "y" || readlinee == "Y")
                     {
@@ -443,7 +441,7 @@ namespace start
                 Console.Title = "Rec_rewild Build Downloads";
                 Console.Clear();
                 Console.WriteLine("To download builds, use the links below: " + Environment.NewLine);
-                Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
+                Console.WriteLine(client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt").Result);
                 Console.WriteLine("Download a build and press any key to continue:");
                 Console.ReadKey();
                 Console.Clear();
@@ -621,7 +619,7 @@ namespace start
 
         public class Reponse<T>
         {
-            public T? Id { get; set; }
+            public T Id { get; set; }
 
             public object Msg { get; set; }
         }
