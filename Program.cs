@@ -65,6 +65,7 @@ namespace start
                         {
                             Console.Clear();
                             Console.WriteLine("Failed to download profile...");
+                            api.DebugLog.Log("FAILED TO DOWNLOAD PROFILE!", api.DebugLog.LogLevel.Error);
                             goto rec_net_profile_notimported;
                         }
 
@@ -457,7 +458,7 @@ namespace start
 
                 beta = false;
 
-                //ConsoleEMU.OpenNewConsole();
+               //ConsoleEMU.OpenNewConsole();
 
                 //note: nameserver is at the same port as before
                 new NameServer();
@@ -529,90 +530,13 @@ namespace start
                     input = Console.ReadLine();
                 }
             }
-            if (readline == "6")
-            {
-                Console.Title = "starting beta server for 2022 build";
-                Console.WriteLine("Please wait for server to start up");
-                version = "2022";
-
-                APIServer_2022.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
-
-                beta = true;
-
-                //note: nameserver is at the same port as before
-                new NameServer();
-                new APIServer_2022();
-                new AuthServer();
-                new ImageServer();
-                new matchServer();
-                new NotificationsServer();
-                new WebSocketHTTP_new();
-                new roomServer();
-
-                Console.Title = "Rec_rewild server started!";
-                Console.WriteLine(msg);
-
-                var input = Console.ReadLine();
-                for (; ; )
-                {
-                    if (input == "!mod")
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse()));
-                        Console.WriteLine();
-                        goto input_server;
-                    }
-                    else if (input == "!mod_box")
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_box()));
-                        Console.WriteLine();
-                        goto input_server;
-                    }
-                    else if (input == "!mod_msg")
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_msg()));
-                        Console.WriteLine();
-                        goto input_server;
-                    }
-                    else if (input == "!mod_time")
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_time()));
-                        Console.WriteLine();
-                        goto input_server;
-                    }
-                    else if (input == "!mod_give")
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_give()));
-                        Console.WriteLine();
-                        goto input_server;
-                    }
-                    else if (input == "!exit")
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("closing the server");
-                        Console.WriteLine();
-                        Environment.Exit(0);
-                        goto input_server;
-                    }
-                input_server:
-                    input = Console.ReadLine();
-                }
-            }
 
         }
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
         public static bool beta = false;
-        public static string appversion = "0.0.16"; //new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt");
+        public static bool dev_log = true;
+        public static string appversion = "0.0.17"; //new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt");
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
         public static string CustomImages = Program.DataPath + "\\Images";

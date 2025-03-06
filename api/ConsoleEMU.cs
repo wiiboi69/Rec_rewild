@@ -18,13 +18,13 @@ namespace util
             logger = factory.CreateLogger("server logger");
             logger.LogInformation("Hello World! Logging is {Description}.", "fun");
         }
-        public static void WriteLine(object? value)
+        public static void WriteLine(object value)
         {
             if (logger is null)
                 return;
             logger.LogInformation($"{value.ToString()}\n");
         }
-        public static void Write(object? value)
+        public static void Write(object value)
         {
             if (logger is null)
                 return;

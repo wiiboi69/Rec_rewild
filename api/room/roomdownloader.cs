@@ -201,10 +201,10 @@ namespace api
             public string CreatedAt { get; set; }
             public Stats Stats { get; set; }
             public string? RankedEntityId { get; set; }
-            public string? RankingContext { get; set; }
+            public string RankingContext { get; set; }
             public List<SubRooms> SubRooms { get; set; }
             public List<Roles> Roles { get; set; }
-            public string? DataBlob { get; set; }
+            public string DataBlob { get; set; }
             public int UgcVersion { get; set; }
             public int Version { get; set; }
             public List<Tags> Tags { get; set; }
@@ -257,7 +257,7 @@ namespace api
         //CurrentSave	
         public class CurrentSave
         {
-            public string? DataBlob { get; set; }
+            public string DataBlob { get; set; }
             public DateTime CreatedAt { get; set; }
 
         }

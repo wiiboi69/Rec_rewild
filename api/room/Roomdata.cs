@@ -1098,11 +1098,11 @@ namespace api
             public int MinLevel { get; set; }
             public string CreatedAt { get; set; }
             public Stats Stats { get; set; }
-            public string? RankedEntityId { get; set; }
-            public string? RankingContext { get; set; }
+            public string RankedEntityId { get; set; }
+            public string RankingContext { get; set; }
             public List<SubRooms> SubRooms { get; set; }
             public List<Roles> Roles { get; set; }
-            public string? DataBlob { get; set; }
+            public string DataBlob { get; set; }
             public int UgcVersion { get; set; }
             public List<Tags> Tags { get; set; }
             public List<Dummy> PromoImages { get; set; }
@@ -1158,11 +1158,11 @@ namespace api
             public int Type { get; set; }
             public string CreatedAt { get; set; }
             public Statsv2 Stats { get; set; }
-            public string? RankedEntityId { get; set; }
-            public string? RankingContext { get; set; }
+            public string RankedEntityId { get; set; }
+            public string RankingContext { get; set; }
             public List<SubRoomsv2> SubRooms { get; set; }
             public List<Roles> Roles { get; set; }
-            public string? DataBlob { get; set; }
+            public string DataBlob { get; set; }
             public int UgcVersion { get; set; }
             public List<Tags> Tags { get; set; }
             public List<Dummy> PromoImages { get; set; }
@@ -1225,11 +1225,11 @@ public bool beta { get; set; }
             public int MinLevel { get; set; }
             public string CreatedAt { get; set; }
             public Stats Stats { get; set; }
-            public string? RankedEntityId { get; set; }
-            public string? RankingContext { get; set; }
+            public string RankedEntityId { get; set; }
+            public string RankingContext { get; set; }
             public List<SubRooms> SubRooms { get; set; }
             public List<Roles> Roles { get; set; }
-            public string? DataBlob { get; set; }
+            public string DataBlob { get; set; }
             public int UgcVersion { get; set; }
             public int Version { get; set; }
             public List<Tags> Tags { get; set; }
@@ -1288,7 +1288,7 @@ public bool beta { get; set; }
             public string Location { get; set; }
             public string Name { get; set; }
             public bool IsSandbox { get; set; }
-            public string? DataBlobName { get; set; }
+            public string DataBlobName { get; set; }
             public int MaxPlayers { get; set; }
             public bool CanMatchmakeInto { get; set; }
             public DateTime DataModifiedAt { get; set; }
@@ -1298,7 +1298,7 @@ public bool beta { get; set; }
             public int SubRoomId { get; set; }
             public int RoomId { get; set; }
             public string Name { get; set; }
-            public string? DataBlob { get; set; }
+            public string DataBlob { get; set; }
             public bool IsSandbox { get; set; }
             public int MaxPlayers { get; set; }
             public int Accessibility { get; set; }
@@ -1351,9 +1351,9 @@ public bool beta { get; set; }
         public class SubRoomsv2
         {
             public int Accessibility { get; set; }
-            public string? DataBlob { get; set; }
-            public string? DataBlobName { get; set; }
-            public string? DataBlobHash { get; set; }
+            public string DataBlob { get; set; }
+            public string DataBlobName { get; set; }
+            public string DataBlobHash { get; set; }
             public bool IsSandbox { get; set; }
             public int MaxPlayers { get; set; }
             public string Name { get; set; }

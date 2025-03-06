@@ -120,9 +120,9 @@ namespace Rec_rewild.api
         {
             public string Key { get; set; }
             public string Value { get; set; }
-            public string? ActiveExperiments { get; set; }
-            public string? StartTime { get; set; }
-            public string? EndTime { get; set; }
+            public string ActiveExperiments { get; set; }
+            public string StartTime { get; set; }
+            public string EndTime { get; set; }
             //StartTime
             //EndTime
         }
