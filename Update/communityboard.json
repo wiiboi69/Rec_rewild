@@ -1,7 +1,7 @@
 {
   "FeaturedPlayer": {
     "Id": 1,
-    "TitleOverride": "EGGRECROOM SUCKS",
+    "TitleOverride": "Featured Player",
     "UrlOverride": "https://example.com"
   },
   "FeaturedRoomGroup": {
@@ -11,7 +11,7 @@
     "EndAt": "9999-05-09T07:00:00Z",
     "FeaturedRooms": [
       {
-        "RoomName": "egg sucks",
+        "RoomName": "dormroom",
         "RoomId": 1,
         "ImageName": "dorm_room.png"
       },
@@ -45,40 +45,40 @@
     ]
   },
   "CurrentAnnouncement": {
-    "Message": "fuck you",
+    "Message": "dont click :3",
     "MoreInfoUrl": "https://"
   },
   "InstagramImages": [
     {
-      "ImageName": "egg.jpg",
+      "ImageName": "meme.jpg",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "egg.png",
+      "ImageName": "meme.png",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "egg.jpg",
+      "ImageName": "meme2.jpg",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "egg.png",
+      "ImageName": "image.png",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "egg.png",
+      "ImageName": "jiggle.png",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "egg.png",
+      "ImageName": "rewild.png",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "banproof.png",
+      "ImageName": "message.png",
       "ImageUrl": "https://www.discord.cim"
     },
     {
-      "ImageName": "heslashhimissues.png",
+      "ImageName": "image.png",
       "ImageUrl": "https://www.discord.cim"
     }
   ],
@@ -86,20 +86,20 @@
     {
       "BlobName": "bottomgear.webm",
       "Title": "bottom gear",
-      "Description": "egg sucks",
+      "Description": "wow",
       "ThumbnailBlobName": "bottom.png",
       "SourceUrl": "https://www.youtube.com/watch?v=zd_Fu4mW2po"
     },
     {
       "BlobName": "u.webm",
-      "Title": "egg sucks",
+      "Title": "Placeholder 2",
       "Description": "",
       "ThumbnailBlobName": "IDK.png",
       "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     },
     {
       "BlobName": "deez.mp4",
-      "Title": "A normal video",
+      "Title": "Placeholder 3",
       "Description": "",
       "ThumbnailBlobName": "Community/Videos/deez.png",
       "SourceUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
