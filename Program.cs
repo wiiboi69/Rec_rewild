@@ -518,6 +518,22 @@ namespace start
                         Console.WriteLine();
                         goto input_server;
                     }
+                    else if (input == "!mod_online")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_FriendStatusOnline()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
+                    else if (input == "!mod_accept")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("sending test websocket data");
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_FriendRequestAccepted()));
+                        Console.WriteLine();
+                        goto input_server;
+                    }
                     else if (input == "!exit")
                     {
                         Console.WriteLine();
@@ -535,7 +551,7 @@ namespace start
         public static string msg = "//This is the server sending and recieving data from recroom." + Environment.NewLine + "//Ignore this if you don't know what this means." + Environment.NewLine + "//Please start up the build now.";
         public static string version = "";
         public static bool beta = false;
-        public static bool dev_log = true;
+        public static bool dev_log = false;
         public static string appversion = "0.0.17"; //new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt");
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
