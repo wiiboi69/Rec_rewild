@@ -202,7 +202,7 @@ namespace start
                 else if (readline4 == "3")
                 {
                     Console.Clear();
-                    Console.WriteLine("Are you sure you want to delete all your SaveData (Y, N)");
+                    Console.WriteLine("Are you sure you want to delete all your SaveData? (Y, N)");
                     string readlinee = Console.ReadLine();
                     if (readlinee == "y" || readlinee == "Y")
                     {

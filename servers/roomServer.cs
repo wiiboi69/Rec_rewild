@@ -209,9 +209,7 @@ namespace server
                         response.ContentLength64 = (long)bytes.Length;
                         Stream outputStream = response.OutputStream;
                         outputStream.Write(bytes, 0, bytes.Length);
-                        
                         outputStream.Flush();
-                      
                     }
                 }
             }

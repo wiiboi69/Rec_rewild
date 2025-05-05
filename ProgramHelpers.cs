@@ -149,7 +149,7 @@ internal static class ProgramHelpers
     {
         return new Reponse<string>
         {
-            Id = "SelfAccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
+            Id = "AccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
             Msg = new api.AccountAuth.Account_update
             {
                 accountId = int.Parse(File.ReadAllText(ProfilePath + "\\userid.txt")),
