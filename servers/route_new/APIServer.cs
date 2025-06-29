@@ -404,7 +404,7 @@ namespace Rec_rewild.servers.route_new
         public static string ProgressionBulk(string id)
         {
             Console.WriteLine($"game requested ProgressionBulk");
-            return "[" + GetLevel(id) + "]";
+            return GetLevel(id);
         }
 
         [rewild_route_system.Route("/api/playerReputation/v2/bulk")]
@@ -509,7 +509,7 @@ namespace Rec_rewild.servers.route_new
         {
             var client = new HttpClient();
             Console.WriteLine($"game requested LoadingScreenTipData");
-            return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/loadingscreen.json").Result;
+            return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/loadingscreen.json").GetAwaiter().GetResult();
         }
 
         [rewild_route_system.Route("/api/quickPlay/v1/getandclear")]
@@ -561,9 +561,7 @@ namespace Rec_rewild.servers.route_new
                 ServerTime = DateTime.UtcNow,
                 Challenges = new List<object>
                 {
-                    new
-                    {
-                    }
+                   
                 },
                 Gift = new
                 {
@@ -583,11 +581,220 @@ namespace Rec_rewild.servers.route_new
             Console.WriteLine($"game requested UnreadSub");
             return BracketResponse;
         }
+
         [rewild_route_system.Route("/announcements/v2/mine/unread")]
         public static string UnreadAnnoucements()
         {
             Console.WriteLine($"game requested UnreadAnnoucements");
             return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/roomcurrencies/v1/currencies")]
+        public static string RoomCurrencies()
+        {
+            Console.WriteLine($"game requested RoomCurrencies");
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/annoucement/v1/get")]
+        public static string GetAnnoucements()
+        {
+            Console.WriteLine($"game requested annoucement data");
+            var client = new HttpClient();
+            try
+            {
+                return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/master/CDN/announcements.json").GetAwaiter().GetResult();
+            }
+            catch
+            {
+                return BracketResponse;
+            }
+        }
+
+        [rewild_route_system.Route("/api/PlayerReporting/v1/voteToKickReasons")]
+        public static string VoteToKickReasons()
+        {
+            Console.WriteLine($"game requested VoteToKickReasons");
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/avatar/v3/saved")]
+        public static string AvatarSaved()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/equipment/v2/getUnlocked")]
+        public static string GetAllEquipments()
+        {
+            try
+            {
+                return File.ReadAllText("SaveData\\equipment.txt");
+            }
+            catch
+            {
+                return "[]";
+            }
+        }
+
+        [rewild_route_system.Route("/api/consumables/v2/getUnlocked")]
+        public static string GetAllConsumables()
+        {
+            try
+            {
+                return File.ReadAllText("SaveData\\consumables.txt");
+            }
+            catch
+            {
+                return "[]";
+            }
+        }
+
+        [rewild_route_system.Route("/api/objectives/v1/myprogress")]
+        public static string ObjectivesMyProgress()
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                Objectives = new List<object>
+                {
+
+                },
+                ObjectivesGroups = new List<object>
+                {
+
+                },
+            });
+        }
+
+        [rewild_route_system.Route("/api/avatar/v2/gifts")]
+        public static string AvatarV2Gifts()
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                Id = 1,
+                AvatarItemDesc = "",
+                ConsumableItemDesc = "",
+                EquipmentPrefabName = "[PaintballGun]",
+                EquipmentModificationGuid = "",
+                Currency = 0,
+                CurrencyType = 2,
+                Xp = 0,
+                Level = 0,
+                GiftRarity = 0,
+                Message = "Welcome to Rec_rewild!",
+            });
+        }
+
+        [rewild_route_system.Route("/api/images/v2/named")]
+        public static string NamedImages()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/gamerewards/v1/pending")]
+        public static string PendingGamerewards()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/communityboard/v2/current")]
+        public static string CurrentCommunityBoard()
+        {
+            var client = new HttpClient();
+            try
+            {
+                return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/communityboard.json").Result;
+            }
+            catch
+            {
+                return BracketResponse;
+            }
+        }
+
+        [rewild_route_system.Route("/api/playerevents/v1/all")]
+        public static string AllEvents()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/roomkeys/v1/mine")]
+        public static string MyRoomkeys()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/CampusCard/v1/UpdateAndGetSubscription")]
+        public static string RRPlus()
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                Subscription = new
+                {
+                    SubscriptionId = 0,
+                    RecNetPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    PlatformType = 0,
+                    PlatformId = 1,
+                    PlatformPurchaseId = "0",
+                    Level = SubscriptionLevel.Platinum,
+                    Period = SubscriptionPeriod.Year,
+                    ExpirationDate = DateTime.Parse("9999-12-30T23:37:28.553Z"),
+                    IsAutoRenewing = true,
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now,
+                    IsActive = true
+                },
+                CanBuySubscription = true,
+                PlatformAccountSubscribedPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt"))
+            });
+        }
+
+        [rewild_route_system.Route("/api/storefronts/v4/balance/2")]
+        public static string Tokens()
+        {
+            var balance = new[]
+            {
+                             new
+                             {
+                                 Balance = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\tokens.txt")),
+                                 BalanceType = -2,
+                                 CurrencyType = 2
+                             }
+                           };
+            return JsonConvert.SerializeObject(balance);
+        }
+
+        [rewild_route_system.Route("/api/roomcurrencies/v1/betaEnabled")]
+        public static string BetaEnabled()
+        {
+            return "true";
+        }
+
+        [rewild_route_system.Route("/api/roomcurrencies/v1/getAllBalances")]
+        public static string GetAllBalances()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/roomkeys/v1/room")]
+        public static string RoomKeys(string roomId)
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/externalfriendinvite/v1/getplatformreferrers")]
+        public static string Getplatformreferrers()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/consumables/v1/updateActive")]
+        public static string UpdateConsumables()
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                Success = true, 
+                Error = ""
+            });
         }
     }
 }

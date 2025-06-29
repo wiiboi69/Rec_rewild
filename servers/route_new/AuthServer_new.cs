@@ -261,5 +261,12 @@ namespace Rec_rewild.servers.route_new
                 refresh_token = randomGuid,
             });
         }
+
+        [rewild_route_system.Route("/role/developer")]
+        public static string RoleDeveloper()
+        {
+            Console.WriteLine($"game requesting if you a dev");
+            return "true";
+        }
     }
 }

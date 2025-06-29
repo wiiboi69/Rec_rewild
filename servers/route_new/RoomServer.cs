@@ -2,16 +2,19 @@
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Newtonsoft.Json;
 using Rec_rewild.api.route;
+using server;
 using start;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Rec_rewild.servers.route_new
@@ -122,6 +125,7 @@ namespace Rec_rewild.servers.route_new
                     for (int i = 0; i < parameters.Length; i++)
                     {
                         var paramType = parameters[i].ParameterType;
+                        var paramName = parameters[i].Name;
 
                         if (paramType == typeof(HttpListenerContext))
                         {
@@ -136,39 +140,34 @@ namespace Rec_rewild.servers.route_new
                         {
                             args[i] = rewild_route_system.ParseJsonBody(body, paramType);
                         }
-                        else if (paramType == typeof(string) && query != null && query[parameters[i].Name] != null)
+                        else if (paramType == typeof(string) && query != null && query[paramName] != null)
                         {
-                            args[i] = query[parameters[i].Name];
-                        }
-                        else if ((
-                                paramType == typeof(int) ||
-                                paramType == typeof(uint) ||
-                                paramType == typeof(long) ||
-                                paramType == typeof(ulong) ||
-                                paramType == typeof(string)) && context.Request.ContentType == "application/x-www-form-urlencoded")
-                        {
-                            var formData = rewild_route_system.ParseFormData(body);
-                            var paramName = parameters[i].Name;
-                            args[i] = Convert.ChangeType(formData[paramName], paramType);
+                            args[i] = query[paramName];
                         }
                         else if (
-                                paramType == typeof(int) ||
-                                paramType == typeof(uint) ||
-                                paramType == typeof(long) ||
-                                paramType == typeof(ulong) ||
-                                paramType == typeof(string))
+                            (paramType == typeof(int) || paramType == typeof(uint) || paramType == typeof(long) ||
+                             paramType == typeof(ulong) || paramType == typeof(string))
+                            && match.Groups[paramName] != null && match.Groups[paramName].Success)
                         {
-                            var paramName = parameters[i].Name;
-                            if (match.Groups[paramName]?.Success == true)
-                            {
-                                args[i] = Convert.ChangeType(match.Groups[paramName].Value, paramType);
-                            }
+                            args[i] = Convert.ChangeType(match.Groups[paramName].Value, paramType);
+                        }
+                        else if (
+                            (paramType == typeof(int) || paramType == typeof(uint) || paramType == typeof(long) ||
+                             paramType == typeof(ulong) || paramType == typeof(string))
+                            && context.Request.ContentType == "application/x-www-form-urlencoded")
+                        {
+                            var formData = rewild_route_system.ParseFormData(body);
+                            if (formData.ContainsKey(paramName))
+                                args[i] = Convert.ChangeType(formData[paramName], paramType);
+                            else
+                                args[i] = paramType.IsValueType ? Activator.CreateInstance(paramType) : null;
                         }
                         else
                         {
-                            throw new InvalidOperationException($"Unsupported parameter type: {paramType}");
+                            throw new InvalidOperationException($"Unsupported parameter type or missing parameter: {paramType} / {paramName}");
                         }
                     }
+
                     var result = method.Invoke(null, args);
 
                     if (method.ReturnType == typeof(void))
@@ -253,21 +252,79 @@ namespace Rec_rewild.servers.route_new
         [rewild_route_system.Route("/goto/room/{room}")]
         public static string GoToRoom(string room)
         {
-            Console.WriteLine($"game requesting goto room");
+            Console.WriteLine($"game requesting goto room: {room}");
             gameinprogress = false;
-            if (Config.GameSession.roomInstance is not null)
-            {
-                Config.GameSession.roomInstance.isInProgress = gameinprogress;
-            }
-            var tmp = GameSessions.Createroom(room, "");
-            return tmp; 
+
+            var tmp = GameSessions.Createroom(room ?? "DormRoom", "");
+            return tmp;
         }
+
 
         [rewild_route_system.Route("/player/heartbeat")]
         public static string Heartbeat()
         {
             Console.WriteLine($"game requesting heartbeat");
             return JsonConvert.SerializeObject(GameSessions.Presence());
+        }
+
+        [rewild_route_system.Route("/player/statusvisibility")]
+        public static string StatusVisibility()
+        {
+            Console.WriteLine($"game requesting Status Visibility");
+            return "{}";
+        }
+
+        [rewild_route_system.Route("/player/vrmovementmode")]
+        public static string VRMovementMode()
+        {
+            Console.WriteLine($"game requesting VRMovementMode");
+            return "{}";
+        }
+
+        [rewild_route_system.Route("/rooms/createdby/me")]
+        public static string RoomsCreatedByMe()
+        {
+            Console.WriteLine($"game requesting RoomsCreatedByMe");
+            return APIServer2021_new.BracketResponse;
+        }
+
+        [rewild_route_system.Route("/rooms/{id}")]
+        public static string GetRoomById(string id)
+        {
+            string fullUrl = "/rooms/" + id;
+            int offset = "/rooms/".Length;
+
+            var raw = room_util.find_room_with_id(fullUrl, offset);
+            var withCreator = room_util.room_change_CreatorAccount(raw);
+
+            if (APIServer.CachedversionID > 20210899)
+                return room_util.room_change_fix_room(withCreator);
+            return withCreator;
+        }
+
+        [rewild_route_system.Route("/rooms")]
+        public static string GetRoomByName(string name, string? include = null)
+        {
+            Console.WriteLine($"{name}.txt");
+
+            try
+            {
+                return room_util.room_find_CustomRooms(name);
+            }
+            catch
+            {
+                using var httpClient = new HttpClient();
+                string fallback = httpClient.GetStringAsync(
+                    $"https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/{name.ToLower()}.txt"
+                ).GetAwaiter().GetResult(); 
+
+                if (APIServer.CachedversionID > 20210899)
+                {
+                    fallback = room_util.room_change_fix_room(fallback);
+                }
+
+                return fallback;
+            }
         }
     }
 }
