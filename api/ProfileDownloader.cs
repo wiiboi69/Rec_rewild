@@ -8,9 +8,9 @@ using System.IO;
 
 namespace api
 {
-    class ProfieStealer
+    class ProfileDownloader
     {
-        public static bool Profilefind(string data, int skip_int = 0, int take_int = 0)
+        public static bool FindProfile(string data, int skip_int = 0, int take_int = 0)
         {
             List<Root> profile = JsonConvert.DeserializeObject<List<Root>>(data);
             if (take_int == 0)

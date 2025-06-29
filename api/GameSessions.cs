@@ -141,7 +141,7 @@ namespace api
 
         public static string Createdorm()
         {
-            return Createroom("DormRoom");
+            return CreateRoom("DormRoom");
         }
         public static PlayerStatus StatusSessionInstance()
         {
@@ -172,7 +172,7 @@ namespace api
                 vrMovementMode = 1
             };
         }
-        public static string Createroom(string roomname)
+        public static string CreateRoom(string roomname)
         {
             string scenename = "";
             if (roomname.Contains("/"))
@@ -744,7 +744,7 @@ namespace api
             public int platform { get; set; }
             public int deviceClass { get; set; }
             public int vrMovementMode { get; set; }
-            public SessionInstance? roomInstance { get; set; }
+            public SessionInstance roomInstance { get; set; }
             public bool isOnline { get; set; }
             public int? errorCode { get; set; } //todo: errorCode list
             public ulong? lastOnline { get; set; }

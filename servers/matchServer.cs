@@ -59,7 +59,7 @@ namespace server
 				else if (rawUrl.StartsWith("/goto/room/"))
 				{
                     gameinprogress = false;
-                    s = GameSessions.Createroom(rawUrl.Remove(0, 11));	
+                    s = GameSessions.CreateRoom(rawUrl.Remove(0, 11));	
                     if (Config.GameSession.roomInstance is not null)
                     {
                         Config.GameSession.roomInstance.isInProgress = gameinprogress;

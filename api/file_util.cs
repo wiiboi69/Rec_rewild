@@ -62,19 +62,12 @@ namespace Rec_rewild.api
 
         public enum FileType
         {
-            // Token: 0x0400CF28 RID: 53032
             Unknown,
-            // Token: 0x0400CF29 RID: 53033
             RoomSave,
-            // Token: 0x0400CF2A RID: 53034
             Holotar,
-            // Token: 0x0400CF2B RID: 53035
             Image,
-            // Token: 0x0400CF2C RID: 53036
             Video,
-            // Token: 0x0400CF2D RID: 53037
             Invention,
-            // Token: 0x0400CF2E RID: 53038
             RoomMetadata
         }
 

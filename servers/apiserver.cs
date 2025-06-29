@@ -143,10 +143,6 @@ namespace server
                             s = JsonConvert.SerializeObject(subscription);
                         }
 
-                        if (Url == "config/v1/amplitude")
-                        {
-                            s = Amplitude.amplitude();
-                        }
                         if (Url == "images/v2/named")
                         {
                             s = ImagesV2Named;

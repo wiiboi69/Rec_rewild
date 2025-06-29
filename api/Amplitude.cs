@@ -5,15 +5,9 @@ namespace api
 {
     internal class Amplitude
     {
-        public static string amplitude()
-        {
-            return JsonConvert.SerializeObject(new Amplitude
-            {
-                AmplitudeKey = "NoKeyProvided"
-            });
-        }
         public string AmplitudeKey { get; set; }
     }
+
     internal class Amplitude_2022
     {
         public static string amplitude_2022()
@@ -28,6 +22,7 @@ namespace api
                 StatSigEnvironment = 0,
             });
         }
+
         public string AmplitudeKey { get; set; }
         public bool UseRudderStack { get; set; }
         public string RudderStackKey { get; set; }

@@ -12,6 +12,7 @@ using System.Security.Cryptography.Xml;
 using System.Security.AccessControl;
 using System.Net.Http;
 using util;
+using Rec_rewild.servers.route_new;
 
 
 namespace start
@@ -69,7 +70,7 @@ namespace start
                             goto rec_net_profile_notimported;
                         }
 
-                        if (!ProfieStealer.Profilefind(data2_setup, take_int: 12))
+                        if (!ProfileDownloader.FindProfile(data2_setup, take_int: 12))
                         {
                             goto download_profile_setup;
                         }
@@ -112,20 +113,19 @@ namespace start
             appversion = appversion.Replace("\r", String.Empty);
             appversion = appversion.Replace("\t", String.Empty);
             Console.WriteLine("Rec_rewild - a fork of OpenRec for Rec Room 2021. (Version: " + appversion + ")");
+            Console.WriteLine("Branch: server-rewrite-v2");
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
-            Console.WriteLine("Discord server here: https://discord.gg/qZhThdFMjy");
-            Console.WriteLine("This is a full server rewrite version" + Environment.NewLine);
-            Console.WriteLine("(1) What's New" 
-                + Environment.NewLine 
-                + "(2) Change Settings" 
-                + Environment.NewLine 
-                + "(3) Modify Profile" 
-                + Environment.NewLine 
-                + "(4) Build Download Links" 
-                + Environment.NewLine 
-                + "(5) Start Server" 
-                + Environment.NewLine 
-                + "(6) Start beta 2022 Server");
+            Console.WriteLine("Discord server here: https://discord.gg/recrewild");
+            Console.WriteLine("This is a full server rewrite version: v2" + Environment.NewLine);
+            Console.WriteLine("(1) What's New"
+                + Environment.NewLine
+                + "(2) Change Settings"
+                + Environment.NewLine
+                + "(3) Modify Profile"
+                + Environment.NewLine
+                + "(4) Build Download Links"
+                + Environment.NewLine
+                + "(5) Start 2021 Server");
 
             string readline = Console.ReadLine();
             if (!int.TryParse(readline, out int choice))
@@ -134,7 +134,7 @@ namespace start
                 Console.Clear();
                 goto Start;
             }
-            if (!int.TryParse(readline, out int choice1) || choice < 1 || choice > 6)
+            if (!int.TryParse(readline, out int choice1) || choice < 1 || choice > 5)
             {
                 Console.WriteLine("invalid");
                 Console.Clear();
@@ -351,7 +351,7 @@ namespace start
                                 goto Start;
                             }
 
-                            List<ProfieStealer.Root> profile = JsonConvert.DeserializeObject<List<ProfieStealer.Root>>(data);
+                            List<ProfileDownloader.Root> profile = JsonConvert.DeserializeObject<List<ProfileDownloader.Root>>(data);
                             byte[] profileimage = new WebClient().DownloadData("https://img.rec.net/" + profile[0].profileImage + "?cropSquare=true&width=192&height=192");
                             File.WriteAllBytes("SaveData\\profileimage.png", profileimage);
 
@@ -423,7 +423,7 @@ namespace start
                         goto Profile;
                     }
                     
-                    if (!ProfieStealer.Profilefind(data2, take_int: 12))
+                    if (!ProfileDownloader.FindProfile(data2, take_int: 12))
                     {
                         goto download_profile;
                     }
@@ -458,9 +458,11 @@ namespace start
 
                 beta = false;
 
-               //ConsoleEMU.OpenNewConsole();
+                //ConsoleEMU.OpenNewConsole();
 
                 //note: nameserver is at the same port as before
+
+                /*
                 new NameServer();
                 new APIServer();
                 new AuthServer();
@@ -470,8 +472,13 @@ namespace start
                 //new WebSocketHTTP();
                 //new WebSocketHTTP_New_test();
                 new WebSocketHTTP_new();
-                new roomServer();                
-                
+                new roomServer();   
+                */
+                new APIServer2021_new();
+                new AuthServer2021_new();
+                new WebSocketHTTP_new();
+                new RoomServer2021_new();
+
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);
 
@@ -537,7 +544,7 @@ namespace start
                     else if (input == "!exit")
                     {
                         Console.WriteLine();
-                        Console.WriteLine(" closing the server");
+                        Console.WriteLine("closing the server");
                         Console.WriteLine();
                         Environment.Exit(0);
                         goto input_server;
@@ -552,7 +559,7 @@ namespace start
         public static string version = "";
         public static bool beta = false;
         public static bool dev_log = false;
-        public static string appversion = "0.0.17"; //new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt");
+        public static string appversion = "0.0.18"; //new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/version.txt");
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
         public static string CustomImages = Program.DataPath + "\\Images";
