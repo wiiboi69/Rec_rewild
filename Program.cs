@@ -513,7 +513,7 @@ namespace start
                     {
                         Console.WriteLine();
                         Console.WriteLine("sending test websocket data");
-                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.createResponse_time()));
+                        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(ProgramHelpers.CreateServerMaintence()));
                         Console.WriteLine();
                         goto input_server;
                     }

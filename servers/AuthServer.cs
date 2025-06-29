@@ -7,8 +7,6 @@ using api;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Security.AccessControl;
-using Client;
-using static Client.ClientSecurity;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace server

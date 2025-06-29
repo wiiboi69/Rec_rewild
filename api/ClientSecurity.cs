@@ -1,141 +1,93 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using server;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 using System.Text;
-using static api.AccountAuth;
+using Newtonsoft.Json;
 
-namespace Client
+public static class ClientSecurity
 {
-    public class ClientSecurity
+    private static readonly string secretKey = "5t378yfn525609t7nym8n0ym79fny79m0nm79guhyskhgyuegeusrtgliuhjrfgaiufrweily793ny793ny793ny973yn7";
+
+    public static string GenerateToken()
     {
-        public static string GenerateToken()
+        var header = new Dictionary<string, object>()
         {
-            string temp1 = "";
-            string temp2 = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
-            ClientSecurity.Auth auth = new ClientSecurity.Auth();
-            DateTime dateTime = DateTime.UtcNow;
-            dateTime = dateTime.AddDays(1.0);
-            dateTime = dateTime.Date;
-            temp1 = EncodeTo64(JsonConvert.SerializeObject( new
-            {
-                nbf = DateTime.UtcNow.Ticks,
-                exp = dateTime.Ticks,
-                iss = "http://localhost:2021",
-                aud = new List<string>()
+            { "alg", "HS256" },
+            { "typ", "JWT" }
+        };
+
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long exp = now + 999600;
+
+        var payload = new Dictionary<string, object>()
+        {
+            { "nbf", now },
+            { "exp", exp },
+            { "iss", "https://auth.rec.net" },
+            { "client_id", "recnet" },
+            { "role", "developer" },
+            { "sub", "6226807" },
+            { "auth_time", now - 3600 },
+            { "idp", "local" },
+            { "jti", GenerateRandomHex(16) },
+            { "sid", GenerateRandomHex(16) },
+            { "iat", now },
+            { "scope", new List<string>
                 {
-                    "http://localhost:2021",
-                    "http://localhost:20211",
-                    "http://localhost:20212",
-                    "http://localhost:20213",
-                    "http://localhost:20214",
-                    "http://localhost:20215",
-                    "http://localhost:20216",
-                    "http://localhost:20217",
-                    "http://localhost:20218",
-                    "http://localhost:20219",
-                    "rr.api",
-                    "rr.commerce",
-                    "rr.rooms",
-                    "rr.storage",
-                    "rr.match",
-                    "rr.leaderboard",
-                    "rr.auth",
-                    "rr.chat",
-                    "rr.accounts"
-                },
-                client_id = "recroom",
-                role  = "developer",/*
-                role = new List<String> 
-                {
-                    "gameClient", 
-                    "screenshare",
-                    "developer",
-                },*/
-                RnPlat = "0",
-                RnPlatid = "1",
-                RnDeviceclass = "2",
-                RnVer = APIServer.CachedversionID.ToString(),
-                idp = "local",
-                sub = GetMID().ToString(),
-                RnAsid = DateTime.UtcNow.Ticks.ToString(),
-                RnSk = "4289734123",
-                iat = DateTime.UtcNow.Ticks,
-                auth_time = DateTime.UtcNow.Ticks,
-                RnPid = "3781123978",
-                scope = new List<string>()
-                {
-                    "rn.accounts",
-                    "rn.accounts.gc",
+                    "openid",
                     "rn.api",
-                    "rn.auth",
-                    "rn.auth.gc",
-                    "rn.chat",
-                    "rn.clubs",
                     "rn.commerce",
-                    "rn.leaderboard",
-                    "rn.link",
-                    "rn.match.read",
-                    "rn.match.write",
                     "rn.notify",
-                    "rn.roomcomments",
+                    "rn.match.read",
+                    "rn.chat",
+                    "rn.accounts",
+                    "rn.auth",
+                    "rn.link",
+                    "rn.clubs",
                     "rn.rooms",
-                    "rn.storage",
-                    "offline_access"
-                },
-                amr = new List<string>() { "cached_login" },       
+                    "rn.discovery"
                 }
-            ));
-            Console.WriteLine(temp1 + "\n");
-            return EncodeTo64(temp2) + "" + temp1 + "" + "TVkpz8Nbmz_8fFdbf3xI0CHwjogaIR45TmhK4NXSgx__e85M0xNO8UDSbGJaUMeSN7rn_I1obrzvqqJhDjqOAyQs39rtKJ-lyMq_oFDf1DOjFhB_KWCQ3V_N1SIOpoTnzoD7kr3voixtB4VrTo1HkUQPK_6a2FvUfg3sNwBBAxVvSv7jRPF5_BLGLRACfT3vIHfM7baSOFYkgijnGu9Okd4XKCSolb0hBO14vRMSUZ_gzdm2YubWEF5PK4kiIKMLnnvqUIAXt37sn0m7SjFK_7CI5K7TcSGJcnO-r63PaKsH3UfPqkTq6QWJKUh9X59mQcUJ6iClkY6Pv8LZWjqpkg";
-        }
-        public class auth_token_data
-        {
-            public string? access_token { get; set; }
-            public string error { get; set; }
-            public string error_description { get; set; }
-            public string key { get; set; }
-            public string refresh_token { get; set; }
-        }
-        public static string EncodeTo64(string toEncode) => Convert.ToBase64String(Encoding.ASCII.GetBytes(toEncode));
-        public static string DecodeFrom64(string encodedData) => Encoding.ASCII.GetString(Convert.FromBase64String(encodedData));
-        public static ulong GetTokenSubject(string token) => ulong.Parse(new JwtSecurityTokenHandler().ReadJwtToken(token).Subject);
-        public static uint GetMID()
-        {
-            string name1 = "SOFTWARE\\Microsoft\\Cryptography";
-            string name2 = "MachineGuid";
-            uint num = 0;
-            using (RegistryKey registryKey1 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-            {
-                using (RegistryKey registryKey2 = registryKey1.OpenSubKey(name1))
-                    num = uint.Parse(((registryKey2 != null ? registryKey2.GetValue(name2) : throw new KeyNotFoundException(string.Format("Key Not Found: {0}", (object)name1))) ?? throw new IndexOutOfRangeException(string.Format("Index Not Found: {0}", (object)name2))).ToString().Split('-')[0], NumberStyles.HexNumber);
-            }
-            return num;
-        }
-        public class Auth
-        {
-            public long nbf { get; set; }
-            public long exp { get; set; }
-            public string iss { get; set; }
-            public List<string> aud { get; set; }
-            public string client_id { get; set; }
-            public List<string> role { get; set; }
-            public string RnPlat { get; set; }
-            public string RnPlatid { get; set; }
-            public string RnDeviceclass { get; set; }
-            public string RnVer { get; set; }
-            public string RnAsid { get; set; }
-            public string RnSk { get; set; }
-            public string sub { get; set; }
-            public long auth_time { get; set; }
-            public string idp { get; set; }
-            public string RnPid { get; set; }
-            public List<string> scope { get; set; }
-            public List<string> amr { get; set; }
-            public long iat { get; internal set; }
-        }
+            },
+            { "amr", new List<string> { "mfa" } }
+        };
+
+        string headerJson = JsonConvert.SerializeObject(header);
+        string payloadJson = JsonConvert.SerializeObject(payload);
+
+        string encodedHeader = Base64UrlEncode(Encoding.UTF8.GetBytes(headerJson));
+        string encodedPayload = Base64UrlEncode(Encoding.UTF8.GetBytes(payloadJson));
+
+        string unsignedToken = $"{encodedHeader}.{encodedPayload}";
+
+        string signature = CreateSignature(unsignedToken, secretKey);
+
+        return $"{unsignedToken}.{signature}";
+    }
+
+    private static string CreateSignature(string unsignedToken, string secret)
+    {
+        var keyBytes = Encoding.UTF8.GetBytes(secret);
+        var messageBytes = Encoding.UTF8.GetBytes(unsignedToken);
+
+        using var hmac = new HMACSHA256(keyBytes);
+        byte[] hash = hmac.ComputeHash(messageBytes);
+
+        return Base64UrlEncode(hash);
+    }
+
+    private static string Base64UrlEncode(byte[] input)
+    {
+        return Convert.ToBase64String(input)
+            .TrimEnd('=')
+            .Replace('+', '-')
+            .Replace('/', '_');
+    }
+
+    private static string GenerateRandomHex(int byteLength)
+    {
+        using var rng = RandomNumberGenerator.Create();
+        byte[] bytes = new byte[byteLength];
+        rng.GetBytes(bytes);
+        return BitConverter.ToString(bytes).Replace("-", "");
     }
 }

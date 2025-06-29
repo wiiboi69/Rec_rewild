@@ -682,7 +682,7 @@ namespace server
                         {
                             string temp = rawUrl.Substring("/account/bulk?id=".Length);
                             if (temp == "1")
-                                s = GetCoachyWoachy();
+                                s = GetCoachBulk();
                             else
                                 s = GetAccountsBulk();
                         }

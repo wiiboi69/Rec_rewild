@@ -143,9 +143,10 @@ internal static class ProgramHelpers
     public static void SelfAccountUpdate()
     {
         WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_SelfAccountUpdate()));
+        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_AccountUpdate()));
     }
 
-    public static Reponse<string> createResponse_SelfAccountUpdate()
+    public static Reponse<string> createResponse_AccountUpdate()
     {
         return new Reponse<string>
         {
@@ -168,7 +169,30 @@ internal static class ProgramHelpers
         };
     }
 
-    public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_time()
+    public static Reponse<string> createResponse_SelfAccountUpdate()
+    {
+        return new Reponse<string>
+        {
+            Id = "SelfAccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
+            Msg = new api.AccountAuth.Account_update
+            {
+                accountId = int.Parse(File.ReadAllText(ProfilePath + "\\userid.txt")),
+                displayName = File.ReadAllText(ProfilePath + "\\displayName.txt"),
+                bannerImage = File.ReadAllText(ProfilePath + "\\username.txt"),
+                createdAt = DateTime.Now,
+                isJunior = false,
+                platforms = 1,
+                profileImage = "Profile.png",
+                username = File.ReadAllText(ProfilePath + "\\username.txt"),
+                identityFlags = 0,
+                personalPronouns = 0,
+                availableUsernameChanges = 9999,
+                isMetaPlatformBlocked = false,
+            }
+        };
+    }
+
+    public static Reponse<WebSocketHTTP_new.ResponseResults> CreateServerMaintence()
     {
         return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
@@ -176,7 +200,6 @@ internal static class ProgramHelpers
             Msg = new StartsInMinutes_Detail()
             {
                 StartsInMinutes = 10,
-
             }
         };
     }

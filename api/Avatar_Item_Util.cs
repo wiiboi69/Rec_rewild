@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Rec_rewild.api
 {
@@ -44,7 +40,7 @@ namespace Rec_rewild.api
             AvatarItemlistdata.Add(new gameconfig_item
             {
                 Key = "Debug.AdditionalLogFlags",
-                Value =  "CircuitsV2Lifecycle",
+                Value = "CircuitsV2Lifecycle",
                 ActiveExperiments = null
             });
             AvatarItemlistdata.Add(new gameconfig_item
@@ -83,39 +79,9 @@ namespace Rec_rewild.api
                 Value = "true",
                 ActiveExperiments = null
             });
-            //UGC.InventionSavingEnabled
-            /*  {
-    "Key": "UGC.AllowBetaInvertedTubeCreation",
-    "Value": "false",
-    "ActiveExperiments": null
-  },
-                "Key": "UGC.AllowNonBetaInvertedTubeCreation",
-    "Value": "false",
-    "ActiveExperiments": null
-  },
-              {
-    "Key": "UGC.RoomSavingEnabled",
-    "Value": "true",
-    "ActiveExperiments": null
-  },
-                  {
-    "Key": "RRUI.MaxActiveHiddenPages",
-    "Value": "5",
-    "ActiveExperiments": null
-  },
-
-             */
-
             return JsonConvert.SerializeObject(AvatarItemlistdata);
         }
 
-        /*
-           {
-    "Key": "Screens.ForceVerification",
-    "Value": "1",
-    "ActiveExperiments": null
-  },
-         */
         public class gameconfig_item
         {
             public string Key { get; set; }
@@ -123,8 +89,6 @@ namespace Rec_rewild.api
             public string ActiveExperiments { get; set; }
             public string StartTime { get; set; }
             public string EndTime { get; set; }
-            //StartTime
-            //EndTime
         }
 
 
@@ -135,10 +99,10 @@ namespace Rec_rewild.api
             public int PlatformMask { get; set; }
             public string FriendlyName { get; set; }
             public string Tooltip { get; set; }
-            public AvatarItem_star Rarity { get; set; }
+            public AvatarItemRarity Rarity { get; set; }
         }
 
-        public enum AvatarItem_star
+        public enum AvatarItemRarity
         {
             Star_0 = 0,
             Star_1 = 10,
@@ -147,15 +111,5 @@ namespace Rec_rewild.api
             Star_4 = 40,
             Star_5 = 50,
         }
-
-
-        /*  {
-    "AvatarItemDesc": "75-HXZBOAEiDBqclnOn8YQ,,,",
-    "AvatarItemType": 0,
-    "PlatformMask": 0,
-    "FriendlyName": "(Belt_PoolFloatie)",
-    "Tooltip": "",
-    "Rarity": 0
-  },*/
     }
 }

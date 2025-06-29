@@ -324,7 +324,7 @@ namespace Rec_rewild.servers.route_new
             Console.WriteLine($"game requested Bulk accounts with id " + id);
             if (id == "1")
             {
-                return AccountAuth.GetCoachyWoachy();
+                return AccountAuth.GetCoachBulk();
             }
             else
             {
