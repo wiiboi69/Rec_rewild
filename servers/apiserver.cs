@@ -586,16 +586,7 @@ namespace server
                         }
                         if (Url.StartsWith("storefronts/v4/balance/2"))
                         {
-                            var balance = new[]
-                            {
-                             new
-                             {
-                                 Balance = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\tokens.txt")),
-                                 BalanceType = -2,
-                                 CurrencyType = 2
-                             }
-                           };
-                            s = JsonConvert.SerializeObject(balance);
+                           
                         }
 
                         if (Url == "gamerewards/v1/pending")
