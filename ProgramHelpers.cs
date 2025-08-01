@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using server;
+using start;
 using System;
 using System.IO;
+using static api.AccountAuth;
 using static start.Program;
 
 internal static class ProgramHelpers
@@ -151,20 +153,20 @@ internal static class ProgramHelpers
         return new Reponse<string>
         {
             Id = "AccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
-            Msg = new api.AccountAuth.Account_update
+            Msg = new AccountMe
             {
-                accountId = int.Parse(File.ReadAllText(ProfilePath + "\\userid.txt")),
-                displayName = File.ReadAllText(ProfilePath + "\\displayName.txt"),
-                bannerImage = File.ReadAllText(ProfilePath + "\\username.txt"),
+                availableUsernameChanges = 9999,
+                email = "zesty@zestyrecrewild.com",
+                birthday = DateTime.Parse("2000-01-01T00:00:00Z"),
+                isFakeJuniorBirthday = false,
+                accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
+                bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                 createdAt = DateTime.Now,
                 isJunior = false,
                 platforms = 1,
                 profileImage = "Profile.png",
-                username = File.ReadAllText(ProfilePath + "\\username.txt"),
-                identityFlags = 0,
-                personalPronouns = 0,
-                availableUsernameChanges = 9999,
-                isMetaPlatformBlocked = false,
+                username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
             }
         };
     }
@@ -174,20 +176,20 @@ internal static class ProgramHelpers
         return new Reponse<string>
         {
             Id = "SelfAccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
-            Msg = new api.AccountAuth.Account_update
+            Msg = new AccountMe
             {
-                accountId = int.Parse(File.ReadAllText(ProfilePath + "\\userid.txt")),
-                displayName = File.ReadAllText(ProfilePath + "\\displayName.txt"),
-                bannerImage = File.ReadAllText(ProfilePath + "\\username.txt"),
+                availableUsernameChanges = 9999,
+                email = "zesty@zestyrecrewild.com",
+                birthday = DateTime.Parse("2000-01-01T00:00:00Z"),
+                isFakeJuniorBirthday = false,
+                accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
+                bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                 createdAt = DateTime.Now,
                 isJunior = false,
                 platforms = 1,
                 profileImage = "Profile.png",
-                username = File.ReadAllText(ProfilePath + "\\username.txt"),
-                identityFlags = 0,
-                personalPronouns = 0,
-                availableUsernameChanges = 9999,
-                isMetaPlatformBlocked = false,
+                username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
             }
         };
     }

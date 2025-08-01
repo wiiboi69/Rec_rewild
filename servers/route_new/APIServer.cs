@@ -17,6 +17,8 @@ using Rec_rewild.api;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net.Http;
 using static server.APIServer;
+using Microsoft.IdentityModel.Tokens;
+using static Rec_rewild.api.dummy_account_system;
 
 namespace Rec_rewild.servers.route_new
 {
@@ -57,24 +59,32 @@ namespace Rec_rewild.servers.route_new
             }
             else
                 Console.WriteLine("APIServer2021: Registering Route");
+            var routeMethods = Assembly.GetExecutingAssembly().GetTypes()
+                           .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+                           .Select(m => new {
+                               Method = m,
+                               Attribute = m.GetCustomAttribute<rewild_route_system.RouteAttribute>()
+                           })
+                           .Where(x => x.Attribute != null)
+                           .OrderBy(x => x.Attribute.Path.Contains("{") ? 1 : 0) // static first
+                           .ThenByDescending(x => x.Attribute.Path.Length);      // longer patterns first
 
-            foreach (var method in Assembly.GetExecutingAssembly().GetTypes()
-                .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)))
+            foreach (var entry in routeMethods)
             {
-                var routeAttribute = method.GetCustomAttribute<rewild_route_system.RouteAttribute>();
-                if (routeAttribute != null)
-                {
+                var method = entry.Method;
+                var routeAttribute = entry.Attribute;
 
-                    var pattern = "^" + Regex.Escape(routeAttribute.Path)
-                        .Replace("\\*", ".*")
-                        .Replace("\\{", "(?<")
-                        .Replace("}", ">[^/]+)")
-                        + "$";
-                    var regex = new Regex(pattern, RegexOptions.Compiled);
+                var pattern = "^" + Regex.Escape(routeAttribute.Path)
+                    .Replace("\\*", ".*")
+                    .Replace("\\{", "(?<")
+                    .Replace("}", ">[^/]+)")
+                    + "$";
+                var regex = new Regex(pattern, RegexOptions.Compiled);
 
-                    var parameters = method.GetParameters();
-                    _routeHandlers.Add((regex, method, parameters));
-                }
+                var parameters = method.GetParameters();
+                _routeHandlers.Add((regex, method, parameters));
+
+                Console.WriteLine($"Registered route: {routeAttribute.Path} to {method.Name}");
             }
         }
 
@@ -234,7 +244,8 @@ namespace Rec_rewild.servers.route_new
 
         private string HandleNotFound(HttpListenerContext context)
         {
-            return "{\"Success\": false, \"Error\": \"404 URL Not Found: " + context.Request.Url + "\"}";
+            Console.WriteLine("Url not found: " + context.Request.Url);
+            return "[]";
         }
         #endregion
 
@@ -287,10 +298,24 @@ namespace Rec_rewild.servers.route_new
         [rewild_route_system.Route("/api/versioncheck/v4")]
         public static string VersionCheck(string v, string p)
         {
-            Console.WriteLine($"game requesting version check for version " + v);
-            return JsonConvert.SerializeObject(new
+            string tmp = " and platform id" + p;
+            if (string.IsNullOrEmpty(p))
             {
-                VersionStatus = 0
+                tmp = "";
+            }
+            Console.WriteLine($"game requesting version check for version " + v + tmp);
+
+            if (int.TryParse(v, out int versionNumber) && versionNumber > 2023000)
+            {
+                return JsonConvert.SerializeObject(new VersionCheck
+                {
+                    VersionStatus = VersionStatus.ValidForPlay // this is a enum
+                });
+            }
+
+            return JsonConvert.SerializeObject(new VersionCheck
+            {
+                VersionStatus = VersionStatus.ValidForPlay 
             });
         }
 
@@ -324,7 +349,20 @@ namespace Rec_rewild.servers.route_new
             Console.WriteLine($"game requested Bulk accounts with id " + id);
             if (id == "1")
             {
-                return AccountAuth.GetCoachBulk();
+                return JsonConvert.SerializeObject(new List<Account>
+                {
+                    new Account
+                    {
+                        accountId = 1,
+                        displayName = "Coach",
+                        bannerImage = "Coach.png",
+                        createdAt = DateTime.Now,
+                        isJunior = false,
+                        platforms = 1,
+                        profileImage = "Coach.png",
+                        username = "Coach",
+                    }
+                });
             }
             else
             {
@@ -348,8 +386,7 @@ namespace Rec_rewild.servers.route_new
 
         [rewild_route_system.Route("/api/PlayerReporting/v1/moderationBlockDetails")]
         public static string ModerationBlockDetails()
-        {
-            Console.WriteLine($"game requested if you banned");
+        { 
             return JsonConvert.SerializeObject(new
             {
                 Duration = 0,
@@ -404,7 +441,7 @@ namespace Rec_rewild.servers.route_new
         public static string ProgressionBulk(string id)
         {
             Console.WriteLine($"game requested ProgressionBulk");
-            return GetLevel(id);
+            return GetLevel();
         }
 
         [rewild_route_system.Route("/api/playerReputation/v2/bulk")]
@@ -476,7 +513,7 @@ namespace Rec_rewild.servers.route_new
             return BracketResponse;
         }
 
-        [rewild_route_system.Route("/api/settings/v2/set")]
+        [rewild_route_system.Route("/api/settings/v2/set")] // implement this
         public static string SettingsV2Set()
         {
             Console.WriteLine($"game requested set settings");
@@ -501,7 +538,31 @@ namespace Rec_rewild.servers.route_new
         public static string Thread(string maxCount, string mode)
         {
             Console.WriteLine($"game requested chats with maxcount {maxCount} and mode {mode}");
-            return BracketResponse;
+
+            var response = new[]
+            {
+                new
+                {
+                    latestMessage = new
+                    {
+                        chatMessageId = 1,
+                        chatThreadId = 1,
+                        senderPlayerId = 1,
+                        timeSent = "2023-04-07T09:59:02.3521154Z",
+                        contents = "{\"Type\":0,\"Version\":2,\"Data\":\"<=>naaa\"}",
+                        moderationState = 0
+                    },
+                    chatThreadId = 1,
+                    playerIds = new[] { 1, 2 },
+                    lastReadMessageId = 1,
+                    chatThreadName = (string?)null,
+                    chatThreadType = 0,
+                    snoozedUntil = (string?)null,
+                    isFavorited = false
+                }
+            };
+
+            return JsonConvert.SerializeObject(response);
         }
 
         [rewild_route_system.Route("/config/LoadingScreenTipData")]
@@ -596,7 +657,7 @@ namespace Rec_rewild.servers.route_new
             return BracketResponse;
         }
 
-        [rewild_route_system.Route("/api/annoucement/v1/get")]
+        [rewild_route_system.Route("/api/announcement/v1/get")]
         public static string GetAnnoucements()
         {
             Console.WriteLine($"game requested annoucement data");
@@ -659,17 +720,21 @@ namespace Rec_rewild.servers.route_new
                 {
 
                 },
-                ObjectivesGroups = new List<object>
+                ObjectiveGroups = new List<object>
                 {
 
                 },
             });
+            
         }
 
         [rewild_route_system.Route("/api/avatar/v2/gifts")]
         public static string AvatarV2Gifts()
         {
-            return JsonConvert.SerializeObject(new
+            /*
+            return JsonConvert.SerializeObject(new[]
+            {
+                 new
             {
                 Id = 1,
                 AvatarItemDesc = "",
@@ -682,8 +747,13 @@ namespace Rec_rewild.servers.route_new
                 Level = 0,
                 GiftRarity = 0,
                 Message = "Welcome to Rec_rewild!",
+            }
             });
+            */
+            return BracketResponse;
         }
+
+
 
         [rewild_route_system.Route("/api/images/v2/named")]
         public static string NamedImages()
@@ -795,6 +865,35 @@ namespace Rec_rewild.servers.route_new
                 Success = true, 
                 Error = ""
             });
+        }
+
+        [rewild_route_system.Route("/api/images/v4/room/{roomid}")]
+        public static string imagesv4room(string roomid, string sort, string filter, string take, string skip)
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/playerevents/v1/room/{roomid}")]
+        public static string playerevents(string roomid)
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/api/sanitize/v1")]
+        public static string Sanitize()
+        {
+            return BracketResponse;
+        }
+
+        [rewild_route_system.Route("/account/create")]
+        public static string AccountCreate()
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                success = true,
+                error = "",
+                value = AccountAuth.GetAccountsBulk()
+        });
         }
     }
 }

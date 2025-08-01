@@ -40,28 +40,62 @@ namespace api
                 }
             });
         }
-        public static string GetCoachBulk()
+        /*  public int availableUsernameChanges { get; set; } = 9999;
+            public string email { get; set; } = "";
+            public DateTime birthday { get; set; } = DateTime.Now;
+            public bool? isFakeJuniorBirthday { get; set; } = null;
+            public int accountId { get; set; }
+            public string username { get; set; }
+            public string displayName { get; set; }
+            public string profileImage { get; set; }
+            public string bannerImage { get; set; }
+            public bool isJunior { get; set; }
+            public int platforms { get; set; }
+            public int personalPronouns { get; set; }
+            public int identityFlags { get; set; }
+            public DateTime createdAt { get; set; }
+            public bool isMetaPlatformBlocked { get; set; } = false;
+        */
+        public static string GetAccountMe()
         {
-            return JsonConvert.SerializeObject(new List<Account>
+            return JsonConvert.SerializeObject(new List<AccountMe>
             {
-                new Account
+                new AccountMe
                 {
-                    accountId = 1,
-                    displayName = "Coach",
-                    bannerImage = "Coach.png",
+                    availableUsernameChanges = 9999,
+                    email = "zesty@zestyrecrewild.com",
+                    birthday = DateTime.Parse("2000-01-01T00:00:00Z"),
+                    isFakeJuniorBirthday = false,
+                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                    displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
+                    bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                     createdAt = DateTime.Now,
                     isJunior = false,
                     platforms = 1,
-                    profileImage = "Coach.png",
-                    username = "Coach",
+                    profileImage = "Profile.png",
+                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
                 }
             });
         }
+
+
         //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2Njk1NzUzOTksImV4cCI6MTY2OTU3ODk5OSwiaXNzIjoiaHR0cHM6Ly9hdXRoLnJlYy5uZXQiLCJjbGllbnRfaWQiOiJyZWNuZXQiLCJyb2xlIjoiZGV2ZWxvcGVyIiwic3ViIjoiNjIyNjgwNyIsImF1dGhfdGltZSI6MTY1Nzc3Mzk1NSwiaWRwIjoibG9jYWwiLCJqdGkiOiJEOUUwNTY2QjU2NTE4QkNEMjBBNjRDMkQ2MzUwQzRFMyIsInNpZCI6IjU2NEY5QUFGQzNBRjQxREQwQTQzOENDMTlFODk5NzYzIiwiaWF0IjoxNjY5NTc1Mzk5LCJzY29wZSI6WyJvcGVuaWQiLCJybi5hcGkiLCJybi5jb21tZXJjZSIsInJuLm5vdGlmeSIsInJuLm1hdGNoLnJlYWQiLCJybi5jaGF0Iiwicm4uYWNjb3VudHMiLCJybi5hdXRoIiwicm4ubGluayIsInJuLmNsdWJzIiwicm4ucm9vbXMiLCJybi5kaXNjb3ZlcnkiXSwiYW1yIjpbIm1mYSJdfQ.GdYHMcKKpDK8mQviYTFVUFTre3olRz8JGWPqNZ6Ke44",
-        public static string ConnectToken()
+        public static string ConnectToken(bool newversion)
         {
             var token = ClientSecurity.GenerateToken();
             Guid randomGuid = Guid.NewGuid();
+            if (newversion)
+            {
+                JsonConvert.SerializeObject(new
+                {
+                    access_token = token,
+                    expires_in = 999999999,
+                    token_type = "Bearer",
+                    refresh_token = randomGuid,
+                    scope = "offline_access rn.accounts rn.accounts.gc rn.api rn.auth rn.auth.gc rn.bugreporting rn.cards rn.chat rn.clubs rn.cms rn.commerce rn.data rn.data.gc rn.datacollection rn.datacollection.gc rn.discovery rn.gamelogs.gc rn.leaderboard rn.link rn.lists rn.match.read rn.match.write rn.moderation rn.notify rn.platformnotifications rn.playersettings rn.roomcomments rn.rooms rn.storage rn.strings rn.studio.gc",
+                    key = ""
+                });
+            }
             return JsonConvert.SerializeObject(new TokenCached
             {
                 access_token = token, 
@@ -80,22 +114,11 @@ namespace api
                 {
                     PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
                     Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
-                    XP = 0    
-                }
-            });
-        }
-        public static string GetLevel(string playerid)
-        {
-            return JsonConvert.SerializeObject(new List<Progress>
-            {
-                new Progress
-                {
-                    PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                    Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
                     XP = 0
                 }
             });
         }
+
         public static string GetRep()
         {
             return JsonConvert.SerializeObject(new Rep
@@ -161,6 +184,27 @@ namespace api
             public int platforms { get; set; }
             public DateTime createdAt { get; set; }
         }
+
+        public class AccountMe
+        {
+            public int availableUsernameChanges { get; set; } = 9999;
+            public string email { get; set; } = "";
+            public DateTime birthday { get; set; } = DateTime.Now;
+            public bool? isFakeJuniorBirthday { get; set; } = null;
+            public int accountId { get; set; }
+            public string username { get; set; }
+            public string displayName { get; set; }
+            public string profileImage { get; set; }
+            public string bannerImage { get; set; }
+            public bool isJunior { get; set; }
+            public int platforms { get; set; }
+            public int personalPronouns { get; set; }
+            public int identityFlags { get; set; }
+            public DateTime createdAt { get; set; }
+            public bool isMetaPlatformBlocked { get; set; } = false;
+        }
+
+
         public class Account_update
         {
             public int availableUsernameChanges { get; set; } = 9999;

@@ -52,23 +52,32 @@ namespace Rec_rewild.servers.route_new
             else
                 Console.WriteLine("AuthServer2021: Registering Route");
 
-            foreach (var method in Assembly.GetExecutingAssembly().GetTypes()
-                .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)))
+            var routeMethods = Assembly.GetExecutingAssembly().GetTypes()
+                 .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+                 .Select(m => new {
+                     Method = m,
+                     Attribute = m.GetCustomAttribute<rewild_route_system.RouteAttribute>()
+                 })
+                 .Where(x => x.Attribute != null)
+                 .OrderBy(x => x.Attribute.Path.Contains("{") ? 1 : 0) // static first
+                 .ThenByDescending(x => x.Attribute.Path.Length);      // longer patterns first
+
+            foreach (var entry in routeMethods)
             {
-                var routeAttribute = method.GetCustomAttribute<rewild_route_system.RouteAttribute>();
-                if (routeAttribute != null)
-                {
+                var method = entry.Method;
+                var routeAttribute = entry.Attribute;
 
-                    var pattern = "^" + Regex.Escape(routeAttribute.Path)
-                        .Replace("\\*", ".*")
-                        .Replace("\\{", "(?<")
-                        .Replace("}", ">[^/]+)")
-                        + "$";
-                    var regex = new Regex(pattern, RegexOptions.Compiled);
+                var pattern = "^" + Regex.Escape(routeAttribute.Path)
+                    .Replace("\\*", ".*")
+                    .Replace("\\{", "(?<")
+                    .Replace("}", ">[^/]+)")
+                    + "$";
+                var regex = new Regex(pattern, RegexOptions.Compiled);
 
-                    var parameters = method.GetParameters();
-                    _routeHandlers.Add((regex, method, parameters));
-                }
+                var parameters = method.GetParameters();
+                _routeHandlers.Add((regex, method, parameters));
+
+                Console.WriteLine($"Registered route: {routeAttribute.Path} to {method.Name}");
             }
         }
 
@@ -251,7 +260,7 @@ namespace Rec_rewild.servers.route_new
         public static string ConnectToken()
         {
             Console.WriteLine($"game requesting connect token");
-            return AccountAuth.ConnectToken();
+            return AccountAuth.ConnectToken(false);
         }
 
         [rewild_route_system.Route("/role/developer")]

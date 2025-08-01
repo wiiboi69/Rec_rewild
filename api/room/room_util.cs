@@ -452,7 +452,7 @@ namespace api
                 n++;
             } while (n < root.SubRooms.Count);
 
-            Room rootv2 = new Room
+            RoomRR rootv2 = new RoomRR
             {
                 Accessibility = root.Accessibility,
                 //"Accessibility": 2,

@@ -13,6 +13,7 @@ using System.Security.AccessControl;
 using System.Net.Http;
 using util;
 using Rec_rewild.servers.route_new;
+using Rec_rewild.api;
 
 
 namespace start
@@ -455,29 +456,32 @@ namespace start
                 version = "2021";
 
                 APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
-
+                
                 beta = false;
-
+                RoomCache.DownloadRooms();
                 //ConsoleEMU.OpenNewConsole();
 
                 //note: nameserver is at the same port as before
 
-                /*
-                new NameServer();
+
+                /*new NameServer();
                 new APIServer();
                 new AuthServer();
                 new ImageServer();
                 new matchServer();
                 new NotificationsServer();
-                //new WebSocketHTTP();
-                //new WebSocketHTTP_New_test();
                 new WebSocketHTTP_new();
                 new roomServer();   
                 */
+
+
+
                 new APIServer2021_new();
                 new AuthServer2021_new();
                 new WebSocketHTTP_new();
                 new RoomServer2021_new();
+                new ImageServer();
+
 
                 Console.Title = "Rec_rewild server started!";
                 Console.WriteLine(msg);

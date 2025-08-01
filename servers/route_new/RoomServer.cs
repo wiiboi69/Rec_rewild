@@ -1,6 +1,7 @@
 ﻿using api;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Newtonsoft.Json;
+using Rec_rewild.api;
 using Rec_rewild.api.route;
 using server;
 using start;
@@ -15,6 +16,8 @@ using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static api.Roomdata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Rec_rewild.servers.route_new
@@ -56,25 +59,35 @@ namespace Rec_rewild.servers.route_new
             else
                 Console.WriteLine("RoomServer2021: Registering Route");
 
-            foreach (var method in Assembly.GetExecutingAssembly().GetTypes()
-                .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)))
+            var routeMethods = Assembly.GetExecutingAssembly().GetTypes()
+                .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+                .Select(m => new {
+                    Method = m,
+                    Attribute = m.GetCustomAttribute<rewild_route_system.RouteAttribute>()
+                })
+                .Where(x => x.Attribute != null)
+                .OrderBy(x => x.Attribute.Path.Contains("{") ? 1 : 0) // static first
+                .ThenByDescending(x => x.Attribute.Path.Length);      // longer patterns first
+
+            foreach (var entry in routeMethods)
             {
-                var routeAttribute = method.GetCustomAttribute<rewild_route_system.RouteAttribute>();
-                if (routeAttribute != null)
-                {
+                var method = entry.Method;
+                var routeAttribute = entry.Attribute;
 
-                    var pattern = "^" + Regex.Escape(routeAttribute.Path)
-                        .Replace("\\*", ".*")
-                        .Replace("\\{", "(?<")
-                        .Replace("}", ">[^/]+)")
-                        + "$";
-                    var regex = new Regex(pattern, RegexOptions.Compiled);
+                var pattern = "^" + Regex.Escape(routeAttribute.Path)
+                    .Replace("\\*", ".*")
+                    .Replace("\\{", "(?<")
+                    .Replace("}", ">[^/]+)")
+                    + "$";
+                var regex = new Regex(pattern, RegexOptions.Compiled);
 
-                    var parameters = method.GetParameters();
-                    _routeHandlers.Add((regex, method, parameters));
-                }
+                var parameters = method.GetParameters();
+                _routeHandlers.Add((regex, method, parameters));
+
+                Console.WriteLine($"Registered route: {routeAttribute.Path} to {method.Name}");
             }
         }
+
 
         public void Start()
         {
@@ -172,12 +185,29 @@ namespace Rec_rewild.servers.route_new
 
                     if (method.ReturnType == typeof(void))
                     {
-                        response.StatusCode = 200;
-                        response_data = "{\"success\":\"true\"}";
+
+                        response.StatusCode = 200; // OK
+                        response_data = "{ \"success\": \"true\" }";
+
+                    }
+                    else if (method.ReturnType == typeof(bool))
+                    {
+                        if ((bool)result == true)
+                        {
+                            response.StatusCode = 200; // OK
+                            response_data = "{ \"success\": \"true\" }";
+                        }
+                        else
+                            response_data = null;
+
+                    }
+                    else if (method.ReturnType == typeof(string) || method.ReturnType == typeof(byte) || method.ReturnType == typeof(byte[]))
+                    {
+                        response_data = result;
                     }
                     else
                     {
-                        response_data = result;
+                        response_data = JsonConvert.SerializeObject(result);
                     }
                     break;
                 }
@@ -229,7 +259,7 @@ namespace Rec_rewild.servers.route_new
 
         private string HandleNotFound(HttpListenerContext context)
         {
-            return "{\"Success\": false, \"Error\": \"404 URL Not Found: " + context.Request.Url + "\"}";
+            return "[]";
         }
         #endregion
 
@@ -289,23 +319,88 @@ namespace Rec_rewild.servers.route_new
         }
 
         [rewild_route_system.Route("/rooms/{id}")]
-        public static string GetRoomById(string id)
+        public static string RoomHandler(string id)
         {
-            string fullUrl = "/rooms/" + id;
-            int offset = "/rooms/".Length;
+            if (!ulong.TryParse(id, out ulong roomId))
+            {
+            }
 
-            var raw = room_util.find_room_with_id(fullUrl, offset);
-            var withCreator = room_util.room_change_CreatorAccount(raw);
+            var roomInfo = Rec_rewild.api.RoomCache.GetRoomInfo(roomId);
+            if (roomInfo != null)
+            {
+                var raw = JsonConvert.SerializeObject(roomInfo);
+                var withCreator = room_util.room_change_CreatorAccount(raw);
 
-            if (APIServer.CachedversionID > 20210899)
-                return room_util.room_change_fix_room(withCreator);
-            return withCreator;
+                if (APIServer.CachedversionID > 20210899)
+                    return room_util.room_change_fix_room(withCreator);
+
+                return withCreator;
+            }
+            else
+            {
+                return "[]"; 
+            }
         }
 
-        [rewild_route_system.Route("/rooms")]
-        public static string GetRoomByName(string name, string? include = null)
+        [rewild_route_system.Route("/rooms/hot")]
+        public static string RoomHandler()
         {
-            Console.WriteLine($"{name}.txt");
+            Console.WriteLine("game requesting Hot Rooms");
+
+            if (RoomCache.Count == 0)
+            {
+                RoomCache.DownloadRooms();
+            }
+
+            return JsonConvert.SerializeObject(new RoomListWrapper
+            {
+                Results = RoomCache._roomList,
+                TotalResults = RoomCache.Count
+            }, 
+            Formatting.None);
+        }
+
+
+        [rewild_route_system.Route("/rooms/bulk")]
+        public static string RoomBulk(string name)
+        {
+            try
+            {
+                var customRooms = room_util.room_find_CustomRooms(name);
+                if (!string.IsNullOrEmpty(customRooms))
+                {
+                    return "[" + customRooms + "]";
+                }
+            }
+            catch
+            {
+                
+            }
+
+            if (Rec_rewild.api.RoomCache.TryGetRoomByName(name, out var roomInfo))
+            {
+                return "[" + JsonConvert.SerializeObject(roomInfo) + "]";
+            }
+
+            return "[]";
+        }
+
+
+        [rewild_route_system.Route("/rooms")]
+        public static string GetRoomByName(string name, string include = null)
+        {
+
+            if (RoomCache.TryGetRoomByName(name, out var roomInfo))
+            {
+                var json = JsonConvert.SerializeObject(roomInfo);
+
+                if (APIServer.CachedversionID > 20210899)
+                {
+                    json = room_util.room_change_fix_room(json);
+                }
+
+                return json;
+            }
 
             try
             {
@@ -313,18 +408,19 @@ namespace Rec_rewild.servers.route_new
             }
             catch
             {
-                using var httpClient = new HttpClient();
-                string fallback = httpClient.GetStringAsync(
-                    $"https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/{name.ToLower()}.txt"
-                ).GetAwaiter().GetResult(); 
-
-                if (APIServer.CachedversionID > 20210899)
-                {
-                    fallback = room_util.room_change_fix_room(fallback);
-                }
-
-                return fallback;
+                return "";
             }
+        }
+
+        [rewild_route_system.Route("/rooms/{id}/interactionby/me")]
+        public static object interactionbyme(string id)
+        {
+            return new
+            {
+                Cheered = false,
+                Favorited = false,
+                LastVisitedAt = DateTime.Now
+            };
         }
     }
 }

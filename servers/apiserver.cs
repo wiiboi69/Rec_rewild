@@ -13,6 +13,7 @@ using System.Collections.Specialized;
 using static Rec_rewild.api.file_util;
 using util;
 using System.Diagnostics.Eventing.Reader;
+using WebSocketSharp;
 
 namespace server
 {
@@ -92,6 +93,44 @@ namespace server
                         else
                         {
                             Console.WriteLine("API Data: " + text);
+                        }
+                        if (rawUrl.Contains("ns2021"))
+                        {
+                            s = JsonConvert.SerializeObject(new
+                            {
+                                Accounts = "http://localhost:20210/",
+                                API = "http://localhost:20210/",
+                                Auth = "http://localhost:20214/",
+                                BugReporting = "http://localhost:20210/",
+                                Cards = "http://localhost:20210/",
+                                CDN = "http://localhost:20210/",
+                                Chat = "http://localhost:20210/",
+                                Clubs = "http://localhost:20210/",
+                                CMS = "http://localhost:20210/",
+                                Commerce = "http://localhost:20210/",
+                                Data = "http://localhost:20210/",
+                                DataCollection = "http://localhost:20210/",
+                                Discovery = "http://localhost:20210/",
+                                Econ = "http://localhost:20210/",
+                                GameLogs = "http://localhost:20210/",
+                                Geo = "http://localhost:20210/",
+                                Images = "http://localhost:20213/",
+                                Leaderboard = "http://localhost:20210/",
+                                Link = "http://localhost:20210/",
+                                Lists = "http://localhost:20210/",
+                                Matchmaking = "http://localhost:20215/",
+                                Moderation = "http://localhost:20210/",
+                                Notifications = "http://localhost:20212/",
+                                PlayerSettings = "http://localhost:20210/",
+                                RoomComments = "http://localhost:20210/",
+                                Rooms = "http://localhost:20218/",
+                                Storage = "http://localhost:20210/",
+                                Strings = "http://localhost:20210/",
+                                StringsCDN = "http://localhost:20210/",
+                                Thorn = "http://localhost:20210/",
+                                Videos = "http://localhost:20210/",
+                                WWW = "http://localhost:20210/"
+                            });
                         }
                         if (Url.StartsWith("versioncheck"))
                         {
@@ -678,14 +717,6 @@ namespace server
                         {
                             s = BracketResponse;
                         }
-                        if (rawUrl.StartsWith("/account/bulk?id="))
-                        {
-                            string temp = rawUrl.Substring("/account/bulk?id=".Length);
-                            if (temp == "1")
-                                s = GetCoachBulk();
-                            else
-                                s = GetAccountsBulk();
-                        }
                         else if (rawUrl.Contains("/account/me/email"))
                         {
                             s = "{\"error\":\"failed: error code: not implemented\",\"success\":false,\"value\":\"\"}";
@@ -693,6 +724,7 @@ namespace server
                         else if(rawUrl.StartsWith("/account/me/bio"))
                         {
                             string temp = text.Substring("bio=".Length);
+                            temp = Uri.UnescapeDataString(temp);
                             File.WriteAllText(Program.ProfilePath + "\\bio.txt", temp);
                             s = "{\"success\":true,\"error\":\"\"}";
                             ProgramHelpers.SelfAccountUpdate();
@@ -736,7 +768,7 @@ namespace server
                         }
                         else if (rawUrl.StartsWith("/account/me"))
                         {
-                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
+                            s = JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<AccountMe>>(AccountAuth.GetAccountsBulk())[0]);
                             Console.WriteLine("checking: " + File.ReadAllText("SaveData\\Profile\\username.txt"));
                         }
                         else if (rawUrl.StartsWith("/account/"))
@@ -781,7 +813,7 @@ namespace server
                         if (Url.StartsWith("players/v2/progression/bulk?"))
                         {
                             string temp = Url.Substring("players/v2/progression/bulk?id=".Length);
-                            s = "[" + GetLevel(temp) + "]";
+                            s = GetLevel();
                         }
                         if (Url.StartsWith("messages/v1/favoriteFriendOnlineStatus"))
                         {

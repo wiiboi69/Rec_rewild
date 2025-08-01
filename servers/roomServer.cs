@@ -33,7 +33,7 @@ namespace server
                 {
                     for (; ; )
                     {
-                        this.listener.Start();
+                        this.listener.Start(); // room server need a rewrite to use a single file call RRORooms.json
                         Console.WriteLine("[roomServer.cs] is listening.");
                         HttpListenerContext context = this.listener.GetContext();
                         HttpListenerRequest request = context.Request;
@@ -170,7 +170,7 @@ namespace server
                             s = JsonConvert.SerializeObject( new{
                                 success = true,
                                 error = "",
-                                value = s 
+                                value = JsonConvert.DeserializeObject(s)
                             });
 
                         }

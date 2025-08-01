@@ -9,150 +9,18 @@ using System.Numerics;
 using static api.Roomdata;
 using System.Net;
 using System.Security.AccessControl;
+using Rec_rewild.api;
+using System.Linq;
 
 namespace api
 {
     public class GameSessions
     {
-        /*
-        public static string Createdorm()
-        {
-            GameSessions.gamesessionid = 20161L;
-            gamesessionsubroomid = 20161L;
-            Console.WriteLine("Rec_Rewild GameSession dormroom");
-            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
-            {
-                gamesessionid = new Random().Next(0, 99);
-                gamesessionsubroomid = new Random().Next(0, 0xffff);
-            }
-            Guid myuuid = Guid.NewGuid();
-            myuuidAsString = myuuid.ToString();
-
-            Config.localGameSession = new GameSessions.SessionInstance
-            {
-                EncryptVoiceChat = false,
-                clubId = null,
-                dataBlob = "",
-                EventId = null,
-                isFull = false,
-                isInProgress = false,
-                isPrivate = false,
-                location = "76d98498-60a1-430c-ab76-b54a29b7a163",
-                MaxCapacity = 20,
-                Name = "dormroom",
-                photonRegionId = "us",
-                photonRoomId = "dormroom" + "-" + myuuidAsString + "-room",
-                roomCode = "",
-                roomId = 1,
-                roomInstanceId = gamesessionid,
-                roomInstanceType = 0,
-                subRoomId = 1,
-                name = "dormroom",
-                maxCapacity = 20,
-                eventId = 0,
-
-            };
-            return JsonConvert.SerializeObject(new GameSessions.JoinResultv3
-            {
-                appVersion = APIServer.CachedversionID.ToString(),
-                deviceClass = 2,
-                errorCode = null,
-                isOnline = true,
-                playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = Config.localGameSession,
-                statusVisibility = 0,
-                vrMovementMode = 1
-            });
-        }
-        
-        public static string Createroom(string roomname)
-        {
-            amesessionid = 20161L;
-            gamesessionsubroomid = 20161L;
-            Console.WriteLine("Rec_Rewild GameSession room : " + roomname);
-            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
-            {
-                gamesessionid = new Random().Next(0, 99);
-                gamesessionsubroomid = new Random().Next(0, 0xffff);
-            }
-            Guid myuuid = Guid.NewGuid();
-            myuuidAsString = myuuid.ToString();
-            gameroomlocation = "";
-            gameroomId = 0;
-            if (!FindRoomData(roomname.ToLower()))
-            {
-                Console.WriteLine("can't find room named : " + roomname + Environment.NewLine + "room not found");
-
-                gameroomlocation = "76d98498-60a1-430c-ab76-b54a29b7a163";
-                gameroomId = 1;
-            }
-
-            Config.localGameSession = new GameSessions.SessionInstance
-            {
-                EncryptVoiceChat = false,
-                clubId = null,
-                dataBlob = "",
-                EventId = null,
-                isFull = false,
-                isInProgress = false,
-                isPrivate = false,
-                location = gameroomlocation,
-                MaxCapacity = 20,
-                Name = roomname,
-                photonRegionId = "us",
-                photonRoomId = roomname + "-" + myuuidAsString + "-room",
-                roomCode = null,
-                roomId = gameroomId,
-                roomInstanceId = gamesessionid,
-                roomInstanceType = 0,
-                subRoomId = 1,
-
-            };
-            return JsonConvert.SerializeObject(new GameSessions.JoinResult
-            {
-                appVersion = APIServer.CachedversionID.ToString(),
-                deviceClass = 2,
-                errorCode = null,
-                isOnline = true,
-                playerId = (long?)APIServer.CachedPlayerID,
-                roomInstance = Config.localGameSession,
-                statusVisibility = 0,
-                vrMovementMode = 1
-            });
-        }
-
-
-        public static bool FindRoomData(String roomname)
-        {
-
-            foreach (KeyValuePair<string, c00005d.rooms_details> keyValuePair in c00005d.rooms_details_list)
-            {
-                bool flag = keyValuePair.Value.Name == roomname;
-                if (flag)
-                {
-                    gameroomlocation = keyValuePair.Value.RoomSceneLocationId;
-                    gameroomId = (long)keyValuePair.Value.RoomId;
-                    return true;
-                }
-            }
-            return false;
-        }
-        */
-
         public static string Createdorm()
         {
             return CreateRoom("DormRoom");
         }
-        public static PlayerStatus StatusSessionInstance()
-        {
-            return new PlayerStatus
-            {
-                PlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                IsOnline = true,
-                InScreenMode = false,
-                GameSession = Config.localGameSession
-            };
-        }
+
 
         public static GameSessions.JoinResult Createnone()
         {
@@ -189,33 +57,39 @@ namespace api
             long gamesessionsubroomid = 20161L;
             string myuuidAsString = "hello";
 
-            if (scenename != "")
+            if (!string.IsNullOrEmpty(scenename))
             {
-                Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\" with scene id : \"" + scenename + "\"");
+                Console.WriteLine($"Rec_Rewild finding room : \"{roomname}\" with scene id : \"{scenename}\"");
             }
             else
             {
-                Console.WriteLine("Rec_Rewild finding room : \"" + roomname + "\"");
+                Console.WriteLine($"Rec_Rewild finding room : \"{roomname}\"");
             }
-            myuuidAsString = "hello";
 
+            myuuidAsString = "hello";
             gamesessionid = new Random().Next(100000000, 0x7fffffff);
-            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
+
+            if (File.Exists("SaveData\\App\\privaterooms.txt") && File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled")
             {
                 gamesessionsubroomid = new Random().Next(0, 0xffff);
                 Guid myuuid = Guid.NewGuid();
                 myuuidAsString = myuuid.ToString();
             }
 
-
-            if (Roomdata.RROS.ContainsKey(roomname))
+            if (RoomCache.TryGetRoomByName(roomname, out var cachedRoom))
             {
-                Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
-                if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
-                {
-                    gamesessionid += (long)Roomdata.RROS[roomname].Room.RoomId;
+                Console.WriteLine($"rec_rewild: {roomname} found! joining...");
 
+                if (!(File.Exists("SaveData\\App\\privaterooms.txt") && File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled"))
+                {
+                    gamesessionid += (long)cachedRoom.RoomId;
                 }
+
+                var subroom = cachedRoom.SubRooms.FirstOrDefault();
+                string dataBlob = subroom?.DataBlob ?? "";
+                string unitySceneId = subroom?.UnitySceneId ?? "";
+                int maxPlayers = subroom?.MaxPlayers ?? cachedRoom.MaxPlayers;
+
                 Config.GameSession = new GameSessions.JoinResult
                 {
                     isOnline = true,
@@ -229,63 +103,59 @@ namespace api
                     {
                         encryptVoiceChat = false,
                         clubId = null,
-                        dataBlob = Roomdata.RROS[roomname].Scenes[0].DataBlobName,
+                        dataBlob = dataBlob,
                         eventId = 0,
                         isFull = false,
                         isInProgress = false,
-                        isPrivate = true,
-                        location = Roomdata.RROS[roomname].Scenes[0].RoomSceneLocationId,
-                        maxCapacity = Roomdata.RROS[roomname].Scenes[0].MaxPlayers,
-                        name = roomname,
+                        isPrivate = false,
+                        location = unitySceneId,
+                        maxCapacity = maxPlayers,
+                        Name = "^"+ roomname,
                         photonRegionId = "eu",
                         photonRegion = "eu",
-                        photonRoomId = roomname + "-" + myuuidAsString + "-room",
+                        photonRoomId = $"{roomname}-{myuuidAsString}-room",
                         roomCode = null,
-                        roomId = (long)Roomdata.RROS[roomname].Room.RoomId,
+                        roomId = (long)cachedRoom.RoomId,
                         roomInstanceId = gamesessionid,
                         roomInstanceType = 0,
                         subRoomId = 0,
                         matchmakingPolicy = 0,
                     }
                 };
-                if (scenename != "")
+
+                if (!string.IsNullOrEmpty(scenename))
                 {
-                    foreach (Roomdata.Scene scene in Roomdata.RROS[roomname].Scenes)
+                    foreach (var scene in cachedRoom.SubRooms)
                     {
                         if (scene.Name == scenename)
                         {
-                            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
+                            if (!(File.Exists("SaveData\\App\\privaterooms.txt") && File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled"))
                             {
-                                Config.GameSession.roomInstance.roomInstanceId += (10000000 * scene.RoomSceneId);
-
+                                Config.GameSession.roomInstance.roomInstanceId += 10000000 * scene.SubRoomId;
                             }
-                            Config.GameSession.roomInstance.subRoomId = scene.RoomSceneId;
-                            Config.GameSession.roomInstance.location = scene.RoomSceneLocationId;
-                            Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
+                            Config.GameSession.roomInstance.subRoomId = scene.SubRoomId;
+                            Config.GameSession.roomInstance.location = scene.UnitySceneId;
+                            Config.GameSession.roomInstance.photonRoomId = $"{roomname}-{myuuidAsString}-room-{scenename}";
                         }
                     }
                 }
                 return JsonConvert.SerializeObject(Config.GameSession);
             }
-            //CrimsonCauldron
-            else
+
+            string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
+            foreach (string roomdir in roomlistdir)
             {
-                try
+                string roomRootData = File.ReadAllText(roomdir);
+                Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(roomRootData);
+
+                if (roomdata.Name.Equals(roomname, StringComparison.OrdinalIgnoreCase) || roomdata.Name.Contains(roomname, StringComparison.OrdinalIgnoreCase))
                 {
+                    Console.WriteLine($"found local custom room: {roomdir} using room name: {roomname}");
 
-                    string roomFilePath = "https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + roomname + ".txt";
-                    string roomFileContent = new WebClient().DownloadString(roomFilePath);
-                    Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(roomFileContent);
-
-
-                    Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
-                    if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
+                    if (!(File.Exists("SaveData\\App\\privaterooms.txt") && File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled"))
                     {
                         gamesessionid += (long)roomdata.RoomId;
-
                     }
-
-
 
                     Config.GameSession = new GameSessions.JoinResult
                     {
@@ -300,17 +170,17 @@ namespace api
                         {
                             encryptVoiceChat = false,
                             clubId = null,
-                            dataBlob = roomdata.SubRooms[0].DataBlob,
+                            dataBlob = roomdata.DataBlob,
                             eventId = 0,
                             isFull = false,
                             isInProgress = false,
                             isPrivate = true,
-                            location = roomdata.SubRooms[0].UnitySceneId,
-                            maxCapacity = roomdata.SubRooms[0].MaxPlayers,
-                            name = roomname,
+                            location = roomdata.SubRooms.Count > 0 ? roomdata.SubRooms[0].UnitySceneId : "",
+                            maxCapacity = roomdata.MaxPlayers,
+                            Name = roomname,
                             photonRegionId = "eu",
                             photonRegion = "eu",
-                            photonRoomId = roomname + "-" + myuuidAsString + "-room",
+                            photonRoomId = $"{roomname}-{myuuidAsString}-room",
                             roomCode = null,
                             roomId = (long)roomdata.RoomId,
                             roomInstanceId = gamesessionid,
@@ -319,179 +189,40 @@ namespace api
                             matchmakingPolicy = 0,
                         }
                     };
-                    if (scenename != "")
-                    {
-                        foreach (Roomdata.SubRooms subroom in roomdata.SubRooms)
-                        {
-                            if (subroom.Name == scenename)
-                            {
-                                if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
-                                {
-                                    Config.GameSession.roomInstance.roomInstanceId += (10000000 * subroom.RoomId);
 
+                    if (!string.IsNullOrEmpty(scenename))
+                    {
+                        foreach (var scene in roomdata.SubRooms)
+                        {
+                            if (scene.Name == scenename)
+                            {
+                                if (!(File.Exists("SaveData\\App\\privaterooms.txt") && File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Enabled"))
+                                {
+                                    Config.GameSession.roomInstance.roomInstanceId += 10000000 * scene.SubRoomId;
                                 }
-                                Config.GameSession.roomInstance.subRoomId = subroom.SubRoomId;
-                                Config.GameSession.roomInstance.location = subroom.UnitySceneId;
-                                Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
+                                Config.GameSession.roomInstance.subRoomId = scene.SubRoomId;
+                                Config.GameSession.roomInstance.location = scene.UnitySceneId;
+                                Config.GameSession.roomInstance.photonRoomId = $"{roomname}-{myuuidAsString}-room-{scenename}";
                             }
                         }
                     }
                     return JsonConvert.SerializeObject(Config.GameSession);
                 }
-                catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.NotFound)
-                {
-                
-                    try
-                    {
-                        string roomFilePathLower = "https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/rooms_name/" + roomname.ToLower() + ".txt";
-                        string roomFileContentLower = new WebClient().DownloadString(roomFilePathLower);
-                        Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(roomFileContentLower);
-
-                        Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
-                        if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
-                        {
-                            gamesessionid += (long)roomdata.RoomId;
-                        }
-
-                        Config.GameSession = new GameSessions.JoinResult
-                        {
-                            isOnline = true,
-                            deviceClass = 0,
-                            playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                            statusVisibility = 0,
-                            vrMovementMode = 1,
-                            errorCode = MatchmakingErrorCode.Success,
-                            appVersion = APIServer.CachedversionID.ToString(),
-                            roomInstance = new GameSessions.SessionInstance
-                            {
-                                encryptVoiceChat = false,
-                                clubId = null,
-                                dataBlob = roomdata.SubRooms[0].DataBlob,
-                                eventId = 0,
-                                isFull = false,
-                                isInProgress = false,
-                                isPrivate = true,
-                                location = roomdata.SubRooms[0].UnitySceneId,
-                                maxCapacity = roomdata.SubRooms[0].MaxPlayers,
-                                name = roomname,
-                                photonRegionId = "eu",
-                                photonRegion = "eu",
-                                photonRoomId = roomname + "-" + myuuidAsString + "-room",
-                                roomCode = null,
-                                roomId = (long)roomdata.RoomId,
-                                roomInstanceId = gamesessionid,
-                                roomInstanceType = 0,
-                                subRoomId = 0,
-                                matchmakingPolicy = 0,
-                            }
-                        };
-
-                        if (scenename != "")
-                        {
-                            foreach (Roomdata.SubRooms subroom in roomdata.SubRooms)
-                            {
-                                if (subroom.Name == scenename)
-                                {
-                                    if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
-                                    {
-                                        Config.GameSession.roomInstance.roomInstanceId += (10000000 * subroom.RoomId);
-                                    }
-                                    Config.GameSession.roomInstance.subRoomId = subroom.SubRoomId;
-                                    Config.GameSession.roomInstance.location = subroom.UnitySceneId;
-                                    Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
-                                }
-                            }
-                        }
-                        return JsonConvert.SerializeObject(Config.GameSession);
-                    }
-                    catch
-                    {
-
-                        string[] roomlistdir = Directory.GetFiles("SaveData\\Rooms\\custom\\");
-                        foreach (string roomdir in roomlistdir)
-                        {
-                            Roomdata.RoomRootv2 roomdata = JsonConvert.DeserializeObject<Roomdata.RoomRootv2>(File.ReadAllText(roomdir));
-
-                            if (roomdata.Name.Contains(roomname))
-                            {
-                                Console.WriteLine("found room name: " + roomdir + " using room name: " + roomname);
-                                string roomrootdata = File.ReadAllText(roomdir);
-                                RoomRootv2 roomRoot = JsonConvert.DeserializeObject<RoomRootv2>(roomrootdata);
-                                if (scenename != "")
-                                {
-                                    Console.WriteLine("rec_rewild: " + roomname + " found! joining...");
-                                    if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
-                                    {
-                                        gamesessionid += (long)roomdata.RoomId;
-
-                                    }
-                                    Config.GameSession = new GameSessions.JoinResult
-                                    {
-                                        isOnline = true,
-                                        deviceClass = 0,
-                                        playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                                        statusVisibility = 0,
-                                        vrMovementMode = 1,
-                                        errorCode = MatchmakingErrorCode.Success,
-                                        appVersion = APIServer.CachedversionID.ToString(),
-                                        roomInstance = new GameSessions.SessionInstance
-                                        {
-                                            encryptVoiceChat = false,
-                                            clubId = null,
-                                            dataBlob = roomdata.DataBlob,
-                                            eventId = 0,
-                                            isFull = false,
-                                            isInProgress = false,
-                                            isPrivate = true,
-                                            location = roomdata.SubRooms[0].UnitySceneId,
-                                            maxCapacity = roomdata.MaxPlayers,
-                                            name = roomname,
-                                            photonRegionId = "eu",
-                                            photonRegion = "eu",
-                                            photonRoomId = roomname + "-" + myuuidAsString + "-room",
-                                            roomCode = null,
-                                            roomId = (long)roomdata.RoomId,
-                                            roomInstanceId = gamesessionid,
-                                            roomInstanceType = 0,
-                                            subRoomId = 0,
-                                            matchmakingPolicy = 0,
-                                        }
-                                    };
-                                    foreach (SubRooms scene in roomRoot.SubRooms)
-                                    {
-                                        if (scene.Name == scenename)
-                                        {
-                                            if (File.ReadAllText("SaveData\\App\\privaterooms.txt") != "Enabled")
-                                            {
-                                                Config.GameSession.roomInstance.roomInstanceId += (10000000 * scene.RoomId);
-
-                                            }
-                                            Config.GameSession.roomInstance.subRoomId = scene.SubRoomId;
-                                            Config.GameSession.roomInstance.location = scene.UnitySceneId;
-                                            Config.GameSession.roomInstance.photonRoomId = roomname + "-" + myuuidAsString + "-room-" + scenename;
-                                        }
-                                    }
-                                }
-                                return JsonConvert.SerializeObject(Config.GameSession);
-                            }
-                        }
-                    }
-                }
-
-
-                Console.WriteLine("rec_rewild: " + roomname + " doesn't exist.");
-                return JsonConvert.SerializeObject(new GameSessions.JoinResult
-                {
-                    isOnline = true,
-                    deviceClass = 0,
-                    playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
-                    statusVisibility = 0,
-                    vrMovementMode = 1,
-                    errorCode = MatchmakingErrorCode.NoSuchRoom,
-                    appVersion = APIServer.CachedversionID.ToString(),
-                });
             }
+
+            Console.WriteLine($"rec_rewild: {roomname} doesn't exist.");
+            return JsonConvert.SerializeObject(new GameSessions.JoinResult
+            {
+                isOnline = true,
+                deviceClass = 0,
+                playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                statusVisibility = 0,
+                vrMovementMode = 1,
+                errorCode = MatchmakingErrorCode.NoSuchRoom,
+                appVersion = APIServer.CachedversionID.ToString(),
+            });
         }
+
 
         public static string FindRoomid(ulong roomname)
         {
@@ -624,30 +355,6 @@ namespace api
             public int matchmakingPolicy { get; set; }
         }
 
-        public class JoinRandomRequest2
-        {
-            public string[] ActivityLevelIds { get; set; }
-            public ulong[] ExpectedPlayerIds { get; set; }
-            public GameSessions.RegionPing[] RegionPings { get; set; }
-        }
-
-        public class JoinRoomRequest
-        {
-            public ulong[] ExpectedPlayerIds { get; set; }
-            public GameSessions.RegionPing[] RegionPings { get; set; }
-            public string[] RoomTags { get; set; }
-            public string RoomName { get; set; }
-            public string SceneName { get; set; }
-            public int AdditionalPlayerJoinMode { get; set; }
-            public bool Private { get; set; }
-        }
-        public class CreateRequest
-        {
-            public string ActivityLevelId { get; set; }
-            public ulong[] ExpectedPlayerIds { get; set; }
-            public GameSessions.RegionPing[] RegionPings { get; set; }
-            public bool IsSandbox { get; set; }
-        }
         public class RegionPing
         {
             public string Region { get; set; }

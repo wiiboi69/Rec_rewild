@@ -27,7 +27,7 @@ namespace start
             Directory.CreateDirectory("SaveData\\custom\\items\\");
             Directory.CreateDirectory("SaveData\\custom\\avatar items\\");
             Directory.CreateDirectory("SaveData\\custom\\skins\\");
-            Directory.CreateDirectory("SaveData_2022\\");
+
 
             if (!(File.Exists("SaveData\\App\\firsttime.txt")))
             {
@@ -80,7 +80,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\Profile\\level.txt")))
             {
-                File.WriteAllText("SaveData\\Profile\\level.txt", "10");
+                File.WriteAllText("SaveData\\Profile\\level.txt", "30");
             }
             if (!(File.Exists("SaveData\\Profile\\tokens.txt")))
             {

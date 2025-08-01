@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -28,8 +29,9 @@ namespace server
 
 		private void StartListen()
 		{
-			this.listener.Prefixes.Add("http://localhost:20213/");
-			byte[] notfound = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
+            var client = new HttpClient();
+            this.listener.Prefixes.Add("http://localhost:20213/");
+			byte[] notfound = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg").Result;
 
             for (; ; )
 			{
@@ -40,7 +42,7 @@ namespace server
 				HttpListenerResponse response = context.Response;
 				string rawUrl = request.RawUrl;
 				string text;
-				byte[] i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg");
+				byte[] i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/notfoundimage.jpg").Result;
                 using (StreamReader streamReader = new StreamReader(request.InputStream, request.ContentEncoding))
 				{
 					text = streamReader.ReadToEnd();
@@ -63,12 +65,12 @@ namespace server
                     rawUrl = rawUrl.Substring("//room".Length);
                     try
                     {
-                        i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
+                        i = client.GetByteArrayAsync("https://cdn.rec.net" + rawUrl.Remove(0, 1)).Result;
                     }
                     catch
                     {
                         Console.WriteLine($"[ImageServer.cs] {rawUrl} DataBlob not found on cdn.rec.net. trying to download from github");
-                        i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/room" + rawUrl);
+                        i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/room" + rawUrl).Result;
                     }
                 }
                 else if (rawUrl.StartsWith("//video/"))
@@ -76,18 +78,18 @@ namespace server
                     rawUrl = rawUrl.Substring("//video".Length);
                     try
                     {
-                        i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
+                        i = client.GetByteArrayAsync("https://cdn.rec.net" + rawUrl.Remove(0, 1)).Result;
                     }
                     catch
                     {
                         Console.WriteLine($"[ImageServer.cs] {rawUrl} video not found on cdn.rec.net. trying to download from github");
-                        i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/video" + rawUrl);
+                        i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/CDN/video" + rawUrl).Result;
                     }
                 }
 
                 else if (rawUrl.StartsWith("//data/"))
 				{
-					i = new WebClient().DownloadData("https://cdn.rec.net" + rawUrl.Remove(0, 1));
+					i = client.GetByteArrayAsync("https://cdn.rec.net" + rawUrl.Remove(0, 1)).Result;
 				}
                 //SaveData\\images\\
                 else if (rawUrl.StartsWith("/Community"))
@@ -99,7 +101,7 @@ namespace server
                         string[] subs = rawUrl.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                         rawUrl = subs[0];
                         Console.WriteLine(rawUrl);
-                        i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images" + rawUrl);
+                        i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images/New_images" + rawUrl).Result;
                     }
                     catch
                     {
@@ -130,12 +132,27 @@ namespace server
                         string[] subs = rawUrl.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
 						rawUrl = subs[0];
 						Console.WriteLine(rawUrl);
-						i = new WebClient().DownloadData("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images" + rawUrl);
+						i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images/New_images" + rawUrl).Result;
 					}
 					catch
 					{
-						Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net. using Default Room Image");
-						i = notfound;
+						try
+						{
+                            i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images/New_images/RRO" + rawUrl).Result;
+                        }
+						catch
+						{
+							try
+							{
+								i = client.GetByteArrayAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/Images/New_images/loading_screen_images" + rawUrl).Result;
+							}
+							catch
+							{
+                                Console.WriteLine("[ImageServer.cs] Image not found on img.rec.net. using Default Room Image");
+                                i = notfound;
+                            }
+                        }
+						
                     }
 				}
 

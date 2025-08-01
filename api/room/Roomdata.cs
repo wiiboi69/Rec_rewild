@@ -18,7 +18,7 @@ namespace api
                 "DormRoom",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 1,
                         Name = "DormRoom",
@@ -79,7 +79,7 @@ namespace api
                 "RecCenter",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 2,
                         Name = "RecCenter",
@@ -141,7 +141,7 @@ namespace api
                 "Paddleball",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 3,
                         Name = "Paddleball",
@@ -199,7 +199,7 @@ namespace api
                 "Dodgeball",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 4,
                         Name = "Dodgeball",
@@ -257,7 +257,7 @@ namespace api
                 "DiscGolfPropultion",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 5,
                         Name = "DiscGolfPropultion",
@@ -310,7 +310,7 @@ namespace api
                 "Paintball",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 6,
                         Name = "Paintball",
@@ -423,7 +423,7 @@ namespace api
                 "LaserTag",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 12,
                         Name = "LaserTag",
@@ -488,7 +488,7 @@ namespace api
                 "Bowling",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 14,
                         Name = "Bowling",
@@ -541,7 +541,7 @@ namespace api
                 "RecRoyaleSquads",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 15,
                         Name = "RecRoyaleSquads",
@@ -593,7 +593,7 @@ namespace api
                 "RecRoyaleSolos",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 16,
                         Name = "RecRoyaleSolos",
@@ -645,7 +645,7 @@ namespace api
                 "RecRoyaleSandbox",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 17,
                         Name = "RecRoyaleSandbox",
@@ -698,7 +698,7 @@ namespace api
                 "Lounge",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 18,
                         Name = "Lounge",
@@ -751,7 +751,7 @@ namespace api
                 "Registration",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 19,
                         Name = "Registration",
@@ -804,7 +804,7 @@ namespace api
                 "Orientation",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 20,
                         Name = "Orientation",
@@ -872,7 +872,7 @@ namespace api
                 "Crescendo",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 21,
                         Name = "Crescendo",
@@ -930,7 +930,7 @@ namespace api
                 "GoldenTrophy",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 22,
                         Name = "GoldenTrophy",
@@ -988,7 +988,7 @@ namespace api
                 "TheRiseofJumbotron",
                 new RoomRoot
                 {
-                    Room = new Room
+                    Room = new RoomRR
                     {
                         RoomId = 23,
                         Name = "TheRiseofJumbotron",
@@ -1045,7 +1045,7 @@ namespace api
         };
         public class RoomRoot
         {
-            public Room Room { get; set; }
+            public RoomRR Room { get; set; }
             public List<Scene> Scenes { get; set; }
             public List<ulong> CoOwners { get; set; }
             public List<int> InvitedCoOwners { get; set; }
@@ -1248,7 +1248,7 @@ public bool beta { get; set; }
             */
 
         }
-        public class Room
+        public class RoomRR
         {
             public ulong RoomId { get; set; }
             public string Name { get; set; }
