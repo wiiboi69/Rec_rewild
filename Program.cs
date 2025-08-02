@@ -474,7 +474,7 @@ namespace start
                 new roomServer();   
                 */
 
-
+                new NameServer();
 
                 new APIServer2021_new();
                 new AuthServer2021_new();
