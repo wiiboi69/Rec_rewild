@@ -22,9 +22,9 @@ namespace start
     {
         static void Main()
         {
+            var client = new HttpClient();
             if (File.Exists("SaveData\\App\\firsttime.txt"))
             {
-                Setup.quicksetup();
                 goto Start;
             }
             Setup.setup();
@@ -80,11 +80,12 @@ namespace start
                 rec_net_profile_notimported:
                     Console.WriteLine("Please enter the username you would like to use:");
                     string newusername = Console.ReadLine();
-                    File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
-                    File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
+                   // File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
+                   // File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
                 rec_net_profile_imported:
                     Console.WriteLine("To download builds, either go to the #rec-room-builds channel or use the links below: (these links are also available from the #rec-room-builds channel)" + Environment.NewLine);
-                    Console.WriteLine(new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/builds.txt"));
+                    string builds = client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main_v2/setup/avataritemsfull.json").GetAwaiter().GetResult();
+                    Console.WriteLine(builds);
                     Console.WriteLine("Download a build and press any key to continue:");
                     Console.ReadKey();
                     Console.Clear();
@@ -108,15 +109,15 @@ namespace start
                 goto Start;
             }
         Start:
+        player_config.load_setting();
             Console.Title = "Rec_rewild Startup Menu";
-            var client = new HttpClient();
             appversion = appversion.Replace("\n", String.Empty);
             appversion = appversion.Replace("\r", String.Empty);
             appversion = appversion.Replace("\t", String.Empty);
-            Console.WriteLine("Rec_rewild - a fork of OpenRec for Rec Room 2021. (Version: " + appversion + ")");
+            Console.WriteLine("Rec_rewild - a fork of OpenRec for Rec Room 2021 and 2022. (Version: " + appversion + ")");
             Console.WriteLine("Branch: server-rewrite-v2");
-            Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild");
-            Console.WriteLine("Discord server here: https://discord.gg/recrewild");
+            Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild/tree/server-rewrite-v2");
+            Console.WriteLine("Discord server here: https://discord.gg/UYQEVMAJTJ");
             Console.WriteLine("This is a full server rewrite version: v2" + Environment.NewLine);
             Console.WriteLine("(1) What's New"
                 + Environment.NewLine
@@ -156,7 +157,7 @@ namespace start
                 Console.Clear();
                 Settings:
                 Console.Title = "Rec_rewild Settings Menu";
-                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Delete All SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Go Back");
+                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Delete All SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Migrate old Rec_rewild data into new version" + Environment.NewLine + "(6) Go Back");
                 string readline4 = Console.ReadLine();
                 if (readline4 == "1")
                 {
@@ -192,7 +193,7 @@ namespace start
                         Console.WriteLine("Failed to download room...");
                         goto Settings;
                     }
-                    if (!roomdownloader.room_find(data2_setup, take_int: 12))
+                    if (!RoomDownloader.room_find(data2_setup, take_int: 12))
                     {
                         goto download_Room;
                     }
@@ -241,25 +242,31 @@ namespace start
                     Console.Clear();
                     goto Start;
                 }
+                else if (readline4 == "6")
+                {
+                    Console.Clear();
+                    goto Start;
+                }
             }
             if (readline == "3")
             {
+                var setting = player_config.Setting;
                 Console.Clear();
             Profile:
                 Console.WriteLine("Quick Tip: You can change them in-game." + Environment.NewLine);
                 Console.Title = "Rec_rewild Profile Menu";
                 Console.WriteLine(
-                      "(1) Change Username      " + File.ReadAllText("SaveData\\Profile\\username.txt")
+                      "(1) Change Username      " + setting.Username
                     + Environment.NewLine 
-                    + "(2) Change Display Name   " + File.ReadAllText("SaveData\\Profile\\displayName.txt")
+                    + "(2) Change Display Name   " + setting.DisplayName
                     + Environment.NewLine 
                     + "(3) Change Profile Image " 
                     + Environment.NewLine 
-                    + "(4) Change Level         " + File.ReadAllText("SaveData\\Profile\\level.txt")
+                    + "(4) Change Level         " + setting.Level
                     + Environment.NewLine
-                    + "(5) Change Tokens        " + File.ReadAllText("SaveData\\Profile\\tokens.txt")
+                    + "(5) Change Balance        "
                     + Environment.NewLine 
-                    + "(6) Change Bio           " + File.ReadAllText("SaveData\\Profile\\bio.txt")
+                    + "(6) Change Bio           " + setting.Bio
                     + Environment.NewLine 
                     + "(7) Profile Downloader" 
                     + Environment.NewLine 
@@ -267,20 +274,22 @@ namespace start
                 string readline3 = Console.ReadLine();
                 if (readline3 == "1")
                 {
-                    Console.WriteLine("Current Username: " + File.ReadAllText("SaveData\\Profile\\username.txt"));
+                    Console.WriteLine("Current Username: " + setting.Username);
                     Console.WriteLine("New Username: ");
                     string newusername = Console.ReadLine();
-                    File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
+                    setting.Username = newusername ?? setting.Username;
+                    player_config.Setting = setting;
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Profile;
                 }
                 else if (readline3 == "2")
                 {
-                    Console.WriteLine("Current displayName: " + File.ReadAllText("SaveData\\Profile\\displayName.txt"));
-                    Console.WriteLine("New displayName: ");
+                    Console.WriteLine("Current Display Name: " + setting.DisplayName);
+                    Console.WriteLine("New Display Name: ");
                     string newdisplayName = Console.ReadLine();
-                    File.WriteAllText("SaveData\\Profile\\displayName.txt", newdisplayName);
+                    setting.DisplayName = newdisplayName ?? setting.DisplayName;
+                    player_config.Setting = setting;
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Profile;
@@ -379,27 +388,25 @@ namespace start
                     Console.WriteLine("Current Level: " + File.ReadAllText("SaveData\\Profile\\level.txt"));
                     Console.WriteLine("New Level: ");
                     string newlevel = Console.ReadLine();
-                    File.WriteAllText("SaveData\\Profile\\level.txt", newlevel);
+                    int level = int.Parse(newlevel);
+                    setting.Level = level;
+                    player_config.Setting = setting;
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Profile;
                 }
                 else if (readline3 == "5")
                 {
-                    Console.WriteLine("Current tokens: " + File.ReadAllText("SaveData\\Profile\\tokens.txt"));
-                    Console.WriteLine("New Tokens: ");
-                    string newtokens = Console.ReadLine();
-                    File.WriteAllText("SaveData\\Profile\\tokens.txt", newtokens);
-                    Console.Clear();
-                    Console.WriteLine("Success!");
+                    //
                     goto Profile;
                 }
                 else if (readline3 == "6")
                 {
-                    Console.WriteLine("Current bio: " + File.ReadAllText("SaveData\\Profile\\bio.txt"));
+                    Console.WriteLine("Current bio: " + setting.Bio);
                     Console.WriteLine("New bio: ");
-                    string newlevel = Console.ReadLine();
-                    File.WriteAllText("SaveData\\Profile\\bio.txt", newlevel);
+                    string newbio = Console.ReadLine();
+                    setting.Bio = newbio;
+                    player_config.Setting = setting;
                     Console.Clear();
                     Console.WriteLine("Success!");
                     goto Profile;

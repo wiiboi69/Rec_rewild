@@ -20,6 +20,7 @@ using static server.APIServer;
 using Microsoft.IdentityModel.Tokens;
 using static Rec_rewild.api.dummy_account_system;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text;
 
 namespace Rec_rewild.servers.route_new
 {
@@ -320,8 +321,9 @@ namespace Rec_rewild.servers.route_new
         [rewild_route_system.Route("/api/gameconfigs/v1/all")]
         public static string GameConfigs()
         {
-            Console.WriteLine($"game requesting gameconfigs");
-            return File.ReadAllText("SaveData\\gameconfigs.txt");
+            Console.WriteLine($"game requesting gameconfigs"); 
+            var client = new HttpClient();
+            return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/gameconfigs.txt").GetAwaiter().GetResult();
         }
 
         [rewild_route_system.Route("/api/config/v1/amplitude")]
@@ -430,9 +432,18 @@ namespace Rec_rewild.servers.route_new
         [rewild_route_system.Route("/api/avatar/v4/items")]
         public static string AvatarV4Items()
         {
+            var client = new HttpClient();
             Console.WriteLine($"game requested all avatar items");
             Console.WriteLine("Got avatar items");
-            return File.ReadAllText("SaveData\\avataritems2.txt");
+            try
+            {
+                return File.ReadAllText("SaveData\\all_avatar_items.txt");
+            }
+            catch
+            {
+                File.WriteAllText("SaveData\\all_avatar_items.txt", client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main_v2/setup/avataritemsfull.json").GetAwaiter().GetResult());
+                return File.ReadAllText("SaveData\\all_avatar_items.txt");
+            }
         }
 
         [rewild_route_system.Route("/api/players/v2/progression/bulk")]
@@ -519,7 +530,7 @@ namespace Rec_rewild.servers.route_new
         }
 
         [rewild_route_system.Route("/api/settings/v2/set")] // implement this
-        public static string SettingsV2Set()
+        public static string SettingsV2Set(Setting setting)
         {
             Console.WriteLine($"game requested set settings");
             return BracketResponse;
@@ -560,9 +571,9 @@ namespace Rec_rewild.servers.route_new
                     chatThreadId = 1,
                     playerIds = new[] { 1, 2 },
                     lastReadMessageId = 1,
-                    chatThreadName = (string?)null,
+                    chatThreadName = (string)null,
                     chatThreadType = 0,
-                    snoozedUntil = (string?)null,
+                    snoozedUntil = (string)null,
                     isFavorited = false
                 }
             };
@@ -825,16 +836,16 @@ namespace Rec_rewild.servers.route_new
 
         [rewild_route_system.Route("/api/storefronts/v4/balance/2")]
         public static string Tokens()
-        {
+        {var setting = player_config.Setting;
             var balance = new[]
             {
-                             new
-                             {
-                                 Balance = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\tokens.txt")),
-                                 BalanceType = -2,
-                                 CurrencyType = 2
-                             }
-                           };
+              new
+                                     {
+                                         Balance = setting.Balances.Tokens,
+                                         BalanceType = -2,
+                                         CurrencyType = 2
+                                     }
+                                   };
             return JsonConvert.SerializeObject(balance);
         }
 
@@ -945,6 +956,62 @@ namespace Rec_rewild.servers.route_new
                     success = true,
                     error = "",
                     ImageName = imgname,
+                });
+            }
+        }
+
+        [rewild_route_system.Route("/account/me/displayname")]
+        public static string ChangeDisplayName(string displayName)
+        {
+            var setting = player_config.Setting;
+            setting.DisplayName = displayName ?? setting.DisplayName;
+            player_config.Setting = setting; 
+
+            ProgramHelpers.SelfAccountUpdate();
+            return JsonConvert.SerializeObject(new
+            {
+                success = true,
+                error = "",
+                value = JsonConvert.DeserializeObject(GetAccountsBulk())
+            });
+        }
+
+        [rewild_route_system.Route("/account/me/bio")]
+        public static string ChangeBio(string bio)
+        {
+            var setting = player_config.Setting;
+            setting.Bio = bio ?? setting.Bio;
+            player_config.Setting = setting;
+
+            ProgramHelpers.SelfAccountUpdate();
+            return JsonConvert.SerializeObject(new
+            {
+                success = true,
+                error = "",
+            });
+        }
+
+        [rewild_route_system.Route("/account/{id}/bio")]
+        public static string GetBio(string id)
+        {
+            var setting = player_config.Setting;
+            var myid = setting.AccountId.ToString();
+            var intid = int.Parse(id);
+            var intmyid = int.Parse(myid);
+            if (intid == intmyid)
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    accountId = intmyid,
+                    bio = setting.Bio,
+                });
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    accountId = intid,
+                    bio = (string)null
                 });
             }
         }

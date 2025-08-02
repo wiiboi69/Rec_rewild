@@ -9,7 +9,7 @@ using System.Data;
 
 namespace api
 {
-    class roomdownloader
+    class RoomDownloader
     {
         public static bool room_find(string data, int skip_int = 0, int take_int = 0)
         {
@@ -200,7 +200,7 @@ namespace api
             public int MinLevel { get; set; }
             public string CreatedAt { get; set; }
             public Stats Stats { get; set; }
-            public string? RankedEntityId { get; set; }
+            public string RankedEntityId { get; set; }
             public string RankingContext { get; set; }
             public List<SubRooms> SubRooms { get; set; }
             public List<Roles> Roles { get; set; }
@@ -266,7 +266,7 @@ namespace api
             public ulong SubRoomId { get; set; }
             public ulong RoomId { get; set; }
             public string Name { get; set; }
-            public CurrentSave? CurrentSave { get; set; }
+            public CurrentSave CurrentSave { get; set; }
             public bool IsSandbox { get; set; }
             public int MaxPlayers { get; set; }
             public int Accessibility { get; set; }

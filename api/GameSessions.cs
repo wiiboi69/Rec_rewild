@@ -11,6 +11,7 @@ using System.Net;
 using System.Security.AccessControl;
 using Rec_rewild.api;
 using System.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace api
 {
@@ -53,6 +54,7 @@ namespace api
         }
         public static string Createroom(string roomname, string scenename)
         {
+            var setting = player_config.Setting;
             long gamesessionid = 20161L;
             long gamesessionsubroomid = 20161L;
             string myuuidAsString = "hello";
@@ -94,7 +96,7 @@ namespace api
                 {
                     isOnline = true,
                     deviceClass = 0,
-                    playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    playerId = setting.AccountId,
                     statusVisibility = 0,
                     vrMovementMode = 1,
                     errorCode = MatchmakingErrorCode.Success,
@@ -110,7 +112,7 @@ namespace api
                         isPrivate = false,
                         location = unitySceneId,
                         maxCapacity = maxPlayers,
-                        Name = "^"+ roomname,
+                        Name = "^" + roomname,
                         photonRegionId = "eu",
                         photonRegion = "eu",
                         photonRoomId = $"{roomname}-{myuuidAsString}-room",
@@ -161,7 +163,7 @@ namespace api
                     {
                         isOnline = true,
                         deviceClass = 0,
-                        playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                        playerId = setting.AccountId,
                         statusVisibility = 0,
                         vrMovementMode = 1,
                         errorCode = MatchmakingErrorCode.Success,
@@ -215,7 +217,7 @@ namespace api
             {
                 isOnline = true,
                 deviceClass = 0,
-                playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                playerId = setting.AccountId,
                 statusVisibility = 0,
                 vrMovementMode = 1,
                 errorCode = MatchmakingErrorCode.NoSuchRoom,
@@ -239,6 +241,7 @@ namespace api
 
         public static GameSessions.MatchPresence Presence()
         {
+            var setting = player_config.Setting;
             bool flag = Config.GameSession == null;
             GameSessions.SessionInstance roomInstance1;
             roomInstance1 = null;
@@ -258,7 +261,7 @@ namespace api
             {
                 isOnline = true,
                 deviceClass = 0,
-                playerId = long.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                playerId = setting.AccountId,
                 statusVisibility = 0,
                 vrMovementMode = 1,
                 //roomInstance = Config.GameSession.roomInstance,

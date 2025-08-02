@@ -210,7 +210,7 @@ namespace api
         public string Value { get; set; }
     }
 
-    internal class Setting
+    public class Setting
     {
         public string Key { get; set; }
         public string Value { get; set; }

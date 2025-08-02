@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rec_rewild.api;
 using server;
 using start;
 using System;
@@ -96,13 +97,14 @@ internal static class ProgramHelpers
 
     public static Reponse<WebSocketHTTP_new.ResponseResults> createResponse_give()
     {
+        var setting = player_config.Setting;
         return new Reponse<WebSocketHTTP_new.ResponseResults>
         {
             Id = WebSocketHTTP_new.ResponseResults.GiftPackageReceivedImmediate,
             Msg = new GiftPackage()
             {
                 Id = 1,
-                PlayerId = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                PlayerId = (ulong)setting.AccountId,
                 FromPlayerId = 1,
                 ConsumableItemDesc = "frOMH6WxDEG1fBqC4_83vg",
                 ConsumableCount = 3,
@@ -144,53 +146,16 @@ internal static class ProgramHelpers
     }
     public static void SelfAccountUpdate()
     {
-        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_SelfAccountUpdate()));
-        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_AccountUpdate()));
+        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_AccountUpdate("SelfAccountUpdate")));
+        WebSocketHTTP_new.SendRequest(JsonConvert.SerializeObject(createResponse_AccountUpdate("AccountUpdate")));
     }
 
-    public static Reponse<string> createResponse_AccountUpdate()
+    public static Reponse<string> createResponse_AccountUpdate(string tmp)
     {
         return new Reponse<string>
         {
-            Id = "AccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
-            Msg = new AccountMe
-            {
-                availableUsernameChanges = 9999,
-                email = "zesty@zestyrecrewild.com",
-                birthday = DateTime.Parse("2000-01-01T00:00:00Z"),
-                isFakeJuniorBirthday = false,
-                accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
-                bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-                createdAt = DateTime.Now,
-                isJunior = false,
-                platforms = 1,
-                profileImage = "Profile.png",
-                username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-            }
-        };
-    }
-
-    public static Reponse<string> createResponse_SelfAccountUpdate()
-    {
-        return new Reponse<string>
-        {
-            Id = "SelfAccountUpdate",//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
-            Msg = new AccountMe
-            {
-                availableUsernameChanges = 9999,
-                email = "zesty@zestyrecrewild.com",
-                birthday = DateTime.Parse("2000-01-01T00:00:00Z"),
-                isFakeJuniorBirthday = false,
-                accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
-                bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-                createdAt = DateTime.Now,
-                isJunior = false,
-                platforms = 1,
-                profileImage = "Profile.png",
-                username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-            }
+            Id = tmp,//WebSocketHTTP_new.ResponseResults.SubscriptionUpdateProfile,
+            Msg = JsonConvert.DeserializeObject(GetAccountsBulk())
         };
     }
 

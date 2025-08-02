@@ -51,15 +51,6 @@ namespace server
 				{
 					i = File.ReadAllBytes("SaveData\\profile.png");
 				}
-				else if (rawUrl.StartsWith("/" + File.ReadAllText("SaveData\\Profile\\username.txt")))
-				{
-					try
-					{
-						i = File.ReadAllBytes("SaveData\\profile.png");
-					}
-					catch
-					{ }
-				}
 				else if (rawUrl.StartsWith("//room/"))
 				{
                     rawUrl = rawUrl.Substring("//room".Length);

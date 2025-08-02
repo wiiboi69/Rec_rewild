@@ -145,7 +145,7 @@ namespace api
         }
 
         /// <summary>
-        /// this is deplcated, use ProfileSteal(string data, int value);
+        /// this is deprecated, use ProfileSteal(string data, int value);
         /// </summary>
         public static void ProfileSteal(string data)
         {
@@ -159,7 +159,7 @@ namespace api
         public class Root_bio
         {
             public int accountId { get; set; }
-            public string? bio { get; set; }
+            public string bio { get; set; }
         }
 
 

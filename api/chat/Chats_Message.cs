@@ -24,7 +24,7 @@ namespace Rec_rewild.api.chat
             public long ChatThreadId { get; set; }
             public long[] PlayerIds { get; set; }
             public long LastReadMessageId { get; set; }
-            public string? ChatThreadName { get; set; } = null;
+            public string ChatThreadName { get; set; } = null;
             public long ChatThreadType { get; set; }
             public DateTime? SnoozedUntil { get; set; } = null;
             public bool IsFavorited { get; set; }

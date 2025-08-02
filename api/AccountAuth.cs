@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
 using Newtonsoft.Json;
+using Rec_rewild.api;
 using start;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace api
 {
@@ -12,31 +14,34 @@ namespace api
     {
         public static string CachedLogins()
         {
+            var setting = player_config.Setting;
             return JsonConvert.SerializeObject(new List<mCachedLogins>
             {
                 new mCachedLogins
                 {
                     platform = 0,
                     platformId = "1",
-                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
+                    accountId = setting.AccountId,
                     lastLoginTime = DateTime.Now
                 }
             });
         }
         public static string GetAccountsBulk()
         {
+            var setting = player_config.Setting;
+
             return JsonConvert.SerializeObject(new List<Account>
             {
                 new Account
                 {
-                    accountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                    displayName = File.ReadAllText(Program.ProfilePath + "\\displayName.txt"),
-                    bannerImage = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
-                    createdAt = DateTime.Now,
-                    isJunior = false,
+                    accountId = setting.AccountId,
+                    displayName = setting.DisplayName,
+                    bannerImage = setting.BannerImage,
+                    createdAt = setting.CreatedAt,
+                    isJunior = setting.IsJunior,
                     platforms = 1,
-                    profileImage = "Profile.png",
-                    username = File.ReadAllText(Program.ProfilePath + "\\username.txt"),
+                    profileImage = setting.ProfileImage,
+                    username = setting.Username,
                 }
             });
         }
@@ -108,12 +113,13 @@ namespace api
 
         public static string GetLevel()
         {
+            var setting = player_config.Setting;
             return JsonConvert.SerializeObject(new List<Progress>
             {
                 new Progress
                 {
-                    PlayerId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                    Level = int.Parse(File.ReadAllText(Program.ProfilePath + "\\level.txt")),
+                    PlayerId = setting.AccountId,
+                    Level = setting.Level,
                     XP = 0
                 }
             });

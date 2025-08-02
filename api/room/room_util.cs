@@ -18,6 +18,7 @@ namespace api
 {
     internal class room_util
     {
+        // this is deprecated
         public static string find_room_with_id(string rawUrl, int value)
         {
             Console.WriteLine(rawUrl + " | " + value);

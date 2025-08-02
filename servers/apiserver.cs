@@ -295,11 +295,6 @@ namespace server
                         {
                             s = File.ReadAllText("SaveData\\equipment.txt");
                         }
-                        if (Url == "platformlogin/v1/getcachedlogins" || Url == "platformlogin/v2/getcachedlogins")
-                        {
-                            s = Getcachedlogins.GetDebugLogin(ulong.Parse(text.Remove(0, 32)), ulong.Parse(text.Remove(0, 22)));
-
-                        }
                         if (Url == "avatar/v1/saved")
                         {
                             s = BracketResponse;
@@ -921,12 +916,11 @@ namespace server
         public class QuickPlayResponseDTO
         {
             public long? TargetPlayerId { get; set; }
-            public string? RoomName { get; set; }
-            public string? ActionCode { get; set; }
+            public string RoomName { get; set; }
+            public string ActionCode { get; set; }
         }
-
         public static string auth = "";
-        public static ulong CachedPlayerID = ulong.Parse(File.ReadAllText("SaveData\\Profile\\userid.txt"));
+        public static ulong CachedPlayerID = (ulong)player_config.Setting.AccountId;
         public static ulong CachedPlatformID = 10000;
         public static ulong CachedversionID = 20210804;
         public static ulong Cachedservertimestarted = 20206000;
