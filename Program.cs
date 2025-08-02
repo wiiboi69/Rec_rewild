@@ -454,11 +454,11 @@ namespace start
                 Console.Title = "starting server";
                 Console.WriteLine("Please wait for server to start up");
                 version = "2021";
-
+                RoomCache.DownloadRooms();
                 APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
                 
                 beta = false;
-                RoomCache.DownloadRooms();
+               
                 //ConsoleEMU.OpenNewConsole();
 
                 //note: nameserver is at the same port as before

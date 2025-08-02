@@ -48,7 +48,7 @@ namespace start
             }
             if (!(File.Exists("SaveData\\avataritems2.txt")))
             {
-                File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
+                File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/setup/avataritemsfull.json"));
             }
             if (!(File.Exists("SaveData\\equipment.txt")))
             {

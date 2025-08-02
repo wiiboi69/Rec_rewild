@@ -19,6 +19,7 @@ using System.Net.Http;
 using static server.APIServer;
 using Microsoft.IdentityModel.Tokens;
 using static Rec_rewild.api.dummy_account_system;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Rec_rewild.servers.route_new
 {
@@ -127,11 +128,8 @@ namespace Rec_rewild.servers.route_new
                 {
                     var args = new object[parameters.Length];
                     string body = "";
-                    if (context.Request.ContentType == "application/json" || context.Request.ContentType == "application/x-www-form-urlencoded")
-                    {
-                        body = rewild_route_system.ParseRequestBody(context.Request);
-                        Console.WriteLine($"APIServer2021: API Data: {body}");
-                    }
+                    body = rewild_route_system.ParseRequestBody(context.Request);
+                    Console.WriteLine($"APIServer2021: API Data: {body}");
 
                     for (int i = 0; i < parameters.Length; i++)
                     {
@@ -489,7 +487,14 @@ namespace Rec_rewild.servers.route_new
         public static string AvatarV2Set(AvatarSelection avatarSelection)
         {
             Console.WriteLine($"game requested set avatar");
-            Console.WriteLine(avatarSelection.SkinColor);
+            var avatarData = new
+            {
+                OutfitSelections = avatarSelection.OutfitSelections,
+                FaceFeatures = avatarSelection.FaceFeatures,
+                SkinColor = avatarSelection.SkinColor,
+                HairColor = avatarSelection.HairColor
+            };
+            File.WriteAllText("SaveData\\avatar.txt", JsonConvert.SerializeObject(avatarData));
             return BracketResponse;
         }
 
@@ -773,7 +778,7 @@ namespace Rec_rewild.servers.route_new
             var client = new HttpClient();
             try
             {
-                return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Update/communityboard.json").Result;
+                return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/new_community_board.json").Result;
             }
             catch
             {
@@ -880,20 +885,68 @@ namespace Rec_rewild.servers.route_new
         }
 
         [rewild_route_system.Route("/api/sanitize/v1")]
-        public static string Sanitize()
+        public static string Sanitize(Sanitize san)
         {
-            return BracketResponse;
+            return "\"" + san.Value + "\"";
         }
 
         [rewild_route_system.Route("/account/create")]
-        public static string AccountCreate()
+        public static object AccountCreate()
         {
-            return JsonConvert.SerializeObject(new
+            return new
             {
                 success = true,
                 error = "",
                 value = AccountAuth.GetAccountsBulk()
-            });
+            };
+        }
+
+        [rewild_route_system.Route("/api/storefronts/v3/giftdropstore/{storeid}")]
+        public static string Store(string storeid)
+        {
+            var client = new HttpClient();
+            try
+            {
+                return client.GetStringAsync($"https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/storefront/2020/StoreFront_{storeid}.json").Result;
+            }
+            catch
+            {
+                return BracketResponse;
+            }
+        }
+
+        [rewild_route_system.Route("/api/images/v4/uploadsaved")]
+        public static string uploadsaved(HttpListenerContext context)
+        {
+            byte[] body;
+            using (var ms = new MemoryStream())
+            {
+                context.Request.InputStream.CopyTo(ms);
+                body = ms.ToArray();
+            }
+            bool flag1;
+            string imgname;
+            File.WriteAllBytes("SaveData\\image.dat", body);
+            string temp1 = file_util.SaveImageFile(body, out flag1, out imgname);
+
+            if (flag1)
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    success = false,
+                    error = "failed to save image",
+                    ImageName = "",
+                });
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new
+                {
+                    success = true,
+                    error = "",
+                    ImageName = imgname,
+                });
+            }
         }
     }
 }
