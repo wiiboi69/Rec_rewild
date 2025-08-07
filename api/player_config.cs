@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using start;
+using static api.AccountAuth;
 
 namespace Rec_rewild.api
 {
@@ -21,8 +22,10 @@ namespace Rec_rewild.api
             public DateTime Birthday { get; set; }
             public string Email { get; set; }
             public int Level { get; set; }
+            public int XP { get; set; }
             public Balances Balances { get; set; } = new Balances();
             public List<RoomKey> Roomkeys { get; set; } = new List<RoomKey>();
+            public Rep Reputation { get; set; } = new Rep();
             public string ProfileImage { get; set; }
             public string BannerImage { get; set; }
             public bool IsJunior { get; set; }

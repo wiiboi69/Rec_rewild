@@ -6,6 +6,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Rec_rewild.api;
 using System.Reflection.Emit;
+using Rec_rewild.console;
 
 namespace start
 {
@@ -15,7 +16,8 @@ namespace start
         public static void setup()
         {
             //sets up all the important files so Rec_rewild doesnt crash
-            Console.WriteLine("Setting up... (May take a minute to download everything.)");
+            //Console.WriteLine("Setting up... (May take a minute to download everything.)");
+            Loading.ShowLoading("Setting up... (May take a minute to download everything.)");
             Directory.CreateDirectory("SaveData\\App\\");
             Directory.CreateDirectory("SaveData\\Profile\\");
             Directory.CreateDirectory("SaveData\\Images\\");
@@ -95,6 +97,7 @@ namespace start
                 }
 
             }*/
+            Loading.StopLoading();
             Console.WriteLine("Done!");
             Console.Clear();
         }
@@ -111,6 +114,7 @@ namespace start
                     DisplayName = Username,
                     Bio = "Welcome to Rec_rewild! This is a custom server for Rec Room. Enjoy your stay!",
                     Level = 30,
+                    XP = 0,
                     Email = "eeee@eeee.eee",
                     Balances = new player_config.Balances
                     {
@@ -134,6 +138,20 @@ namespace start
                     Roomkeys = new List<player_config.RoomKey>
                     {
                         new player_config.RoomKey { id = "", have_key = false }
+                    },
+                    Reputation = new api.AccountAuth.Rep
+                    {
+                        IsCheerful = false,
+                        Noteriety = 0.0,
+                        SelectedCheer = 0,
+                        CheerCredit = 0,
+                        CheerGeneral = 0,
+                        CheerHelpful = 0,
+                        CheerCreative = 0,
+                        CheerGreatHost = 0,
+                        CheerSportsman = 0,
+                        SubscriberCount = 0,
+                        SubscribedCount = 0,
                     },
                     CreatedAt = DateTime.UtcNow,
                     Birthday = DateTime.UtcNow,

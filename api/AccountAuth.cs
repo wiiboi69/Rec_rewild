@@ -10,7 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace api
 {
-    internal class AccountAuth
+    public class AccountAuth
     {
         public static string CachedLogins()
         {
@@ -22,7 +22,7 @@ namespace api
                     platform = 0,
                     platformId = "1",
                     accountId = setting.AccountId,
-                    lastLoginTime = DateTime.Now
+                    lastLoginTime = setting.LastLogin
                 }
             });
         }
@@ -120,27 +120,28 @@ namespace api
                 {
                     PlayerId = setting.AccountId,
                     Level = setting.Level,
-                    XP = 0
+                    XP = setting.XP
                 }
             });
         }
 
         public static string GetRep()
         {
+            var setting = player_config.Setting;
             return JsonConvert.SerializeObject(new Rep
             {
-                AccountId = int.Parse(File.ReadAllText(Program.ProfilePath + "\\userid.txt")),
-                IsCheerful = true,
-                Noteriety = 0.0,
-                SelectedCheer = 0,
-                CheerCredit = 0,
-                CheerGeneral = 0,
-                CheerHelpful = 0,
-                CheerCreative = 0,
-                CheerGreatHost = 0,
-                CheerSportsman = 0,
-                SubscriberCount = 0,
-                SubscribedCount = 0,
+                AccountId = setting.AccountId,
+                IsCheerful = setting.Reputation.IsCheerful,
+                Noteriety = setting.Reputation.Noteriety,
+                SelectedCheer = setting.Reputation.SelectedCheer,
+                CheerCredit = setting.Reputation.CheerCredit,
+                CheerGeneral = setting.Reputation.CheerGeneral,
+                CheerHelpful = setting.Reputation.CheerHelpful,
+                CheerCreative = setting.Reputation.CheerCreative,
+                CheerGreatHost = setting.Reputation.CheerGreatHost,
+                CheerSportsman = setting.Reputation.CheerSportsman,
+                SubscriberCount = setting.Reputation.SubscriberCount,
+                SubscribedCount = setting.Reputation.SubscribedCount,
             });
         }
         public class Rep
@@ -177,7 +178,7 @@ namespace api
             public int platform { get; set; }
             public string platformId { get; set; }
             public int accountId { get; set; }
-            public DateTime lastLoginTime { get; set; }
+            public DateTime? lastLoginTime { get; set; }
         }
         public class Account
         {

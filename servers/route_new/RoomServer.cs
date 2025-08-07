@@ -269,6 +269,9 @@ namespace Rec_rewild.servers.route_new
         public static string PlayerLogin()
         {
             Console.WriteLine($"game requesting matchmaking login");
+            var setting = player_config.Setting;
+            setting.LastLogin = DateTime.UtcNow;
+            player_config.Setting = setting;
             return APIServer2021_new.BlankResponse;
         }
 

@@ -306,9 +306,13 @@ namespace Rec_rewild.servers.route_new
 
             if (int.TryParse(v, out int versionNumber) && versionNumber > 2023000)
             {
-                return JsonConvert.SerializeObject(new VersionCheck
+                return JsonConvert.SerializeObject(new NewVersionCheck
                 {
-                    VersionStatus = VersionStatus.ValidForPlay // this is a enum
+                    ValidVersion = VersionStatus.ValidForPlay,
+                    VersionStatus = VersionStatus.ValidForPlay,
+                    UpdateNotificationStage = UpdateNoti.None,
+                    IsVersionIslanded = false,
+                    IsCrossPlayDisabled = false
                 });
             }
 

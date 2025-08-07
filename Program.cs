@@ -14,6 +14,8 @@ using System.Net.Http;
 using util;
 using Rec_rewild.servers.route_new;
 using Rec_rewild.api;
+using System.IO.Compression;
+using System.Security.Policy;
 
 
 namespace start
@@ -23,6 +25,12 @@ namespace start
         static void Main()
         {
             var client = new HttpClient();
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length >= 3 && args[1] == "--auto-start")
+            {
+                Console.WriteLine("not finished!");
+            }
+
             if (File.Exists("SaveData\\App\\firsttime.txt"))
             {
                 goto Start;
@@ -52,16 +60,29 @@ namespace start
                     string mode = Console.ReadLine();
                     if (mode.ToLower() == "y")
                     {
-                        download_profile_setup:
+                        WebClient webClient = new WebClient();
                         Console.Title = "Rec_rewild Profile Downloader";
                         Console.Clear();
                         Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to Rec_rewild.");
                         Console.WriteLine("Please type the username of the profile you would like: ");
                         string readusername_setup = Console.ReadLine();
-                        string data2_setup = "";
+                        if (readusername_setup.StartsWith("@"))
+                        {
+                            readusername_setup = readusername_setup.Remove(0, 1);
+                        }
+                        string data = "";
                         try
                         {
-                            data2_setup = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername_setup + "&take=5");
+                            webClient.UseDefaultCredentials = true;
+                            webClient.Headers["Accept"] = "application/json, text/plain, */*";
+                            webClient.Headers["Accept-Language"] = "en-US,en;q=0.5";
+                            webClient.Headers["Accept-Encoding"] = "gzip, deflate, br, zstd";
+                            webClient.Headers["User-Agent"] = "BestHTTP";
+                            webClient.Headers["Origin"] = "https://rec.net";
+                            webClient.Headers["Host"] = "apim.rec.net";
+                            webClient.Headers["Referer"] = "https://rec.net/";
+
+                            data = webClient.DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername_setup);
                         }
                         catch
                         {
@@ -71,9 +92,9 @@ namespace start
                             goto rec_net_profile_notimported;
                         }
 
-                        if (!ProfileDownloader.FindProfile(data2_setup, take_int: 12))
+                        if (!ProfileDownloader.FindProfile(data, take_int: 12))
                         {
-                            goto download_profile_setup;
+                            goto rec_net_profile_notimported;
                         }
                         goto rec_net_profile_imported;
                     }
@@ -84,7 +105,7 @@ namespace start
                    // File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
                 rec_net_profile_imported:
                     Console.WriteLine("To download builds, either go to the #rec-room-builds channel or use the links below: (these links are also available from the #rec-room-builds channel)" + Environment.NewLine);
-                    string builds = client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main_v2/setup/avataritemsfull.json").GetAwaiter().GetResult();
+                    string builds = client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main_v2/CDN/rewild_program/builds.txt").GetAwaiter().GetResult();
                     Console.WriteLine(builds);
                     Console.WriteLine("Download a build and press any key to continue:");
                     Console.ReadKey();
@@ -109,7 +130,28 @@ namespace start
                 goto Start;
             }
         Start:
-        player_config.load_setting();
+            try
+            {
+                player_config.load_setting();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("It looks like your player save data is corrupted! Do you want to reset it? You can always manually fix it yourself.");
+                Console.WriteLine("(1) Yes" + Environment.NewLine + "(2) No");
+
+                string readlinee = Console.ReadLine();
+                if (readlinee == "1")
+                {
+                    File.Delete("SaveData\\Profile\\player.json");
+                    start.Setup.setup_profile();
+                }
+                else
+                {
+                    Environment.Exit(1);
+                }
+            }
+
             Console.Title = "Rec_rewild Startup Menu";
             appversion = appversion.Replace("\n", String.Empty);
             appversion = appversion.Replace("\r", String.Empty);
@@ -119,6 +161,28 @@ namespace start
             Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild/tree/server-rewrite-v2");
             Console.WriteLine("Discord server here: https://discord.gg/UYQEVMAJTJ");
             Console.WriteLine("This is a full server rewrite version: v2" + Environment.NewLine);
+            WebClient downloader = new WebClient();
+            string ver = downloader.DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/rewild_program/version.txt").Replace("\n", String.Empty).Replace("\r", String.Empty).Replace("\t", String.Empty);
+            if (!ver.Contains(appversion))
+            {
+            Update:
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("You are using version " + appversion + ", but the latest version is " + ver + ".");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Would you like to update it? (Y, N)");
+                string readdline = Console.ReadLine();
+                if (readdline == "y" || readdline == "Y")
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = $"https://github.com/wiiboi69/Rec_rewild/releases/tag/{ver}",
+                        UseShellExecute = true
+                    });
+                    goto Update;
+                }
+                goto Update;
+            }   
             Console.WriteLine("(1) What's New"
                 + Environment.NewLine
                 + "(2) Change Settings"
@@ -128,7 +192,7 @@ namespace start
                 + "(4) Build Download Links"
                 + Environment.NewLine
                 + "(5) Start 2021 Server");
-
+            
             string readline = Console.ReadLine();
             if (!int.TryParse(readline, out int choice))
             {
@@ -146,7 +210,7 @@ namespace start
             {
                 Console.Title = "Rec_rewild Changelog";
                 Console.Clear();
-                Console.WriteLine(client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/changelog.txt").Result);
+                Console.WriteLine(client.GetStringAsync($"https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/rewild_program/changelog_{appversion}.txt").Result);
                 Console.WriteLine("Press any key to continue:");
                 Console.ReadKey();
                 Console.Clear();
@@ -231,8 +295,6 @@ namespace start
                     Console.WriteLine("Downloaded equipment");
                     File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/consumables.txt"));
                     Console.WriteLine("Downloaded fresh consumables");
-                    File.WriteAllText("SaveData\\gameconfigs.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/gameconfigs.txt"));
-                    Console.WriteLine("Downloaded game configs");
                     Console.WriteLine("Updated successfully");
                     Thread.Sleep(400); 
                     goto Settings;
@@ -397,8 +459,77 @@ namespace start
                 }
                 else if (readline3 == "5")
                 {
-                    //
-                    goto Profile;
+                Balance:
+                    Console.Clear();
+                    Console.WriteLine("What balance?");
+                    Console.WriteLine("(1) Change Tokens " + Environment.NewLine + "(2) Change Laser Tag Tickets" + Environment.NewLine + "(3) Change Isle Gold" + Environment.NewLine + "(4) Change Crescendo Silver" + Environment.NewLine + "(5) Change RecRoyale_Season1" + Environment.NewLine + "(6) Go Back");
+                    string idk = Console.ReadLine();
+                    if (idk == "1")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Current Tokens: " + setting.Balances.Tokens);
+                        Console.WriteLine("New Tokens:");
+                        string TokensStr = Console.ReadLine();
+                        int Tokens = int.Parse(TokensStr);
+                        setting.Balances.Tokens = Tokens;
+                        player_config.Setting = setting;
+                        Console.Clear();
+                        Console.WriteLine("Success!");
+                        Thread.Sleep(100);
+                        goto Balance;
+                    }
+                    if (idk == "2")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Current Laser Tag Tickets: " + setting.Balances.Tickets);
+                        Console.WriteLine("New Laser Tag Tickets:");
+                        string TicketsStr = Console.ReadLine();
+                        int Tickets = int.Parse(TicketsStr);
+                        setting.Balances.Tickets = Tickets;
+                        player_config.Setting = setting;
+                        Console.Clear();
+                        Console.WriteLine("Success!");
+                        Thread.Sleep(100);
+                        goto Balance;
+                    }
+                    if (idk == "3")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Current Isle Gold: " + setting.Balances.Gold);
+                        Console.WriteLine("New Isle Gold:");
+                        string IsleGoldStr = Console.ReadLine();
+                        int IsleGold = int.Parse(IsleGoldStr);
+                        setting.Balances.Gold = IsleGold;
+                        player_config.Setting = setting;
+                        Console.Clear();
+                        Console.WriteLine("Success!");
+                        Thread.Sleep(100);
+                        goto Balance;
+                    }
+                    if (idk == "4")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Current Crescendo Silver: " + setting.Balances.Silver);
+                        Console.WriteLine("New Crescendo Silver:");
+                        string SilverStr = Console.ReadLine();
+                        int Silver = int.Parse(SilverStr);
+                        setting.Balances.Silver = Silver;
+                        player_config.Setting = setting;
+                        Console.Clear();
+                        Console.WriteLine("Success!");
+                        Thread.Sleep(100);
+                        goto Balance;
+                    }
+                    if (idk == "5")
+                    {
+                        Console.Clear();
+                        goto Balance;
+                    }
+                    if (idk == "6")
+                    {
+                        Console.Clear();
+                        goto Profile;
+                    } 
                 }
                 else if (readline3 == "6")
                 {
@@ -480,8 +611,6 @@ namespace start
                 new WebSocketHTTP_new();
                 new roomServer();   
                 */
-
-                new NameServer();
 
                 new APIServer2021_new();
                 new AuthServer2021_new();
@@ -574,6 +703,7 @@ namespace start
         public static string DataPath = Environment.CurrentDirectory + "\\SaveData";
         public static string ProfilePath = Program.DataPath + "\\Profile";
         public static string CustomImages = Program.DataPath + "\\Images";
+
 
         public class Reponse<T>
         {
