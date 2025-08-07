@@ -167,5 +167,17 @@ namespace start
                 player_config.save_setting();
             }
         }
+
+        public static void setup_server()
+        {
+            if (!(File.Exists("SaveData\\App\\server_setting.json")))
+            {
+                server_config._setting = new server_config.App_Setting
+                {
+                    ConsoleSound = true
+                };
+                server_config.save_setting();
+            }
+        }
     }
 }

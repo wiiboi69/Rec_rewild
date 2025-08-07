@@ -1,22 +1,15 @@
-﻿using System;
+﻿using api;
+using Newtonsoft.Json;
+using Rec_rewild.api;
+using Rec_rewild.servers.route_new;
+using server;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using server;
-using api;
-using System.Threading;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Security.AccessControl;
 using System.Net.Http;
-using util;
-using Rec_rewild.servers.route_new;
-using Rec_rewild.api;
-using System.IO.Compression;
-using System.Security.Policy;
-
+using System.Threading;
 
 namespace start
 {
@@ -40,7 +33,7 @@ namespace start
 
         Tutorial:
             if (Setup.firsttime == true)
-              
+
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Title = "Rec_rewild Intro";
@@ -101,8 +94,8 @@ namespace start
                 rec_net_profile_notimported:
                     Console.WriteLine("Please enter the username you would like to use:");
                     string newusername = Console.ReadLine();
-                   // File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
-                   // File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
+                // File.WriteAllText("SaveData\\Profile\\username.txt", newusername);
+                // File.WriteAllText("SaveData\\Profile\\displayName.txt", newusername);
                 rec_net_profile_imported:
                     Console.WriteLine("To download builds, either go to the #rec-room-builds channel or use the links below: (these links are also available from the #rec-room-builds channel)" + Environment.NewLine);
                     string builds = client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main_v2/CDN/rewild_program/builds.txt").GetAwaiter().GetResult();
@@ -151,7 +144,12 @@ namespace start
                     Environment.Exit(1);
                 }
             }
-
+            server_config.load_setting();
+            var server_setting = server_config.Setting;
+            if (server_setting.ConsoleSound)
+            {
+                Console.Beep(300, 100);
+            }
             Console.Title = "Rec_rewild Startup Menu";
             appversion = appversion.Replace("\n", String.Empty);
             appversion = appversion.Replace("\r", String.Empty);
@@ -166,6 +164,10 @@ namespace start
             if (!ver.Contains(appversion))
             {
             Update:
+                if (server_setting.ConsoleSound)
+                {
+                    Console.Beep(200, 100);
+                }
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("You are using version " + appversion + ", but the latest version is " + ver + ".");
@@ -182,32 +184,44 @@ namespace start
                     goto Update;
                 }
                 goto Update;
-            }   
+            }
             Console.WriteLine("(1) What's New"
                 + Environment.NewLine
                 + "(2) Change Settings"
                 + Environment.NewLine
-                + "(3) Modify Profile"
+                + "(3) Modify Your Profile"
                 + Environment.NewLine
                 + "(4) Build Download Links"
                 + Environment.NewLine
-                + "(5) Start 2021 Server");
-            
+                + "(5) Start Server");
+
             string readline = Console.ReadLine();
             if (!int.TryParse(readline, out int choice))
             {
+                if (server_setting.ConsoleSound)
+                {
+                    Console.Beep(200, 100);
+                }
                 Console.WriteLine("only enter numbers");
                 Console.Clear();
                 goto Start;
             }
             if (!int.TryParse(readline, out int choice1) || choice < 1 || choice > 5)
             {
+                if (server_setting.ConsoleSound)
+                {
+                    Console.Beep(200, 100);
+                }
                 Console.WriteLine("invalid");
                 Console.Clear();
-                goto Start; 
+                goto Start;
             }
             if (readline == "1")
             {
+                if (server_setting.ConsoleSound)
+                {
+                    Console.Beep(300, 100);
+                }
                 Console.Title = "Rec_rewild Changelog";
                 Console.Clear();
                 Console.WriteLine(client.GetStringAsync($"https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/rewild_program/changelog_{appversion}.txt").Result);
@@ -218,20 +232,27 @@ namespace start
             }
             if (readline == "2")
             {
+                if (server_setting.ConsoleSound)
+                {
+                    Console.Beep(300, 100);
+                }
                 Console.Clear();
-                Settings:
+            Settings:
                 Console.Title = "Rec_rewild Settings Menu";
-                Console.WriteLine("(1) Private Rooms: " + File.ReadAllText("SaveData\\App\\privaterooms.txt") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Delete All SaveData" + Environment.NewLine + "(4) Update SaveData" +  Environment.NewLine + "(5) Migrate old Rec_rewild data into new version" + Environment.NewLine + "(6) Go Back");
+                Console.WriteLine("(1) Console Sounds: " + (server_setting.ConsoleSound ? "Enabled" : "Disabled") + Environment.NewLine + "(2) Custom Room Downloader" + Environment.NewLine + "(3) Delete All SaveData" + Environment.NewLine + "(4) Update SaveData" + Environment.NewLine + "(5) Migrate old Rec_rewild data into new version" + Environment.NewLine + "(6) Go Back");
                 string readline4 = Console.ReadLine();
                 if (readline4 == "1")
-                {
-                    if (File.ReadAllText("SaveData\\App\\privaterooms.txt") == "Disabled")
+                {// setting.DisplayName = displayName ?? setting.DisplayName;
+                 // player_config.Setting = setting;
+                    if (server_setting.ConsoleSound == false)
                     {
-                        File.WriteAllText("SaveData\\App\\privaterooms.txt", "Enabled");
+                        server_setting.ConsoleSound = true;
+                        server_config.Setting = server_setting;
                     }
                     else
                     {
-                        File.WriteAllText("SaveData\\App\\privaterooms.txt", "Disabled");
+                        server_setting.ConsoleSound = false;
+                        server_config.Setting = server_setting;
                     }
                     Console.Clear();
                     Console.WriteLine("Success!");
@@ -239,6 +260,10 @@ namespace start
                 }
                 else if (readline4 == "2")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                 download_Room:
                     Console.Title = "Rec_rewild room Downloader";
@@ -267,6 +292,10 @@ namespace start
                 }
                 else if (readline4 == "3")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                     Console.WriteLine("Are you sure you want to delete all your SaveData? (Y, N)");
                     string readlinee = Console.ReadLine();
@@ -287,6 +316,10 @@ namespace start
                 }
                 else if (readline4 == "4")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                     File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));
                     File.WriteAllText("SaveData\\avataritems2.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems2.txt"));
@@ -296,22 +329,38 @@ namespace start
                     File.WriteAllText("SaveData\\consumables.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/consumables.txt"));
                     Console.WriteLine("Downloaded fresh consumables");
                     Console.WriteLine("Updated successfully");
-                    Thread.Sleep(400); 
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(1000, 100);
+                    }
+                    Thread.Sleep(400);
                     goto Settings;
                 }
                 else if (readline4 == "5")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                     goto Start;
                 }
                 else if (readline4 == "6")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                     goto Start;
                 }
             }
             if (readline == "3")
             {
+                if (server_setting.ConsoleSound)
+                {
+                    Console.Beep(300, 100);
+                }
                 var setting = player_config.Setting;
                 Console.Clear();
             Profile:
@@ -319,23 +368,27 @@ namespace start
                 Console.Title = "Rec_rewild Profile Menu";
                 Console.WriteLine(
                       "(1) Change Username      " + setting.Username
-                    + Environment.NewLine 
+                    + Environment.NewLine
                     + "(2) Change Display Name   " + setting.DisplayName
-                    + Environment.NewLine 
-                    + "(3) Change Profile Image " 
-                    + Environment.NewLine 
+                    + Environment.NewLine
+                    + "(3) Change Profile Image "
+                    + Environment.NewLine
                     + "(4) Change Level         " + setting.Level
                     + Environment.NewLine
                     + "(5) Change Balance        "
-                    + Environment.NewLine 
+                    + Environment.NewLine
                     + "(6) Change Bio           " + setting.Bio
-                    + Environment.NewLine 
-                    + "(7) Profile Downloader" 
-                    + Environment.NewLine 
+                    + Environment.NewLine
+                    + "(7) Profile Downloader"
+                    + Environment.NewLine
                     + "(8) Go Back");
                 string readline3 = Console.ReadLine();
                 if (readline3 == "1")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.WriteLine("Current Username: " + setting.Username);
                     Console.WriteLine("New Username: ");
                     string newusername = Console.ReadLine();
@@ -347,6 +400,10 @@ namespace start
                 }
                 else if (readline3 == "2")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.WriteLine("Current Display Name: " + setting.DisplayName);
                     Console.WriteLine("New Display Name: ");
                     string newdisplayName = Console.ReadLine();
@@ -358,6 +415,10 @@ namespace start
                 }
                 else if (readline3 == "3")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                     Console.WriteLine("1) Upload Media Link" + Environment.NewLine + "2) Drag Image onto this window" + Environment.NewLine + "3) Download Rec.Net Profile Image" + Environment.NewLine + "4) Go Back");
                     string readline4 = Console.ReadLine();
@@ -381,6 +442,10 @@ namespace start
                     }
                     else if (readline4 == "2")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.WriteLine("Drag any image onto this window and press enter: ");
                         string imagedir = Console.ReadLine();
                         try
@@ -402,7 +467,10 @@ namespace start
                     }
                     else if (readline4 == "3")
                     {
-                        
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.WriteLine("Type a RecRoom @ username and press enter: ");
                         string username = Console.ReadLine();
                         if (username.StartsWith("@"))
@@ -430,23 +498,38 @@ namespace start
                         }
                         catch
                         {
+                            if (server_setting.ConsoleSound)
+                            {
+                                Console.Beep(200, 100);
+                            }
                             Console.Clear();
                             Console.WriteLine("Unable to download image...");
                             goto Profile;
                         }
                         Console.Clear();
                         Console.WriteLine("Success!");
-
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(1000, 100);
+                        }
                         goto Profile;
                     }
                     else if (readline4 == "4")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         goto Start;
                     }
                 }
                 else if (readline3 == "4")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.WriteLine("Current Level: " + File.ReadAllText("SaveData\\Profile\\level.txt"));
                     Console.WriteLine("New Level: ");
                     string newlevel = Console.ReadLine();
@@ -459,6 +542,10 @@ namespace start
                 }
                 else if (readline3 == "5")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                 Balance:
                     Console.Clear();
                     Console.WriteLine("What balance?");
@@ -466,6 +553,10 @@ namespace start
                     string idk = Console.ReadLine();
                     if (idk == "1")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         Console.WriteLine("Current Tokens: " + setting.Balances.Tokens);
                         Console.WriteLine("New Tokens:");
@@ -480,6 +571,10 @@ namespace start
                     }
                     if (idk == "2")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         Console.WriteLine("Current Laser Tag Tickets: " + setting.Balances.Tickets);
                         Console.WriteLine("New Laser Tag Tickets:");
@@ -494,6 +589,10 @@ namespace start
                     }
                     if (idk == "3")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         Console.WriteLine("Current Isle Gold: " + setting.Balances.Gold);
                         Console.WriteLine("New Isle Gold:");
@@ -508,6 +607,10 @@ namespace start
                     }
                     if (idk == "4")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         Console.WriteLine("Current Crescendo Silver: " + setting.Balances.Silver);
                         Console.WriteLine("New Crescendo Silver:");
@@ -522,17 +625,29 @@ namespace start
                     }
                     if (idk == "5")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         goto Balance;
                     }
                     if (idk == "6")
                     {
+                        if (server_setting.ConsoleSound)
+                        {
+                            Console.Beep(300, 100);
+                        }
                         Console.Clear();
                         goto Profile;
-                    } 
+                    }
                 }
                 else if (readline3 == "6")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.WriteLine("Current bio: " + setting.Bio);
                     Console.WriteLine("New bio: ");
                     string newbio = Console.ReadLine();
@@ -544,7 +659,11 @@ namespace start
                 }
                 else if (readline3 == "7")
                 {
-                    download_profile:
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
+                download_profile:
                     Console.Title = "Rec_rewild Profile Downloader";
                     Console.Clear();
                     Console.WriteLine("Profile Downloader: This tool takes the username and profile image of any username you type in and imports it to Rec_rewild.");
@@ -555,23 +674,27 @@ namespace start
                     {
                         data2 = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername + "&take=5");
                     }
-                    catch
+                    catch (ex)
                     {
                         Console.Clear();
                         Console.WriteLine("Failed to download profile...");
                         goto Profile;
                     }
-                    
+
                     if (!ProfileDownloader.FindProfile(data2, take_int: 12))
                     {
                         goto download_profile;
                     }
-                    
+
                     Console.Clear();
                     goto Profile;
                 }
                 else if (readline3 == "8")
                 {
+                    if (server_setting.ConsoleSound)
+                    {
+                        Console.Beep(300, 100);
+                    }
                     Console.Clear();
                     goto Start;
                 }
@@ -594,9 +717,9 @@ namespace start
                 version = "2021";
                 RoomCache.DownloadRooms();
                 APIServer.Cachedservertimestarted = (ulong)DateTime.Now.Ticks;
-                
+
                 beta = false;
-               
+
                 //ConsoleEMU.OpenNewConsole();
 
                 //note: nameserver is at the same port as before
@@ -689,7 +812,7 @@ namespace start
                         Environment.Exit(0);
                         goto input_server;
                     }
-                    input_server:
+                input_server:
                     input = Console.ReadLine();
                 }
             }
@@ -746,7 +869,7 @@ namespace start
             public int Level { get; set; }
             public int PackageType { get; set; } //TODO: get enum for it
             public string Message { get; set; }
-            public string EquipmentPrefabName { get; set; } 
+            public string EquipmentPrefabName { get; set; }
             public string EquipmentModificationGuid { get; set; }
             public GiftContext GiftContext { get; set; } = GiftContext.Weekly_Challenge_Complete;
             public GiftRarity GiftRarity { get; set; }

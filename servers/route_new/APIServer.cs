@@ -1,26 +1,19 @@
 ﻿using api;
+using Newtonsoft.Json;
+using Rec_rewild.api;
+using Rec_rewild.api.route;
+using start;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
-using start;
-using Rec_rewild.api.route;
-using Newtonsoft.Json;
-using System.Net.NetworkInformation;
-using System.Security.AccessControl;
 using static api.AccountAuth;
-using Rec_rewild.api;
-using static System.Net.Mime.MediaTypeNames;
-using System.Net.Http;
 using static server.APIServer;
-using Microsoft.IdentityModel.Tokens;
-using static Rec_rewild.api.dummy_account_system;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Text;
 
 namespace Rec_rewild.servers.route_new
 {
@@ -63,7 +56,8 @@ namespace Rec_rewild.servers.route_new
                 Console.WriteLine("APIServer2021: Registering Route");
             var routeMethods = Assembly.GetExecutingAssembly().GetTypes()
                            .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
-                           .Select(m => new {
+                           .Select(m => new
+                           {
                                Method = m,
                                Attribute = m.GetCustomAttribute<rewild_route_system.RouteAttribute>()
                            })
@@ -318,14 +312,14 @@ namespace Rec_rewild.servers.route_new
 
             return JsonConvert.SerializeObject(new VersionCheck
             {
-                VersionStatus = VersionStatus.ValidForPlay 
+                VersionStatus = VersionStatus.ValidForPlay
             });
         }
 
         [rewild_route_system.Route("/api/gameconfigs/v1/all")]
         public static string GameConfigs()
         {
-            Console.WriteLine($"game requesting gameconfigs"); 
+            Console.WriteLine($"game requesting gameconfigs");
             var client = new HttpClient();
             return client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/gameconfigs.txt").GetAwaiter().GetResult();
         }
@@ -390,7 +384,7 @@ namespace Rec_rewild.servers.route_new
 
         [rewild_route_system.Route("/api/PlayerReporting/v1/moderationBlockDetails")]
         public static string ModerationBlockDetails()
-        { 
+        {
             return JsonConvert.SerializeObject(new
             {
                 Duration = 0,
@@ -638,11 +632,11 @@ namespace Rec_rewild.servers.route_new
             {
                 ChallengeMapId = 0,
                 StartAt = DateTime.UtcNow,
-                EndAt = DateTime.UtcNow.AddDays(7), 
+                EndAt = DateTime.UtcNow.AddDays(7),
                 ServerTime = DateTime.UtcNow,
                 Challenges = new List<object>
                 {
-                   
+
                 },
                 Gift = new
                 {
@@ -745,7 +739,7 @@ namespace Rec_rewild.servers.route_new
 
                 },
             });
-            
+
         }
 
         [rewild_route_system.Route("/api/avatar/v2/gifts")]
@@ -816,12 +810,13 @@ namespace Rec_rewild.servers.route_new
         [rewild_route_system.Route("/api/CampusCard/v1/UpdateAndGetSubscription")]
         public static string RRPlus()
         {
+            var setting = player_config.Setting;
             return JsonConvert.SerializeObject(new
             {
                 Subscription = new
                 {
                     SubscriptionId = 0,
-                    RecNetPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt")),
+                    RecNetPlayerId = setting.AccountId,
                     PlatformType = 0,
                     PlatformId = 1,
                     PlatformPurchaseId = "0",
@@ -834,13 +829,14 @@ namespace Rec_rewild.servers.route_new
                     IsActive = true
                 },
                 CanBuySubscription = true,
-                PlatformAccountSubscribedPlayerId = Convert.ToUInt64(File.ReadAllText("SaveData\\Profile\\userid.txt"))
+                PlatformAccountSubscribedPlayerId = setting.AccountId
             });
         }
 
         [rewild_route_system.Route("/api/storefronts/v4/balance/2")]
         public static string Tokens()
-        {var setting = player_config.Setting;
+        {
+            var setting = player_config.Setting;
             var balance = new[]
             {
               new
@@ -882,7 +878,7 @@ namespace Rec_rewild.servers.route_new
         {
             return JsonConvert.SerializeObject(new
             {
-                Success = true, 
+                Success = true,
                 Error = ""
             });
         }
@@ -969,7 +965,7 @@ namespace Rec_rewild.servers.route_new
         {
             var setting = player_config.Setting;
             setting.DisplayName = displayName ?? setting.DisplayName;
-            player_config.Setting = setting; 
+            player_config.Setting = setting;
 
             ProgramHelpers.SelfAccountUpdate();
             return JsonConvert.SerializeObject(new
@@ -1021,4 +1017,4 @@ namespace Rec_rewild.servers.route_new
         }
     }
 }
-    
+
