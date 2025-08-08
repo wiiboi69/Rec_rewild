@@ -148,17 +148,40 @@ namespace start
             var server_setting = server_config.Setting;
             if (server_setting.ConsoleSound)
             {
-                Console.Beep(300, 100);
+                Console.Beep(800, 150);
             }
             Console.Title = "Rec_rewild Startup Menu";
             appversion = appversion.Replace("\n", String.Empty);
             appversion = appversion.Replace("\r", String.Empty);
             appversion = appversion.Replace("\t", String.Empty);
-            Console.WriteLine("Rec_rewild - a fork of OpenRec for Rec Room 2021 and 2022. (Version: " + appversion + ")");
-            Console.WriteLine("Branch: server-rewrite-v2");
-            Console.WriteLine("Download source code here: https://github.com/wiiboi69/Rec_rewild/tree/server-rewrite-v2");
-            Console.WriteLine("Discord server here: https://discord.gg/UYQEVMAJTJ");
-            Console.WriteLine("This is a full server rewrite version: v2" + Environment.NewLine);
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            string line = new string('═', 60);
+            Console.WriteLine($"╔{line}╗");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"║{"Rec_rewild - a fork of OpenRec for Rec Room 2021 and 2022.",-60}║");
+            Console.WriteLine($"║{"",-60}║");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"║{"Branch: server-rewrite-v2",-60}║");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"║{"Download source code here:",-60}║");
+            Console.WriteLine($"║{"https://github.com/wiiboi69/Rec_rewild/tree/server-rewrite-v2",-60}║");
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"║{"Discord server here:",-60}║");
+            Console.WriteLine($"║{"https://discord.gg/UYQEVMAJTJ",-60}║");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"║{"",-60}║");
+            Console.WriteLine($"║{"This is a full server rewrite version: v2",-60}║");
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine($"╚{line}╝");
+
+            Console.ResetColor();
             WebClient downloader = new WebClient();
             string ver = downloader.DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main/CDN/rewild_program/version.txt").Replace("\n", String.Empty).Replace("\r", String.Empty).Replace("\t", String.Empty);
             if (!ver.Contains(appversion))
@@ -220,7 +243,7 @@ namespace start
             {
                 if (server_setting.ConsoleSound)
                 {
-                    Console.Beep(300, 100);
+                    Console.Beep(800, 150);
                 }
                 Console.Title = "Rec_rewild Changelog";
                 Console.Clear();
@@ -234,7 +257,8 @@ namespace start
             {
                 if (server_setting.ConsoleSound)
                 {
-                    Console.Beep(300, 100);
+                    Console.Beep(800, 150);
+
                 }
                 Console.Clear();
             Settings:
@@ -262,7 +286,8 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
+
                     }
                     Console.Clear();
                 download_Room:
@@ -294,7 +319,8 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
+
                     }
                     Console.Clear();
                     Console.WriteLine("Are you sure you want to delete all your SaveData? (Y, N)");
@@ -318,7 +344,8 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
+
                     }
                     Console.Clear();
                     File.WriteAllText("SaveData\\avataritems.txt", new WebClient().DownloadString("https://raw.githubusercontent.com/wiiboi69/Rec_rewild/master/Download/avataritems.txt"));
@@ -340,7 +367,8 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
+
                     }
                     Console.Clear();
                     goto Start;
@@ -349,7 +377,8 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
+
                     }
                     Console.Clear();
                     goto Start;
@@ -359,7 +388,8 @@ namespace start
             {
                 if (server_setting.ConsoleSound)
                 {
-                    Console.Beep(300, 100);
+                    Console.Beep(800, 150);
+
                 }
                 var setting = player_config.Setting;
                 Console.Clear();
@@ -387,7 +417,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
                     }
                     Console.WriteLine("Current Username: " + setting.Username);
                     Console.WriteLine("New Username: ");
@@ -402,7 +432,8 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
+
                     }
                     Console.WriteLine("Current Display Name: " + setting.DisplayName);
                     Console.WriteLine("New Display Name: ");
@@ -417,7 +448,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                            
                     }
                     Console.Clear();
                     Console.WriteLine("1) Upload Media Link" + Environment.NewLine + "2) Drag Image onto this window" + Environment.NewLine + "3) Download Rec.Net Profile Image" + Environment.NewLine + "4) Go Back");
@@ -444,7 +475,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.WriteLine("Drag any image onto this window and press enter: ");
                         string imagedir = Console.ReadLine();
@@ -469,7 +500,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.WriteLine("Type a RecRoom @ username and press enter: ");
                         string username = Console.ReadLine();
@@ -518,7 +549,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         goto Start;
@@ -528,7 +559,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
                     }
                     Console.WriteLine("Current Level: " + File.ReadAllText("SaveData\\Profile\\level.txt"));
                     Console.WriteLine("New Level: ");
@@ -544,7 +575,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
                     }
                 Balance:
                     Console.Clear();
@@ -555,7 +586,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         Console.WriteLine("Current Tokens: " + setting.Balances.Tokens);
@@ -573,7 +604,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         Console.WriteLine("Current Laser Tag Tickets: " + setting.Balances.Tickets);
@@ -591,7 +622,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         Console.WriteLine("Current Isle Gold: " + setting.Balances.Gold);
@@ -609,7 +640,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         Console.WriteLine("Current Crescendo Silver: " + setting.Balances.Silver);
@@ -627,7 +658,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         goto Balance;
@@ -636,7 +667,7 @@ namespace start
                     {
                         if (server_setting.ConsoleSound)
                         {
-                            Console.Beep(300, 100);
+                            Console.Beep(800, 150);
                         }
                         Console.Clear();
                         goto Profile;
@@ -646,7 +677,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
                     }
                     Console.WriteLine("Current bio: " + setting.Bio);
                     Console.WriteLine("New bio: ");
@@ -661,7 +692,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
                     }
                 download_profile:
                     Console.Title = "Rec_rewild Profile Downloader";
@@ -674,7 +705,7 @@ namespace start
                     {
                         data2 = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername + "&take=5");
                     }
-                    catch (ex)
+                    catch (Exception ex)
                     {
                         Console.Clear();
                         Console.WriteLine("Failed to download profile...");
@@ -693,7 +724,7 @@ namespace start
                 {
                     if (server_setting.ConsoleSound)
                     {
-                        Console.Beep(300, 100);
+                        Console.Beep(800, 150);
                     }
                     Console.Clear();
                     goto Start;

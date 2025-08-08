@@ -22,7 +22,7 @@ namespace api
                     platform = 0,
                     platformId = "1",
                     accountId = setting.AccountId,
-                    lastLoginTime = setting.LastLogin
+                    lastLoginTime = setting.LastLogin ?? DateTime.UtcNow,
                 }
             });
         }
