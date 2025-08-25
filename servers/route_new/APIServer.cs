@@ -300,7 +300,9 @@ namespace Rec_rewild.servers.route_new
 
             if (int.TryParse(v, out int versionNumber) && versionNumber > 2023000)
             {
-                return JsonConvert.SerializeObject(new NewVersionCheck
+                Console.WriteLine("Rec Rewild 2023 exists bud");
+                Environment.Exit(0); // rttfffffffffffffffffffffffffffffffffffffffffff
+                /*return JsonConvert.SerializeObject(new NewVersionCheck
                 {
                     ValidVersion = VersionStatus.ValidForPlay,
                     VersionStatus = VersionStatus.ValidForPlay,
@@ -308,6 +310,7 @@ namespace Rec_rewild.servers.route_new
                     IsVersionIslanded = false,
                     IsCrossPlayDisabled = false
                 });
+                */
             }
 
             return JsonConvert.SerializeObject(new VersionCheck
