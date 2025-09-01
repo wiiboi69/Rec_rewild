@@ -115,7 +115,7 @@ namespace start
                     Bio = "Welcome to Rec_rewild! This is a custom server for Rec Room. Enjoy your stay!",
                     Level = 30,
                     XP = 0,
-                    Email = "eeee@eeee.eee",
+                    Email = Username + "@recrewild.server",
                     Balances = new player_config.Balances
                     {
                         Tokens = 1500,
