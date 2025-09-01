@@ -18,14 +18,7 @@ namespace start
         static void Main()
         {
             var client = new HttpClient();
-            bool enabled = client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/refs/heads/main_v2/CDN/rewild_program/enable.txt").GetAwaiter().GetResult().Contains("true");
-            if (!enabled)
-            {
-                Console.WriteLine("Rec_rewild has been disabled by the developer. Please check the discord for more info.");
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
-                Environment.Exit(0);
-            }
+           
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length >= 3 && args[1] == "--auto-start")
             {
