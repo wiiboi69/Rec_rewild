@@ -174,7 +174,7 @@ namespace start
             {
                 server_config._setting = new server_config.App_Setting
                 {
-                    ConsoleSound = true
+                    ConsoleSound = false
                 };
                 server_config.save_setting();
             }
