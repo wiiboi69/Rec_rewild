@@ -375,7 +375,7 @@ namespace Rec_rewild.servers.route_new
             return JsonConvert.SerializeObject(JsonConvert.DeserializeObject<List<Account>>(AccountAuth.GetAccountsBulk())[0]);
         }
 
-        [rewild_route_system.Route("/club/home/me")]
+        [rewild_route_system.Route("/club/home/me")] 
         public static string ClubHomeMe()
         {
             Console.WriteLine($"game requested your home club");

@@ -674,7 +674,7 @@ namespace start
                     {
                         data2 = new WebClient().DownloadString("https://apim.rec.net/accounts/account/search?name=" + readusername + "&take=5");
                     }
-                    catch (ex)
+                    catch (Exception ex)
                     {
                         Console.Clear();
                         Console.WriteLine("Failed to download profile...");

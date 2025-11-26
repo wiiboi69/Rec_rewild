@@ -26,7 +26,7 @@ namespace Rec_rewild.api
             try
             {
                 var client = new HttpClient();
-                Console.WriteLine("setting up rooms");
+                Console.WriteLine("Setting up Rooms");
                 var json = client.GetStringAsync("https://raw.githubusercontent.com/wiiboi69/Rec_rewild_server_data/main/RRORooms.json").Result;
 
                 json = room_util.room_inject_CustomRooms_list(json);
@@ -36,7 +36,7 @@ namespace Rec_rewild.api
                 }
 
                 Rec_rewild.api.RoomCache.Initialize(json);
-                Console.WriteLine($"downloaded {Rec_rewild.api.RoomCache.Count} rooms");
+                Console.WriteLine($"Downloaded {Rec_rewild.api.RoomCache.Count} rooms");
             }
             catch (Exception ex)
             {
